@@ -2,7 +2,7 @@ from netpyne import specs
 cfg = specs.SimConfig() 
 
 cfg.hParams = {'celsius':35, 'v_init':-61}
-cfg.duration = 500 # 1*1e3
+cfg.duration = 5 # 1*1e3
 cfg.dt = 0.025          
 cfg.verbose = True      
 cfg.recordCells = ['all']
@@ -16,5 +16,3 @@ cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 cfg.stim = 'IClamp'
 cfg.amp=0.1
 cfg.cellnum = 1
-
-

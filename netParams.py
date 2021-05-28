@@ -1,8 +1,11 @@
 from netpyne import specs, sim
 import numpy as np
 import csv
-from cfg import cfg
-netParams = specs.NetParams()  # object of class NetParams to store the network parameters
+netParams = specs.NetParams()
+try:
+    from __main__ import cfg  # import SimConfig object with params from parent module
+except:
+    from cfg import cfg  # if no simConfig in parent module, import directly from cfg.py:cfg
 
 # order in genemod MUST be preserved to match cell_identities channel order
 genemod = {'ch_Cacna1a_cp5':{'gCav2_1bar': 0.00001},  'ch_Cacna1b_cp6':{'gCav2_2bar': 0.0001},
@@ -13,7 +16,6 @@ genemod = {'ch_Cacna1a_cp5':{'gCav2_1bar': 0.00001},  'ch_Cacna1b_cp6':{'gCav2_2
            'ch_Kcnc1_md74298':{'gk': 0.015},            'ch_Scn1a_md264834':{'gNav11bar': 1.0}}
 cell_identities = np.bool_(np.transpose(np.genfromtxt('allcells_new12_unique_binary.csv', delimiter=',')))
 cell = cell_identities[cfg.cellnum]
-print(cfg.cellnum)
 
 ## Cell parameters/rules
 CEL = {'secs': {}}
