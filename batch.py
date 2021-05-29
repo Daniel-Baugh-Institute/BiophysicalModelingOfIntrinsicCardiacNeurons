@@ -11,7 +11,6 @@ def batch():
         b.saveFolder = 'data'
         b.method = 'grid'
         b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
-        b.saveScripts()
         b.run()
 
 batch()
