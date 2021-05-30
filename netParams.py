@@ -8,7 +8,7 @@ except:
     from cfg import cfg  # if no simConfig in parent module, import directly from cfg.py:cfg
 
 # order in genemod MUST be preserved to match cell_identities channel order
-genemod = {'ch_Cacna1a_cp5':{'gCav2_1bar': 0.00001},  'ch_Cacna1b_cp6':{'gCav2_2bar': 0.0001},
+genemod = {'ch_Cacna1a_cp5':{'gCav2_1bar': 0.00001},  'ch_Cacna1b_cp6':{'gCav2_2bar': 0.00001},
            'ch_Cacna1c_cp3':{'gLbar': 0.0001},        'ch_Cacna1g_cp41':{'gCav3_1bar': 0.00001},
            'ch_Cacna1i_cp42':{'gCav3_3bar': 0.0001},  'ch_Hcn1_cp9':{'gHCN1bar': 0.00001},
            'ch_Hcn2_cp10':{'gHCN2bar': 0.010},           'ch_Hcn3_cp11':{'gHCN3bar': 0.00001},
@@ -27,5 +27,5 @@ netParams.cellParams['CEL'] = CEL
 netParams.popParams['U'] = {'cellType': 'CEL', 'numCells': 1}
 
 if cfg.stim == 'IClamp':
-    netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': cfg.amp, 'dur': 1e9, 'delay': 0} 
+    netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': cfg.amp, 'dur': 1e9, 'delay': 20} 
     netParams.stimTargetParams['iclamp->CEL'] = {'source': 'iclamp', 'conds': {'cellType': 'CEL'}, 'sec': 'soma', 'loc': 0.5}
