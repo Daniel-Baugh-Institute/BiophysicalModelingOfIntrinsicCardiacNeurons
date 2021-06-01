@@ -14,5 +14,5 @@ cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
 cfg.stim = 'IClamp'
-cfg.amp=0.3
-cfg.cellnum = 115
+cfg.amp=0.4
+cfg.cellnum = 1
