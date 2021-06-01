@@ -8,11 +8,11 @@ cfg.verbose = True
 cfg.recordCells = ['all']
 cfg.recordTraces = {'V_soma':{'sec':'soma','loc':0.5,'var':'v'}}
 cfg.recordStep = 0.1       
-cfg.filename = 'test1'
+cfg.filename = 'test2'
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
 cfg.stim = 'IClamp'
-cfg.amp=0.1
-cfg.cellnum = 1
+cfg.amp=0.3
+cfg.cellnum = 115
