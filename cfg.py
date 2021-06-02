@@ -11,6 +11,8 @@ cfg.recordStep = 0.1
 cfg.filename = 'test2'
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
+cfg.analysis['plotRaster'] = {'saveFig': True}                   # Plot a raster
+
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
 cfg.stim = 'IClamp'
