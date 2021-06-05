@@ -192,7 +192,7 @@ def plot2DRate(dataFolder, batchLabel, params, data, par1, par2, val, valLabel, 
 
     plt.show()
 
-def spikeStats(dataFolder, batchLabel, params, data"):
+def spikeStats(dataFolder, batchLabel, params, data):
     df = toPandas(params, data)
     spkrate = dict(zip(df.simLabel,df.avgRate))
     spktime = dict(zip(df.simLabel,df.spkt))
