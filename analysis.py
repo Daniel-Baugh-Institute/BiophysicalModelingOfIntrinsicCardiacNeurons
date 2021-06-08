@@ -194,15 +194,18 @@ def plot2DRate(dataFolder, batchLabel, params, data, par1, par2, val, valLabel, 
 
 def spikeStats(dataFolder, batchLabel, params, data):
     df = toPandas(params, data)
-    spkrate = dict(zip(df.simLabel,df.avgRate))
     spktime = dict(zip(df.simLabel,df.spkt))
     spkcount = {i:len(spktime[i]) for i in spktime.keys()}
     firstspk = {}
     for i in spktime.keys():
         if spktime[i]==[]:
-            firstspk[i] = 'NA'
+            firstspk[i] = 0
         else:
             firstspk[i] = spktime[i][0]
+    for i in range(len(tuple(df.simLabel))):
+        datadict[df.simLabel[i]] = {{'V_soma':df.V_soma[i]},{'t':df.t[i]},{'spikeRate':df.avgRate[i]},{'spikeTime':df.spkt},{'spikeCount':spkcount[df.simLabel[i]]},{'timeFirstSpike':firstspk[df.simLabel[i]]}}
+
+    allSimData = json.dumps(datadict, indent = 4)
     return
 
 
