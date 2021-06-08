@@ -197,15 +197,21 @@ def spikeStats(dataFolder, batchLabel, params, data):
     spktime = dict(zip(df.simLabel,df.spkt))
     spkcount = {i:len(spktime[i]) for i in spktime.keys()}
     firstspk = {}
+    datadict = {}
     for i in spktime.keys():
         if spktime[i]==[]:
             firstspk[i] = 0
         else:
             firstspk[i] = spktime[i][0]
-    for i in range(len(tuple(df.simLabel))):
-        datadict[df.simLabel[i]] = {{'V_soma':df.V_soma[i]},{'t':df.t[i]},{'spikeRate':df.avgRate[i]},{'spikeTime':df.spkt},{'spikeCount':spkcount[df.simLabel[i]]},{'timeFirstSpike':firstspk[df.simLabel[i]]}}
 
-    allSimData = json.dumps(datadict, indent = 4)
+    for i in range(len(tuple(df.simLabel))):
+        datadict[df.simLabel[i]]={'V_soma':df.V_soma[i],'t':df.t[i], 'spikeRate':df.avgRate[i], 'spikeTime':df.spkt[i],'spikeCount':spkcount[df.simLabel[i]],'timeFirstSpike':firstspk[df.simLabel[i]]}
+    
+    temp = pd.DataFrame.from_dict(datadict)
+    tempstr = pd.DataFrame.to_json(temp)
+    with open('simAllData.json','w') as f:
+        f.write(tempstr)
+        f.close()
     return
 
 
