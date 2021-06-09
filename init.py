@@ -7,4 +7,4 @@ sim.create(netParams=netParams, simConfig=simConfig)
 print('AAAAAAAAAAAAAAAAAAAAAA')
 
 def set_memb():
-    isum = ina + ik + ica + iother
+    isum = ina + ik + ica + ihcn
