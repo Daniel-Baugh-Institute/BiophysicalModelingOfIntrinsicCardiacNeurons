@@ -4,7 +4,6 @@ simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsD
 # sim.createSimulateAnalyze(netParams=netParams, simConfig=simConfig)
 sim.create(netParams=netParams, simConfig=simConfig)
 
-print('AAAAAAAAAAAAAAAAAAAAAA')
 
 def set_memb():
     isum = ina + ik + ica + iother
@@ -13,3 +12,6 @@ def set_memb():
         g_pas = isum/(e_pas-v)
     else:
         print("Error!")
+
+set_memb()
+print('AAAAAAAAAAAAAAAAAAAAAA')
