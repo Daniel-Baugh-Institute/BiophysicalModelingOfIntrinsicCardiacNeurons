@@ -16,5 +16,7 @@ cfg.analysis['plotRaster'] = {'saveFig': True}                   # Plot a raster
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
 cfg.stim = 'IClamp'
-cfg.amp=0.4
-cfg.cellnum = 1
+cfg.amp=1
+cfg.cellnum = 15 #105
+set_memb()
+print('~~~~~~~~~~~~~~~')
