@@ -40,7 +40,7 @@ ENDCOMMENT
 NEURON {
 	SUFFIX ch_Kcna1ab1_md80769
 	USEION k READ ek WRITE ik
-	RANGE gk, gbar, ik
+	RANGE gk, gbar, ik, ikcna
 	GLOBAL ninf, taun
 }
 
@@ -86,6 +86,7 @@ ASSIGNED {
 	alphan (1/ms)
 	betan (1/ms)
 	qt
+	ikcna (mA/cm2)
 }
 
 STATE { n }
@@ -99,8 +100,9 @@ INITIAL {
 
 BREAKPOINT {
 	SOLVE states METHOD cnexp
-      gk = gbar * n^4 
-	ik = gk * (v - ek)
+    gk = gbar * n^4 
+	ikcna = gk * (v - ek)
+	ik = ikcna
 }
 
 DERIVATIVE states {

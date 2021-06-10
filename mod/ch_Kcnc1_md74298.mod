@@ -46,7 +46,7 @@ NEURON {
 	USEION k READ ek WRITE ik 	: READ ki 		:removed by SG
 	RANGE gk
 	GLOBAL activate_Q10,Q10,gmaxQ10,rate_k,gmax_k,temp1,temp2,tempb
-	RANGE gkcnc
+	RANGE gkcnc, ikcnc
 	GLOBAL squidtemp
 }
 
@@ -78,14 +78,15 @@ ASSIGNED {
 	ptau (ms)
 	rate_k
 	gmax_k
-
+	ikcnc (mA/cm2)
 	gkcnc (S/cm2)
 }
 
 BREAKPOINT {
 	SOLVE states METHOD cnexp
-	ik   = (gk*gmax_k)*p*(v-ek)
 	gkcnc = (gk*gmax_k)*p
+	ikcnc = (gk*gmax_k)*p*(v-ek)
+	ik = ikcnc
 }
 
 UNITSOFF

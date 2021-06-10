@@ -15,7 +15,7 @@ NEURON {
 	SUFFIX ch_Scn1a_md264834
 	USEION na READ ena WRITE ina
 	USEION ttx READ ttxo, ttxi VALENCE 1
-	RANGE gNav11bar, gNav11, ina,mh,ms,hh,hs
+	RANGE gNav11bar, gNav11, ina,mh,ms,hh,hs, iscn
 }
 
 UNITS	{
@@ -43,6 +43,7 @@ ASSIGNED {
 	mTau
 	hInf
 	hTau
+	iscn (mA/cm2)
 }
 
 STATE	{
@@ -53,7 +54,8 @@ STATE	{
 BREAKPOINT	{
 	SOLVE states METHOD cnexp
 	gNav11 = gNav11bar*m*m*m*h
-	ina = gNav11*(v-ena)
+	iscn = gNav11*(v-ena)
+	ina = iscn
 }
 
 DERIVATIVE states	{

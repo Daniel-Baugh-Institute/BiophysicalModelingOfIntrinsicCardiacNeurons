@@ -19,11 +19,11 @@ ENDCOMMENT
 
 NEURON	{
 	SUFFIX ch_Cacna1i_cp42
-	:USEION ca READ eca WRITE ica 			:SG
-	USEION ca READ cai, cao WRITE ica 		:SG mm
-	RANGE gCav3_3bar, gCav3_3, ica, BBiD
-	RANGE ggk								:SG mm
-	GLOBAL USEGHK							:SG mm
+	:USEION ca READ eca WRITE ica 						:SG
+	USEION ca READ cai, cao WRITE ica 					:SG mm
+	RANGE gCav3_3bar, gCav3_3, ica, BBiD, ica1i
+	RANGE ggk											:SG mm
+	GLOBAL USEGHK										:SG mm
 }
 
 UNITS	{
@@ -59,6 +59,7 @@ ASSIGNED	{
 	celsius 	(degC)
 	cai (mM)
 	cao (mM)
+	ica1i (mA/cm2)
 }
 
 STATE	{ 
@@ -75,7 +76,8 @@ BREAKPOINT	{
 	} else {
 		ggk = (v-eca)
 	}
-	ica = gCav3_3*ggk
+	ica1i = gCav3_3*ggk
+	ica = ica1i
 	:ica = gCav3_3*(v-eca)
 }
 

@@ -21,7 +21,7 @@ NEURON	{
 	:USEION ca READ eca WRITE ica 			:SG mm
 	USEION ca READ cai, cao WRITE ica 		:SG mm
 	RANGE gCav2_1bar, gCav2_1, ica, BBiD
-	RANGE ggk								:SG mm
+	RANGE ggk, ica1a						:SG mm
 	GLOBAL USEGHK							:SG mm
 }
 
@@ -57,6 +57,7 @@ ASSIGNED	{
 	celsius 	(degC)
 	cai (mM)
 	cao (mM)
+	ica1a (mA/cm2)
 }
 
 STATE	{ 
@@ -72,7 +73,8 @@ BREAKPOINT	{
 	} else {
 		ggk = (v-eca)
 	}
-	ica = gCav2_1*ggk
+	ica1a = gCav2_1*ggk
+	ica = ica1a
 	:ica = gCav2_1*(v-eca)
 }
 
