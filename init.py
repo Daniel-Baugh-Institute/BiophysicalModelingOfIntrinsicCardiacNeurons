@@ -11,5 +11,5 @@ def set_memb():
     e_pas= v + isum/g_pas
     if e_pas<-100:
         g_pas = isum/(e_pas-v)
-    else
+    else:
         print("Error!")
