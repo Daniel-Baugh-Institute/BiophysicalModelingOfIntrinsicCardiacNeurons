@@ -18,5 +18,3 @@ cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 cfg.stim = 'IClamp'
 cfg.amp=1
 cfg.cellnum = 15 #105
-set_memb()
-print('~~~~~~~~~~~~~~~')
