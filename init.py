@@ -13,3 +13,6 @@ def set_memb(vinit=-61):
     seg.e_pas= vinit + isum/seg.g_pas
 
 print('AAAAAAAAAAAAAAAAAAAAAA')
+
+foo = h.FInitializeHandler(0,"set_memb()")
+print(type(foo))
