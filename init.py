@@ -7,9 +7,9 @@ sim.create(netParams=netParams, simConfig=simConfig)
 
 def set_memb():
     isum = ina + ik + ica + iother
-    e_pas= v + isum/g_pas
+    e_pas= h.v_init + isum/g_pas
     if e_pas<-100:
-        g_pas = isum/(e_pas-v)
+        g_pas = isum/(e_pas-h.v_init)
     else:
         print("Error!")
 
