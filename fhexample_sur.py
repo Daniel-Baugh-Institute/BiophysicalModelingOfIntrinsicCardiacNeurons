@@ -29,7 +29,7 @@ h.stdinit()
 fih[0].allprint()
 h.finitialize(h.v_init)
 
-h.continuerun(10*ms)
+h.continuerun(40*ms)
 
 plt.figure()
 plt.plot(t, v)
