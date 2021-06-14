@@ -15,24 +15,35 @@ for sec in h.allsec():
 def fi():
     print(a.e_pas)
     isum = a.ina + a.ik
+    if isum==0:
+        a.e_pas = h.v_init
+    else:
+        if a.g_pas>0:
+            a.e_pas = h.v_init+isum/a.g_pas
+        else:
+            if a.e_pas != h.v_init:
+                a.g_pas = isum/(a.e_pas-h.v_init)
     print(isum)
-    a.e_pas= h.v_init + isum/a.g_pas
+    # a.e_pas= h.v_init + isum/a.g_pas
     print(a.e_pas)
+    # print(a(0.5).v)
 
 
 fih = [h.FInitializeHandler(1, fi)]
 
-v = h.Vector().record(a(0.5)._ref_v)            
-t = h.Vector().record(h._ref_t) 
+volt = h.Vector().record(a(0.5)._ref_v)            
+time = h.Vector().record(h._ref_t) 
+# epas = h.Vector().record(a(0.5)._ref_e_pas) 
 
-h.stdinit()
+# h.stdinit()
 fih[0].allprint()
 h.finitialize(h.v_init)
 
-h.continuerun(40*ms)
+h.run(40*ms)
 
 plt.figure()
-plt.plot(t, v)
+plt.plot(time, volt)
+# plt.plot(time,epas)
 plt.xlabel('t (ms)')
 plt.ylabel('v (mV)')
 plt.show()
