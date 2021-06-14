@@ -13,8 +13,9 @@ for sec in h.allsec():
     sec.gnabar_hh = 10
 
 def fi():
-    print(a.e_pas)
+    print('epas at begg. of fi() = ', a.e_pas)
     isum = a.ina + a.ik
+    # a.i_pas = a.g_pas*(h.v_init-a.e_pas)
     if isum==0:
         a.e_pas = h.v_init
     else:
@@ -23,13 +24,12 @@ def fi():
         else:
             if a.e_pas != h.v_init:
                 a.g_pas = isum/(a.e_pas-h.v_init)
-    print(isum)
-    # a.e_pas= h.v_init + isum/a.g_pas
-    print(a.e_pas)
-    # print(a(0.5).v)
+    print('isum = ',isum)
+    print('ipas = ',a.i_pas)
+    print('epas = ',a.e_pas)
 
 
-fih = [h.FInitializeHandler(1, fi)]
+fih = [h.FInitializeHandler(2, fi)]
 
 volt = h.Vector().record(a(0.5)._ref_v)            
 time = h.Vector().record(h._ref_t) 
@@ -38,8 +38,10 @@ time = h.Vector().record(h._ref_t)
 # h.stdinit()
 fih[0].allprint()
 h.finitialize(h.v_init)
-
-h.run(40*ms)
+h.fcurrent()
+h.tstop = 10*ms
+h.run(h.tstop)
+print('Volt at 5 ms = ',volt[-1])
 
 plt.figure()
 plt.plot(time, volt)
