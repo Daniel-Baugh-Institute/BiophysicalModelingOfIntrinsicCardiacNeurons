@@ -34,6 +34,8 @@ fih = [h.FInitializeHandler(2, fi)]
 
 volt = h.Vector().record(a(0.5)._ref_v)            
 time = h.Vector().record(h._ref_t) 
+fih[0].allprint()
+h.finitialize(h.v_init)
 
 # h.stdinit()
 fih[0].allprint()

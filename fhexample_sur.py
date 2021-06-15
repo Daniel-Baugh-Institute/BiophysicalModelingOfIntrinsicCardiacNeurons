@@ -11,11 +11,12 @@ for sec in h.allsec():
     sec.insert('hh')
     sec.insert('pas')
     sec.gnabar_hh = 10 #(default is 0.12)
+    sec.gl_hh = 0
     
 
 def fi():
     print('epas at begg. of fi() = ', a.e_pas)
-    isum = a.ina + a.ik + a.il_hh
+    isum = a.ina + a.ik #+ a.il_hh
     if isum==0:
         a.e_pas = h.v_init
     else:
