@@ -10,7 +10,7 @@ sim.create(netParams=netParams, simConfig=simConfig)
 
 def fi():
     '''set steady state RMP for 1 cell'''
-    print('AAAAAAAAAAAAAAAAAAAAAA')
+    #print('AAAAAAAAAAAAAAAAAAAAAA')
     seg = sim.net.cells[0].secs.soma.hObj(0.5) # since only 1 cell with nseg=1 can jump straight to that seg
     print('epas at beginning of fi() = ', seg.e_pas)
     isum = seg.ina + seg.ik + seg.ica + seg.iother
