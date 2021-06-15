@@ -30,20 +30,19 @@ def fi():
     print('isum+ipas =',isum + seg.i_pas)
     print('epas = ',seg.e_pas)
     volt = h.Vector().record(seg.v) 
-    time = h.Vector().record(h._ref_t) 
+    time = h.Vector().record(h._ref_t)           
+    
 
-            
+
 fih = [h.FInitializeHandler(2,fi)]
 fih[0].allprint()
 h.finitialize(h.v_init)
 
 
-
 # h.stdinit()
-fih[0].allprint()
-h.finitialize(h.v_init)
+
 h.fcurrent()
-h.tstop = 5*ms
+h.tstop = 5
 h.run(h.tstop)
 print('Volt at 0 ms = ',volt[0])
 print('Volt at 10 ms = ',volt[-1])
