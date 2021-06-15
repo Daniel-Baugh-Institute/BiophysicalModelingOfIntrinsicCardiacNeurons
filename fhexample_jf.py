@@ -1,39 +1,51 @@
 # specify an example model
-from neuron import h#, gui
-from neuron.units import mV
+from neuron import h
+from neuron.units import ms, mV
+import matplotlib.pyplot as plt
+h.load_file('stdrun.hoc')
 
 a = h.Section()
-for a in h.allsec():
-    #sec.insert('hh')
-    #sec.insert('pas')
-    #sec.gnabar_hh = 10
-    a.insert('hh')
-    a.gnabar_hh = 10
-    a.insert('pas')
+h.v_init = -61
+
+for sec in h.allsec():
+    sec.insert('hh')
+    sec.insert('pas')
+    sec.gnabar_hh = 0.12 #10 #(default is 0.12)
     
 
+def fi():
+    print('epas at begg. of fi() = ', a.e_pas)
+    isum = a.ina + a.ik + a.il_hh
+    if isum==0:
+        a.e_pas = h.v_init
+    else:
+        if a.g_pas>0:
+            a.e_pas = h.v_init+isum/a.g_pas
+        else:
+            if a.e_pas != h.v_init:
+                a.g_pas = isum/(a.e_pas-h.v_init)
+    print('isum = ',isum)
+    print('ipas = ',a.i_pas)
+    print('isum+ipas =',isum+a.i_pas)
+    print('epas = ',a.e_pas)
 
-def fi2(vinit=-61):
-    isum = a.ina + a.ik
-    a.e_pas= vinit + isum/a.g_pas
-    # print('fi2() called after everything initialized. Just before return')
-    # print('     from finitialize.')
-    # print('     Good place to record or plot initial values')
-    # print('  a.v=%g a.m_hh=%g' % (a.v, a.m_hh))
-    # print('  b.v=%g b.m_hh=%g' % (b.v, b.m_hh))
 
-v_init= -61
-fih = h.FInitializeHandler(fi2)
+fih = [h.FInitializeHandler(2, fi)]
 
-class Test:
-    def __init__(self):
-        self.fih = h.FInitializeHandler(self.p)
-    def p(self):
-        print('inside %r.p()' % self)
+volt = h.Vector().record(a(0.5)._ref_v)            
+time = h.Vector().record(h._ref_t) 
 
-test = Test()
+# h.stdinit()
+fih[0].allprint()
+h.finitialize(h.v_init)
+h.fcurrent()
+h.tstop = 5*ms
+h.run(h.tstop)
+print('Volt at 0 ms = ',volt[0])
+print('Volt at 10 ms = ',volt[-1])
 
-h.stdinit()
-fih.allprint(hi)
-
-#fih[0].allprint()
+plt.figure()
+plt.plot(time, volt)
+plt.xlabel('t (ms)')
+plt.ylabel('v (mV)')
+plt.show()
