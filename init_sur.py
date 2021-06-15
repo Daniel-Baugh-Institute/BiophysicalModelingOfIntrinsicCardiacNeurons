@@ -18,7 +18,7 @@ def fi():
         if seg.g_pas>0:
             seg.e_pas = cfg.hParams['v_init']+isum/seg.g_pas
         else:
-            if seg.e_pas != h.v_init:
+            if seg.e_pas != cfg.hParams['v_init']:
                 seg.g_pas = isum/(seg.e_pas-cfg.hParams['v_init'])
     print('isum = ',isum)
     print('ipas = ',seg.i_pas)
