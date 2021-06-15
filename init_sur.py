@@ -4,7 +4,6 @@ from neuron import h
 simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams.py')
 # sim.createSimulateAnalyze(netParams=netParams, simConfig=simConfig)
 sim.create(netParams=netParams, simConfig=simConfig)
-sim.simulate()
 
 
 def fi():
@@ -25,6 +24,10 @@ def fi():
     print('ipas = ',seg.i_pas)
     print('isum+ipas =',isum+seg.i_pas)
     print('epas = ',seg.e_pas)
+    print(seg.v)
+    print(h.t)
 
 fih = [h.FInitializeHandler(2, fi)]
 
+sim.simulate()
+sim.analyze()
