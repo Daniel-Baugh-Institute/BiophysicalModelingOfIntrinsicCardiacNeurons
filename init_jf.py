@@ -28,17 +28,15 @@ def fi():
     print('epas = ',seg.e_pas)
     print(seg.v)
     print(h.t)
+    plt.figure()
+    plt.plot(h.t, seg.v)
+    plt.show()
 
 fih = [h.FInitializeHandler(2, fi)]
 sim.simulate()
 sim.analyze()
-print(seg.v)
 
-plt.figure()
-plt.plot(seg.v,h.t)
-plt.xlabel('t (ms)')
-plt.ylabel('v (mV)') 
-plt.show()
+
 
 
 
