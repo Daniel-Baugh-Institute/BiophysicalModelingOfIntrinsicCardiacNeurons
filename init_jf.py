@@ -12,7 +12,7 @@ def fi():
     '''set steady state RMP for 1 cell'''
     print('AAAAAAAAAAAAAAAAAAAAAA')
     seg = sim.net.cells[0].secs.soma.hObj(0.5) # since only 1 cell with nseg=1 can jump straight to that seg
-    print('epas at begg. of fi() = ', seg.e_pas)
+    print('epas at beginning of fi() = ', seg.e_pas)
     isum = seg.ina + seg.ik + seg.ica + seg.iother
     if isum==0:
         seg.e_pas = cfg.hParams['v_init']
@@ -28,9 +28,6 @@ def fi():
     print('epas = ',seg.e_pas)
     print(seg.v)
     print(h.t)
-    plt.figure()
-    plt.plot(h.t, seg.v)
-    plt.show()
 
 fih = [h.FInitializeHandler(2, fi)]
 sim.simulate()

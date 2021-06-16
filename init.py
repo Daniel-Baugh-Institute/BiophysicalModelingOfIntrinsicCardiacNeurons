@@ -1,11 +1,11 @@
 from netpyne import sim
 from neuron import h
-import matplotlib.pyplot as plt
+
 
 
 simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams.py')
-# sim.createSimulateAnalyze(netParams=netParams, simConfig=simConfig)
-sim.create(netParams=netParams, simConfig=simConfig)
+sim.createSimulateAnalyze(netParams=netParams, simConfig=simConfig)
+#sim.create(netParams=netParams, simConfig=simConfig)
 
 
 def fi():
