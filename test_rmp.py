@@ -1,6 +1,8 @@
-#purpose: to show rmp. Creates scatter plot w/ one point for the rmp for each of 115 cellnums
-#load json file to extract v and time
+#purpose: to extract set rmp value for all cellnums and create plot showing rmp for each cellnum
+#load json file to extract v (seg.v) = RMP
+# or (delta y)/(delta x), where y is voltage and x is time. Expect to yield 0 if steady state achieved
 #(y1-y0)/(x1-x0)
+
 
 import json
 import pandas as pd
@@ -16,36 +18,14 @@ from analysis.py import toPandas
 
 
 #--------------------------------------------------------------------
-# Function to convert data to Pandas
+# get rmp and save 
 #--------------------------------------------------------------------
-def toPandas(params, data):
-    if 'simData' in data[list(data.keys())[0]]:
-        rows = [list(d['paramValues'])+[s for s in list(d['simData'].values())] for d in list(data.values())]
-        cols = [str(d['label']) for d in params]+[s for s in list(data[list(data.keys())[0]]['simData'].keys())]
-    else:
-        rows = [list(d['paramValues'])+[s for s in list(d.values())] for d in list(data.values())]
-        cols = [str(d['label']) for d in params]+[s for s in list(data[list(data.keys())[0]].keys())]
-
-    df = pd.DataFrame(rows, columns=cols)
-    df['simLabel'] = list(data.keys())
-    #df['V_soma'][0] #output is OrderedDict([('cell_0',[-61.0,etc....])]) - voltages
+# First check if steady state 
+# diff(v)
+# plot diff(v)
 
 
-    colRename=[]
-    for col in list(df.columns):
-        if col.startswith("[u'"):
-            colName = col.replace(", u'","_'").replace("[u","").replace("'","").replace("]","").replace(", ","_")
-            colRename.append(colName)
-        else:
-            colRename.append(col)
-    #print(colRename)
-    df.columns = colRename
-
-    return df
-
-#--------------------------------------------------------------------
-# get rmp and save --- 
-#--------------------------------------------------------------------
+#df['V_soma'][0] #output is OrderedDict([('cell_0',[-61.0,etc....])]) - voltages
     #df = pd.DataFrame(rows, columns=cols)
     #df['simLabel'] = list(data.keys())
     #df['V_soma'][0] #output is OrderedDict([('cell_0',[-61.0,etc....])]) - voltages
@@ -56,16 +36,12 @@ def get_rmp()
     for i in list(df.simLabel):
         temp_str = df.simLabel[i]
         delta_t = cfg.recordStep #0.1 ms
-        v0 = df['V_soma'][i]
-        v1 = df['V_soma'][i+1]
-
-
+        v0 = df['V_soma'][i+1]
+        v1 = df['V_soma'][i+2]
+        delta_v = v1 - v0
+        if delta_v != 0:
+            #not at ss
+            rmp[i] = []
+        else:
+            rmp[i] = v1
         
-
-# Main code
-if __name__ == '__main__':
-    get_rmp()
-
-
-
-
