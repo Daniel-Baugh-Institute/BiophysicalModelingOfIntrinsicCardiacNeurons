@@ -6,7 +6,7 @@ Functions to read and plot figures from the batch simulation results.
 
 import json
 import pandas as pd
-import seaborn as sb
+#import seaborn as sb
 import matplotlib.pyplot as plt
 import pickle
 import numpy as np
@@ -215,17 +215,22 @@ def spikeStats(dataFolder, batchLabel, params, data):
     return
 
 
+
+### ADD BACK plot2DRate plot (simple 2D plot)
+#def plot2DRate(dataFolder, batchLabel, params, data, 'amp', 'cellnum', 'U', "'U' pop rate (Hz)")
+
+
 #--------------------------------------------------------------------
 # Function to read batch data and plot figure
 #--------------------------------------------------------------------
 def readPlot():
     dataFolder = 'data' #'amp_data' #'tauWeight_data'
-    batchLabel = '21june02a'#'amp' #'tauWeight'
+    batchLabel = '21june16a'#'amp' #'tauWeight'
 
     params, data = readBatchData(dataFolder, batchLabel, loadAll=0, saveAll=1, vars=None, maxCombs=None)
     spikeStats(dataFolder, batchLabel, params, data)
     #plot2DRate(dataFolder, batchLabel, params, data, 'synMechTau2', 'connWeight', 'M', "'M' pop rate (Hz)")
-    # plot2DRate(dataFolder, batchLabel, params, data, 'amp', 'cellnum', 'U', "'U' pop rate (Hz)")
+    #plot2DRate(dataFolder, batchLabel, params, data, 'amp', 'cellnum', 'U', "'U' pop rate (Hz)")
 
 # Main code
 if __name__ == '__main__':
