@@ -1,18 +1,11 @@
 """
 test_rmp.py
 Functions to read saved voltages to assess if steady state achieved and extract and plot rmp set in init.py (seg.v)
-
 """
 import json
-from typing import List
-import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
-from pylab import *
-from itertools import product
-from netpyne import specs
 from collections import OrderedDict
-#from analysis import toPandas # imports pd module
+from analysis import toPandas # imports pd module
 
 #--------------------------------------------------------------------
 # get rmp and display for all cellnums. demonstrate steady state.
@@ -30,6 +23,7 @@ curr_v = {}
 for c in list(cellnums):
     #print(str(cellnums[c]))
     curr_v[c] = data[list(data.keys())[c]]['simData']['V_soma']['cell_0']
+    data[list(data.keys())[c]]['epas']
     # check for steady state
     if (curr_v[c][0] - curr_v[c][1]) == 0: # at ss
         rmp[c] = curr_v[c][1]
