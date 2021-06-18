@@ -147,12 +147,14 @@ def setPlotFormat(numColors=8):
 
     plt.rc('axes', prop_cycle=(cycler('color', colorlist)))
 
-def spikeStats(dataFolder, batchLabel, params, data):
+def analysisMeasures(dataFolder, batchLabel, params, data):
     df = toPandas(params, data)
     spktime = dict(zip(df.simLabel,df.spkt))
     spkcount = {i:len(spktime[i]) for i in spktime.keys()}
     firstspk = {}
     datadict = {}
+    rmpdict_em = {}
+    rmpdict_mb = {}
     for i in spktime.keys():
         if spktime[i]==[]:
             firstspk[i] = 0
@@ -161,11 +163,50 @@ def spikeStats(dataFolder, batchLabel, params, data):
 
     for i in range(len(tuple(df.simLabel))):
         datadict[df.simLabel[i]]={'V_soma':df.V_soma[i],'t':df.t[i], 'spikeRate':df.avgRate[i], 'spikeTime':df.spkt[i],'spikeCount':spkcount[df.simLabel[i]],'timeFirstSpike':firstspk[df.simLabel[i]]}
-    
+        
     temp = pd.DataFrame.from_dict(datadict)
     tempstr = pd.DataFrame.to_json(temp)
-    spkfile = '%s/%s_spkStats.json' % (dataFolder, batchLabel)
+    spkfile = '%s/%s_spkStats.json' % (dataFolder,batchLabel)
     with open(spkfile,'w') as f:
         f.write(tempstr)
         f.close()
+
+    jsondict = json.load(open(spkfile))
+
+    # RMP calculation
+    for i in range(len(tuple(df.simLabel))):
+        l = len(jsondict[df.simLabel[i]]['V_soma']['cell_0'])
+        if l%2 ==0:
+            mid = int(l/2)
+        else: 
+            mid = int((l-1)/2)
+        rmpdict_em[df.simLabel[i]] = jsondict[df.simLabel[i]]['V_soma']['cell_0'][-1]-jsondict[df.simLabel[i]]['V_soma']['cell_0'][mid] #em: end-mid
+        rmpdict_mb[df.simLabel[i]] = jsondict[df.simLabel[i]]['V_soma']['cell_0'][mid]-jsondict[df.simLabel[i]]['V_soma']['cell_0'][0] #mb: mid-beg
+    # print(rmpdict.items())
+    cid_em,rv_em = zip(*rmpdict_em.items())
+    cid_mb,rv_mb = zip(*rmpdict_mb.items())
+    # import IPython; IPython.embed()
+    return cid_em, rv_em, cid_mb,rv_mb
+
+def readPlot():
+    dataFolder = 'data' #'amp_data' #'tauWeight_data'
+    batchLabel = '21june18a' #'amp' #'tauWeight'
+
+    params, data = readBatchData(dataFolder, batchLabel, loadAll=0, saveAll=1, vars=None, maxCombs=None)
+    cellid_em, rmpv_em, cellid_mb, rmpv_mb  = analysisMeasures(dataFolder, batchLabel, params, data)
+
+    fig, axs = plt.subplots(2,1,sharex = True, sharey = False)
+    fig.suptitle("RMP")
+    axs[0].scatter(cellid_em, rmpv_em)
+    axs[0].set_ylabel('v[5ms]-v[mid ms]')
+    axs[0].set_title('Scatter plot')
+    axs[1].plot(cellid_mb, rmpv_mb,'.')
+    axs[1].set_ylabel('v[mid ms]-v[0]')
+    axs[1].set_xlabel('Cell ID')
+    axs[1].set_title('Plot with .')
+    plt.show()
     return
+
+
+if __name__ == '__main__':
+    readPlot()
