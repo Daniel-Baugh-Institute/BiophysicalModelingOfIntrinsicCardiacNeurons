@@ -185,26 +185,14 @@ def analysisMeasures(dataFolder, batchLabel, params, data):
     # print(rmpdict.items())
     cid_em,rv_em = zip(*rmpdict_em.items())
     cid_mb,rv_mb = zip(*rmpdict_mb.items())
-    # import IPython; IPython.embed()
-    return cid_em, rv_em, cid_mb,rv_mb
+    return
 
 def readPlot():
     dataFolder = 'data' #'amp_data' #'tauWeight_data'
-    batchLabel = '21june18a' #'amp' #'tauWeight'
+    batchLabel = '21june18f'#'amp' #'tauWeight'
 
-    params, data = readBatchData(dataFolder, batchLabel, loadAll=0, saveAll=1, vars=None, maxCombs=None)
-    cellid_em, rmpv_em, cellid_mb, rmpv_mb  = analysisMeasures(dataFolder, batchLabel, params, data)
-
-    fig, axs = plt.subplots(2,1,sharex = True, sharey = False)
-    fig.suptitle("RMP")
-    axs[0].scatter(cellid_em, rmpv_em)
-    axs[0].set_ylabel('v[5ms]-v[mid ms]')
-    axs[0].set_title('Scatter plot')
-    axs[1].plot(cellid_mb, rmpv_mb,'.')
-    axs[1].set_ylabel('v[mid ms]-v[0]')
-    axs[1].set_xlabel('Cell ID')
-    axs[1].set_title('Plot with .')
-    plt.show()
+    params, data = readBatchData(dataFolder, batchLabel, loadAll=1, saveAll=1, vars=None, maxCombs=None)
+    analysisMeasures(dataFolder, batchLabel, params, data)
     return
 
 
