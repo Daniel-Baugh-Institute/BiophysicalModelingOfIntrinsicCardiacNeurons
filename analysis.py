@@ -209,7 +209,7 @@ def spikeStats(dataFolder, batchLabel, params, data):
     
     temp = pd.DataFrame.from_dict(datadict)
     tempstr = pd.DataFrame.to_json(temp)
-    spkfile = '%s_spkStats.json' % (batchLabel)
+    spkfile = '%s/%s/%s_spkStats.json' % (dataFolder, batchLabel, batchLabel)
     with open(spkfile,'w') as f:
         f.write(tempstr)
         f.close()
