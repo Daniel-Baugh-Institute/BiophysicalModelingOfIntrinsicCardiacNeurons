@@ -18,11 +18,6 @@ from analysis import toPandas # imports pd module
 #--------------------------------------------------------------------
 # First check if steady state. eg - diff(v), plot diff(v), v = rmp
 # load '_allData.json' Has {'params': params, 'data': data} for all cells. A single file with all data
-####### Accesing params #######
-#dir(pd.DataFrame; df = pd.DataFrame(rows, columns=cols)
-#df['simLabel'] = list(data.keys())
-#df['V_soma'][0] #output is OrderedDict([('cell_0',[-61.0,etc....])]) - voltages
-# df.keys--> index(['amp', 'cellnum', 'V_soma', 'avgRate', 'spkid', 'spkt', 't','simLabel'],dtype='object')
 def get_rmp()  
     # NOTE: THIS VERSION DOES NOT USE PANDAS 
     batchLabel = '21june17a'; dataFolder = 'data' 
@@ -59,14 +54,12 @@ if __name__ == '__main__':
     get_rmp()
     plot_rmp()
 
-
-
-
-
-   
   
-
-
+# Pandas:
+#dir(pd.DataFrame; df = pd.DataFrame(rows, columns=cols)
+#df['simLabel'] = list(data.keys())
+#df['V_soma'][0] #output is OrderedDict([('cell_0',[-61.0,etc....])]) - voltages
+# df.keys--> index(['amp', 'cellnum', 'V_soma', 'avgRate', 'spkid', 'spkt', 't','simLabel'],dtype='object')
  #   for i in list(df.simLabel):
  #       temp_str = df.simLabel[i]
  #       delta_t = cfg.recordStep #0.1 ms
