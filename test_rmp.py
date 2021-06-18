@@ -26,7 +26,6 @@ def get_rmp()
         output = json.load(fileObj, object_pairs_hook=OrderedDict) #odict_keys(['params', 'data'])
     data = output['data']                                           #data[list(data.keys())[0]]
     cellnums = output['params'][1]['values'] #list of cellnums
-
     rmp = [] # initialize new var
     i = 0 
     for c in list(cellnums):
@@ -43,7 +42,7 @@ def get_rmp()
         plt.figure() # create 1 figure for current cellnum
         x = cfg.recordStep # time step
         plt.Line2D(x, curr_v[1], x+x, curr_v[0]) #  plt.Line2D(curr_v[1]/x, curr_v[0]/x)
-        #save plot
+        # save plot
 
 def plot_rmp()
 # Plot rmp (scatter). Color code or shape to denote at ss v not at ss.
@@ -53,7 +52,6 @@ def plot_rmp()
 if __name__ == '__main__':
     get_rmp()
     plot_rmp()
-
   
 # Pandas:
 #dir(pd.DataFrame; df = pd.DataFrame(rows, columns=cols)
@@ -71,4 +69,3 @@ if __name__ == '__main__':
  #           rmp[i] = []
  #       else:
  #           rmp[i] = v1
-        
