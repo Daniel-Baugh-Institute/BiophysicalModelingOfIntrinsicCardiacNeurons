@@ -13,7 +13,7 @@ cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
 cfg.analysis['plotRaster'] = {'saveFig': True}                   # Plot a raster
 
-cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net', 'rmp']
+cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
 cfg.stim = 'IClamp'
 cfg.amp= 0	#1
