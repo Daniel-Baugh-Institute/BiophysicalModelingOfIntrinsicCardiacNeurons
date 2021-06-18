@@ -15,14 +15,9 @@ def fi():
     print('epas at beginning of fi() = ', seg.e_pas)
     isum = seg.ina + seg.ik + seg.ica + seg.iother
     seg.e_pas = cfg.hParams['v_init']+isum/seg.g_pas
-    if seg.e_pas != cfg.hParams['v_init']:
-        seg.g_pas = isum/(seg.e_pas-cfg.hParams['v_init'])
-    print('isum = ',isum)
-    print('ipas = ',seg.i_pas)
-    print('isum+ipas =',isum+seg.i_pas)
-    print('epas at end of fi () = ',seg.e_pas)
-    print('v = ', seg.v)
-    print(h.t)
+    #seg.g_pas = isum/(seg.e_pas-cfg.hParams['v_init'])
+    print('isum = ',isum, 'ipas = ',seg.i_pas, 'isum+ipas =',isum+seg.i_pas, 'epas at end of fi () = ',seg.e_pas,'v = ', seg.v)
+    #print(h.t)
 
 fih = [h.FInitializeHandler(2, fi)]
 sim.simulate()
