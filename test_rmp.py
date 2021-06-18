@@ -20,7 +20,7 @@ from analysis import toPandas # imports pd module
 # load '_allData.json' Has {'params': params, 'data': data} for all cells. A single file with all data
 def get_rmp()  
     # NOTE: THIS VERSION DOES NOT USE PANDAS 
-    batchLabel = '21june17a'; dataFolder = 'data' 
+    batchLabel = '21june18a'; dataFolder = 'data' 
     filename = '%s/%s_allData.json' % (dataFolder, batchLabel) 
     with open(filename, 'r') as fileObj:
         output = json.load(fileObj, object_pairs_hook=OrderedDict) #odict_keys(['params', 'data'])
