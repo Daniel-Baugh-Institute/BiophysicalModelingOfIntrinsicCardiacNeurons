@@ -147,51 +147,6 @@ def setPlotFormat(numColors=8):
 
     plt.rc('axes', prop_cycle=(cycler('color', colorlist)))
 
-
-#--------------------------------------------------------------------
-# Function to plot relation between parameters (tau2 and weight) and firing rate
-#--------------------------------------------------------------------
-def plot2DRate(dataFolder, batchLabel, params, data, par1, par2, val, valLabel, graphType='matrix', saveFile=None):
-    df = toPandas(params, data)
-    # dfpop = dfPopRates(df1, 7)
-
-    dfpop = df.iloc[:,0:5] # get param columns of all rows
-    # dfpop['simLabel'] = df['simLabel']
-    for k in list(df.popRates[0].keys()): dfpop[k] = [r[k] for r in df.popRates]
-    #return dfpop
-
-    #print(dfpop)
-    # if not valLabel: valLabel = val
-    dfsubset = dfpop[[par1,par2,val]]
-        # dfgroup = dfsubset.groupby(by=[par1,par2])
-        # if groupStat=='first':
-        #     dfgroup2 = dfgroup.first()
-        # elif groupStat=='last':
-        #     dfgroup2 = dfgroup.last()
-        # elif groupStat=='mean':
-        #     dfgroup2 = dfgroup.mean()
-        # elif groupStat=='sum':
-        #     dfgroup2 = dfgroup.sum()
-        # dffinal = pd.DataFrame(dfgroup2).reset_index()
-
-    dfpiv = pd.pivot_table(dfsubset, index=par1, columns=par2, values=val)
-#    pandas.pivot_table(df,values='count',index='site_id',columns='week')
-    if graphType=='matrix':
-        sb.heatmap(dfpiv, square=True, cbar_kws={'label': valLabel})
-    elif graphType=='line':
-        setPlotFormat(numColors = len(dfpiv.columns))
-        #dfpiv = dfpiv[['IT2','IT4','IT5A','IT5B','PT5B','IT6','CT6']]
-        dfpiv.plot(marker='o')
-    try:
-        if saveFile:
-            plt.savefig(saveFile)
-        else:
-            plt.savefig(dataFolder+'/'+batchLabel+'_matrix_'+par1+'_'+par2+'_'+val+'.png')
-    except:
-        print('Error saving figure...')
-
-    plt.show()
-
 def spikeStats(dataFolder, batchLabel, params, data):
     df = toPandas(params, data)
     spktime = dict(zip(df.simLabel,df.spkt))
