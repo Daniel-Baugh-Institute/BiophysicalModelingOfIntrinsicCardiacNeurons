@@ -225,7 +225,7 @@ def spikeStats(dataFolder, batchLabel, params, data):
 #--------------------------------------------------------------------
 def readPlot():
     dataFolder = 'data' #'amp_data' #'tauWeight_data'
-    batchLabel = '21june16a'#'amp' #'tauWeight'
+    batchLabel = '21june17a'#'amp' #'tauWeight'
 
     params, data = readBatchData(dataFolder, batchLabel, loadAll=0, saveAll=1, vars=None, maxCombs=None)
     spikeStats(dataFolder, batchLabel, params, data)
