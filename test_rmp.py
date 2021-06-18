@@ -1,9 +1,7 @@
 """
 test_rmp.py
-
 Functions to read saved voltages to assess if steady state achieved and extract and plot rmp set in init.py (seg.v)
 """
-
 import json
 from typing import List
 import pandas as pd
@@ -21,25 +19,21 @@ from analysis import toPandas # imports pd module
 # First check if steady state. eg - diff(v), plot diff(v), v = rmp
 # load '_allData.json' Has {'params': params, 'data': data} for all cells. A single file with all data
 ####### Accesing params #######
-#dir(pd.DataFrame)
-#df = pd.DataFrame
-# (rows, columns=cols)
+#dir(pd.DataFrame; df = pd.DataFrame(rows, columns=cols)
 #df['simLabel'] = list(data.keys())
 #df['V_soma'][0] #output is OrderedDict([('cell_0',[-61.0,etc....])]) - voltages
-# df.keys>>>> index(['amp', 'cellnum', 'V_soma', 'avgRate', 'spkid', 'spkt', 't','simLabel'],dtype='object')
+# df.keys--> index(['amp', 'cellnum', 'V_soma', 'avgRate', 'spkid', 'spkt', 't','simLabel'],dtype='object')
 def get_rmp()  
     # NOTE: THIS VERSION DOES NOT USE PANDAS 
     batchLabel = '21june17a'; dataFolder = 'data' 
     filename = '%s/%s_allData.json' % (dataFolder, batchLabel) 
     with open(filename, 'r') as fileObj:
         output = json.load(fileObj, object_pairs_hook=OrderedDict) #odict_keys(['params', 'data'])
-    # SET UP OUTER LOOP FOR CELLNUM (PARAMS)
-    # cellnums = output['params'][1]['values']   # list of cellnums
     data = output['data']                                           #data[list(data.keys())[0]]
-    cellnums = output['params'][1]['values']
+    cellnums = output['params'][1]['values'] #list of cellnums
 
-    rmp = [] ############### ISSUE HERE. HOW TO INIITIALIZE NEW LIST/VAR
-    i = 1    # or i = 0
+    rmp = [] # initialize new var
+    i = 0 
     for c in list(cellnums):
         print(str(cellnums[c]))
         curr_v = data[list(data.keys())[c]]['simData']['V_soma']['cell_0']
@@ -53,8 +47,8 @@ def get_rmp()
                 i = i+1
         plt.figure() # create 1 figure for current cellnum
         x = cfg.recordStep # time step
-        plt.Line2D(curr_v[1]/x, curr_v[0]/x)
-        # save plot
+        plt.Line2D(x, curr_v[1], x+x, curr_v[0]) #  plt.Line2D(curr_v[1]/x, curr_v[0]/x)
+        #save plot
 
 def plot_rmp()
 # Plot rmp (scatter). Color code or shape to denote at ss v not at ss.
