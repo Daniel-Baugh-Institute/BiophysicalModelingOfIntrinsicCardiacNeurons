@@ -214,25 +214,3 @@ def spikeStats(dataFolder, batchLabel, params, data):
         f.write(tempstr)
         f.close()
     return
-
-
-
-### ADD BACK plot2DRate plot (simple 2D plot)
-#def plot2DRate(dataFolder, batchLabel, params, data, 'amp', 'cellnum', 'U', "'U' pop rate (Hz)")
-
-
-#--------------------------------------------------------------------
-# Function to read batch data and plot figure
-#--------------------------------------------------------------------
-def readPlot():
-    dataFolder = 'data' #'amp_data' #'tauWeight_data'
-    batchLabel = '21june18a'#'amp' #'tauWeight'
-
-    params, data = readBatchData(dataFolder, batchLabel, loadAll=0, saveAll=1, vars=None, maxCombs=None)
-    spikeStats(dataFolder, batchLabel, params, data)
-    #plot2DRate(dataFolder, batchLabel, params, data, 'synMechTau2', 'connWeight', 'M', "'M' pop rate (Hz)")
-    #plot2DRate(dataFolder, batchLabel, params, data, 'amp', 'cellnum', 'U', "'U' pop rate (Hz)")
-
-# Main code
-if __name__ == '__main__':
-    readPlot()
