@@ -14,14 +14,6 @@ def fi():
     seg = sim.net.cells[0].secs.soma.hObj(0.5) # since only 1 cell with nseg=1 can jump straight to that seg
     print('epas at beginning of fi() = ', seg.e_pas)
     isum = seg.ina + seg.ik + seg.ica + seg.iother
-    #if isum==0:
-    #    seg.e_pas = cfg.hParams['v_init']
-    #else:
-    #    if seg.g_pas>0:
-    #        seg.e_pas = cfg.hParams['v_init']+isum/seg.g_pas
-    #    else:
-    #        if seg.e_pas != cfg.hParams['v_init']:
-    #            seg.g_pas = isum/(seg.e_pas-cfg.hParams['v_init'])
     seg.e_pas = cfg.hParams['v_init']+isum/seg.g_pas
     if seg.e_pas != cfg.hParams['v_init']:
         seg.g_pas = isum/(seg.e_pas-cfg.hParams['v_init'])
