@@ -5,7 +5,6 @@ Functions to read saved voltages to assess if steady state achieved and extract 
 import json
 import matplotlib.pyplot as plt
 from collections import OrderedDict
-from analysis import toPandas # imports pd module
 
 #--------------------------------------------------------------------
 # get rmp and display for all cellnums. demonstrate steady state.
