@@ -2,7 +2,7 @@ from netpyne import specs
 cfg = specs.SimConfig() 
 
 cfg.hParams = {'celsius':35, 'v_init':-61}
-cfg.duration = 500 #500 # 1*1e3
+cfg.duration = 5 #500 # 1*1e3
 cfg.dt = 0.025          
 cfg.verbose = False     
 cfg.recordCells = ['all']
@@ -13,7 +13,7 @@ cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
 cfg.analysis['plotRaster'] = {'saveFig': True}                   # Plot a raster
 
-cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
+cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net', 'rmp']
 
 cfg.stim = 'IClamp'
 cfg.amp= 0	#1
