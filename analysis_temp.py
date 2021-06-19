@@ -16,5 +16,5 @@ e_pas = data['simData']['epas']['cell_0'][1]
 #cao = data['simData']['cao_soma']['cell_0'][0]
 #ik_soma = data['simData']['ik_soma']['cell_0'][0]
 #ina_soma = data['simData']['ina_soma']['cell_0'][0]
-iother_soma = data['simData']['iother_soma']['cell_0'][0]
+#iother_soma = data['simData']['iother_soma']['cell_0'][0]
 
