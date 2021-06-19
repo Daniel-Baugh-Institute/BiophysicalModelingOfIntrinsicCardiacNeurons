@@ -2,13 +2,10 @@ from imp import IMP_HOOK
 from future.standard_library import install_aliases
 from netpyne import sim
 from neuron import h
-import matplotlib.pyplot as plt
-
 
 simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams.py')
 # sim.createSimulateAnalyze(netParams=netParams, simConfig=simConfig)
 sim.create(netParams=netParams, simConfig=simConfig)
-
 
 def fi():
     '''set steady state RMP for 1 cell'''
