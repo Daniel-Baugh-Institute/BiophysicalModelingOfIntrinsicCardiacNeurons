@@ -8,7 +8,7 @@ cfg.dt = 0.025
 cfg.verbose = False     
 cfg.recordCells = ['all']
 cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
-                        'ina_soma': {'sec': 'soma', 'loc': 0.5, 'var': 'ina'},
+                        'iother_soma': {'sec': 'soma', 'loc': 0.5, 'var': 'iother'},
                         'epas' : {'sec': 'soma', 'loc': 0.5,'var': 'e_pas'}}
 #cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
 #                          'ik_soma': {'sec': 'soma', 'loc': 0.5, 'var': 'ik'},
