@@ -9,7 +9,6 @@ cfg.dt = 0.025
 cfg.verbose = False     
 cfg.recordCells = ['all']
 #cfg.recordTraces = {'V_soma':{'sec':'soma','loc':0.5,'var':'v'}} #var':'epas'}}
-# Recording/plotting parameters
 cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
                           'ik_soma': {'sec': 'soma', 'loc': 0.5, 'var': 'ik'},
                           'cai_soma': {'sec': 'soma', 'loc':0.5, 'var': 'cai'},
@@ -21,7 +20,7 @@ cfg.recordStep = 0.1
 cfg.filename = 'test_epas'
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
-cfg.analysis['plotRaster'] = {'saveFig': True}                   # Plot a raster
+cfg.analysis['plotRaster'] = {'saveFig': True}         
 
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
