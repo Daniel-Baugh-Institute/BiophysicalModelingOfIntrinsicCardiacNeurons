@@ -26,4 +26,4 @@ cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
 cfg.stim = 'IClamp'
 cfg.amp= 0
-cfg.cellnum = 114 
+cfg.cellnum = 0 
