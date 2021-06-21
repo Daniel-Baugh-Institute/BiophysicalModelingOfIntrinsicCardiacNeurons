@@ -3,7 +3,7 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig() 
 
 cfg.hParams = {'celsius':35, 'v_init':-61}
-cfg.duration = 5 #500 # 1*1e3
+cfg.duration = 500 # 1*1e3
 cfg.dt = 0.025          
 cfg.verbose = False     
 cfg.recordCells = ['all']
@@ -17,7 +17,7 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
 #                          'iother_soma': {'sec': 'soma', 'loc': 0.5, 'var': 'iother'},
 #                          'epas' : {'sec': 'soma', 'loc': 0.5,'var': 'e_pas'}}
 cfg.recordStep = 0.1       
-cfg.filename = 'test_epas'
+cfg.filename = 'output'
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
 cfg.analysis['plotRaster'] = {'saveFig': True}         
