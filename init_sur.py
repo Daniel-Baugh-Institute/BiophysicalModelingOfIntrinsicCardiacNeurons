@@ -7,6 +7,7 @@ simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsD
 # sim.createSimulateAnalyze(netParams=netParams, simConfig=simConfig)
 sim.create(netParams=netParams, simConfig=simConfig)
 seg = sim.net.cells[0].secs.soma.hObj(0.5)
+
 def fi():
     '''set steady state RMP for 1 cell'''
      # since only 1 cell with nseg=1 can jump straight to that seg
@@ -16,6 +17,18 @@ def fi():
     print('AAAA: isum = ',isum, 'ipas = ',seg.i_pas, 'isum+ipas =',isum+seg.i_pas, 'epas = ',seg.e_pas,'v = ', seg.v)
 
 fih = [h.FInitializeHandler(2, fi)]
+
+mech = 'ch_Cacna1i_cp42'
+if seg.sec.has_membrane(mech):
+    print('T present')
+else:
+    print('T absent')
+
+
+
+
+
+
 # sim.simulate()
 # sim.analyze()
 
