@@ -1,5 +1,6 @@
 """
-analysis.py: Functions to read and interpret figures from the batch simulation results.
+analysis.py: Functions 1.) to read data from batch simulations and 2.) to calc. metrics for analysis. 
+Saves an output file with all data for each of its 2 functionalities.
 NOTE: need to define inputs to readBatchData to use interactively. dataFolder and batchLabel
         are defined in batch.py. C/p values for remaining variables.
 """
@@ -15,7 +16,6 @@ def readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None
     if loadAll:
         print('\nLoading single file with all data...')
         filename = '%s/%s_allData.json' % (dataFolder, batchLabel)
-        #filename = '%s/%s/%s_allData.json' % (dataFolder, batchLabel, batchLabel)
         with open(filename, 'r') as fileObj:
             dataLoad = json.load(fileObj, object_pairs_hook=OrderedDict)
         params = dataLoad['params']
