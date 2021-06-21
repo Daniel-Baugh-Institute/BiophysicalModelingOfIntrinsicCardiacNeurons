@@ -1,26 +1,12 @@
 """
-analysis.py
-
-Functions to read and plot figures from the batch simulation results.
+analysis.py: Functions to read and interpret figures from the batch simulation results.
 """
 
 import json
 import pandas as pd
-#import seaborn as sb
-import matplotlib.pyplot as plt
-import pickle
-import numpy as np
-from pylab import *
-from itertools import product
-from pprint import pprint
-from netpyne import specs
 from collections import OrderedDict
 
-
-
-#--------------------------------------------------------------------
-# Function to read batch data
-#--------------------------------------------------------------------
+# readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None)
 def readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None):
     # load from previously saved file with all data
     if loadAll:
@@ -104,9 +90,7 @@ def readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None
 
         return params, data
 
-#--------------------------------------------------------------------
-# Function to convert data to Pandas
-#--------------------------------------------------------------------
+# toPandas(params, data) convert data to Pandas
 def toPandas(params, data):
     if 'simData' in data[list(data.keys())[0]]:
         rows = [list(d['paramValues'])+[s for s in list(d['simData'].values())] for d in list(data.values())]
@@ -130,68 +114,7 @@ def toPandas(params, data):
 
     return df
 
-#--------------------------------------------------------------------
-# Function to colors and style of figures
-#--------------------------------------------------------------------
-def setPlotFormat(numColors=8):
-    plt.style.use('seaborn-whitegrid')
-
-    plt.rcParams['font.size'] = 12
-    plt.rcParams['axes.titlesize'] = 14
-    plt.rcParams['axes.labelsize'] = 12
-    plt.rcParams['legend.fontsize'] = 'large'
-
-    NUM_COLORS = numColors
-    colormap = plt.get_cmap('nipy_spectral')
-    colorlist = [colormap(1.*i/NUM_COLORS) for i in range(NUM_COLORS)]
-
-    plt.rc('axes', prop_cycle=(cycler('color', colorlist)))
-
-
-#--------------------------------------------------------------------
-# Function to plot relation between parameters (tau2 and weight) and firing rate
-#--------------------------------------------------------------------
-def plot2DRate(dataFolder, batchLabel, params, data, par1, par2, val, valLabel, graphType='matrix', saveFile=None):
-    df = toPandas(params, data)
-    # dfpop = dfPopRates(df1, 7)
-
-    dfpop = df.iloc[:,0:5] # get param columns of all rows
-    # dfpop['simLabel'] = df['simLabel']
-    for k in list(df.popRates[0].keys()): dfpop[k] = [r[k] for r in df.popRates]
-    #return dfpop
-
-    #print(dfpop)
-    # if not valLabel: valLabel = val
-    dfsubset = dfpop[[par1,par2,val]]
-        # dfgroup = dfsubset.groupby(by=[par1,par2])
-        # if groupStat=='first':
-        #     dfgroup2 = dfgroup.first()
-        # elif groupStat=='last':
-        #     dfgroup2 = dfgroup.last()
-        # elif groupStat=='mean':
-        #     dfgroup2 = dfgroup.mean()
-        # elif groupStat=='sum':
-        #     dfgroup2 = dfgroup.sum()
-        # dffinal = pd.DataFrame(dfgroup2).reset_index()
-
-    dfpiv = pd.pivot_table(dfsubset, index=par1, columns=par2, values=val)
-#    pandas.pivot_table(df,values='count',index='site_id',columns='week')
-    if graphType=='matrix':
-        sb.heatmap(dfpiv, square=True, cbar_kws={'label': valLabel})
-    elif graphType=='line':
-        setPlotFormat(numColors = len(dfpiv.columns))
-        #dfpiv = dfpiv[['IT2','IT4','IT5A','IT5B','PT5B','IT6','CT6']]
-        dfpiv.plot(marker='o')
-    try:
-        if saveFile:
-            plt.savefig(saveFile)
-        else:
-            plt.savefig(dataFolder+'/'+batchLabel+'_matrix_'+par1+'_'+par2+'_'+val+'.png')
-    except:
-        print('Error saving figure...')
-
-    plt.show()
-
+# spikeStats(dataFolder, batchLabel, params, data):
 def spikeStats(dataFolder, batchLabel, params, data):
     df = toPandas(params, data)
     spktime = dict(zip(df.simLabel,df.spkt))
@@ -214,25 +137,3 @@ def spikeStats(dataFolder, batchLabel, params, data):
         f.write(tempstr)
         f.close()
     return
-
-
-
-### ADD BACK plot2DRate plot (simple 2D plot)
-#def plot2DRate(dataFolder, batchLabel, params, data, 'amp', 'cellnum', 'U', "'U' pop rate (Hz)")
-
-
-#--------------------------------------------------------------------
-# Function to read batch data and plot figure
-#--------------------------------------------------------------------
-def readPlot():
-    dataFolder = 'data' #'amp_data' #'tauWeight_data'
-    batchLabel = '21june21a'#'amp' #'tauWeight'
-
-    params, data = readBatchData(dataFolder, batchLabel, loadAll=0, saveAll=1, vars=None, maxCombs=None)
-    #spikeStats(dataFolder, batchLabel, params, data)
-    #plot2DRate(dataFolder, batchLabel, params, data, 'synMechTau2', 'connWeight', 'M', "'M' pop rate (Hz)")
-    #plot2DRate(dataFolder, batchLabel, params, data, 'amp', 'cellnum', 'U', "'U' pop rate (Hz)")
-
-# Main code
-if __name__ == '__main__':
-    readPlot()
