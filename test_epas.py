@@ -16,7 +16,6 @@ cellnums = output['params'][1]['values'] #list of cellnums
 epas = {} # initialize new vars
 for c in list(cellnums):
     epas[c] = data[list(data.keys())[c]]['simData']['epas']['cell_0'][1] # get 2nd val as 1st is preset in 'pas'
-    data[list(data.keys())[c]]['simData']['epas']['cell_0'][1]
     
 # PLOT FIGURE
 plt.figure() # epas values for all cellnums
