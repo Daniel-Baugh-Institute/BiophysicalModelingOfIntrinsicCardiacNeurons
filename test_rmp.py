@@ -38,7 +38,8 @@ plt.savefig(batchLabel+'_delta_rmp'+'.png')
 plt.show()
 
 plt.figure() # rmp in mV
-plt.plot(list(delta_rmp), list(rmp.values()))
+plt.plot(list(rmp), list(rmp.values()))
 plt.xlabel('cellnum'); plt.ylabel('mV')
 plt.savefig(batchLabel+'_rmp'+'.png')
 plt.show()
+

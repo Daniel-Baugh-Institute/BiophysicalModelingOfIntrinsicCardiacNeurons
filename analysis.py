@@ -226,10 +226,10 @@ def spikeStats(dataFolder, batchLabel, params, data):
 #--------------------------------------------------------------------
 def readPlot():
     dataFolder = 'data' #'amp_data' #'tauWeight_data'
-    batchLabel = '21june20a'#'amp' #'tauWeight'
+    batchLabel = '21june21a'#'amp' #'tauWeight'
 
     params, data = readBatchData(dataFolder, batchLabel, loadAll=0, saveAll=1, vars=None, maxCombs=None)
-    spikeStats(dataFolder, batchLabel, params, data)
+    #spikeStats(dataFolder, batchLabel, params, data)
     #plot2DRate(dataFolder, batchLabel, params, data, 'synMechTau2', 'connWeight', 'M', "'M' pop rate (Hz)")
     #plot2DRate(dataFolder, batchLabel, params, data, 'amp', 'cellnum', 'U', "'U' pop rate (Hz)")
 
