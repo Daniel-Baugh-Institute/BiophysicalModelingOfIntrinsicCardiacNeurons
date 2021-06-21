@@ -1,21 +1,26 @@
 """
 analysis.py: Functions to read and interpret figures from the batch simulation results.
+NOTE: need to define inputs to readBatchData to use interactively. dataFolder and batchLabel
+        are defined in batch.py. C/p values for remaining variables.
 """
 
 import json
 import pandas as pd
 from collections import OrderedDict
+from itertools import product
 
-# readBatchData(dataFolder, batchLabel, loadAll=True, saveAll=True, vars=None, maxCombs=None, listCombs=None)
-def readBatchData(dataFolder, batchLabel, loadAll=True, saveAll=True, vars=None, maxCombs=None, listCombs=None):
+# readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None)
+def readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None):
     # load from previously saved file with all data
     if loadAll:
         print('\nLoading single file with all data...')
-        filename = '%s/%s/%s_allData.json' % (dataFolder, batchLabel, batchLabel)
+        filename = '%s/%s_allData.json' % (dataFolder, batchLabel)
+        #filename = '%s/%s/%s_allData.json' % (dataFolder, batchLabel, batchLabel)
         with open(filename, 'r') as fileObj:
             dataLoad = json.load(fileObj, object_pairs_hook=OrderedDict)
         params = dataLoad['params']
         data = dataLoad['data']
+        
         return params, data
 
     if isinstance(listCombs, str):
@@ -111,10 +116,9 @@ def toPandas(params, data):
             colRename.append(col)
     #print(colRename)
     df.columns = colRename
-
     return df
 
-# spikeStats(dataFolder, batchLabel, params, data):
+# spikeStats(dataFolder, batchLabel, params, data)
 def spikeStats(dataFolder, batchLabel, params, data):
     df = toPandas(params, data)
     spktime = dict(zip(df.simLabel,df.spkt))
@@ -136,4 +140,3 @@ def spikeStats(dataFolder, batchLabel, params, data):
     with open(spkfile,'w') as f:
         f.write(tempstr)
         f.close()
-    return
