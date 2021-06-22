@@ -82,19 +82,19 @@ BREAKPOINT	{
 }
 
 DERIVATIVE states	{
-	rates()
+	rates(v)
 	m' = (mInf-m)/mTau
 	h' = (hInf-h)/hTau
 }
 
 INITIAL{
-	rates()
+	rates(v)
 	m = mInf
 	h = hInf
 }
 
 UNITSOFF 
-PROCEDURE rates(){
+PROCEDURE rates(v(mV)){
 		mInf = 1/(1+exp((v- -45.454426)/-5.073015)) 
 		mTau = 3.394938 +( 54.187616 / (1 + exp((v - -40.040397)/4.110392))) 
 		hInf = 1 /(1+exp((v-(-74.031965))/8.416382)) 
