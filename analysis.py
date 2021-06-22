@@ -1,7 +1,6 @@
 """
 analysis.py: Functions to read and interpret figures from the batch simulation results.
 """
-
 import json
 import pandas as pd
 from collections import OrderedDict
@@ -12,7 +11,7 @@ def readAllData(filename):
     params, data, df = dataLoad['params'], dataLoad['data'], toPandas(dataLoad['params'], dataLoad['data'])
 
 # readBatchData(dataFolder, batchLabel, loadAll=True, saveAll=True, vars=None, maxCombs=None, listCombs=None)
-def readBatchData(dataFolder, batchLabel, loadAll=True, saveAll=True, vars=None, maxCombs=None, listCombs=None):
+def readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None):
     # load from previously saved file with all data
     if loadAll:
         print('\nLoading single file with all data...')
@@ -119,26 +118,15 @@ def toPandas(params, data):
 
     return df
 
-# spikeStats(dataFolder, batchLabel, params, data):
-def spikeStats(dataFolder, batchLabel, params, data):
-    df = toPandas(params, data)
-    spktime = dict(zip(df.simLabel,df.spkt))
-    spkcount = {i:len(spktime[i]) for i in spktime.keys()}
-    firstspk = {}
-    datadict = {}
-    for i in spktime.keys():
-        if spktime[i]==[]:
-            firstspk[i] = 0
-        else:
-            firstspk[i] = spktime[i][0]
-
-    for i in range(len(tuple(df.simLabel))):
-        datadict[df.simLabel[i]]={'V_soma':df.V_soma[i],'t':df.t[i], 'spikeRate':df.avgRate[i], 'spikeTime':df.spkt[i],'spikeCount':spkcount[df.simLabel[i]],'timeFirstSpike':firstspk[df.simLabel[i]]}
-    
-    temp = pd.DataFrame.from_dict(datadict)
-    tempstr = pd.DataFrame.to_json(temp)
-    spkfile = '%s/%s_spkStats.json' % (dataFolder, batchLabel)
-    with open(spkfile,'w') as f:
-        f.write(tempstr)
-        f.close()
-    return
+# spikeStats()
+def spikeStats()
+    dfss=df[['amp', 'cellnum', 'avgRate']].copy()  # note double brackets
+    dfss['scnt'] = df['spkt'].apply(len) # number of spikes
+    # dfss['spknum'].describe() # count 460.000000 mean 1.886957 std 4.674625 min 0.000000 25% 1.000000 50% 1.000000 75% 1.000000 max 27.000000
+    dfss['spk1'] = df['spkt'].apply(lambda x: x[0] if len(x)>0 else -1) # spk1; time of first spike
+    dfss.f1 = df.spkt.apply(lambda x: 1e3/(x[1] - x[0]) if len(x)>1 else 0) # f1: freq for 1st ISI
+    dfss.f2 = df.spkt.apply(lambda x: 1e3/(x[2] - x[1]) if len(x)>2 else 0) # f2: freq for 2nd ISI
+    dfss['sdur'] = df['spkt'].apply(lambda x: x[-1] - x[0] if len(x)>1 else 0) # sdur: duration of spiking
+    dfss['hz'] = dfss.scnt.div(dfss.sdur).mul(1e3).replace(inf,0) # hz: freq calculated as cnt/duration of spiking
+    # plt.scatter[dfss.hz, dfss.avgRate]
+    return dfss
