@@ -12,7 +12,7 @@ htau = []
 mech = 'ch_Cacna1i_cp42' #hh
 sec.insert(mech)
 
-volt = [v for v in np.arange(-100,100,1)]
+volt = [v for v in np.arange(-80,-55,1)] #left window
 
 for v in volt:
 	h.rates_ch_Cacna1i_cp42(v)
@@ -21,18 +21,9 @@ for v in volt:
 	mtau.append(h.mTau_ch_Cacna1i_cp42)
 	htau.append(h.hTau_ch_Cacna1i_cp42)
 
-fig, axs = plt.subplots(2,2, sharex = 'all')
-fig.suptitle(mech)
-axs[0,0].set_xlabel('Membrane Voltage (mV)')
-axs[0,0].plot(volt,minf)
-axs[0,0].set_title('minf')
-axs[0,1].plot(volt,hinf)
-axs[0,1].set_title('hinf')
-axs[0,1].set_xlabel('Membrane Voltage (mV)')
-axs[1,0].plot(volt,mtau)
-axs[1,0].set_title('mtau')
-axs[1,0].set_xlabel('Membrane Voltage (mV)')
-axs[1,1].plot(volt,htau)
-axs[1,1].set_title('htau')
-axs[1,1].set_xlabel('Membrane Voltage (mV)')
+fig, axs = plt. subplots(1,2)
+axs[0].set_title('m/hinf vs Vm')
+axs[0].plot(volt,minf, volt,hinf)
+axs[1].set_title('m/htau vs Vm')
+axs[1].plot(volt,mtau, volt,htau)
 plt.show()
