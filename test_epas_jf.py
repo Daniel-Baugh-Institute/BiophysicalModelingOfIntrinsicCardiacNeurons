@@ -7,7 +7,7 @@ import json
 import matplotlib.pyplot as plt
 from collections import OrderedDict
 
-batchLabel = '21june21a'; dataFolder = 'data' 
+batchLabel = '21june21b'; dataFolder = 'data' 
 filename = '%s/%s_allData.json' % (dataFolder, batchLabel) 
 with open(filename, 'r') as fileObj:
     output = json.load(fileObj, object_pairs_hook=OrderedDict) #odict_keys(['params', 'data'])

@@ -10,7 +10,7 @@ from collections import OrderedDict
 # get rmp and display for all cellnums. demonstrate steady state.
 #--------------------------------------------------------------------
 # load '_allData.json' Has {'params': params, 'data': data} for all cells. A single file with all data
-batchLabel = '21june18d'; dataFolder = 'data' 
+batchLabel = '21june21b'; dataFolder = 'data' 
 filename = '%s/%s_allData.json' % (dataFolder, batchLabel) 
 with open(filename, 'r') as fileObj:
     output = json.load(fileObj, object_pairs_hook=OrderedDict) #odict_keys(['params', 'data'])
@@ -22,7 +22,7 @@ curr_v = {}
 for c in list(cellnums):
     #print(str(cellnums[c]))
     curr_v[c] = data[list(data.keys())[c]]['simData']['V_soma']['cell_0']
-    data[list(data.keys())[c]]['epas']
+   # data[list(data.keys())[c]]['epas']
     # check for steady state
     if (curr_v[c][0] - curr_v[c][1]) == 0: # at ss
         rmp[c] = curr_v[c][1]
