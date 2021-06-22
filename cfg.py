@@ -2,7 +2,7 @@ from netpyne import specs
 from netpyne.specs import simConfig
 cfg = specs.SimConfig() 
 
-cfg.hParams = {'celsius':35, 'v_init':-61}
+cfg.hParams = {'celsius':35, 'v_init':-70}
 cfg.duration = 500 # 1*1e3
 cfg.dt = 0.025          
 cfg.verbose = False     
