@@ -1,29 +1,21 @@
 """
-analysis.py: Functions 1.) to read data from batch simulations and 2.) to calc. metrics for analysis. 
-Saves an output file with all data for each of its 2 functionalities.
-NOTE: need to define inputs to readBatchData to use interactively. dataFolder and batchLabel
-        are defined in batch.py. C/p values for remaining variables.
+analysis.py: Functions to read and interpret figures from the batch simulation results.
 """
 
 import json
 import pandas as pd
 from collections import OrderedDict
-from itertools import product
-from netpyne import specs
-import matplotlib.pyplot as plt
-import numpy as np
 
-# readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None)
+# readBatchData(dataFolder, batchLabel, loadAll=True, saveAll=True, vars=None, maxCombs=None, listCombs=None)
 def readBatchData(dataFolder, batchLabel, loadAll=True, saveAll=True, vars=None, maxCombs=None, listCombs=None):
     # load from previously saved file with all data
     if loadAll:
         print('\nLoading single file with all data...')
-        filename = '%s/%s_allData.json' % (dataFolder, batchLabel)
+        filename = '%s/%s/%s_allData.json' % (dataFolder, batchLabel, batchLabel)
         with open(filename, 'r') as fileObj:
             dataLoad = json.load(fileObj, object_pairs_hook=OrderedDict)
         params = dataLoad['params']
         data = dataLoad['data']
-        
         return params, data
 
     if isinstance(listCombs, str):
@@ -119,95 +111,29 @@ def toPandas(params, data):
             colRename.append(col)
     #print(colRename)
     df.columns = colRename
+
     return df
 
-# spikeStats(dataFolder, batchLabel, params, data)
+# spikeStats(dataFolder, batchLabel, params, data):
 def spikeStats(dataFolder, batchLabel, params, data):
-    df = toPandas(params, data) #GET RID OF toPandas and creation of this df. Construct df for columns = temp.index ()
-    datadict = {}   # eliminate creation of datadict -- unnecessary
-    spktimes = dict(zip(df.simLabel,df.spkt))
-    spkcount = {i:len(spktimes[i]) for i in spktimes.keys()} #spkcount['amp_cellnum']
-    firstspk = {} # timeFirstSpike
-    avgRate = {} # spikeRate as spkcount/dur
-    ifr = {} # instantaneous firing rate (freq) = inverse of ISIs = timeseries of inverse periods btwn successive APs (Neymotin et al)
-
-    # calc firstspk = timeFirstSpike
-    for i in spktimes.keys():
-        if spktimes[i]==[]:
+    df = toPandas(params, data)
+    spktime = dict(zip(df.simLabel,df.spkt))
+    spkcount = {i:len(spktime[i]) for i in spktime.keys()}
+    firstspk = {}
+    datadict = {}
+    for i in spktime.keys():
+        if spktime[i]==[]:
             firstspk[i] = 0
         else:
-            firstspk[i] = spktimes[i][0]
-    
-    # calc avgRate 
-        cfg = specs.SimConfig()
-        avgRate = len(spkcount)/cfg.duration
-    
+            firstspk[i] = spktime[i][0]
+
     for i in range(len(tuple(df.simLabel))):
-        datadict[df.simLabel[i]]={'V_soma':df.V_soma[i],'t':df.t[i], 'avgRate':df.avgRate[i], 'spikeTimes':df.spkt[i],'spikeCount':spkcount[df.simLabel[i]],'timeFirstSpike':firstspk[df.simLabel[i]]} #'IFR':ifr[df.simLabel[i]]}
-        # spikeTimes = spktimes. use 'spikeTimes':spktimes[df.simLabel[i]] where  spktimes[df.simLabel[i]] should = df.spkt[i]
-    temp = pd.DataFrame.from_dict(datadict) # temp = df we want to construct (with cols = datadict entries = temp.index)
+        datadict[df.simLabel[i]]={'V_soma':df.V_soma[i],'t':df.t[i], 'spikeRate':df.avgRate[i], 'spikeTime':df.spkt[i],'spikeCount':spkcount[df.simLabel[i]],'timeFirstSpike':firstspk[df.simLabel[i]]}
+    
+    temp = pd.DataFrame.from_dict(datadict)
     tempstr = pd.DataFrame.to_json(temp)
     spkfile = '%s/%s_spkStats.json' % (dataFolder, batchLabel)
     with open(spkfile,'w') as f:
         f.write(tempstr)
         f.close()
-
-    ## PLOTS
-    #spikecount
-    plt.figure()
-    plt.scatter(list(np.linspace(1, len(spkcount),len(spkcount))),list(spkcount.values()))
-    plt.xlabel('cellnum'); plt.ylabel('num_spikes')
-    plt.savefig(batchLabel+'_spkcounts'+'.png')
-    plt.show()
-    #first spike time
-    plt.figure()
-    plt.scatter(list(np.linspace(1, len(firstspk),len(firstspk))),list(firstspk.values()))
-    plt.xlabel('cellnum'); plt.ylabel('first_spike (ms)')
-    plt.savefig(batchLabel+'_firstspk'+'.png')
-    plt.show()
-    # avgRate (single point per amp_cellnum))
-    # freq = instantaneous firing rate (plot over time) (line/trace per cell) 
-            # 1 plot per amp_cellnum
-            # overlay all amp_cellnums
-
-
-    ############################################
-    # ## additional metrics from Suter 
-    # sfa_ratio = {} # spike freq adaptation ratio =(avg last 2 ISIs)/(avg 1st 2 ISIs)
-    # rmp = {} # resting membrane potential (mV)
-    # iResitance = [} # input resistance (mohm)
-    # sag = {} # %
-    # rheobase = {} # est rheobase (pA)
-    # fIslope = {} # (hz/nA)
-    # fILinIdx = {} # fi linearity idx 
-
-    ## AP-related parameters - based on analysis of rmp and dV/dt(Suter et al, Neymotin et al)
-    #APwidth = {} # ms
-    #dvdtMax = {}   # max dV/dt mV/ms
-    #dvdtMin = {}   # min dV/dt mV/ms
-    #APslope = {} # abs diff btwn max/min 1st deriv of AP (Neymotin et al)
-    #APpeak = {} # AP peak voltage = max depolarization (mV)
-    #APthreshold = {} # APthreshold mV
-    #APampltiude = {} # threshold to peak (mV)
-    #deltaAPwidth = {} # % change in AP width - btwn 1st and 8th APs (Suter et al)
-    #APdur = {}   # abs diff at 25 and 50% max. amplitude
-    #APshape = {} # avg across allspikes(0.1*APthreshold + 0.15*APdur at 25% max amplitude + 0.25*AP dur at 50% max amplitude +0.25* AP peak)        
-
-    # identifying depol blockade 
-    #x = 0
-    #i = 0
-    #depolBlockcell = {}
-   
-    #for x in len(spktimes):
-    #    tempspikes = {}
-    #    strlabel = str(df.simLabel[x])
-    #    tempspikes = spktimes[strlabel]
-    #    if len(temp_spkt) ==1:
-    #        # check if depol blockade
-    #        if df.V_soma[x]['cell_0'][501] != df.V_soma[x]['cell_0'][500]:
-    #            depolBlockcell[i] = strlabel
-    #            i = i+1
-
-
-        
-        
+    return
