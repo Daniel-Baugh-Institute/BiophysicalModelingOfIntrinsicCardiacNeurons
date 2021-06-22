@@ -118,15 +118,25 @@ def toPandas(params, data):
 
     return df
 
-# spikeStats()
-def spikeStats()
+# spikeStats(), save, load
+''' example usage:
+df1 = spikeStats() # assuming df has been read
+plt.scatter(df1.hz, df1.avgRate) # a scatter plot
+df1.scnt.describe() # stats on the stats eg: count 460.000000 mean 1.886957 std 4.674625 min 0.000000 25% 1.000000 50% 1.000000 75% 1.000000 max 27.000000
+'''
+
+def spikeStats(df=df):
     dfss=df[['amp', 'cellnum', 'avgRate']].copy()  # note double brackets
-    dfss['scnt'] = df['spkt'].apply(len) # number of spikes
-    # dfss['spknum'].describe() # count 460.000000 mean 1.886957 std 4.674625 min 0.000000 25% 1.000000 50% 1.000000 75% 1.000000 max 27.000000
-    dfss['spk1'] = df['spkt'].apply(lambda x: x[0] if len(x)>0 else -1) # spk1; time of first spike
-    dfss.f1 = df.spkt.apply(lambda x: 1e3/(x[1] - x[0]) if len(x)>1 else 0) # f1: freq for 1st ISI
-    dfss.f2 = df.spkt.apply(lambda x: 1e3/(x[2] - x[1]) if len(x)>2 else 0) # f2: freq for 2nd ISI
-    dfss['sdur'] = df['spkt'].apply(lambda x: x[-1] - x[0] if len(x)>1 else 0) # sdur: duration of spiking
-    dfss['hz'] = dfss.scnt.div(dfss.sdur).mul(1e3).replace(inf,0) # hz: freq calculated as cnt/duration of spiking
-    # plt.scatter[dfss.hz, dfss.avgRate]
+    dfss.scnt = df.spkt.apply(len) # number of spikes
+    dfss['spk1'] = df.spkt.apply(lambda x: x[0] if len(x)>0 else -1) # spk1; time of first spike
+    dfss['f1']   = df.spkt.apply(lambda x: 1e3/(x[1] - x[0]) if len(x)>1 else 0) # f1: freq for 1st ISI
+    dfss['f2']   = df.spkt.apply(lambda x: 1e3/(x[2] - x[1]) if len(x)>2 else 0) # f2: freq for 2nd ISI
+    dfss['sdur'] = df.spkt.apply(lambda x: x[-1] - x[0] if len(x)>1 else 0) # sdur: duration of spiking
+    dfss['hz']   = dfss.scnt.div(dfss.sdur).mul(1e3).replace(inf,0) # hz: freq calculated as cnt/duration of spiking
     return dfss
+
+def svSpikeStats(dataFolder, batchLabel, dfss=dfss):
+    filename = '%s/%s_spkStats.json' % (dataFolder, batchLabel)    
+    dfss.to_pickle(filename)
+
+def ldSpikeStats(f): return pd.read_pickle(f)
