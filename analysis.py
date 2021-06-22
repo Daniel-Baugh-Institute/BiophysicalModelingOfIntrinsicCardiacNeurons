@@ -12,9 +12,10 @@ from itertools import product
 from netpyne import specs
 from netpyne.specs import simConfig
 cfg = specs.SimConfig()
-
+import matplotlib.pyplot as plt
+import numpy as np
 # readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None)
-def readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None):
+def readBatchData(dataFolder, batchLabel, loadAll=True, saveAll=True, vars=None, maxCombs=None, listCombs=None):
     # load from previously saved file with all data
     if loadAll:
         print('\nLoading single file with all data...')
@@ -122,17 +123,61 @@ def toPandas(params, data):
     return df
 
 # spikeStats(dataFolder, batchLabel, params, data)
-
 def spikeStats(dataFolder, batchLabel, params, data):
     df = toPandas(params, data)
     datadict = {}
     spktimes = dict(zip(df.simLabel,df.spkt))
-    spkcount = {i:len(spktimes[i]) for i in spktimes.keys()}
+    spkcount = {i:len(spktimes[i]) for i in spktimes.keys()} #spkcount['amp_cellnum']
     firstspk = {} # timeFirstSpike
-    avgRate = {} # spikeRate as spkcount/dur
-    ifr = {} # instantaneous firing rate (freq) = inverse of ISIs = timeseries of inverse periods btwn successive APs (Neymotin et al)
+    # avgRate = {} # spikeRate as spkcount/dur
+    # ifr = {} # instantaneous firing rate (freq) = inverse of ISIs = timeseries of inverse periods btwn successive APs (Neymotin et al)
 
-    ## additional metrics from Suter et al 2013 
+    # calc firstspk = timeFirstSpike
+    for i in spktimes.keys():
+        if spktimes[i]==[]:
+            firstspk[i] = 0
+        else:
+            firstspk[i] = spktimes[i][0]
+    
+    # calc avgRate 
+        avgRate = len(spkcount)/cfg.duration
+    
+
+    for i in range(len(tuple(df.simLabel))):
+        datadict[df.simLabel[i]]={'V_soma':df.V_soma[i],'t':df.t[i], 'avgRate':df.avgRate[i], 'spikeTimes':df.spkt[i],'spikeCount':spkcount[df.simLabel[i]],'timeFirstSpike':firstspk[df.simLabel[i]]} #'IFR':ifr[df.simLabel[i]]}
+        # spikeTimes = spktimes. use 'spikeTimes':spktimes[df.simLabel[i]] where  spktimes[df.simLabel[i]] should = df.spkt[i]
+    temp = pd.DataFrame.from_dict(datadict)
+    rows = [list(d['paramValues'])+[s for s in list(d['simData'].values())] for d in list(data.values())]
+    cols = [str(d['label']) for d in params]+[s for s in list(datadict[list(datadict.keys())[0]].keys())]
+
+    df_stats = pd.DataFrame(rows, cols)
+    tempstr = pd.DataFrame.to_json(temp)
+    spkfile = '%s/%s_spkStats.json' % (dataFolder, batchLabel)
+    with open(spkfile,'w') as f:
+        f.write(tempstr)
+        f.close()
+
+    ## PLOTS
+    #spikecount
+    plt.figure()
+    plt.scatter(list(np.linspace(1, len(spkcount),len(spkcount))),list(spkcount.values()))
+    plt.xlabel('cellnum'); plt.ylabel('num_spikes')
+    plt.savefig(batchLabel+'_spkcounts'+'.png')
+    plt.show()
+    #first spike time
+    plt.figure()
+    plt.scatter(list(np.linspace(1, len(firstspk),len(firstspk))),list(firstspk.values()))
+    plt.xlabel('cellnum'); plt.ylabel('first_spike (ms)')
+    plt.savefig(batchLabel+'_firstspk'+'.png')
+    plt.show()
+    # avgRate (single point per amp_cellnum))
+    # freq = instantaneous firing rate (plot over time) (line/trace per cell) 
+            # 1 plot per amp_cellnum
+            # overlay all amp_cellnums
+
+
+    ############################################
+    # ## additional metrics from Suter 
     # sfa_ratio = {} # spike freq adaptation ratio =(avg last 2 ISIs)/(avg 1st 2 ISIs)
     # rmp = {} # resting membrane potential (mV)
     # iResitance = [} # input resistance (mohm)
@@ -151,38 +196,23 @@ def spikeStats(dataFolder, batchLabel, params, data):
     #APampltiude = {} # threshold to peak (mV)
     #deltaAPwidth = {} # % change in AP width - btwn 1st and 8th APs (Suter et al)
     #APdur = {}   # abs diff at 25 and 50% max. amplitude
-    
+    #APshape = {} # avg across allspikes(0.1*APthreshold + 0.15*APdur at 25% max amplitude + 0.25*AP dur at 50% max amplitude +0.25* AP peak)        
 
-    #APshape = {} # avg across allspikes(0.1*APthreshold + 0.15*APdur at 25% max amplitude + 0.25*AP dur at 50% max amplitude +0.25* AP peak)
-
-    # calc firstspk = timeFirstSpike
-    for i in spktimes.keys():
-        if spktimes[i]==[]:
-            firstspk[i] = 0
-        else:
-            firstspk[i] = spktimes[i][0]
-    
-    # calc avgRate 
-        avgRate = len(spkcount)/cfg.duration
-
-    # calc IFR
-
-
-    for i in range(len(tuple(df.simLabel))):
-        datadict[df.simLabel[i]]={'V_soma':df.V_soma[i],'t':df.t[i], 'avgRate':df.avgRate[i], 'spikeTimes':df.spkt[i],'spikeCount':spkcount[df.simLabel[i]],'timeFirstSpike':firstspk[df.simLabel[i]], 'IFR':ifr[df.simLabel[i]]}
-        # spikeTimes = spktimes. use 'spikeTimes':spktimes[df.simLabel[i]] where  spktimes[df.simLabel[i]] should = df.spkt[i]
-    temp = pd.DataFrame.from_dict(datadict)
-    tempstr = pd.DataFrame.to_json(temp)
-    spkfile = '%s/%s_spkStats.json' % (dataFolder, batchLabel)
-    with open(spkfile,'w') as f:
-        f.write(tempstr)
-        f.close()
+    # identifying depol blockade 
+    #x = 0
+    #i = 0
+    #depolBlockcell = {}
+   
+    #for x in len(spktimes):
+    #    tempspikes = {}
+    #    strlabel = str(df.simLabel[x])
+    #    tempspikes = spktimes[strlabel]
+    #    if len(temp_spkt) ==1:
+    #        # check if depol blockade
+    #        if df.V_soma[x]['cell_0'][501] != df.V_soma[x]['cell_0'][500]:
+    #            depolBlockcell[i] = strlabel
+    #            i = i+1
 
 
-    ## extract and plot 
-    # timeFirstSpike (single point per amp_cellnum)
-    # spkcount (numspikes) (single point per amp_cellnum))
-    # avgRate (single point per amp_cellnum))
-    # freq = instantaneous firing rate (plot over time) (line/trace per cell) 
-            # 1 plot per amp_cellnum
-            # overlay all amp_cellnums
+        
+        
