@@ -23,7 +23,7 @@ NEURON	{
 	USEION ca READ cai, cao WRITE ica 					:SG mm
 	RANGE gCav3_3bar, gCav3_3, ica, BBiD, ica1i
 	RANGE ggk											:SG mm
-	GLOBAL USEGHK										:SG mm
+	GLOBAL USEGHK, mInf, mTau, hInf, hTau				:SG mm
 }
 
 UNITS	{
