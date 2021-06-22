@@ -10,10 +10,9 @@ import pandas as pd
 from collections import OrderedDict
 from itertools import product
 from netpyne import specs
-from netpyne.specs import simConfig
-cfg = specs.SimConfig()
 import matplotlib.pyplot as plt
 import numpy as np
+
 # readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None)
 def readBatchData(dataFolder, batchLabel, loadAll=True, saveAll=True, vars=None, maxCombs=None, listCombs=None):
     # load from previously saved file with all data
@@ -124,13 +123,13 @@ def toPandas(params, data):
 
 # spikeStats(dataFolder, batchLabel, params, data)
 def spikeStats(dataFolder, batchLabel, params, data):
-    df = toPandas(params, data)
-    datadict = {}
+    df = toPandas(params, data) #GET RID OF toPandas and creation of this df. Construct df for columns = temp.index ()
+    datadict = {}   # eliminate creation of datadict -- unnecessary
     spktimes = dict(zip(df.simLabel,df.spkt))
     spkcount = {i:len(spktimes[i]) for i in spktimes.keys()} #spkcount['amp_cellnum']
     firstspk = {} # timeFirstSpike
-    # avgRate = {} # spikeRate as spkcount/dur
-    # ifr = {} # instantaneous firing rate (freq) = inverse of ISIs = timeseries of inverse periods btwn successive APs (Neymotin et al)
+    avgRate = {} # spikeRate as spkcount/dur
+    ifr = {} # instantaneous firing rate (freq) = inverse of ISIs = timeseries of inverse periods btwn successive APs (Neymotin et al)
 
     # calc firstspk = timeFirstSpike
     for i in spktimes.keys():
@@ -140,17 +139,13 @@ def spikeStats(dataFolder, batchLabel, params, data):
             firstspk[i] = spktimes[i][0]
     
     # calc avgRate 
+        cfg = specs.SimConfig()
         avgRate = len(spkcount)/cfg.duration
     
-
     for i in range(len(tuple(df.simLabel))):
         datadict[df.simLabel[i]]={'V_soma':df.V_soma[i],'t':df.t[i], 'avgRate':df.avgRate[i], 'spikeTimes':df.spkt[i],'spikeCount':spkcount[df.simLabel[i]],'timeFirstSpike':firstspk[df.simLabel[i]]} #'IFR':ifr[df.simLabel[i]]}
         # spikeTimes = spktimes. use 'spikeTimes':spktimes[df.simLabel[i]] where  spktimes[df.simLabel[i]] should = df.spkt[i]
-    temp = pd.DataFrame.from_dict(datadict)
-    rows = [list(d['paramValues'])+[s for s in list(d['simData'].values())] for d in list(data.values())]
-    cols = [str(d['label']) for d in params]+[s for s in list(datadict[list(datadict.keys())[0]].keys())]
-
-    df_stats = pd.DataFrame(rows, cols)
+    temp = pd.DataFrame.from_dict(datadict) # temp = df we want to construct (with cols = datadict entries = temp.index)
     tempstr = pd.DataFrame.to_json(temp)
     spkfile = '%s/%s_spkStats.json' % (dataFolder, batchLabel)
     with open(spkfile,'w') as f:
