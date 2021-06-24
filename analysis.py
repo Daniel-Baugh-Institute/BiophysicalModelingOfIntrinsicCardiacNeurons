@@ -7,6 +7,7 @@ from numpy import concatenate
 import pandas as pd
 from collections import OrderedDict
 import statistics
+from itertools import product
 
 
 def readAllData(filename):
@@ -19,7 +20,7 @@ def readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None
     # load from previously saved file with all data
     if loadAll:
         print('\nLoading single file with all data...')
-        filename = '%s/%s/%s_allData.json' % (dataFolder, batchLabel, batchLabel)
+        filename = '%s/%s_allData.json' % (dataFolder, batchLabel, batchLabel)
         with open(filename, 'r') as fileObj:
             dataLoad = json.load(fileObj, object_pairs_hook=OrderedDict)
         params = dataLoad['params']
@@ -155,7 +156,9 @@ def spikeStats(df=df):
 def svSpikeStats(dataFolder, batchLabel, dfss=dfss):
     filenamejson = '%s/%s_spkStats.json' % (dataFolder, batchLabel)   
     filenamepkl =  '%s/%s_spkStats.pkl' % (dataFolder, batchLabel)   
-    dfss.to_pickle(filenamejson) # saves pkl, though doesnt load. Try:
+    dfss.to_pickle(filenamepkl)
+    dfss.to_json(filenamejson)
+    # dfss.to_pickle(filenamejson) # saves pkl, though doesnt load. Try:
     # dfss.write_pickle
     return filenamejson, filenamepkl, dfss
 

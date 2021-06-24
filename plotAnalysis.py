@@ -3,8 +3,12 @@ import pickle as pkl
 import json
 import matplotlib.pyplot as plt
 
-filenamepkl =  '%s/%s_spkStats.pkl' % (dataFolder, batchLabel) 
-def ldSpikeStats_pkl(f): return pd.read_pickle(f)
+batchLabel = '21june21b'
+dataFolder = 'data'
+f =  '%s/%s_spkStats.pkl' % (dataFolder, batchLabel) 
+def ldSpikeStats_pkl(f): 
+    df = pd.read_pickle(f)
+    return df
 
 def ldSpikeStats_json(f): return pd.read_json(f)
 
