@@ -25,23 +25,24 @@ l=0
 for c in list(cellnums): 
     epas[c] = data[list(data.keys())[c]]['simData']['epas']['cell_0'][1] # get 2nd val as 1st is preset in 'pas'
     if data[list(data.keys())[c]]['simData']['epas']['cell_0'][1] > 0:
-        print('>0')
+        print([str(c) + ' >0'])
         pos_epas[i] = cellnums[c]
         i=i+1
     else:
-        if data[list(data.keys())[c]]['simData']['epas']['cell_0'][1] > -100:
-            print('< -100')
-            below_range[l] = data[list(data.keys())[c]]['simData']['epas']['cell_0'][1] > -100
+        if data[list(data.keys())[c]]['simData']['epas']['cell_0'][1] < -100:
+            print([str(c)+'<  -100'])
+            below_range[l] = data[list(data.keys())[c]]['simData']['epas']['cell_0'][1] < -100
             l=l+1
-        else:  #<=-100
-            print('in range')
-            if data[list(data.keys())[c]]['simData']['epas']['cell_0'][1] >= -70: #btwn -70 and -100
+        else:  #>=-100 #more pos than -100
+            if data[list(data.keys())[c]]['simData']['epas']['cell_0'][1] <= -70: #btwn -70 and -100
+                print([str(c)+' in range']) # & more negative than -70
                 in_range[j] = data[list(data.keys())[c]]['simData']['epas']['cell_0'][1]
                 j=j+1
-            if data[list(data.keys())[c]]['simData']['epas']['cell_0'][1] < -70: # btwn -70 and 0
-                print('btwn 0 and -70')
-                above_range[k] = data[list(data.keys())[c]]['simData']['epas']['cell_0'][1]
-                k=k+1
+            else:
+                if data[list(data.keys())[c]]['simData']['epas']['cell_0'][1] > -70: # more pos than -70 
+                    print([str(c) + ' btwn 0 and -70'])
+                    above_range[k] = data[list(data.keys())[c]]['simData']['epas']['cell_0'][1]
+                    k=k+1
 #for c in range (0, len(data.keys())):
 #    epas[c] = data[list(data.keys())[c]]['simData']['epas']['cell_0'][1] # get 2nd val as 1st is preset in 'pas'
     
