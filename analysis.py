@@ -7,8 +7,6 @@ import pandas as pd
 import numpy as np
 from collections import OrderedDict
 from itertools import product
-import matplotlib.pyplot as plt
-
 
 def readAllData(filename):
     global params, data, df
