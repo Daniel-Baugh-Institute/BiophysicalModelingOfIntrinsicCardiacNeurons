@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 from collections import OrderedDict
 from itertools import product
+df = dfss = filenamepkl = None
 
 def readAllData(filename):
     global params, data, df
