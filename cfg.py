@@ -2,8 +2,8 @@ from netpyne import specs
 from netpyne.specs import simConfig
 cfg = specs.SimConfig() 
 
-cfg.hParams = {'celsius':35, 'v_init':-70}
-cfg.duration = 5 #500 #1*1e3 #(ms)
+cfg.hParams = {'celsius':35, 'v_init':-60}
+cfg.duration = 500 #1*1e3 #(ms)
 cfg.dt = 0.025          
 cfg.verbose = False     
 cfg.recordCells = ['all']
