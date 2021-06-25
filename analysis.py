@@ -5,7 +5,7 @@ import json
 import pickle
 import pandas as pd
 import numpy as np
-from collections import Orderedict
+from collections import OrderedDict
 from itertools import product
 
 
