@@ -23,3 +23,52 @@ def plotSpikeStats(df1):
 
     # instantaneous firing rate - plots hz / time as timeseries
     plt.plot(df1.ifr) 
+
+
+
+
+
+
+    #spk1
+plt.figure()
+plt.scatter(np.linspace(1,345, 345), dfss.spk1)
+plt.title('time of 1st spike_' + batchLabel)
+plt.xlabel('amp_cellnum')
+plt.ylabel('t(ms)')
+plt.savefig('spk1_'+ batchLabel +'.png')
+plt.show()
+
+#spkcounts
+plt.figure()
+plt.scatter(np.linspace(1,345, 345), dfss.scnt)
+plt.title('spikecount_' + batchLabel)
+plt.xlabel('amp_cellnum')
+plt.ylabel('# spikes')
+plt.savefig('scnt_'+ batchLabel +'.png')
+plt.show()
+
+# rate 
+plt.figure()
+plt.scatter(np.linspace(1,345, 345), dfss.hz)
+plt.title('spike freq (rate)_' + batchLabel)
+plt.xlabel('amp_cellnum')
+plt.ylabel('Hz')
+plt.savefig('rate_hz'+ batchLabel +'.png')
+plt.show()
+
+# f1
+plt.figure()
+plt.scatter(np.linspace(1,345, 345), dfss.f1)
+plt.title('f1_' + batchLabel)
+plt.xlabel('amp_cellnum')
+plt.ylabel('Hz')
+plt.savefig('f1'+ batchLabel +'.png')
+plt.show()
+
+plt.figure()
+plt.scatter(np.linspace(1,345, 345), dfss.f2)
+plt.title('f2_' + batchLabel)
+plt.xlabel('amp_cellnum')
+plt.ylabel('Hz')
+plt.savefig('f2'+ batchLabel +'.png')
+plt.show()
