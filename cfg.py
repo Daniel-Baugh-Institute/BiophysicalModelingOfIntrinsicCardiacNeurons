@@ -3,7 +3,7 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig() 
 
 cfg.hParams = {'celsius':35, 'v_init':-70}
-cfg.duration = 100#00 # 1*1e3
+cfg.duration = 5 #500 #1*1e3 #(ms)
 cfg.dt = 0.025          
 cfg.verbose = False     
 cfg.recordCells = ['all']
@@ -23,6 +23,6 @@ cfg.analysis['plotRaster'] = {'saveFig': False}
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
 cfg.stim = 'IClamp'
-cfg.amp= 0.2      
-cfg.cellnum = 6              
+cfg.amp= 0     
+cfg.cellnum = 0              
 

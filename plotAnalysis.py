@@ -1,5 +1,6 @@
 import pandas as pd
-import pickle as pkl
+import numpy as np
+import pickle
 import json
 import matplotlib.pyplot as plt
 

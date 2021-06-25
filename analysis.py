@@ -4,9 +4,9 @@ analysis.py: Functions to read and interpret figures from the batch simulation r
 import json
 import pickle
 import pandas as pd
+import numpy as np
 from collections import OrderedDict
 from itertools import product
-import numpy as np
 
 
 def readAllData(filename):
@@ -136,25 +136,27 @@ def spikeStats(df=df):
     dfss['spk1'] = df.spkt.apply(lambda x: x[0] if len(x)>0 else -1) # spk1; time of first spike
     dfss['f1']   = df.spkt.apply(lambda x: 1e3/(x[1] - x[0]) if len(x)>1 else 0) # f1: freq for 1st ISI
     dfss['f2']   = df.spkt.apply(lambda x: 1e3/(x[2] - x[1]) if len(x)>2 else 0) # f2: freq for 2nd ISI
+    dfss['sdur'] = df.spkt.apply(lambda x: x[-1] - x[0] if len(x)>1 else 0) # sdur: duration of spiking
+    dfss['hz']   = dfss.scnt.div(dfss.sdur).mul(1e3).replace(np.inf, 0) # hz: freq calculated as cnt/duration of spiking. Compare w/ avgRate. why are these diff?
     #dfss['fend'] = df.spkt.apply(lambda x: 1e3/(x[len(x)] - x[len(x)-1]) if len(x)>3 else 0) # fend: freq for last ISI
     #dfss['fend0'] = df.spkt.apply(lambda x: 1e3/(x[len(x-1)] - x[len(x)-2]) if len(x)>4 else 0) # fend-1: freq for 2nd tp last ISI
-    dfss['sdur'] = df.spkt.apply(lambda x: x[-1] - x[0] if len(x)>1 else 0) # sdur: duration of spiking
-  
-    dfss['hztemp']   = dfss.scnt.div(dfss.sdur).mul(1e3).replace(np.inf, 0) # hz: freq calculated as cnt/duration of spiking. Compare w/ avgRate. why are these diff?
-    dfss['hz'] = dfss.hztemp.mul(1e3)
+    #dfss['sfa'] = (statistics.mean(f_last))/(statistics.mean(f_first)) #spike freq adaptation ration = (mean(fend, fend-1))/((mean (f1, f2)) Suter et al.
     return dfss
-    #from Suter et al
-    #dfss['sfa'] = (statistics.mean(f_last))/(statistics.mean(f_first)) #spike freq adaptation ration = (mean(fend, fend-1))/((mean (f1, f2)) (Suter et al) 
-
     
-
 def svSpikeStats(dataFolder, batchLabel, dfss=dfss):
     filenamejson = '%s/%s_spkStats.json' % (dataFolder, batchLabel)   
     filenamepkl =  '%s/%s_spkStats.pkl' % (dataFolder, batchLabel)   
     dfss.to_pickle(filenamepkl)
     dfss.to_json(filenamejson)
-    # dfss.to_pickle(filenamejson) # saves pkl, though doesnt load. Try:
-    # dfss.write_pickle
 
-def ldSpikeStats(f): return pd.read_pickle(f) 
-#def ldSpikeStats_json(f): return pd.read_json(f)
+def ldSpikeStats(f=filenamepkl): return pd.read_pickle(f) 
+
+
+##################################################################
+# IN PROGRESS - MAY MOVE TO DIFF SCRIPT 
+##################################################################
+# identifying class of cells that return 1st spike time -1. Appear as APs but DO NOT REACH THRESHOLD. NOT A SPIKE.
+for i in dfss.spk1: 
+    if dfss.spk1[i] == -1:
+        print(['amp=' + str(dfss.amp[i])]) # i=8 0_8, 0_13, 0_19, 0_28, 0_31, 0_35, 0_37, 0_38, 0_41, 0_46, 0_54, 0_56, 0_59, 0_61, 0_69, 0_83, 0_85, 0_87, 0_90,0_97, 0_103, 0_105 
+        print(['cellnum=' + str(dfss.cellnum[i])])
