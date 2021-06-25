@@ -7,7 +7,7 @@ import json
 import matplotlib.pyplot as plt
 from collections import OrderedDict
 
-batchLabel = '21june25ajf'; dataFolder = 'data' 
+batchLabel = 'netParams_A'; dataFolder = 'data' 
 filename = '%s/%s_allData.json' % (dataFolder, batchLabel) 
 with open(filename, 'r') as fileObj:
     output = json.load(fileObj, object_pairs_hook=OrderedDict) #odict_keys(['params', 'data'])
@@ -21,5 +21,6 @@ for c in list(cellnums):
 plt.figure() # epas values for all cellnums
 plt.scatter(list(epas),list(epas.values()))
 plt.xlabel('cellnum'); plt.ylabel('mV')
+plt.title('e_pas: ' + batchLabel)
 plt.savefig(batchLabel+'_epas'+'.png')
 plt.show()
