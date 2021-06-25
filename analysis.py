@@ -149,4 +149,7 @@ def svSpikeStats(dataFolder, batchLabel, dfss=dfss):
     dfss.to_pickle(filenamepkl)
     dfss.to_json(filenamejson)
 
-def ldSpikeStats(f=filenamepkl): return pd.read_pickle(f) 
+def ldSpikeStats(f): 
+    if f[-5:].__contains__('.json'): return pd.read_json(f) 
+    elif f[-5:].__contains__('.pkl'): return pd.read_pickle(f)
+    else: print("Unknown filetype: %s (need pkl or json)"%f)
