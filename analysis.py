@@ -151,13 +151,3 @@ def svSpikeStats(dataFolder, batchLabel, dfss=dfss):
     dfss.to_json(filenamejson)
 
 def ldSpikeStats(f=filenamepkl): return pd.read_pickle(f) 
-
-
-##################################################################
-# IN PROGRESS - MAY MOVE TO DIFF SCRIPT 
-##################################################################
-# identifying class of cells that return 1st spike time -1. Appear as APs but DO NOT REACH THRESHOLD. NOT A SPIKE.
-for i in dfss.spk1: 
-    if dfss.spk1[i] == -1:
-        print(['amp=' + str(dfss.amp[i])]) # i=8 0_8, 0_13, 0_19, 0_28, 0_31, 0_35, 0_37, 0_38, 0_41, 0_46, 0_54, 0_56, 0_59, 0_61, 0_69, 0_83, 0_85, 0_87, 0_90,0_97, 0_103, 
-        print(['cellnum=' + str(dfss.cellnum[i])])
