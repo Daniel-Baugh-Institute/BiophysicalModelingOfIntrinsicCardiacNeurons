@@ -4,7 +4,7 @@ import pickle
 import json
 import matplotlib.pyplot as plt
 
-batchLabel = '21june21b'
+batchLabel = '21june25_A'
 dataFolder = 'data'
 f =  '%s/%s_spkStats.pkl' % (dataFolder, batchLabel) 
 def ldSpikeStats_pkl(f): 
@@ -15,21 +15,21 @@ def ldSpikeStats_json(f): return pd.read_json(f)
 
 def plotSpikeStats(df1):
     # spikcount
-
+df.loc[row_indexer,column_indexer]
+df.loc[df('cellnum')==0:114]
     # time of first spike
 
     # hz should == avgRate as spkcount/dur
-    plt.scatter(df1.hz, df1.avgRate)
 
     # instantaneous firing rate - plots hz / time as timeseries
-    plt.plot(df1.ifr) 
 
 
+# time first spike
 
 
+# spike count
 
-
-    #spk1
+spk1
 plt.figure()
 plt.scatter(np.linspace(1,345, 345), dfss.spk1)
 plt.title('time of 1st spike_' + batchLabel)
@@ -72,3 +72,15 @@ plt.xlabel('amp_cellnum')
 plt.ylabel('Hz')
 plt.savefig('f2'+ batchLabel +'.png')
 plt.show()
+
+
+
+
+##################################################################
+# IN PROGRESS - MAY MOVE TO DIFF SCRIPT 
+##################################################################
+# identifying class of cells that return 1st spike time -1. Appear as APs but DO NOT REACH THRESHOLD. NOT A SPIKE.
+for i in dfss.spk1: 
+    if dfss.spk1[i] == -1:
+        print(['amp=' + str(dfss.amp[i])]) # i=8 0_8, 0_13, 0_19, 0_28, 0_31, 0_35, 0_37, 0_38, 0_41, 0_46, 0_54, 0_56, 0_59, 0_61, 0_69, 0_83, 0_85, 0_87, 0_90,0_97, 0_103, 
+        print(['cellnum=' + str(dfss.cellnum[i])])
