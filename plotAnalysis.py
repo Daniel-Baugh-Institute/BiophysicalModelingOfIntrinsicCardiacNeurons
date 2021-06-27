@@ -14,22 +14,21 @@ def ldSpikeStats_pkl(f):
 def ldSpikeStats_json(f): return pd.read_json(f)
 
 def plotSpikeStats(df1):
-    # spikcount
+   
 df.loc[row_indexer,column_indexer]
-df.loc[df('cellnum')==0:114]
-    # time of first spike
 
-    # hz should == avgRate as spkcount/dur
-
-    # instantaneous firing rate - plots hz / time as timeseries
-
-
-# time first spike
-
-
+# time of first spike
 # spike count
+# rate
 
-spk1
+
+# identifying depol blockade 
+
+
+
+
+
+
 plt.figure()
 plt.scatter(np.linspace(1,345, 345), dfss.spk1)
 plt.title('time of 1st spike_' + batchLabel)
@@ -45,7 +44,7 @@ plt.title('spikecount_' + batchLabel)
 plt.xlabel('amp_cellnum')
 plt.ylabel('# spikes')
 plt.savefig('scnt_'+ batchLabel +'.png')
-plt.show()
+plt.show()[]
 
 # rate 
 plt.figure()
