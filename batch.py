@@ -8,7 +8,7 @@ def batch():
         params['cellnum'] = [x for x in range(115)]
         b = Batch(params=params, cfgFile='cfg.py', netParamsFile='netParams_D.py')
         # Set output folder, grid method (all param combinations), and run configuration
-        b.batchLabel = '21june27_D_1' if sys.argv[-1]=='batch.py' else sys.argv[-1]
+        b.batchLabel = '21june27_D_2' if sys.argv[-1]=='batch.py' else sys.argv[-1]
         b.saveFolder = 'data'                #'data'
         b.method = 'grid'
         b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
