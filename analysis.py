@@ -82,7 +82,8 @@ def readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, 
         # save
         if saveAll:
             print('Saving to single file with all data')
-            filename = '%s/%s_allData.json' % (target if target else dataFolder, batchLabel)
+            filename = '%s/%s_allData.json' % (dataFolder, batchLabel)
+            #(dataFolder, batchLabel) #(target if target else dataFolder, batchLabel)
             dataSave = {'params': params, 'data': data}
             with open(filename, 'w') as fileObj:
                 json.dump(dataSave, fileObj)
