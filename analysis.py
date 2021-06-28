@@ -14,8 +14,8 @@ def readAllData(filename):
     with open(filename, 'r') as fileObj: dataLoad = json.load(fileObj, object_pairs_hook=OrderedDict)
     params, data, df = dataLoad['params'], dataLoad['data'], toPandas(dataLoad['params'], dataLoad['data'])
 
-# readBatchData(dataFolder, batchLabel, loadAll=True, saveAll=True, vars=None, maxCombs=None, listCombs=None)
-def readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None):
+# readBatchData(dataFolder, batchLabel, target=None, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None)
+def readBatchData(dataFolder, batchLabel, target=None, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None):
     # load from previously saved file with all data
     if loadAll:
         print('\nLoading single file with all data...')
@@ -91,7 +91,7 @@ def readBatchData(dataFolder, batchLabel, loadAll=False, saveAll=True, vars=None
         # save
         if saveAll:
             print('Saving to single file with all data')
-            filename = '%s/%s_allData.json' % (dataFolder, batchLabel)
+            filename = '%s/%s_allData.json' % (target if target else dataFolder, batchLabel)
             dataSave = {'params': params, 'data': data}
             with open(filename, 'w') as fileObj:
                 json.dump(dataSave, fileObj)
