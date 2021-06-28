@@ -20,10 +20,9 @@ df.loc[row_indexer,column_indexer]
 # time of first spike
 # spike count
 # rate
-
+ø
 
 # identifying depol blockade 
-
 
 
 
