@@ -14,18 +14,9 @@ def readAllData(filename):
     with open(filename, 'r') as fileObj: dataLoad = json.load(fileObj, object_pairs_hook=OrderedDict)
     params, data, df = dataLoad['params'], dataLoad['data'], toPandas(dataLoad['params'], dataLoad['data'])
 
-# readBatchData(dataFolder, batchLabel, target=None, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None)
-def readBatchData(dataFolder, batchLabel, target=None, loadAll=False, saveAll=True, vars=None, maxCombs=None, listCombs=None):
-    # load from previously saved file with all data
-    if loadAll:
-        print('\nLoading single file with all data...')
-        filename = '%s/%s_allData.json' % (dataFolder, batchLabel)
-        with open(filename, 'r') as fileObj:
-            dataLoad = json.load(fileObj, object_pairs_hook=OrderedDict)
-        params = dataLoad['params']
-        data = dataLoad['data']
-        return params, data
-
+# readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None)
+def readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None):
+    '''gather data from dataFolder with batchLabel and save back to dataFolder or to target'''
     if isinstance(listCombs, str):
         filename = str(listCombs)
         with open(filename, 'r') as fileObj:
