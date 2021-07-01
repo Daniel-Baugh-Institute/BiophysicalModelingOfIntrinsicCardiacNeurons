@@ -27,8 +27,9 @@ CEL['secs']['soma'] = {'geom': {'diam': 30, 'L': 30, 'Ra': 35.4, 'cm':1}, 'mechs
 for mod,onoff in zip(genemod,cell):
     if onoff:
         for i in genemod[mod]: genemod[mod][i] = df_chcond.iloc[cfg.cellnum][ctr]
-        print(str(df_chcond.iloc[cfg.cellnum][ctr])
+        #print(str(df_chcond.iloc[cfg.cellnum][ctr]))
         ctr+=1
+        print('ctr='+ str(ctr))
         CEL['secs']['soma']['mechs'][mod]=genemod[mod]
 netParams.cellParams['CEL'] = CEL
 netParams.popParams['U'] = {'cellType': 'CEL', 'numCells': 1}
