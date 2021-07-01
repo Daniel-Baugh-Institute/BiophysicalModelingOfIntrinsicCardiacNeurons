@@ -3,6 +3,7 @@ def RinStats(df=df):
     stimend = stim['dur'] + stim['delay']
     dfrin=df[['amp','cellnum']].copy()
     dfrin['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
+    dfrin['Vrmp'] = dfrin.Vlist.apply(lambda x: x[0])
     dfrin['Vmin'] = dfrin.Vlist.apply(min)
     dfrin['indxss'] = df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<stimend)))
     return dfrin
