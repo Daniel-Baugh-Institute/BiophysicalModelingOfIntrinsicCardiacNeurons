@@ -9,7 +9,7 @@ def RinStats(df=df):
  	#LATER
  	# dfrin['indxrmp']=df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<50)))
  	dfrin['indxrmp']=df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<data[list(data.keys())[c]]['net']['cells'][0]['stims'][0]['delay'])))
-
+ 	return dfrin
 
 # fig, axs = plt.subplots(2,1)
 # axs[0].scatter(list(r_vmin),list(r_vmin.values()))
