@@ -4,7 +4,7 @@ def RinStats(df=df):
     dfrin=df[['amp','cellnum']].copy()
     dfrin['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
     dfrin['Vmin'] = dfrin.Vlist.apply(min)
-    dfrin['indxss']=df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<stimend)
+    dfrin['indxss'] = df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<stimend)))
     return dfrin
 
 # fig, axs = plt.subplots(2,1)
