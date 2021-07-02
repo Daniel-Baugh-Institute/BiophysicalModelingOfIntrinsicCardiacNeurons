@@ -3,6 +3,7 @@ import numpy as np
 import csv
 import pandas as pd
 netParams = specs.NetParams()
+
 try:
     from __main__ import cfg  # import SimConfig object with params from parent module
 except:
