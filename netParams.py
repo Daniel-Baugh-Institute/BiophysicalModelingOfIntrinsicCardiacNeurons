@@ -19,7 +19,8 @@ cell_identities = np.bool_(np.transpose(np.genfromtxt('allcells_new12_unique_bin
 cell = cell_identities[cfg.cellnum]
 
 ctr = 0
-df_chcond = pd.read_csv('ionch_cond_allcells.csv',sep = ',',header=None)
+df_chcond = pd.read_csv('ionch_cond_allcells_Naf01.csv',sep = ',',header=None) # ionch_cond_allcells_Naf01.csv
+                                                                        # ionch_cond_allcells.csv
 
 ## Cell parameters/rules
 CEL = {'secs': {}}
