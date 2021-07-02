@@ -24,10 +24,10 @@ df_chcond = pd.read_csv('ionch_cond_allcells.csv',sep = ',',header=None)
 ## Cell parameters/rules
 CEL = {'secs': {}}
 CEL['secs']['soma'] = {'geom': {'diam': 30, 'L': 30, 'Ra': 35.4, 'cm':1}, 'mechs': {'pas' : {'g': 1.8e-6, 'e': -65}}}
+
 for mod,onoff in zip(genemod,cell):
     if onoff:
         for i in genemod[mod]: genemod[mod][i] = df_chcond.iloc[cfg.cellnum][ctr]
-        #print(str(df_chcond.iloc[cfg.cellnum][ctr]))
         ctr+=1
         print('ctr='+ str(ctr))
         CEL['secs']['soma']['mechs'][mod]=genemod[mod]
