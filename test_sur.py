@@ -6,6 +6,9 @@ def RinStats(df=df):
     dfrin['Vrmp'] = dfrin.Vlist.apply(lambda x: x[0])
     dfrin['Vmin'] = dfrin.Vlist.apply(min)
     dfrin['indxss'] = df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<stimend)))
+    dfrin['Vss'] = dfrin.apply(lambda row: row['Vlist'][row['indxss']], axis =1)
+    #rin_min = vmin-vrmp/df.amp
+    #rin_ss = vss=vrmp/df.amp
     return dfrin
 
 # fig, axs = plt.subplots(2,1)
