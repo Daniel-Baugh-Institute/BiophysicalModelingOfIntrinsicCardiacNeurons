@@ -13,7 +13,7 @@ df = dfss = filenamepkl = None
 def readAllData(filename, dfonly=True):
     #global params, data, df
     with open(filename, 'r') as fileObj: dataLoad = json.load(fileObj, object_pairs_hook=OrderedDict)
-    params, data = dataLoad['params'], dataLoad['data'],toPandas(dataLoad['params'], dataLoad['data'])
+ #   params, data = dataLoad['params'], dataLoad['data'],toPandas(dataLoad['params'], dataLoad['data'])
     params, data, df = dataLoad['params'], dataLoad['data'], toPandas(dataLoad['params'], dataLoad['data'])
     return df if dfonly else params, data, df
 
