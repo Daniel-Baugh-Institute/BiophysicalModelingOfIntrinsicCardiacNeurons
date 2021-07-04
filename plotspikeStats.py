@@ -40,7 +40,15 @@ def plt_ss():
     plt.savefig(batchLabel + '_spk1.png')
     plt.show()
 
+    for x in range(115): 
+        fig, ax = plt.subplots()
+        ax.clear()
+        df.loc[df.cellnum ==x].plot.line('V', 't', color=k, ax=ax)
 
+        #for a,c in zip(set(df['amp']), ('b','g','r')): df.loc[df.amp==a].plot.scatter('cellnum', 'spk1', color=c, ax=ax)
+    plt.title('Time of 1st spike per cellnum')
+    plt.savefig(batchLabel + '_spk1.png')
+    plt.show()
 
     
 
