@@ -7,17 +7,17 @@ cfg.duration = 500 #1*1e3 #(ms)
 cfg.dt = 0.025          
 cfg.verbose = False     
 cfg.recordCells = ['all']
-cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
-                        'epas' : {'sec': 'soma', 'loc': 0.5,'var': 'e_pas'},
-                    'ih':{'sec': 'soma', 'loc': 0.5,'var': 'iother'}, 
-                    'ina': {'sec': 'soma', 'loc': 0.5,'var': 'ina'},
-                    'ica': {'sec': 'soma', 'loc': 0.5,'var': 'ica'},
-                    'ik': {'sec': 'soma', 'loc': 0.5,'var': 'ik'}}
+cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
+                     #   'epas' : {'sec': 'soma', 'loc': 0.5,'var': 'e_pas'},
+                    #'ih':{'sec': 'soma', 'loc': 0.5,'var': 'iother'}, 
+                    #'ina': {'sec': 'soma', 'loc': 0.5,'var': 'ina'},
+                   # 'ica': {'sec': 'soma', 'loc': 0.5,'var': 'ica'},
+                    #'ik': {'sec': 'soma', 'loc': 0.5,'var': 'ik'}}
 
 cfg.recordStep = 0.1       
 cfg.filename = 'output'
 cfg.saveJson = True
-cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}
+cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
 
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']

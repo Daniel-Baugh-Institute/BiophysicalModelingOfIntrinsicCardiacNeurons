@@ -20,7 +20,7 @@ cell_identities = np.bool_(np.transpose(np.genfromtxt('allcells_new12_unique_bin
 cell = cell_identities[cfg.cellnum]
 
 ctr = 0
-df_chcond = pd.read_csv('ionch_cond_allcells_05.csv',sep = ',',header=None) # ionch_cond_allcells_Naf01.csv
+df_chcond = pd.read_csv('ionch_cond_allcells.csv',sep = ',',header=None) # ionch_cond_allcells_Naf01.csv
                                                                         # ionch_cond_allcells.csv
 
 ## Cell parameters/rules
@@ -37,5 +37,5 @@ netParams.cellParams['CEL'] = CEL
 netParams.popParams['U'] = {'cellType': 'CEL', 'numCells': 1}
 
 if cfg.stim == 'IClamp':
-    netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': cfg.amp, 'dur': 1e3, 'delay': 50} 
+    netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': cfg.amp, 'dur': 300, 'delay': 100} 
     netParams.stimTargetParams['iclamp->CEL'] = {'source': 'iclamp', 'conds': {'cellType': 'CEL'}, 'sec': 'soma', 'loc': 0.5}
