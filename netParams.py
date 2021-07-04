@@ -19,7 +19,7 @@ genemod = {'ch_Cacna1a_cp5':{'gCav2_1bar': 0.00001},  'ch_Cacna1b_cp6':{'gCav2_2
 cell_identities = np.bool_(np.transpose(np.genfromtxt('allcells_new12_unique_binary.csv', delimiter=',')))
 cell = cell_identities[cfg.cellnum]
 
-ctr = 0
+ctr = 0 
 df_chcond = pd.read_csv('ionch_cond_allcells_Naf_01.csv',sep = ',',header=None) # ionch_cond_allcells_Naf01.csv
                                                                         # ionch_cond_allcells.csv
 
