@@ -4,7 +4,7 @@ from netpyne.batch import Batch
 
 def batch():
         params = specs.ODict()
-        params['amp'] =  [0.5]
+        params['amp'] =  [0.1, 1.0]
         params['cellnum'] = [x for x in range(115)]
         b = Batch(params=params, cfgFile='cfg.py', netParamsFile='netParams.py')
         # Set output folder, grid method (all param combinations), and run configuration
