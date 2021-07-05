@@ -7,8 +7,8 @@ def RinStats(df=df):
     dfrin['Vmin'] = dfrin.Vlist.apply(min)
     dfrin['indxss'] = df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<stimend)))
     dfrin['Vss'] = dfrin.apply(lambda row: row['Vlist'][row['indxss']], axis =1)
-    #rin_min = vmin-vrmp/df.amp
-    #rin_ss = vss=vrmp/df.amp
+    dfrin['Rin_ss'] = dfrin.Vss.sub(dfrin.Vrmp).div(df.amp)
+    dfrin['Rin_min'] = dfrin.Vmin.sub(dfrin.Vrmp).div(df.amp)
     return dfrin
 
 # fig, axs = plt.subplots(2,1)
