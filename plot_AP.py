@@ -28,7 +28,7 @@ for c in range(len(cellnums)):
     temp_V= df.V_soma[c]['cell_0']
     fig=plt.figure()
     plt.plot(temp_t, temp_V)
-    plt.savefig('voltage_'+str(a)+'_'+ str(c) +'.png')
+    plt.savefig(batchLabel +'_'+'voltage_'+str(a)+'_'+ str(c) +'.png')
     #plt.savefig('/'+newdataFolder+'/'+'voltage_'+str(a)+'_'+ str(c) +'.png')
 
 def toPandas(params, data):
