@@ -20,7 +20,7 @@ cell_identities = np.bool_(np.transpose(np.genfromtxt('allcells_new12_unique_bin
 cell = cell_identities[cfg.cellnum]
 
 ctr = 0 
-df_chcond = pd.read_csv('ionch_cond_allcells_Naf_01.csv',sep = ',',header=None) # ionch_cond_allcells_Naf01.csv
+df_chcond = pd.read_csv('ionch_cond_allcells_Naf_05.csv',sep = ',',header=None) # ionch_cond_allcells_Naf01.csv
                                                                         # ionch_cond_allcells.csv
 
 ## Cell parameters/rules
