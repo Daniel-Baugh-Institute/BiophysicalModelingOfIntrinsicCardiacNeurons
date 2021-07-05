@@ -2,27 +2,39 @@ from netpyne import specs
 from netpyne.specs import simConfig
 cfg = specs.SimConfig() 
 
-cfg.hParams = {'celsius':35, 'v_init':-60}
-cfg.duration = 500 #1*1e3 #(ms)
+cfg.hParams = {'celsius':35, 'v_init':-61}
+cfg.duration = 1500 #1*1e3 #(ms)
 cfg.dt = 0.025          
 cfg.verbose = False     
 cfg.recordCells = ['all']
 cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
-                     #   'epas' : {'sec': 'soma', 'loc': 0.5,'var': 'e_pas'},
-                    #'ih':{'sec': 'soma', 'loc': 0.5,'var': 'iother'}, 
-                    #'ina': {'sec': 'soma', 'loc': 0.5,'var': 'ina'},
-                   # 'ica': {'sec': 'soma', 'loc': 0.5,'var': 'ica'},
-                    #'ik': {'sec': 'soma', 'loc': 0.5,'var': 'ik'}}
+#                         'epas' : {'sec': 'soma', 'loc': 0.5,'var': 'e_pas'},
+#                     'ih':{'sec': 'soma', 'loc': 0.5,'var': 'iother'}, 
+#                     'ina': {'sec': 'soma', 'loc': 0.5,'var': 'ina'},
+#                     'ica': {'sec': 'soma', 'loc': 0.5,'var': 'ica'},
+#                     'ik': {'sec': 'soma', 'loc': 0.5,'var': 'ik'},
+#                     'ipas':{'sec': 'soma', 'loc': 0.5,'var': 'i_pas'}}
+                    # 'ica1a':{'sec': 'soma', 'loc': 0.5,'var': 'ica1a_ch_Cacna1a_cp5'},
+                    # 'ica1b':{'sec': 'soma', 'loc': 0.5,'var': 'ica1b_ch_Cacna1b_cp6'},
+                    # 'ica1c':{'sec': 'soma', 'loc': 0.5,'var': 'ica1c_ch_Cacna1c_cp3'},
+                    # 'ica1g':{'sec': 'soma', 'loc': 0.5,'var': 'ica1g_ch_Cacna1g_cp41'},
+                    # 'ica1i':{'sec': 'soma', 'loc': 0.5,'var': 'ica1i_ch_Cacna1i_md279'},
+                    # 'ihcn1':{'sec': 'soma', 'loc': 0.5,'var': 'ihcn1_ch_Hcn1_cp9'},
+                    # 'ihcn2':{'sec': 'soma', 'loc': 0.5,'var': 'ihcn2_ch_Hcn2_cp10'},
+                    # 'ihcn3':{'sec': 'soma', 'loc': 0.5,'var': 'ihcn3_ch_Hcn3_cp11'},
+                    # 'ihcn4':{'sec': 'soma', 'loc': 0.5,'var': 'ihcn4_ch_Hcn4_cp12'}}
+
+cfg.stim = 'IClamp'
+cfg.amp= -0.001     
+cfg.cellnum = 0 
 
 cfg.recordStep = 0.1       
-cfg.filename = 'output'
+cfg.filename = '21jul5a/'+str(cfg.cellnum)+str(cfg.amp)
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
 
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
 
-cfg.stim = 'IClamp'
-cfg.amp= 0     
-cfg.cellnum = 0              
+             
 
