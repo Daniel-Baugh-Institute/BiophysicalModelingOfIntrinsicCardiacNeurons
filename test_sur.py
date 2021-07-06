@@ -11,8 +11,10 @@ def RinStats(df=df):
     dfrin['Rin_min'] = dfrin.Vmin.sub(dfrin.Vrmp).div(df.amp)
     return dfrin
 
-# fig, axs = plt.subplots(2,1)
-# axs[0].scatter(list(r_vmin),list(r_vmin.values()))
-# axs[0].set_title('Rm (in MOhm corr. to neg. peak')
-# axs[1].scatter(list(r_vss),list(r_vss.values()))
-# axs[1].set_title('Rm (in MOhm corr. to ss after sag')
+import matplotlib.pyplot as plt
+fig, axs = plt.subplots(2,1)
+axs[0].scatter(dfrin.cellnum, dfrin.Rin_min)
+axs[0].set_title('Rm (in MOhm corr. to neg. peak')
+axs[1].scatter(dfrin.cellnum, dfrin.Rin_ss)
+axs[1].set_title('Rm (in MOhm corr. to ss after sag')
+plt.show()
