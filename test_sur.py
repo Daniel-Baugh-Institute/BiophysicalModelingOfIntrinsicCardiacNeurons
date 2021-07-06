@@ -1,3 +1,10 @@
+def idDepnBlock(df=df):
+    dblk['Vend'] = dblk.apply(lambda row: row['Vlist'][4000:6000], axis =1)
+    dblk['Vdiff'] = dblk.Vend.apply(lambda x: max(x)-min(x))
+    return
+
+
+
 def RinStats(df=df):
     stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
     stimend = stim['dur'] + stim['delay']
@@ -21,20 +28,20 @@ plt.show()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-import statistics
-import math
-def idDepnBlock(df=df):
-    stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
-    stimend = stim['dur'] + stim['delay']
-    dblk=df[['amp','cellnum']].copy()
-    dblk['ind1'] = df.t.apply(lambda x:len(np.flatnonzero((stimend-10)<np.array(x))))
-    dblk['ind2'] = df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<stimend)))
-    dblk['Vsubset'] = dblk.apply(lambda row: row['Vlist'][row['ind1']:row['ind2']], axis =1)
-    dblk['Vsubset_mn'] = dblk.Vsubset.apply(min)
-    dblk['Vsubset_mx']= dblk.Vsubset.apply(max)
-    dblk['Vsubset_avg']=dblk.Vsubset.apply(lambda x: statistics.mean(x))
-    #testing math.trunc() function to check for depn block
-    return dblk
+# import statistics
+# import math
+# def idDepnBlock(df=df):
+#     stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
+#     stimend = stim['dur'] + stim['delay']
+#     dblk=df[['amp','cellnum']].copy()
+#     dblk['ind1'] = df.t.apply(lambda x:len(np.flatnonzero((stimend-10)<np.array(x))))
+#     dblk['ind2'] = df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<stimend)))
+#     dblk['Vsubset'] = dblk.apply(lambda row: row['Vlist'][row['ind1']:row['ind2']], axis =1)
+#     dblk['Vsubset_mn'] = dblk.Vsubset.apply(min)
+#     dblk['Vsubset_mx']= dblk.Vsubset.apply(max)
+#     dblk['Vsubset_avg']=dblk.Vsubset.apply(lambda x: statistics.mean(x))
+#     #testing math.trunc() function to check for depn block
+#     return dblk
 
 
 
