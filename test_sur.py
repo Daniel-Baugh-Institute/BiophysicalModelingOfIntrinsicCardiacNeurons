@@ -11,6 +11,8 @@ def RinStats(df=df):
     dfrin['Rin_min'] = dfrin.Vmin.sub(dfrin.Vrmp).div(df.amp)
     return dfrin
 
+import statistics
+import math
 def idDepnBlock(df=df):
     stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
     stimend = stim['dur'] + stim['delay']
@@ -18,9 +20,10 @@ def idDepnBlock(df=df):
     dblk['ind1'] = df.t.apply(lambda x:len(np.flatnonzero((stimend-10)<np.array(x))))
     dblk['ind2'] = df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<stimend)))
     dblk['Vsubset'] = dblk.apply(lambda row: row['Vlist'][row['ind1']:row['ind2']], axis =1)
-    dblk.Vsubset.apply(min)
-    dblk.Vsubset.apply(max)
-    dblk.Vsubset.mean()
+    dblk['Vsubset_mn'] = dblk.Vsubset.apply(min)
+    dblk['Vsubset_mx']= dblk.Vsubset.apply(max)
+    dblk['Vsubset_avg']=dblk.Vsubset.apply(lambda x: statistics.mean(x))
+    #testing math.trunc() function to check for depn block
     return dblk
 
 
