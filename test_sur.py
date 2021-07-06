@@ -1,7 +1,7 @@
 def idDepnBlock(df=df):
     dblk['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
     dblk['Vend'] = dblk.apply(lambda row: row['Vlist'][4000:6000], axis =1)
-    dblk['Vdiff'] = dblk.Vend.apply(lambda x: max(x)-min(x))
+    dblk['Vdiff'] = dblk.Vend.apply(lambda x: max(x)-min(x) if min(x)+61>30 else -1)
     return
 
 import matplotlib.pyplot as plt
