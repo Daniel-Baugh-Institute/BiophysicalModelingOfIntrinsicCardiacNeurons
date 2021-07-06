@@ -11,6 +11,16 @@ def RinStats(df=df):
     dfrin['Rin_min'] = dfrin.Vmin.sub(dfrin.Vrmp).div(df.amp)
     return dfrin
 
+import matplotlib.pyplot as plt
+fig, axs = plt.subplots(2,1)
+axs[0].scatter(dfrin.cellnum, dfrin.Rin_min)
+axs[0].set_title('Rm (in MOhm corr. to neg. peak')
+axs[1].scatter(dfrin.cellnum, dfrin.Rin_ss)
+axs[1].set_title('Rm (in MOhm corr. to ss after sag')
+plt.show()
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 import statistics
 import math
 def idDepnBlock(df=df):
@@ -28,10 +38,4 @@ def idDepnBlock(df=df):
 
 
 
-import matplotlib.pyplot as plt
-fig, axs = plt.subplots(2,1)
-axs[0].scatter(dfrin.cellnum, dfrin.Rin_min)
-axs[0].set_title('Rm (in MOhm corr. to neg. peak')
-axs[1].scatter(dfrin.cellnum, dfrin.Rin_ss)
-axs[1].set_title('Rm (in MOhm corr. to ss after sag')
-plt.show()
+
