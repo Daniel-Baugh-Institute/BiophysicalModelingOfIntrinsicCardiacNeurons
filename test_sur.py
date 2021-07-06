@@ -11,6 +11,13 @@ def RinStats(df=df):
     dfrin['Rin_min'] = dfrin.Vmin.sub(dfrin.Vrmp).div(df.amp)
     return dfrin
 
+def idDepnBlock(df=df):
+
+
+    return depblk
+
+
+
 import matplotlib.pyplot as plt
 fig, axs = plt.subplots(2,1)
 axs[0].scatter(dfrin.cellnum, dfrin.Rin_min)
