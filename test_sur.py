@@ -12,9 +12,16 @@ def RinStats(df=df):
     return dfrin
 
 def idDepnBlock(df=df):
-
-
-    return depblk
+    stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
+    stimend = stim['dur'] + stim['delay']
+    dblk=df[['amp','cellnum']].copy()
+    dblk['ind1'] = df.t.apply(lambda x:len(np.flatnonzero((stimend-10)<np.array(x))))
+    dblk['ind2'] = df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<stimend)))
+    dblk['Vsubset'] = dblk.apply(lambda row: row['Vlist'][row['ind1']:row['ind2']], axis =1)
+    dblk.Vsubset.apply(min)
+    dblk.Vsubset.apply(max)
+    dblk.Vsubset.mean()
+    return dblk
 
 
 
