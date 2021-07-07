@@ -1,11 +1,13 @@
 from netpyne import sim
 from neuron import h
+import csv
 
 simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams.py')
 # sim.createSimulateAnalyze(netParams=netParams, simConfig=simConfig)
 sim.create(netParams=netParams, simConfig=simConfig)
 
 seg = sim.net.cells[0].secs.soma.hObj(0.5) # since only 1 cell with nseg=1 can jump straight to that seg
+elist = []
 
 def fi():
     '''set steady state RMP for 1 cell'''
@@ -14,7 +16,15 @@ def fi():
     seg.e_pas = cfg.hParams['v_init']+isum/seg.g_pas
     print(cfg.cellnum)
     print(seg.e_pas)
+    elist.append(seg.e_pas)
+
+    
 
 fih = [h.FInitializeHandler(2, fi)]
 sim.simulate()
 sim.analyze()
+
+file = open('edump_21jul07b.csv','a') 
+csvwriter = csv.writer(file, delimiter = '\t')
+csvwriter.writerow(elist)
+file.close()
