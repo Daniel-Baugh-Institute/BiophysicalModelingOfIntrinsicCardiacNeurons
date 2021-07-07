@@ -4,6 +4,16 @@ def idDepnBlock(df=df):
     dblk['Vdiff'] = dblk.Vend.apply(lambda x: max(x)-min(x) if min(x)+61>30 else -1)
     return
 
+#Using df graphics
+dfss.loc[df.amp==0.6].plot.scatter('cellnum', 'Vdiff')
+plt.show()
+
+# fig, ax = plt.subplots()
+# ax.clear()
+# for a,c in zip(set(df['amp']), ('b','g','r')): df.loc[df.amp==a].plot.scatter('cellnum', 'sdur', color=c, ax=ax)
+# ax.set_ylim(400,500)
+
+
 import matplotlib.pyplot as plt
 fig = plt.plot(dfss.Vdiff, '.')
 plt.show()
