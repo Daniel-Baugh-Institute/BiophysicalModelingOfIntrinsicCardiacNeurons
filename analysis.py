@@ -138,7 +138,7 @@ def spikeStats(df=df):
     #dfss['sfa'] = (statistics.mean(f_last))/(statistics.mean(f_first)) #spike freq adaptation ration = (mean(fend, fend-1))/((mean (f1, f2)) Suter et al.
     dfss['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
     dfss['Vend'] = dfss.apply(lambda row: row['Vlist'][4000:6000], axis =1)     #INDICES are HARDCODED
-    dfss['Vdiff'] = dfss.Vend.apply(lambda x: max(x)-min(x) if min(x)+61>30 else -1)
+    # dfss['Vdiff'] = dfss.Vend.apply(lambda x: max(x)-min(x) if min(x)+61<30 else -1)
     return dfss
     
 def svSpikeStats(dataFolder, batchLabel, dfss=dfss):
