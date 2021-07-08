@@ -18,14 +18,15 @@ def classifyAP(df=df):
     # phasic - 1 AP
     db['Vph'] = dfss.scnt.apply(lambda x: ? if x<=3 else -1)
 
+    # get time of last spike - tlast
     # tonic - w/o sp
-    db['Vton']
+    db['Vton'] #if tlast is within delay and stimend
 
     # tonic - w/ sustained sp
-    db['Vton_infsp']
+    db['Vton_infsp'] # if tlast ~ cfg.duration
 
     # tonic - w/o sustained sp
-    db['Vton_finsp']
+    db['Vton_finsp'] # if tlast<cfg.duration-50
 
     return
 
