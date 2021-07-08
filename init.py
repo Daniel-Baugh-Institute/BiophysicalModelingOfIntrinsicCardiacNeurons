@@ -24,7 +24,7 @@ fih = [h.FInitializeHandler(2, fi)]
 sim.simulate()
 sim.analyze()
 
-file = open('edump_21jul07Oo.csv','a') 
+file = open('edump_21jul08a.csv','a') 
 csvwriter = csv.writer(file, delimiter = '\t')
 csvwriter.writerow(elist)
 file.close()
