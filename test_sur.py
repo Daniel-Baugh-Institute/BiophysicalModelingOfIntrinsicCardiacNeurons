@@ -2,23 +2,24 @@
 def classifyAP(df=df):
     stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
     stimend = stim['dur'] + stim['delay']
-    db=df[['amp','cellnum']].copy()
-    db['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
-    db['Vrmp'] = db.Vlist.apply(lambda x: x[0])
+    dclass=df[['amp','cellnum']].copy()
+    dclass['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
+    dclass['Vrmp'] = db.Vlist.apply(lambda x: x[0])
 
     # db
-    db['ind1'] = df.t.apply(lambda x:len(np.flatnonzero((stimend-10)<np.array(x))))
-    db['ind2'] = df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<stimend)))
-    db['Vend'] = db.apply(lambda row: row['Vlist'][row['ind1']:row['ind2']], axis =1)
-    db['Vdb'] = db.apply(lambda row: ? if row['Vend'].max()-row['Vend'].min()<1 and row['Vend'].min()-row['Vrmp'][0]<30 else -1)
+    dclass['ind1'] = df.t.apply(lambda x:len(np.flatnonzero((stimend-10)<np.array(x))))
+    dclass['ind2'] = df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<stimend)))
+    dclass['Vend'] = db.apply(lambda row: row['Vlist'][row['ind1']:row['ind2']], axis =1)
+    dclass['Vdb'] = db.apply(lambda row: row['Vend'].min()-row['Vrmp'][0] if row['Vend'].max()-row['Vend'].min()<1 and row['Vend'].min()-row['Vrmp'][0]<30 else -1)
 
     # subthreshold -  No Na
-    db['Vsubth'] = df.V_soma.apply(lambda x: ? if max(x)<0 else -1)
+    dclass['Vsubth'] = df.V_soma.apply(lambda x: max(x) if max(x)<0 else -1)
 
     # phasic - 1 AP
-    db['Vph'] = dfss.scnt.apply(lambda x: ? if x<=3 else -1)
+    dclass['Vph'] = dfss.scnt.apply(lambda x: x if x<=3 else -1)
 
     # get time of last spike - tlast
+    dclass['spkend'] = df.spkt.apply(lambda x: x[len(x)-1] if len(x)>0 else -1)
     # tonic - w/o sp
     db['Vton'] #if tlast is within delay and stimend
 
