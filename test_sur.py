@@ -4,7 +4,7 @@ def classifyAP(df=df):
     stimend = stim['dur'] + stim['delay']
     dclass=df[['amp','cellnum']].copy()
     dclass['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
-    dclass['Vrmp'] = db.Vlist.apply(lambda x: x[0])
+    dclass['Vrmp'] = dclass.Vlist.apply(lambda x: x[0])
 
     # db
     dclass['ind1'] = df.t.apply(lambda x:len(np.flatnonzero((stimend-10)<np.array(x))))
