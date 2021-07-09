@@ -18,15 +18,15 @@ def classifyAP(df=df):
     # phasic
     dclass['Vph'] = dfss.scnt.apply(lambda x: x if 0<x<=3 else -1)
 
-    dclass['spkend'] = df.spkt.apply(lambda x: x[len(x)-1])
+    dclass['spkend'] = df.spkt.apply(lambda x: x[len(x)-1] if len(x)>0 else -1)
     # tonic - w/o sp
-    dclass['Vton'] = dclass.spkend.apply(lambda x: x if x<stimend else -1) 
+    dclass['Vton'] = dclass.spkend.apply(lambda x: x if x<=stimend else -1) 
 
     # tonic - w/o sustained sp
-    dclass['Vton_infsp'] = dclass.spkend.apply(lambda x: x if x<cfg.duration-5 else -1)
+    dclass['Vton_infsp'] = dclass.spkend.apply(lambda x: x if stimend<=x<=cfg.duration-5 else -1)
 
     # tonic - w/ sustained sp
-    db['Vton_finsp'] = dclass.spkend.apply(lambda x: x if x<cfg.duration-50 else -1)
+    db['Vton_finsp'] = dclass.spkend.apply(lambda x: x if stimend<=x<=cfg.duration-50 else -1)
 
     # check excitability
     # for each cellnum; each amp - record first change of profile from sub to AP
