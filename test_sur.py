@@ -13,7 +13,7 @@ def classifyAP(df=df):
     dclass['Vdb'] = db.apply(lambda row: 0 if row['Vend'].max()-row['Vend'].min()<1 and row['Vend'].min()-row['Vrmp'][0]>30 else -1)
 
     # subthreshold 
-    dclass['Vsubth'] = df.V_soma.apply(lambda x: max(x) if max(x)<0 else -1)
+    dclass['Vsubth'] = dclass.Vlist.apply(lambda x: max(x) if max(x)<0 else -1)
 
     # phasic
     dclass['Vph'] = dfss.scnt.apply(lambda x: x if x<=3 else -1)
