@@ -10,25 +10,26 @@ def classifyAP(df=df):
     dclass['ind1'] = df.t.apply(lambda x:len(np.flatnonzero((stimend-10)<np.array(x))))
     dclass['ind2'] = df.t.apply(lambda x:len(np.flatnonzero(np.array(x)<stimend)))
     dclass['Vend'] = db.apply(lambda row: row['Vlist'][row['ind1']:row['ind2']], axis =1)
-    dclass['Vdb'] = db.apply(lambda row: row['Vend'].min()-row['Vrmp'][0] if row['Vend'].max()-row['Vend'].min()<1 and row['Vend'].min()-row['Vrmp'][0]<30 else -1)
+    dclass['Vdb'] = db.apply(lambda row: 0 if row['Vend'].max()-row['Vend'].min()<1 and row['Vend'].min()-row['Vrmp'][0]>30 else -1)
 
-    # subthreshold -  No Na
+    # subthreshold 
     dclass['Vsubth'] = df.V_soma.apply(lambda x: max(x) if max(x)<0 else -1)
 
-    # phasic - 1 AP
+    # phasic
     dclass['Vph'] = dfss.scnt.apply(lambda x: x if x<=3 else -1)
 
-    # get time of last spike - tlast
     dclass['spkend'] = df.spkt.apply(lambda x: x[len(x)-1] if len(x)>0 else -1)
     # tonic - w/o sp
-    db['Vton'] #if tlast is within delay and stimend
-
-    # tonic - w/ sustained sp
-    db['Vton_infsp'] # if tlast ~ cfg.duration
+    dclass['Vton'] = dclass.spkend.apply(lambda x: x if x<stimend else -1) 
 
     # tonic - w/o sustained sp
-    db['Vton_finsp'] # if tlast<cfg.duration-50
+    dclass['Vton_infsp'] = dclass.spkend.apply(lambda x: x if x<cfg.duration-5 else -1)
 
+    # tonic - w/ sustained sp
+    db['Vton_finsp'] = dclass.spkend.apply(lambda x: x if x<cfg.duration-50 else -1)
+
+    # check excitability
+    # for each cellnum; each amp - record first change of profile from sub to AP
     return
 
 
