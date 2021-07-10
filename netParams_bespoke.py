@@ -16,18 +16,14 @@ genemod = {'ch_Cacna1a_cp5':{'gCav2_1bar': 0.00001},  'ch_Cacna1b_cp6':{'gCav2_2
            'ch_Hcn4_cp12':{'gHCN4bar': 0.0001},           'ch_Kcna1ab1_md80769':{'gbar': 0.015},   
            'ch_Kcnc1_md74298':{'gk': 0.015},            'ch_Scn1a_md264834':{'gNav11bar': 1.0}}
 cell_identities = np.bool_(np.transpose(np.genfromtxt('allcells_new12_unique_binary.csv', delimiter=',')))
-df_chcond = pd.read_csv('ionch_cond_allcells.csv',sep = ',',header=None)
+chcond = np.genfromtxt('ionch_cond_allcells.csv', delimiter=',')
 
 ## Cell parameters/rules
 CEL = {'secs': 
        {'soma': 
         {'geom': {'diam': 30, 'L': 30, 'Ra': 35.4, 'cm':1}, 
          'mechs': {'pas' : {'g': 1.8e-6, 'e': -65}}}}}
-for mod,onoff in zip(genemod, cell_identities[cfg.cellnum]):
-    if onoff:
-        for key, gmax in zip(genemod[mod], , df_chcond.iloc[cfg.cellnum]): genemod[mod][key] = gmax
-        CEL['secs']['soma']['mechs'][mod]=genemod[mod]
-
+CEL['secs']['soma']['mechs'].update({mod : {list(val)[0]: gmax} for (mod, val),gmax in zip(genemod.items(), chcond.iloc[cfg.cellnum]) if gmax>0})
 netParams.cellParams['CEL'] = CEL
 netParams.popParams['U'] = {'cellType': 'CEL', 'numCells': 1}
 
