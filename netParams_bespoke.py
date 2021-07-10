@@ -23,7 +23,7 @@ CEL = {'secs':
        {'soma': 
         {'geom': {'diam': 30, 'L': 30, 'Ra': 35.4, 'cm':1}, 
          'mechs': {'pas' : {'g': 1.8e-6, 'e': -65}}}}}
-CEL['secs']['soma']['mechs'].update({mod : {list(val)[0]: gmax} for (mod, val),gmax in zip(genemod.items(), chcond.iloc[cfg.cellnum]) if gmax>0})
+CEL['secs']['soma']['mechs'].update({mod : {list(val)[0]: gmax} for (mod, val),gmax in zip(genemod.items(), chcond[cfg.cellnum]) if gmax>0})
 netParams.cellParams['CEL'] = CEL
 netParams.popParams['U'] = {'cellType': 'CEL', 'numCells': 1}
 
