@@ -23,9 +23,9 @@ CEL = {'secs':
        {'soma': 
         {'geom': {'diam': 30, 'L': 30, 'Ra': 35.4, 'cm':1}, 
          'mechs': {'pas' : {'g': 1.8e-6, 'e': -65}}}}}
-for mod,onoff,gmax in zip(genemod, cell_identities[cfg.cellnum], df_chcond.iloc[cfg.cellnum]):
+for mod,onoff in zip(genemod, cell_identities[cfg.cellnum]):
     if onoff:
-        for key in genemod[mod]: genemod[mod][key] = gmax
+        for key, gmax in zip(genemod[mod], , df_chcond.iloc[cfg.cellnum]): genemod[mod][key] = gmax
         CEL['secs']['soma']['mechs'][mod]=genemod[mod]
 
 netParams.cellParams['CEL'] = CEL
