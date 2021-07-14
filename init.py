@@ -2,7 +2,7 @@ from netpyne import sim
 from neuron import h
 import csv
 
-simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams.py')
+simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams_A.py')
 # sim.createSimulateAnalyze(netParams=netParams, simConfig=simConfig)
 sim.create(netParams=netParams, simConfig=simConfig)
 
@@ -24,7 +24,7 @@ fih = [h.FInitializeHandler(2, fi)]
 sim.simulate()
 sim.analyze()
 
-file = open('edump_21jul08c.csv','a') 
+file = open('edump_21jul14.csv','a') 
 csvwriter = csv.writer(file, delimiter = '\t')
 csvwriter.writerow(elist)
 file.close()
