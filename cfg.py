@@ -25,11 +25,11 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
                     # 'ihcn4':{'sec': 'soma', 'loc': 0.5,'var': 'ihcn4_ch_Hcn4_cp12'}}
 
 cfg.stim = 'IClamp'
-cfg.amp= 0.01     
+cfg.amp= 0.04     
 cfg.cellnum = 1 
 
 cfg.recordStep = 0.1       
-cfg.filename = '21jul14/'+'d'#+str(cfg.cellnum)+str(cfg.amp)
+cfg.filename = '21jul14/'+'e'#+str(cfg.cellnum)+str(cfg.amp)
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
