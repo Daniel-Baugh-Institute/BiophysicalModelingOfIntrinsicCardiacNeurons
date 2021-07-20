@@ -20,7 +20,7 @@ def classifyAP(df=df):
 
     dclass['spkend'] = df.spkt.apply(lambda x: x[len(x)-1] if len(x)>0 else -1)
     # tonic - w/o sp
-    dclass['Vton'] = dclass.spkend.apply(lambda x: x if stim['delay']<=x<=stimend else -1) 
+    dclass['Vton'] = df.spkt.apply(lambda x: x[len(x)-1] if len(x)>3 and stim['delay']<=x[-1]<=stimend+5 else -1)
 
     # tonic - w/o sustained sp
     dclass['Vton_susps'] = dclass.spkend.apply(lambda x: x if stimend+5<=x>=data[list(data)[0]]['simConfig']['duration']-50 else -1)
