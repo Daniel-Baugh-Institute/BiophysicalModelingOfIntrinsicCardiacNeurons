@@ -33,9 +33,6 @@ integrated working model is being ported to NetPyNE (default 35 degC).
 To avoid any temp-based discrepancies, 'celsius' has been replaced with 'squidtemp' = 6.3 (degC)
 
 10 June 2021 - Added local ikcnc current
-
-22 June 2021
-pinf, tau are made GLOBAL
 ENDCOMMENT
 
 
