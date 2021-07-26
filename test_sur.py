@@ -26,8 +26,9 @@ def classifyAP(df=df):
     dclass['Vton_susps'] = dclass.spkend.apply(lambda x: x if stimend+5<=x>=data[list(data)[0]]['simConfig']['duration']-50 else -1)
 
     # tonic - w/ sustained sp
-    db['Vton_brfps'] = dclass.spkend.apply(lambda x: x if stimend+5<=x<=data[list(data)[0]]['simConfig']['duration']-50 else -1)
+    dclass['Vton_brfps'] = dclass.spkend.apply(lambda x: x if stimend+5<=x<=data[list(data)[0]]['simConfig']['duration']-50 else -1)
 
+    dclass['Vburst'] = df.spkt.apply(lambda x: x[len(x)-1] if len(x)>1 and x[-1]<stimend-5)
     # check excitability
     # for each cellnum; each amp - record first change of profile from sub to AP
     return
