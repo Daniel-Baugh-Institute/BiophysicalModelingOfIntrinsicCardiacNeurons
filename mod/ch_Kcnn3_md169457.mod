@@ -4,6 +4,7 @@
 COMMENT
 26 July 2021 Edits by Suranjana Gupta (SG)
 Changed SUFFIX and added ikcnn3
+Changed rates (ca) to rates (conc)
 ENDCOMMENT
 
 NEURON {
@@ -52,11 +53,11 @@ DERIVATIVE states {
         z' = (zInf - z) / zTau
 }
 
-PROCEDURE rates(ca(mM)) {
-          if(ca < 1e-7){
-	              ca = ca + 1e-07
+PROCEDURE rates(conc(mM)) {                 : SG changed ca to conc
+          if(conc < 1e-7){
+	              conc = conc + 1e-07
           }
-          zInf = 1/(1 + (offc / ca)^sloc)
+          zInf = 1/(1 + (offc / conc)^sloc)
 }
 
 INITIAL {
