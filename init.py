@@ -7,7 +7,7 @@ simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsD
 sim.create(netParams=netParams, simConfig=simConfig)
 
 seg = sim.net.cells[0].secs.soma.hObj(0.5) # since only 1 cell with nseg=1 can jump straight to that seg
-elist = []
+# elist = []
 
 def fi():
     '''set steady state RMP for 1 cell'''
@@ -16,7 +16,7 @@ def fi():
     seg.e_pas = cfg.hParams['v_init']+isum/seg.g_pas 
     print(cfg.cellnum)
     print(seg.e_pas)
-    elist.append(seg.e_pas)
+    # elist.append(seg.e_pas)
 
 
 
@@ -24,10 +24,10 @@ fih = [h.FInitializeHandler(2, fi)]
 sim.simulate()
 sim.analyze()
 
-file = open('edump_21jul26b.csv','a') 
-csvwriter = csv.writer(file, delimiter = '\t')
-csvwriter.writerow(elist)
-file.close()
+# file = open('edump_21jul26b.csv','a') 
+# csvwriter = csv.writer(file, delimiter = '\t')
+# csvwriter.writerow(elist)
+# file.close()
 
 # if h.ismembrane("me_cadad_Adestexhe"):
 #         h.setdata_me_cadad_Adestexhe(seg(0.5))
