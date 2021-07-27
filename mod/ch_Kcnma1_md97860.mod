@@ -13,7 +13,7 @@ NEURON {
 	RANGE gbar, ik, ikcnma1
 	RANGE minf, mtau, hinf, htau, zinf, ztau			:SG changed GLOBAL to RANGE
 	GLOBAL m_vh, m_k, mtau_y0, mtau_vh1, mtau_vh2, mtau_k1, mtau_k2
-	GLOBAL z_coef, ztau
+	GLOBAL z_coef
 	GLOBAL h_y0, h_vh, h_k, htau_y0, htau_vh1, htau_vh2, htau_k1, htau_k2
 }
 
