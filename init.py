@@ -23,8 +23,8 @@ def fi():
     #            5000*ica*taur_me_cadad_Adestexhe)
     # else:
     #     0
-    # print(cfg.cellnum)
-    # print(seg.e_pas)
+    print(cfg.cellnum)
+    print(seg.e_pas)
     # elist.append(seg.e_pas)
 
 
