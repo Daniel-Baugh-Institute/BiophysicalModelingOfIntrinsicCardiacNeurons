@@ -15,9 +15,9 @@ def fi():
     isum = (seg.ina if h.ismembrane('na_ion') else 0) + (seg.ik if h.ismembrane('k_ion') else 0) + (seg.ica if h.ismembrane('ca_ion') else 0) + (seg.iother if h.ismembrane('other_ion') else 0)
     seg.e_pas = cfg.hParams['v_init']+isum/seg.g_pas 
     if h.ismembrane("me_cadad_Adestexhe"):
-        kd_me_cadad_Adestexhe = seg.cai*(-(seg.cai * depth_me_cadad_Adestexhe *FARADAY) + cainf_me_cadad_Adestexhe * depth_me_cadad_Adestexhe * FARADAY - \
-            5000*seg.ica*taur_me_cadad_Adestexhe - depth_me_cadad_Adestexhe * FARADAY*kt_me_cadad_Adestexhe * taur_me_cadad_Adestexhe)
-        kd_me_cadad_Adestexhe = kd_me_cadad_Adestexhe/(seg.cai*depth_me_cadad_Adestexhe*FARADAY - cainf_me_cadad_Adestexhe * depth_me_cadad_Adestexhe * FARADAY + \
+        kd_me_cadad_Adestexhe = seg.cai*(-(seg.cai * depth_me_cadad_Adestexhe *h.FARADAY) + cainf_me_cadad_Adestexhe * depth_me_cadad_Adestexhe * h.FARADAY - \
+            5000*seg.ica*taur_me_cadad_Adestexhe - depth_me_cadad_Adestexhe * h.FARADAY*kt_me_cadad_Adestexhe * taur_me_cadad_Adestexhe)
+        kd_me_cadad_Adestexhe = kd_me_cadad_Adestexhe/(seg.cai*depth_me_cadad_Adestexhe*h.FARADAY - cainf_me_cadad_Adestexhe * depth_me_cadad_Adestexhe * h.FARADAY + \
                5000*seg.ica*taur_me_cadad_Adestexhe)
     else:
         0
