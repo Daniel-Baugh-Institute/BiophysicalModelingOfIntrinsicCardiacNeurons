@@ -3,11 +3,12 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig() 
 
 cfg.hParams = {'celsius':35, 'v_init':-61}
-cfg.duration = 600  #1500 #1*1e3 #(ms)
+cfg.duration = 10  #1500 #1*1e3 #(ms)
 cfg.dt = 0.025          
 cfg.verbose = False     
 cfg.recordCells = ['all']
-cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
+cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
+                        'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
 #                         'epas' : {'sec': 'soma', 'loc': 0.5,'var': 'e_pas'},
 #                     'ih':{'sec': 'soma', 'loc': 0.5,'var': 'iother'}, 
 #                     'ina': {'sec': 'soma', 'loc': 0.5,'var': 'ina'},
@@ -25,11 +26,11 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
                     # 'ihcn4':{'sec': 'soma', 'loc': 0.5,'var': 'ihcn4_ch_Hcn4_cp12'}}
 
 cfg.stim = 'IClamp'
-cfg.amp= 0.1     
+cfg.amp= 0     
 cfg.cellnum = 1 
 
 cfg.recordStep = 0.1       
-cfg.filename = '21jul27c/1_a'
+cfg.filename = '21jul28a/0'
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
