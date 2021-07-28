@@ -52,6 +52,7 @@ STATE {
 
 INITIAL {
   cai = cainf
+  drive_channel = (cainf-cai)/taur
 }
 
 ASSIGNED {
