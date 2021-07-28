@@ -34,12 +34,9 @@ UNITS {
   (um)	= (micron)
   (mA)	= (milliamp)
   (msM)	= (ms mM)
+  FARADAY = (faraday) (coulomb)   :SG added
 }
 
-CONSTANT {
-  FARADAY = 96489		(coul)		: moles do not appear in units
-  :	FARADAY = 96.489	(k-coul)	: moles do not appear in units
-}
 
 PARAMETER {
   depth	= 1	(um)		: depth of shell
