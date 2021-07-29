@@ -15,7 +15,7 @@ def fi():
     isum = (seg.ina if h.ismembrane('na_ion') else 0) + (seg.ik if h.ismembrane('k_ion') else 0) + (seg.ica if h.ismembrane('ca_ion') else 0) + (seg.iother if h.ismembrane('other_ion') else 0)
     seg.e_pas = cfg.hParams['v_init']+isum/seg.g_pas 
     if h.ismembrane('cadad'):
-        seg.cainf_cad = seg.cai - (seg.drive_channel_caded * seg.taur_cadads)
+        seg.cainf_cadad = seg.cai - (seg.drive_channel_cadad * seg.taur_cadad)
     print(cfg.cellnum)
     print(seg.e_pas)
     # elist.append(seg.e_pas)
