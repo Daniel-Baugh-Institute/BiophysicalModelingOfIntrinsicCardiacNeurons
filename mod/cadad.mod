@@ -39,7 +39,7 @@ UNITS {
 
 
 PARAMETER {
-  depth	= 1	(um)		: depth of shell
+  depth	= 2	(um)		: 1 depth of shell
   taur	= 5	(ms)		: rate of calcium removal
   cainf	= 2.4e-4	(mM)
 }
