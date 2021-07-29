@@ -25,7 +25,7 @@ INDEPENDENT {t FROM 0 TO 1 WITH 1 (ms)}
 NEURON {
   SUFFIX cadad
   USEION ca READ ica, cai WRITE cai
-  RANGE depth,kt,kd,cainf,taur
+  RANGE depth,cainf,taur              :SG removed dummy kd, kt
 }
 
 UNITS {
@@ -42,8 +42,6 @@ PARAMETER {
   depth	= 1	(um)		: depth of shell
   taur	= 5	(ms)		: rate of calcium removal
   cainf	= 2.4e-4	(mM)
-  kt	= 0	(mM/ms)		: dummy
-  kd	= 0	(mM)		: dummy
 }
 
 STATE {
@@ -52,7 +50,6 @@ STATE {
 
 INITIAL {
   cai = cainf
-  drive_channel = (cainf-cai)/taur
 }
 
 ASSIGNED {
