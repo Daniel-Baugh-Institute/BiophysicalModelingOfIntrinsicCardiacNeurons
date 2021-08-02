@@ -28,6 +28,10 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
 cfg.stim = 'IClamp'
 cfg.amp= 0.6    
 cfg.cellnum = 1 
+cfg.gkcna = 0.015
+cfg.gkcnc = 0.015
+cfg.gsk = 0.01
+cfg.tau = 5
 
 cfg.recordStep = 0.1       
 cfg.filename = '21jul30a/12'
