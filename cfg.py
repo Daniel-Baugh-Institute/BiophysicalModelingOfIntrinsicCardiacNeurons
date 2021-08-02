@@ -32,6 +32,7 @@ cfg.gkcna = 0.015
 cfg.gkcnc = 0.015
 cfg.gsk = 0.01
 cfg.tau = 5
+cfg.depth = 2
 
 cfg.recordStep = 0.1       
 cfg.filename = '21aug02c/2'
