@@ -21,7 +21,8 @@ cell = cell_identities[cfg.cellnum]
 CEL = {'secs': {}}
 CEL['secs']['soma'] = {'geom': {'diam': 30, 'L': 30, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 1.8e-6, 'e': -65},
                                                                                     'ch_Kcnn3_md169457': {'gSK_E2bar':cfg.gsk}, #0.000001
-                                                                                    'cadad':{'depth':2, 'taur':cfg.tau, 'cainf':2.4e-4} }   }
+                                                                                    #'ch_Kcnma1_md97860': {'gbar':0.1}, #1  
+                                                                                    'cadad':{'depth':1, 'taur':cfg.tau, 'cainf':2.4e-4} }   }
 
 # 'ch_Kcnma1_md97860': {'gbar':0.1}, #1                                                                                
 
