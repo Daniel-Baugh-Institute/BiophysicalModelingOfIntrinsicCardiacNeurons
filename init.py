@@ -26,15 +26,4 @@ fih = [h.FInitializeHandler(2, fi)]
 sim.simulate()
 sim.analyze()
 
-# file = open('edump_21jul26b.csv','a') 
-# csvwriter = csv.writer(file, delimiter = '\t')
-# csvwriter.writerow(elist)
-# file.close()
-
-# if h.ismembrane("me_cadad_Adestexhe"):
-#         h.setdata_me_cadad_Adestexhe(seg(0.5))
-#         seg.kd_me_cadad_Adestexhe = seg.cai*(-(seg.cai * seg.depth_me_cadad_Adestexhe *h.FARADAY) + seg.cainf_me_cadad_Adestexhe * seg.depth_me_cadad_Adestexhe * h.FARADAY - \
-#             5000*seg.ica*seg.taur_me_cadad_Adestexhe - seg.depth_me_cadad_Adestexhe * h.FARADAY*seg.kt_me_cadad_Adestexhe * seg.taur_me_cadad_Adestexhe)
-#         seg.kd_me_cadad_Adestexhe = seg.kd_me_cadad_Adestexhe/(seg.cai*seg.depth_me_cadad_Adestexhe*h.FARADAY - seg.cainf_me_cadad_Adestexhe * seg.depth_me_cadad_Adestexhe * h.FARADAY + \
-#                5000*seg.ica*seg.taur_me_cadad_Adestexhe)
 
