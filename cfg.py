@@ -3,12 +3,12 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig() 
 
 cfg.hParams = {'celsius':35, 'v_init':-61}
-cfg.duration = 600  #1500 #1*1e3 #(ms)
+cfg.duration = 1000  #1500 #1*1e3 #(ms)
 cfg.dt = 0.025          
 cfg.verbose = False     
 cfg.recordCells = ['all']
-cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
-                        'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
+cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
+                        #'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
 #                         'epas' : {'sec': 'soma', 'loc': 0.5,'var': 'e_pas'},
 #                     'ih':{'sec': 'soma', 'loc': 0.5,'var': 'iother'}, 
 #                     'ina': {'sec': 'soma', 'loc': 0.5,'var': 'ina'},
@@ -32,7 +32,7 @@ cfg.cellnum = 1
 cfg.recordStep = 0.1       
 cfg.filename = '21jul30a/12'
 cfg.saveJson = True
-cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
+cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
 
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
