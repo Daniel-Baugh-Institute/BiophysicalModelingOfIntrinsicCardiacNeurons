@@ -30,7 +30,7 @@ cfg.amp= 0.6
 cfg.cellnum = 1 
 
 cfg.recordStep = 0.1       
-cfg.filename = '21jul30a/8'
+cfg.filename = '21jul30a/9'
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
