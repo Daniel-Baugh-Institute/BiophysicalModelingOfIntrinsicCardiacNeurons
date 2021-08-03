@@ -3,7 +3,7 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig() 
 
 cfg.hParams = {'celsius':35, 'v_init':-61}
-cfg.duration = 1000  #1500 #1*1e3 #(ms)
+cfg.duration = 500  #1500 #1*1e3 #(ms)
 cfg.dt = 0.025          
 cfg.verbose = False     
 cfg.recordCells = ['all']
@@ -37,7 +37,7 @@ cfg.depth = 2
 cfg.recordStep = 0.1       
 cfg.filename = '21aug02c/2'
 cfg.saveJson = True
-cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}
+cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
 
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
