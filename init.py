@@ -23,9 +23,7 @@ def fi():
 
 
 fih = [h.FInitializeHandler(2, fi)]
-print('SSSSSSSSSSSSSSSSIM before simulate')
 sim.simulate()
-print('AAAAAAAAAAAAAAAASIM after simulate')
 sim.analyze()
 
 
