@@ -31,12 +31,9 @@ cfg.cellnum = 1
 cfg.gkcnc = 0.015
 
 cfg.recordStep = 0.1       
-cfg.filename = '21aug02c/2'
+cfg.filename = '21aug04a'
 cfg.saveJson = True
-cfg.analysis['plotTraces'] = None
+cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
 
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
-
-             
-
