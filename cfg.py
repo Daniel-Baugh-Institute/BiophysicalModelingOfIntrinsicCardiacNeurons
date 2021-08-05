@@ -3,7 +3,7 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig() 
 
 cfg.hParams = {'celsius':35, 'v_init':-61}
-cfg.duration = 5  #1500 #1*1e3 #(ms)
+cfg.duration = 500  #1500 #1*1e3 #(ms)
 cfg.dt = 0.025          
 cfg.verbose = False     
 cfg.recordCells = ['all']
@@ -29,7 +29,7 @@ cfg.stim = 'IClamp'
 cfg.amp= 0.6    
 cfg.cellnum = 1 
 cfg.gkcnc = 0.015
-
+cfg.gkcna = 0.015
 cfg.recordStep = 0.1       
 cfg.filename = '21aug04a'
 cfg.saveJson = True
