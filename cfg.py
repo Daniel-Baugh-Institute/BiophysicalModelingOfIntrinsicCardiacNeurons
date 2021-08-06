@@ -31,7 +31,7 @@ cfg.cellnum = 1
 cfg.gkcnc = 0.015
 
 cfg.recordStep = 0.1       
-cfg.filename = '21aug04a'
+cfg.filename = '21aug04b'
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
