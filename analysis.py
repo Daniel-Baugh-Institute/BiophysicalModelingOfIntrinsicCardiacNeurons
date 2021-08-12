@@ -26,7 +26,7 @@ def readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, 
         listCombs = dataLoad['paramsMatch']
 
     # read the batch file and cfg
-    batchFile = '%s/%s_batch.json' % (dataFolder, batchLabel)
+    batchFile = '/tera/suri/%s/%s_batch.json' % (dataFolder, batchLabel)
     with open(batchFile, 'r') as fileObj:
         b = json.load(fileObj)['batch']
 
@@ -53,7 +53,7 @@ def readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, 
                 # read output file
                 iCombStr = ''.join([''.join('_'+str(i)) for i in iComb])
                 simLabel = b['batchLabel']+iCombStr
-                outFile = b['saveFolder']+'/'+simLabel+'.json'
+                outFile = b['saveFolder']+'/'+simLabel+'_data.json'
                 try:
                     with open(outFile, 'r') as fileObj:
                         output = json.load(fileObj, object_pairs_hook=OrderedDict)
@@ -84,7 +84,7 @@ def readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, 
         # save
         if saveAll:
             print('Saving to single file with all data')
-            filename = '%s/%s_allData.json' % (dataFolder, batchLabel)
+            filename = '/tera/suri/%s/%s_allData.json' % (dataFolder, batchLabel)
             #(dataFolder, batchLabel) #(target if target else dataFolder, batchLabel)
             dataSave = {'params': params, 'data': data}
             with open(filename, 'w') as fileObj:
