@@ -6,7 +6,7 @@ from netpyne.batch import Batch
 def batch():
         params = specs.ODict()
         params['amp'] = [0.6, 1.0] #, 1.5]                                    
-        params['cellnum'] = [x for x in range(115)]
+        params['cellnum'] = [x for x in range(101)]
         params['gkcna'] = [0.015, 0.03, 0.05, 0.1, 0.3, 0.5]
         params['gkcnc'] = [0.015, 0.03, 0.05, 0.1, 0.3, 0.5]
         
