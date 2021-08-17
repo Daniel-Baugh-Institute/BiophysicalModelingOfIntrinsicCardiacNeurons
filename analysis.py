@@ -139,8 +139,8 @@ def spikeStats(df=df):
     return dfss
     
 def svSpikeStats(dataFolder, batchLabel, dfss=dfss):
-    filenamejson = '%s/%s_spkStats.json' % (dataFolder, batchLabel)   
-    filenamepkl =  '%s/%s_spkStats.pkl' % (dataFolder, batchLabel)   
+    filenamejson = '/tera/suri/%s/%s_spkStats.json' % (dataFolder, batchLabel)   
+    filenamepkl =  '/tera/suri/%s/%s_spkStats.pkl' % (dataFolder, batchLabel)   
     dfss.to_pickle(filenamepkl)
     dfss.to_json(filenamejson)
 
