@@ -1,4 +1,4 @@
-from netpyne import sim
+≈from netpyne import sim
 from neuron import h
 import csv
 
