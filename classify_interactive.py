@@ -13,17 +13,22 @@ dclass['Vton'] = df.spkt.apply(lambda x: 1 if len(x)>3 and stim['delay']<=x[-1]<
 dclass['Vton_susps'] = dclass.spkend.apply(lambda x: 1 if stimend+5<=x>=data[list(data)[0]]['simConfig']['duration']-50 else 0)
 dclass['Vton_brfps'] = dclass.spkend.apply(lambda x: 1 if stimend+5<=x<=data[list(data)[0]]['simConfig']['duration']-50 else 0)
 
+dclass.sum() # prints all columns
+dtypes = ['Vsubth','Vph','Vton','Vton_susps','Vton_brfps']
+dclass[dtypes].sum()
+
+
 import matplotlib.pyplot as plt
 fig, ax = plt.subplots()
 ax.clear()
 for a,c in zip(set(df['amp']), ('g','r')): dclass.loc[df.amp==a].plot.scatter('cellnum', 'Vsubth', color=c, ax=ax)
 plt.title('Subthreshold')
-plt.savefig('21aug11a'+ '_0s.png')
+plt.savefig('21aug18a'+ '_0s.png')
 plt.show()
 
 fig, ax = plt.subplots()
 ax.clear()
 for a,c in zip(set(df['amp']), ('g','r')): dclass.loc[df.amp==a].plot.scatter('cellnum', 'Vph', color=c, ax=ax)
 plt.title('Phasic')
-plt.savefig('21aug11a'+ '_0p.png')
+plt.savefig('21aug18a'+ '_0p.png')
 plt.show()
