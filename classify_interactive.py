@@ -15,20 +15,22 @@ dclass['Vton_brfps'] = dclass.spkend.apply(lambda x: 1 if stimend+5<=x<=data[lis
 
 dclass.sum() # prints all columns
 dtypes = ['Vsubth','Vph','Vton','Vton_susps','Vton_brfps']
+arr = dclass[dtypes].sum()
+
+import matplotlib.pyplot as plt
+arr.plot.bar(legend=False)
+plt.savefig('ZZZ.png')
+plt.show()
+
 dclass[dtypes].sum()
 
 
-import matplotlib.pyplot as plt
+
+
+
 fig, ax = plt.subplots()
 ax.clear()
 for a,c in zip(set(df['amp']), ('g','r')): dclass.loc[df.amp==a].plot.scatter('cellnum', 'Vsubth', color=c, ax=ax)
 plt.title('Subthreshold')
-plt.savefig('21aug18a'+ '_0s.png')
-plt.show()
-
-fig, ax = plt.subplots()
-ax.clear()
-for a,c in zip(set(df['amp']), ('g','r')): dclass.loc[df.amp==a].plot.scatter('cellnum', 'Vph', color=c, ax=ax)
-plt.title('Phasic')
-plt.savefig('21aug18a'+ '_0p.png')
+plt.savefig('ZZZ.png')
 plt.show()
