@@ -22,6 +22,9 @@ arr.plot.bar(legend=False)
 plt.savefig('ZZZ.png')
 plt.show()
 
+dsubclass = dclass[['Vsubth','Vph','Vton','Vton_susps','Vton_brfps']].copy()
+
+
 dclass[dtypes].sum()
 
 
