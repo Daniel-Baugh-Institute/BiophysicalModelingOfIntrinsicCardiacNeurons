@@ -27,7 +27,7 @@ fig = plt.figure()
 arr.plot.bar(legend=True)
 plt.ylabel('#of Cells')
 plt.title('Counts')
-plt.savefig('21aug18a_bar.png')
+plt.savefig('21aug12a_bar.png')
 plt.show()
 
 
@@ -43,7 +43,7 @@ plt.yticks([0.1,1.1],"")
 plt.ylabel('Subtypes')
 plt.title('Classification')
 plt.show()
-plt.savefig('21aug18a_scatter.png')
+plt.savefig('21aug12a_scatter.png')
 
 
 # single amp: 115 cells: 21jul07A
