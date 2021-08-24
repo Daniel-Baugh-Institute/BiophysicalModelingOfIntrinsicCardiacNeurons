@@ -27,24 +27,23 @@ fig = plt.figure()
 arr.plot.bar(legend=True)
 plt.ylabel('#of Cells')
 plt.title('Counts')
-plt.savefig('21jul18a_bar.png')
+plt.savefig('21aug18a_bar.png')
 plt.show()
 
 
 fig = plt.figure()
 ax = fig.add_subplot()
-for a,c in zip(set(df['amp']), ('g','r','m')): dclass.loc[df.amp==a].plot.scatter('cellnum', 'Vsubth',marker='x',color=c,ax=ax)
-for a,c in zip(set(df['amp']), ('g','r','m')): dclass.loc[df.amp==a].plot.scatter('cellnum', 'Vph',marker='o',color=c,ax=ax)
+for a,c in zip(set(df['amp']), ('g','r','m')): dclass.loc[df.amp==a].plot.scatter('cellnum', 'Vsubth',marker='o',color=c,ax=ax)
+for a,c in zip(set(df['amp']), ('g','r','m')): dclass.loc[df.amp==a].plot.scatter('cellnum', 'Vph',marker='x',color=c,ax=ax)
 for a,c in zip(set(df['amp']), ('g','r','m')): dclass.loc[df.amp==a].plot.scatter('cellnum', 'Vton',marker='s',color=c,ax=ax)
 for a,c in zip(set(df['amp']), ('g','r','m')): dclass.loc[df.amp==a].plot.scatter('cellnum', 'Vton_brfps',marker='^',color=c,ax=ax)
 for a,c in zip(set(df['amp']), ('g','r','m')): dclass.loc[df.amp==a].plot.scatter('cellnum', 'Vton_susps',marker='*',color=c,ax=ax)
 plt.ylim(0.1,1.1)
 plt.yticks([0.1,1.1],"")
-plt.legend()
 plt.ylabel('Subtypes')
 plt.title('Classification')
 plt.show()
-plt.savefig('21jul18a_scatter.png')
+plt.savefig('21aug18a_scatter.png')
 
 
 # single amp: 115 cells: 21jul07A
