@@ -26,12 +26,12 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
                     # 'ihcn4':{'sec': 'soma', 'loc': 0.5,'var': 'ihcn4_ch_Hcn4_cp12'}}
 
 cfg.stim = 'IClamp'
-cfg.amp= 0.6    
-cfg.cellnum =1
 cfg.hcn1 = 0.00001
 cfg.hcn2 = 0.009
 cfg.hcn3 = 0.0001
 cfg.hcn4 = 0.0002
+cfg.amp = 0.6    
+cfg.cellnum = 1
 
 cfg.recordStep = 0.1       
 cfg.filename = '21aug06a'
