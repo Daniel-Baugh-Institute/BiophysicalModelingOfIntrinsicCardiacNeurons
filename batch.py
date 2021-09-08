@@ -7,15 +7,14 @@ def batch():
         params = specs.ODict()
         params['amp'] = [0.6, 1.0]
         params['cellnum'] = [x for x in range(101)]
-        # params['ca1a'] = [0.00001, 0.0001, 0.001, 0.01]
-        # params['ca1b'] = [0.00001, 0.0001, 0.001, 0.01]
-        # params['ca1c'] = [0.00001, 0.0001, 0.001, 0.01]
-        params['ca1g'] = [0.00001, 0.0001, 0.001, 0.01]
-        params['ca1i'] = [0.000027,0.00027,0.0027,0.027]
+        params['hcn1'] = [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1] 
+        # params['hcn2'] = [0.000009, 0.00009, 0.0009, 0.009, 0.09, 0.9]
+        params['hcn3'] = [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1]
+        # params['hcn4'] = [0.000002, 0.00002, 0.0002, 0.002, 0.02, 0.2]
 
         b = Batch(params=params, cfgFile='cfg.py', netParamsFile='netParams_A.py')
         # Set output folder, grid method (all param combinations), and run configuration
-        b.batchLabel = '21sep08b' 
+        b.batchLabel = '21sep08c' 
         b.saveFolder = '/tera/' + os.getlogin() + '/' + b.batchLabel
         b.method = 'grid'
         b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
