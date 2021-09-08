@@ -9,8 +9,8 @@ except:
 
 # order in genemod MUST be preserved to match cell_identities channel order
 genemod = {'ch_Cacna1a_cp5':{'gCav2_1bar': cfg.ca1a},  'ch_Cacna1b_cp6':{'gCav2_2bar': cfg.ca1b},
-           'ch_Cacna1c_cp3':{'gLbar': cfg.ca1c},        'ch_Cacna1g_cp41':{'gCav3_1bar': cfg.ca1g},
-           'ch_Cacna1i_md279':{'gcabar': cfg.ca1i},  'ch_Hcn1_cp9':{'gHCN1bar': 0.00001},         #pcabar =.2e-3; 'gCav3_3bar': 0.0001
+           'ch_Cacna1c_cp3':{'gLbar': cfg.ca1c},        'ch_Cacna1g_cp41':{'gCav3_1bar': 0.00001},
+           'ch_Cacna1i_md279':{'gcabar': 0.00027},  'ch_Hcn1_cp9':{'gHCN1bar': 0.00001},         #pcabar =.2e-3; 'gCav3_3bar': 0.0001
            'ch_Hcn2_cp10':{'gHCN2bar': 0.009},           'ch_Hcn3_cp11':{'gHCN3bar': 0.0001},    
            'ch_Hcn4_cp12':{'gHCN4bar': 0.0002},           'ch_Kcna1ab1_md80769':{'gbar': 0.015},   #0.015; 0.0054
            'ch_Kcnc1_md74298':{'gk': 0.015},            'ch_Scn1a_md264834':{'gNav11bar': 1.0}}     #1.0    #0.015
