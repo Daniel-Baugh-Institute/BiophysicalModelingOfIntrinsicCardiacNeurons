@@ -28,11 +28,11 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
 cfg.stim = 'IClamp'
 cfg.amp = 0.6    
 cfg.cellnum = 1
-cfg.ca1a = 0.00001
-cfg.ca1b = 0.0001
-cfg.ca1c = 0.0001
-# cfg.ca1g = 0.00001
-# cfg.ca1i = 0.00027
+# cfg.ca1a = 0.00001
+# cfg.ca1b = 0.0001
+# cfg.ca1c = 0.0001
+cfg.ca1g = 0.00001
+cfg.ca1i = 0.00027
 
 
 cfg.recordStep = 0.1       
