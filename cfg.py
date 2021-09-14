@@ -1,3 +1,4 @@
+import sys, os
 from netpyne import specs
 from netpyne.specs import simConfig
 cfg = specs.SimConfig() 
