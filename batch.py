@@ -14,7 +14,7 @@ def batch():
 
         b = Batch(params=params, cfgFile='cfg.py', netParamsFile='netParams_A.py')
         # Set output folder, grid method (all param combinations), and run configuration
-        b.batchLabel = '21sep14a' 
+        b.batchLabel = '21sep14b' 
         b.saveFolder = '/tera/' + os.getlogin() + '/' + b.batchLabel
         b.method = 'grid'
         b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
