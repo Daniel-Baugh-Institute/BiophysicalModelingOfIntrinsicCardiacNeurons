@@ -27,5 +27,6 @@ print('SSSSSSSSSSSSSSSSIM before simulate')
 sim.simulate()
 print('AAAAAAAAAAAAAAAASIM after simulate')
 sim.analyze()
+h.quit()
 
 
