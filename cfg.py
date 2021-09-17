@@ -35,7 +35,7 @@ cfg.ka = 0.11
 
 cfg.recordStep = 0.1       
 # cfg.filename = '21sep14d/'
-cfg.simLabel = '21sep14f'
+cfg.simLabel = '21sep17a'
 cfg.saveFolder = '/tera/' + os.getlogin() + '/' +cfg.simLabel
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}
