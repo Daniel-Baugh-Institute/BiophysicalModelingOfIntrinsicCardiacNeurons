@@ -21,9 +21,9 @@ cell = cell_identities[cfg.cellnum]
 CEL = {'secs': {}}
 
 CEL['secs']['soma'] = {'geom': {'diam': 30, 'L': 30, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 1.8e-6, 'e': -65}, 
-                                                                                    'ch_Kcnd2_md143100': {'gmax': cfg.ka}, 
-                                                                                    'ch_Kcnq1_md183949': {'gmax': cfg.km}   } }
+                                                                                    'ka': {'gkabar': cfg.ka}  } }
                                                                             
+#KAAR_rybak; gAbar
 
 for mod,onoff in zip(genemod,cell):
     if onoff:
