@@ -1,6 +1,6 @@
 import sys, os
 import numpy as np
-from netpyne import specs 
+from netpyne import specs, pc 
 from neuron import h
 import sys, inspect
 from netpyne.batch import Batch
@@ -16,10 +16,13 @@ def batch():
 
     b = Batch(params=params, cfgFile='cfg.py', netParamsFile='netParams_A.py')
     # Set output folder, grid method (all param combinations), and run configuration
-    b.batchLabel = '21oct08a' 
+    b.batchLabel = '21oct19a' 
     b.saveFolder = b.batchLabel
     b.method = 'grid'
     b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
     b.run()
 
 batch()
+pc.quit()
+h.quit()
+
