@@ -11,7 +11,6 @@ def parseBatchParams (b):
     bl, pl = [(i, p.match(l)) for i,l in enumerate(lines)], [] # bl: lines that match regexp
     for i,m in bl:
         if m:
-            print('AAAA',m.group(2))
             try:
                 pl.append((m.group(1), eval(m.group(2)), m.group(3))) # strings: name, valueList, [indexed]
                 print(f'setting {m.group(1)} to {"indexed" if m.group(3) else "continuous"} in range {(lambda x:(min(x),max(x)))(eval(m.group(2)))}')
@@ -53,7 +52,6 @@ def getArgs ():
     # parser.add_argument("-r", default='sobol.csv', help='raw output from sobol call (default ./sobol.csv)')
     parser.add_argument("-f", default='params.csv', help='file for saving param lists (default ./params.csv)')
     parser.add_argument("-s", default=1234, type=int, help='seed')
-    parser.add_argument("-z", action='store_true', default=False, help='append a zero to each sobolized param (eg to turn off ion channel)')
     # parser.add_argument("-v", action='store_true', default=False, help='output to terminal')
     parser.add_argument("-b", default='batch.py', help='name of batchfile with "params" ranges (default ./batch.py)')
     return parser.parse_args()
