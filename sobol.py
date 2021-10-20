@@ -7,10 +7,11 @@ from itertools import product
 def parseBatchParams (b):
     ''' read a batch.py file for NetPyNE param search; returning list of (name, valueList, [indexed]) where optional indexed means to use all the values '''
     with open(b,'r') as fb: lines = fb.readlines()
-    p = re.compile(r'''\s +params[^a-z]+([^]']+)'\]\s *=\s *(\[[^]]+\])\s *#*\s *(indexed)*''') # 'indexed' is the keyword to NOT sobolize eg amp or cellnum
+    p = re.compile(r'''\s+params[^a-z]+([^]']+)'\]\s*=\s*(\[[^]]+\])\s*#*\s*(indexed)*''') # 'indexed' is the keyword to NOT sobolize eg amp or cellnum
     bl, pl = [(i, p.match(l)) for i,l in enumerate(lines)], [] # bl: lines that match regexp
     for i,m in bl:
         if m:
+            print('AAAA',m.group(2))
             try:
                 pl.append((m.group(1), eval(m.group(2)), m.group(3))) # strings: name, valueList, [indexed]
                 print(f'setting {m.group(1)} to {"indexed" if m.group(3) else "continuous"} in range {(lambda x:(min(x),max(x)))(eval(m.group(2)))}')
