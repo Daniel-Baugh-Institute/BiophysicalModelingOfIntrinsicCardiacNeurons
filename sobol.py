@@ -13,6 +13,7 @@ def parseBatchParams (b):
         if m:
             try:
                 pl.append((m.group(1), eval(m.group(2)), m.group(3))) # strings: name, valueList, [indexed]
+                print(f'setting {m.group(1)} to {"indexed" if m.group(3) else "continuous"} in range {(lambda x:(min(x),max(x)))(eval(m.group(2)))}')
             except Exception as e:
                 print(f"ERROR >>>{e}<<<\n\tunable to evaluate '{m.group(2)}':\n\tline {i}: {m.string.strip()}")
     return pl
