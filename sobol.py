@@ -1,19 +1,23 @@
 #!/usr/bin/env python
 
-import math, re, csv
+import math, re, csv, os, sys
 from scipy.stats import qmc
 from itertools import product
 
 def parseBatchParams (b):
     ''' read a batch.py file for NetPyNE param search; returning list of (name, valueList, [indexed]) where optional indexed means to use all the values '''
-    with open(b,'r') as fb: lines = fb.readlines()
+    try: 
+        with open(b,'r') as fb: lines = fb.readlines()
+        print(f'Reading {os.getcwd()+"/"+b}')
+    except Exception as e:
+        print(f"ERROR >>>{e}<<<")
     p = re.compile(r'''\s+params[^a-z]+([^]']+)'\]\s*=\s*(\[[^]]+\])\s*#*\s*(indexed)*''') # 'indexed' is the keyword to NOT sobolize eg amp or cellnum
     bl, pl = [(i, p.match(l)) for i,l in enumerate(lines)], [] # bl: lines that match regexp
     for i,m in bl:
         if m:
             try:
                 pl.append((m.group(1), eval(m.group(2)), m.group(3))) # strings: name, valueList, [indexed]
-                print(f'setting {m.group(1)} to {"indexed" if m.group(3) else "continuous"} in range {(lambda x:(min(x),max(x)))(eval(m.group(2)))}')
+                print(f'\tsetting {m.group(1)} to {"indexed" if m.group(3) else "continuous"} in range {(lambda x:(min(x),max(x)))(eval(m.group(2)))}')
             except Exception as e:
                 print(f"ERROR >>>{e}<<<\n\tunable to evaluate '{m.group(2)}':\n\tline {i}: {m.string.strip()}")
     return pl
@@ -37,9 +41,18 @@ def sobcall (pl, num, seed=33):
 def sob (dim=4, num=4096, seed=1234):
     sm = qmc.Sobol(d=dim, scramble=True, seed=seed)
     m = math.floor(math.log(num)/math.log(2) + 0.99) # round up to nearest power of 2
-    if 2**m != num: print(f'{2**m} samples (2^{m} ; {num} requested)')
+    if 2**m != num: print(f'\t{2**m} samples (2^{m} ; {num} requested)')
     vals = sm.random_base2(m=m) # 2^m points
     return vals
+
+def output (out):
+    try: 
+        with open(ag.f, 'w') as f:
+            wr = csv.writer(f)
+            wr.writerows(out)
+        print(f'Output to {os.getcwd()+"/"+ag.f}')
+    except Exception as e:
+        print(f"ERROR >>>{e}<<<")
 
 def getArgs ():
     import argparse
@@ -58,7 +71,4 @@ def getArgs ():
 
 if __name__ == '__main__':
     ag = getArgs()
-    allvals = sobcall(parseBatchParams(ag.b), ag.cnt)
-    with open(ag.f, 'w') as f:
-        wr = csv.writer(f)
-        wr.writerows(allvals)
+    output(sobcall(parseBatchParams(ag.b), ag.cnt))
