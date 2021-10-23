@@ -1,15 +1,10 @@
 from netpyne import sim
 from neuron import h
-import csv
+import csv, sys
 
-simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams_A.py')
-# sim.createSimulateAnalyze(netParams=netParams, simConfig=simConfig)
-sim.create(netParams=netParams, simConfig=simConfig)
-
-seg = sim.net.cells[0].secs.soma.hObj(0.5) # since only 1 cell with nseg=1 can jump straight to that seg
 # elist = []
 
-def fi():
+def fi(seg):
     '''set steady state RMP for 1 cell'''
     isum = 0
     isum = (seg.ina if h.ismembrane('na_ion') else 0) + (seg.ik if h.ismembrane('k_ion') else 0) + (seg.ica if h.ismembrane('ca_ion') else 0) + (seg.iother if h.ismembrane('other_ion') else 0)
@@ -21,12 +16,14 @@ def fi():
     # elist.append(seg.e_pas)
 
 
+def simSim (np0, sc0):
+    sim.createSimulateAnalyze(netParams=np0, simConfig=sc0)
+    fih = [h.FInitializeHandler(2, lambda: fi(sim.net.cells[0].secs.soma.hObj(0.5)))]
+    print('BEFORE simulate')
+    sim.simulate()
+    sim.saveData()
+    print('AFTER save')
 
-fih = [h.FInitializeHandler(2, fi)]
-print('SSSSSSSSSSSSSSSSIM before simulate')
-sim.simulate()
-print('AAAAAAAAAAAAAAAASIM after simulate')
-sim.analyze()
-h.quit()
-
-
+if __name__ == "__main__":
+    simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams_A.py')
+    simSim(netParams, simConfig)
