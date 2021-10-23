@@ -60,12 +60,12 @@ def getArgs ():
              Params may be indicated as '# indexed' in which case the batch values given will be used.
              Other params will be scaled using a sobol quasi-monte carlo distribution'''
     parser = argparse.ArgumentParser(description=msg, )
-    # parser.add_argument('--dim', nargs='?', type=int, default=4, help='dim of space to be sampled')
-    parser.add_argument('--cnt', nargs='?', type=int, default=10, help='num of samples: will be rounded up to a power of 2')
+    # parser.add_argument('-d', '--dims', nargs='?', type=int, default=4, help='dim of space to be sampled')
+    parser.add_argument('-c', '--cnt', nargs='?', type=int, default=10, help='num of samples: will be rounded up to a power of 2') # input as `--` name
     # parser.add_argument("-r", default='sobol.csv', help='raw output from sobol call (default ./sobol.csv)')
     parser.add_argument("-f", default='params.csv', help='file for saving param lists (default ./params.csv)')
     parser.add_argument("-s", default=1234, type=int, help='seed')
-    # parser.add_argument("-v", action='store_true', default=False, help='output to terminal')
+    # parser.add_argument("-v", action='store_true', default=False, help='verbose output to terminal')
     parser.add_argument("-b", default='batch.py', help='name of batchfile with "params" ranges (default ./batch.py)')
     return parser.parse_args()
 
