@@ -1,10 +1,9 @@
 import sys, os
+sys.path.insert(0,'/u/billl/nrniv/netpyne') # CHANGE -- make sure which netpyne we're reading
 import numpy as np
 import inspect
 from netpyne import specs
 from netpyne.batch import Batch
-
-print('Netpyne batch from ', inspect.getsourcefile(Batch))
 
 def batch():
         params = specs.ODict()
@@ -15,9 +14,9 @@ def batch():
 
         b = Batch(params=params, cfgFile='cfg.py', netParamsFile='netParams_A.py')
         # Set output folder, grid method (all param combinations), and run configuration
-        b.batchLabel = '21oct23b' 
+        b.batchLabel = '21oct23c' 
         b.saveFolder = '/tera/' + os.getlogin() + '/' + b.batchLabel
-        b.method = 'list'
+        b.method = 'list'  # params.csv will be read by default; else need name in cfg.paramListFile
         b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
         b.run()
 

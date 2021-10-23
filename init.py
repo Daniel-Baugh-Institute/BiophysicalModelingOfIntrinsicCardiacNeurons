@@ -1,8 +1,5 @@
 from netpyne import sim
 from neuron import h
-import csv, sys
-
-# elist = []
 
 def fi(seg):
     '''set steady state RMP for 1 cell'''
@@ -11,10 +8,7 @@ def fi(seg):
     seg.e_pas = cfg.hParams['v_init']+isum/seg.g_pas 
     if h.ismembrane('cadad'):
         seg.cainf_cadad = seg.cai - ((- (10000) * seg.ica / (2 * h.FARADAY * seg.depth_cadad)) * seg.taur_cadad)
-    print(cfg.cellnum)
-    print(seg.e_pas)
-    # elist.append(seg.e_pas)
-
+    print(cfg.cellnum, seg.e_pas)
 
 def simSim (np0, sc0):
     sim.createSimulateAnalyze(netParams=np0, simConfig=sc0)
@@ -24,6 +18,5 @@ def simSim (np0, sc0):
     sim.saveData()
     print('AFTER save')
 
-if __name__ == "__main__":
-    simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams_A.py')
-    simSim(netParams, simConfig)
+simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams_A.py')
+simSim(netParams, simConfig)
