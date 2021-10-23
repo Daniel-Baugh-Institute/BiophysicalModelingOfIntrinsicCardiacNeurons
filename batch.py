@@ -17,7 +17,7 @@ def batch():
         # Set output folder, grid method (all param combinations), and run configuration
         b.batchLabel = '21oct23b' 
         b.saveFolder = '/tera/' + os.getlogin() + '/' + b.batchLabel
-        b.method = 'grid'
+        b.method = 'list'
         b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
         b.run()
 
