@@ -82,7 +82,7 @@ def readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, 
         print('%d files missing' % (missing))
     elif b['method'] == 'list':
         dfpara = pd.read_csv('params.csv',delimiter=',')
-	labelList = dfpara.columns.values.tolist()
+	labelList = list(dfpara.columns)
 	#pass
 
     else:
