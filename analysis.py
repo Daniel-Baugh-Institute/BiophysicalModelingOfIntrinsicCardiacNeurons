@@ -19,28 +19,28 @@ def readAllData(filename, dfonly=True):
 # readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None)
 def readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None):
     '''gather data from dataFolder with batchLabel and save back to dataFolder or to target'''
-    if isinstance(listCombs, str):
-        filename = str(listCombs)
-        with open(filename, 'r') as fileObj:
-            dataLoad = json.load(fileObj)
-        listCombs = dataLoad['paramsMatch']
-
     # read the batch file and cfg
-    batchFile = '/tera/suri/%s/%s_batch.json' % (dataFolder, batchLabel)
+    batchFile = f'{dataFolder}/{batchLabel_batch.json}'
     with open(batchFile, 'r') as fileObj:
         b = json.load(fileObj)['batch']
 
-    # read params labels and ranges
-    params = b['params']
-
-    # reorder so grouped params come first
-    preorder = [p for p in params if 'group' in p and p['group']]
-    for p in params:
-        if p not in preorder: preorder.append(p)
-    params = preorder
-
-    # read vars from all files - store in dict
     if b['method'] == 'grid':
+        if isinstance(listCombs, str):
+            filename = str(listCombs)
+            with open(filename, 'r') as fileObj:
+                dataLoad = json.load(fileObj)
+            listCombs = dataLoad['paramsMatch']
+
+        # read params labels and ranges
+        params = b['params']
+
+        # reorder so grouped params come first
+        preorder = [p for p in params if 'group' in p and p['group']]
+        for p in params:
+            if p not in preorder: preorder.append(p)
+        params = preorder
+
+        # read vars from all files - store in dict
         labelList, valuesList = list(zip(*[(p['label'], p['values']) for p in params]))
         valueCombinations = product(*(valuesList))
         indexCombinations = product(*[list(range(len(x))) for x in valuesList])
@@ -80,17 +80,22 @@ def readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, 
                 missing = missing + 1
 
         print('%d files missing' % (missing))
+    elif b['method'] == 'list':
+        pass
 
-        # save
-        if saveAll:
-            print('Saving to single file with all data')
-            filename = '/tera/suri/%s/%s_allData.json' % (dataFolder, batchLabel)
-            #(dataFolder, batchLabel) #(target if target else dataFolder, batchLabel)
-            dataSave = {'params': params, 'data': data}
-            with open(filename, 'w') as fileObj:
-                json.dump(dataSave, fileObj)
+    else:
+        raise Exception(f"Method {b['method'] if b['method'] else 'No method'} files cannot be read.")
+        
+    # save
+    if saveAll:
+        print('Saving to single file with all data')
+        filename = '/tera/suri/%s/%s_allData.json' % (dataFolder, batchLabel)
+        #(dataFolder, batchLabel) #(target if target else dataFolder, batchLabel)
+        dataSave = {'params': params, 'data': data}
+        with open(filename, 'w') as fileObj:
+            json.dump(dataSave, fileObj)
 
-        return params, data
+    return params, data
 
 # toPandas(params, data) convert data to Pandas
 def toPandas(params, data):
