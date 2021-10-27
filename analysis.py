@@ -81,7 +81,9 @@ def readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, 
 
         print('%d files missing' % (missing))
     elif b['method'] == 'list':
-        pass
+        dfpara = pd.read_csv('params.csv',delimiter=',')
+	params = dfparams.columns.values.tolist()
+	#pass
 
     else:
         raise Exception(f"Method {b['method'] if b['method'] else 'No method'} files cannot be read.")
