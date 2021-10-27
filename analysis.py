@@ -20,7 +20,7 @@ def readAllData(filename, dfonly=True):
 def readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None):
     '''gather data from dataFolder with batchLabel and save back to dataFolder or to target'''
     # read the batch file and cfg
-    batchFile = f'{dataFolder}/{batchLabel_batch.json}'
+    batchFile = f'{dataFolder}/{batchLabel}_batch.json'
     with open(batchFile, 'r') as fileObj:
         b = json.load(fileObj)['batch']
 
@@ -82,7 +82,7 @@ def readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, 
         print('%d files missing' % (missing))
     elif b['method'] == 'list':
         dfpara = pd.read_csv('params.csv',delimiter=',')
-	labelList = list(dfpara.columns)
+        labelList = list(dfpara.columns)
 	#pass
 
     else:
