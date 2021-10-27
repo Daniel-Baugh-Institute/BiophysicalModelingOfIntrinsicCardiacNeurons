@@ -5,6 +5,7 @@ import json
 import pickle
 import pandas as pd
 import numpy as np
+import os
 from collections import OrderedDict
 from itertools import product
 df = dfss = filenamepkl = None
@@ -81,6 +82,7 @@ def readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, 
 
         print('%d files missing' % (missing))
     elif b['method'] == 'list':
+        fileList = [x for x in os.scandir(dataFolder)]
         dfpara = pd.read_csv('params.csv',delimiter=',')
         labelList = list(dfpara.columns)
 	#pass
