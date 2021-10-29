@@ -88,7 +88,11 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
         fileList = [x.name for x in os.scandir(dataFolder) if x.name.endswith('_data.json')]
         fileList.sort(key=lambda x: int(re.split(f'{batchLabel}|[_.]',x)[1]))
         dfParam = pd.read_csv(paramFile,delimiter=',')
-        labelList = list(dfParam.columns)
+        if (len(dfParam)!=len(fileList)):
+            raise Exception(f"Dimensions do not match. File cannot be read")
+            exit()
+        else:
+            labelList = list(dfParam.columns)
 	#pass
 
     else:
