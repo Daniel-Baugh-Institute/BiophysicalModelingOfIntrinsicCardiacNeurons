@@ -89,7 +89,7 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
         fileList.sort(key=lambda x: int(re.split(f'{batchLabel}|[_.]',x)[1]))
         dfParam = pd.read_csv(paramFile,delimiter=',')
         if (len(dfParam)!=len(fileList)):
-            raise Exception(f"The number of files in {fileList} and the no. of parameters in {paramFile} do not match. {paramFile} cannot be read")
+            raise Exception(f"The number of files in {dataFolder} and the no. of parameters in {paramFile} do not match. {paramFile} cannot be read")
         labelList = list(dfParam.columns)
 	#pass
 
