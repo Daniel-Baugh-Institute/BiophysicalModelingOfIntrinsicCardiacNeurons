@@ -19,7 +19,7 @@ def readAllData(filename, dfonly=True):
     return df if dfonly else params, data, df
 
 # readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None)
-def readBatchData(dataFolder, batchLabel, paramFile = None, target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None):
+def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None):
     '''gather data from dataFolder with batchLabel and save back to dataFolder or to target'''
     # read the batch file and cfg
     batchFile = f'{dataFolder}/{batchLabel}_batch.json'
