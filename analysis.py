@@ -84,8 +84,7 @@ def readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, 
         print('%d files missing' % (missing))
     elif b['method'] == 'list':
         fileList = [x.name for x in os.scandir(dataFolder) if x.name.endswith('_data.json')]
-        numSeq = [int(re.split(f'{batchLabel}|[_.]',x)[1]) for x in fileList]
-        numSeq.sort()
+        fileList.sort(key=lambda x: int(re.split(f'{batchLabel}|[_.]',x)[1]))
         dfpara = pd.read_csv('params.csv',delimiter=',')
         labelList = list(dfpara.columns)
 	#pass
