@@ -5,7 +5,7 @@ import json
 import pickle
 import pandas as pd
 import numpy as np
-import os
+import os,sys
 import re
 from collections import OrderedDict
 from itertools import product
@@ -99,7 +99,7 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
     # save
     if saveAll:
         print('Saving to single file with all data')
-        filename = '/tera/suri/%s/%s_allData.json' % (dataFolder, batchLabel)
+        filename = '%s/%s_allData.json' % (dataFolder, batchLabel)
         #(dataFolder, batchLabel) #(target if target else dataFolder, batchLabel)
         dataSave = {'params': params, 'data': data}
         with open(filename, 'w') as fileObj:
