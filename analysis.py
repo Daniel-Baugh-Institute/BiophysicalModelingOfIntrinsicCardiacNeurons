@@ -91,6 +91,13 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
         if (len(dfParam)!=len(fileList)):
             raise Exception(f"The number of files in {dataFolder} and the no. of parameters in {paramFile} do not match. {paramFile} cannot be read")
         labelList = list(dfParam.columns)
+        for datafile,paralist in zip(fileList[:5],dfParam.values):
+            outFile = f'{dataFolder}/{datafile}'
+            print(outFile)
+            with open(outFile, 'r') as fileObj:
+                output = json.load(fileObj, object_pairs_hook=OrderedDict)
+                print(output.keys())
+
 	#pass
 
     else:
