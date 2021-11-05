@@ -17,7 +17,7 @@ def batch():
         # Set output folder, grid method (all param combinations), and run configuration
         b.batchLabel = '21oct5m' 
         b.saveFolder = '/tera/' + os.getlogin() + '/' + b.batchLabel
-        b.method = 'list'  # params.csv will be read by default; else need name in cfg.paramListFile
+        b.method = 'grid'  # params.csv will be read by default; else need name in cfg.paramListFile
         b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
         b.run()
 
