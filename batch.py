@@ -1,10 +1,11 @@
-import sys, os, inspect, netpyne, pdb
+import sys
 sys.path.insert(0,'/u/billl/nrniv/netpyne')
+import os, inspect, netpyne, pdb
 import numpy as np
 from netpyne import specs
 from netpyne.batch import Batch
 
-print('Netpyne batch from ', inspect.getsourcefile(netpyne.batch))
+print(f'Netpyne batch from {inspect.getsourcefile(Batch)} ; {sys.path}')
 
 def batch():
     params = specs.ODict()
