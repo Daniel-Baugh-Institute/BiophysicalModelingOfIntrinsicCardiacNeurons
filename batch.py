@@ -1,4 +1,5 @@
 import sys, os, inspect, netpyne, pdb
+sys.path.insert(0,'/u/billl/nrniv/netpyne')
 import numpy as np
 from netpyne import specs
 from netpyne.batch import Batch
@@ -14,7 +15,7 @@ def batch():
 
     b = Batch(params=params, cfgFile='cfg.py', netParamsFile='netParams_A.py')
     # Set output folder, grid method (all param combinations), and run configuration
-    b.batchLabel = '21oct16a'
+    b.batchLabel = '21nov05a'
     b.saveFolder = '/tera/' + os.getlogin() + '/' + b.batchLabel
     b.method = 'grid'
     b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
