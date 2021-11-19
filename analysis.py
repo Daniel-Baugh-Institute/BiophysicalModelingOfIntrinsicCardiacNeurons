@@ -11,8 +11,8 @@ from collections import OrderedDict
 from itertools import product
 df = dfss = filenamepkl = None
 
-# execute this function after _allData.json is created
 def readAllData(filename, dfonly=True):
+    '''read _allData.json routine to get params and data'''
     global params, data, df
     with open(filename, 'r') as fileObj: dataLoad = json.load(fileObj, object_pairs_hook=OrderedDict)
     params, data, df = dataLoad['params'], dataLoad['data'], toPandas(dataLoad['params'], dataLoad['data'])
