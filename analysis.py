@@ -96,9 +96,11 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
         for datafile,paralist in zip(fileList[:5],dfParam.values):
             outFile = f'{dataFolder}/{datafile}'
             print(outFile)
-            fileIndex=int(re.split(f'{batchLabel}|[_.]',datafile)[1])
-            print(fileIndex)
-            data[fileIndex] = {}
+            indexComb=int(re.split(f'{batchLabel}|[_.]',datafile)[1])
+            print(indexComb)
+            data[indexComb] = {}
+            paraComb = tuple(paralist)
+            data[indexComb]['paramValues'] = paraComb
             with open(outFile, 'r') as fileObj:
                 output = json.load(fileObj, object_pairs_hook=OrderedDict)
                 if all([output['simConfig'][x]!=y for x,y in zip(labelList,dfParam.loc[output['simConfig']['cellnum']])]):
@@ -107,7 +109,7 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
             for key in vars:
                 print(key)
                 #print(output[key])
-                data[fileIndex][key] = output[key]
+                data[indexComb][key] = output[key]
 
 	#pass
 
