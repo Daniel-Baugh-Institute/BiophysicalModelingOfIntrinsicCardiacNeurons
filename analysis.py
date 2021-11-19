@@ -99,6 +99,7 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
                 output = json.load(fileObj, object_pairs_hook=OrderedDict)
                 if all([output['simConfig'][x]!=y for x,y in zip(labelList,dfParam.loc[output['simConfig']['cellnum']])]):
                     raise Exception(f"Parameter values in {paramFile} and in the json files do not match")
+                if not vars: vars = list(output.keys())
 
 	#pass
 
