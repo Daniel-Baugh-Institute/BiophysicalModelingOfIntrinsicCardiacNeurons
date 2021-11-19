@@ -84,15 +84,15 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
 
         print('%d files missing' % (missing))
     elif b['method'] == 'list':
-        
         fileList = [x.name for x in os.scandir(dataFolder) if x.name.endswith('_data.json')]
         fileList.sort(key=lambda x: int(re.split(f'{batchLabel}|[_.]',x)[1]))
         dfParam = pd.read_csv(paramFile,delimiter=',')
         if (len(dfParam)!=len(fileList)):
             raise Exception(f"The number of files in {dataFolder} and the no. of parameters in {paramFile} do not match. {paramFile} cannot be read")
         labelList = list(dfParam.columns)
+        params = dfParam.values.tolist()
         # REMOVE [:5]
-        for datafile,paralist in zip(fileList[:5],dfParam.values):
+        for datafile,paralist in zip(fileList[:5],dfParams.values):
             outFile = f'{dataFolder}/{datafile}'
             print(outFile)
             with open(outFile, 'r') as fileObj:
