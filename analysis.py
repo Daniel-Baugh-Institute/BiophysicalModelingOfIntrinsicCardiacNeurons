@@ -92,7 +92,7 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
         labelList = list(dfParam.columns)
         params = dfParam.values.tolist()
         # REMOVE [:5]
-        for datafile,paralist in zip(fileList[:5],dfParams.values):
+        for datafile,paralist in zip(fileList[:5],dfParam.values):
             outFile = f'{dataFolder}/{datafile}'
             print(outFile)
             with open(outFile, 'r') as fileObj:
