@@ -102,7 +102,7 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
             data[indexComb] = {}
             paraComb = tuple(paralist)
             data[indexComb]['paramValues'] = paraComb
-            params.append([{i:j} for i, j in zip(dfParam.columns, dfParam.iloc[indexComb])])
+            params.append([{'label':i, 'values':j} for i, j in zip(dfParam.columns, dfParam.iloc[indexComb])])
             with open(outFile, 'r') as fileObj:
                 output = json.load(fileObj, object_pairs_hook=OrderedDict)
                 if all([output['simConfig'][x]!=y for x,y in zip(labelList,dfParam.loc[output['simConfig']['cellnum']])]):
