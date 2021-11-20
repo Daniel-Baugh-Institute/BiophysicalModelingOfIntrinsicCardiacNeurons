@@ -102,7 +102,8 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
             data[indexComb] = {}
             paraComb = tuple(paralist)
             data[indexComb]['paramValues'] = paraComb
-            params.append([{'label':i, 'values':j} for i, j in zip(dfParam.columns, dfParam.iloc[indexComb])])
+            for lab, val in zip(dfParam.columns, dfParam.iloc[indexComb]):
+                params.append({'label':lab, 'values':val})
             with open(outFile, 'r') as fileObj:
                 output = json.load(fileObj, object_pairs_hook=OrderedDict)
                 if all([output['simConfig'][x]!=y for x,y in zip(labelList,dfParam.loc[output['simConfig']['cellnum']])]):
@@ -117,7 +118,7 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
 
     else:
         raise Exception(f"Method {b['method'] if b['method'] else 'No method'} files cannot be read.")
-    import IPython; IPython.embed()
+    #import IPython; IPython.embed()
     # save
     if saveAll:
         print('Saving to single file with all data')
