@@ -88,10 +88,11 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
         fileList.sort(key=lambda x: int(re.split(f'{batchLabel}|[_.]',x)[1]))
         dfParam = pd.read_csv(paramFile,delimiter=',')
         data = {}
+        params=[]
         if (len(dfParam)!=len(fileList)):
             raise Exception(f"The number of files in {dataFolder} and the no. of parameters in {paramFile} do not match. {paramFile} cannot be read")
         labelList = list(dfParam.columns)
-        params = dfParam.values.tolist()
+        #params = dfParam.values.tolist()
         # REMOVE [:5]
         for datafile,paralist in zip(fileList[:5],dfParam.values):
             outFile = f'{dataFolder}/{datafile}'
@@ -101,6 +102,7 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
             data[indexComb] = {}
             paraComb = tuple(paralist)
             data[indexComb]['paramValues'] = paraComb
+            params.append([{i:j} for i, j in zip(dfParam.columns, dfParam.iloc[indexComb])])
             with open(outFile, 'r') as fileObj:
                 output = json.load(fileObj, object_pairs_hook=OrderedDict)
                 if all([output['simConfig'][x]!=y for x,y in zip(labelList,dfParam.loc[output['simConfig']['cellnum']])]):
@@ -115,7 +117,7 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
 
     else:
         raise Exception(f"Method {b['method'] if b['method'] else 'No method'} files cannot be read.")
-        
+    import IPython; IPython.embed()
     # save
     if saveAll:
         print('Saving to single file with all data')
@@ -124,7 +126,6 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
         dataSave = {'params': params, 'data': data}
         with open(filename, 'w') as fileObj:
             json.dump(dataSave, fileObj)
-
     return params, data
 
 # toPandas(params, data) convert data to Pandas
