@@ -88,10 +88,12 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
         fileList.sort(key=lambda x: int(re.split(f'{batchLabel}|[_.]',x)[1]))
         dfParam = pd.read_csv(paramFile,delimiter=',')
         data = {}
-        params=[]
         if (len(dfParam)!=len(fileList)):
             raise Exception(f"The number of files in {dataFolder} and the no. of parameters in {paramFile} do not match. {paramFile} cannot be read")
         labelList = list(dfParam.columns)
+        params=[]
+        for lab in labelList:
+            params.append({'label':lab})
         #params = dfParam.values.tolist()
         # REMOVE [:5]
         for datafile,paralist in zip(fileList[:5],dfParam.values):
@@ -102,8 +104,8 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
             data[indexComb] = {}
             paraComb = tuple(paralist)
             data[indexComb]['paramValues'] = paraComb
-            for lab, val in zip(dfParam.columns, dfParam.iloc[indexComb]):
-                params.append({'label':lab, 'values':val})
+            for val in dfParam.iloc[indexComb]:
+                params.append({'values':val})
             with open(outFile, 'r') as fileObj:
                 output = json.load(fileObj, object_pairs_hook=OrderedDict)
                 if all([output['simConfig'][x]!=y for x,y in zip(labelList,dfParam.loc[output['simConfig']['cellnum']])]):
