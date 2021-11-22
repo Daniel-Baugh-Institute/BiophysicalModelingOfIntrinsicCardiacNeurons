@@ -97,9 +97,7 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
         # REMOVE [:5]
         for datafile,paralist in zip(fileList[:5],dfParam.values):
             outFile = f'{dataFolder}/{datafile}'
-            print(outFile)
             indexComb=int(re.split(f'{batchLabel}|[_.]',datafile)[1])
-            print(indexComb)
             data[indexComb] = {}
             paraComb = tuple(paralist)
             data[indexComb]['paramValues'] = paraComb
@@ -109,8 +107,6 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
                     raise Exception(f"Parameter values in {paramFile} and in the json files do not match")
             if not vars: vars = list(output.keys())
             for key in vars:
-                print(key)
-                #print(output[key])
                 data[indexComb][key] = output[key]
 
 	#pass
@@ -146,7 +142,6 @@ def toPandas(params, data):
             colRename.append(colName)
         else:
             colRename.append(col)
-    #print(colRename)
     df.columns = colRename
 
     return df
