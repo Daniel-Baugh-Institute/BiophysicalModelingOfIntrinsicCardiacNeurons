@@ -117,7 +117,6 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
 
     else:
         raise Exception(f"Method {b['method'] if b['method'] else 'No method'} files cannot be read.")
-    #import IPython; IPython.embed()
     # save
     if saveAll:
         print('Saving to single file with all data')
@@ -125,7 +124,8 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
         dataSave = {'params': params, 'data': data}
         with open(filename, 'w') as fileObj:
             json.dump(dataSave, fileObj)
-    return params, data
+    else:
+        return params, data
 
 # toPandas(params, data) convert data to Pandas
 def toPandas(params, data):
