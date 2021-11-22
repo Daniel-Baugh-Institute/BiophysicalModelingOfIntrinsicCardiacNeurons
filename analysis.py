@@ -92,9 +92,8 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
             raise Exception(f"The number of files in {dataFolder} and the no. of parameters in {paramFile} do not match. {paramFile} cannot be read")
         labelList = list(dfParam.columns)
         params=[]
-        for i in labelList:
+        for lab in labelList:
             params.append({'label':lab,'values':list(dfParam[lab])})
-        #params = dfParam.values.tolist()
         # REMOVE [:5]
         for datafile,paralist in zip(fileList[:5],dfParam.values):
             outFile = f'{dataFolder}/{datafile}'
