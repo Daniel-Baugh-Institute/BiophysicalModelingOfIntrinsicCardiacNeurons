@@ -94,8 +94,7 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
         params=[]
         for lab in labelList:
             params.append({'label':lab,'values':list(dfParam[lab])})
-        # REMOVE [:5]
-        for datafile,paralist in zip(fileList[:5],dfParam.values):
+        for datafile,paralist in zip(fileList,dfParam.values):
             outFile = f'{dataFolder}/{datafile}'
             indexComb=int(re.split(f'{batchLabel}|[_.]',datafile)[1])
             data[indexComb] = {}
