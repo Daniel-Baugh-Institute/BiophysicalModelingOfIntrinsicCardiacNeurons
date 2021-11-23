@@ -28,14 +28,14 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
 
 cfg.stim = 'IClamp'
 cfg.amp = 0.6    
-cfg.cellnum = 28
-cfg.ka = 0.11
+cfg.cellnum = 0
+cfg.ka = 0.13
 
 
 cfg.recordStep = 0.1       
 # cfg.filename = '21sep14d/'
-cfg.simLabel = '21oct04a'
-cfg.saveFolder = '/tera/' + os.getlogin() + '/' +cfg.simLabel
+cfg.simLabel = '21nov23a'
+cfg.saveFolder = cfg.simLabel
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
