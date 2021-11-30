@@ -30,7 +30,7 @@ cfg.stim = 'IClamp'
 cfg.amp = 0.6    
 cfg.cellnum = 0
 cfg.ka = 0.13
-
+cfg.na = 1
 
 cfg.recordStep = 0.1       
 # cfg.filename = '21sep14d/'
