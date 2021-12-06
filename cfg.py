@@ -31,6 +31,17 @@ cfg.amp = 0.6
 cfg.cellnum = 0
 cfg.ka = 0.13
 cfg.na = 1
+cfg.kcnc= 0.015
+cfg.kcnab=0.015
+cfg.h1 = 0.00001
+cfg.h2 = 0.009
+cfg.h3 = 0.0001
+cfg.h4 = 0.0002
+cfg.c1a = 0.00001
+cfg.c1b = 0.0001
+cfg.c1c = 0.0001
+cfg.c1g = 0.00001
+cfg.c1i = 0.00027
 
 cfg.recordStep = 0.1       
 # cfg.filename = '21sep14d/'
