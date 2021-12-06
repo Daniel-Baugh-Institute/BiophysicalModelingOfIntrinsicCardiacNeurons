@@ -11,7 +11,7 @@ def batch():
         params['amp'] = [0.6, 0.7, 0.8, 0.9] # indexed
         params['cellnum'] = [x for x in range(101)] # indexed
         #params['rybak'] = [0, 0.01, 0.03, 0.05, 0.07, 0.1, 0.12, 0.15] 
-        params['ka'] = [0.08, 0.015]
+        params['ka'] = [0.08, 0.15]
         params['na'] = [0.1, 1]
         params['kcnc'] =[0.011, 0.015]
         params['kcnab'] =[0.011, 0.015]
