@@ -12,18 +12,18 @@ def batch():
         params['cellnum'] = [x for x in range(101)] # indexed
         #params['rybak'] = [0, 0.01, 0.03, 0.05, 0.07, 0.1, 0.12, 0.15] 
         params['ka'] = [0.08, 0.15]
-        params['na'] = [0.1, 1]
+        params['na'] = [0.1, 1]                 #log10
         params['kcnc'] =[0.011, 0.015]
         params['kcnab'] =[0.011, 0.015]
-        params['h1'] =[0.0001, 0.00001]
-        params['h2'] =[0.09, 0.009]
-        params['h3'] =[0.001, 0.0001]
-        params['h4'] =[0.002, 0.0002]
-        params['c1a'] =[0.0001, 0.00001]
-        params['c1b'] =[0.001, 0.0001]
-        params['c1c'] =[0.001, 0.0001]
-        params['c1g'] =[0.0001, 0.00001]
-        params['c1i'] =[0.0027, 0.00027]
+        params['h1'] =[0.0001, 0.00001]         #log10
+        params['h2'] =[0.09, 0.009]             #log10
+        params['h3'] =[0.001, 0.0001]           #log10
+        params['h4'] =[0.002, 0.0002]           #log10
+        params['c1a'] =[0.0001, 0.00001]        #log10
+        params['c1b'] =[0.001, 0.0001]          #log10
+        params['c1c'] =[0.001, 0.0001]          #log10
+        params['c1g'] =[0.0001, 0.00001]        #log10
+        params['c1i'] =[0.0027, 0.00027]        #log10
 
         b = Batch(params=params, cfgFile='cfg.py', netParamsFile='netParams_A.py')
         # Set output folder, grid method (all param combinations), and run configuration
