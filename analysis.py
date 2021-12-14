@@ -194,8 +194,8 @@ def allAnalysis(df=df):
     # Plotting
 
     fig = px.scatter_3d(dfss, x='cellnum', y='amp', z='hz',color='hz', hover_data=['cellnum','hz','amp',df.ka,df.na, df.kcnc, df.kcnab, df.h1, df.h2, df.h3, df.h4, df.c1a, df.c1b, df.c1c, df.c1g, df.c1i],labels={'cellnum':'Cell Number','hz':'Firing Frequency (Hz)', 'amp':'Current Clamp (nA)','hover_data_3':'Ka Conductance (S/cm2)', 'hover_data_4':'Na Conductance (S/cm2)', 'hover_data_5':'Kcnc Conductance (S/cm2)', 'hover_data_6':'Kcnab Conductance (S/cm2)', 'hover_data_7':'HCN1 Conductance (S/cm2)', 'hover_data_8':'HCN2 Conductance (S/cm2)', 'hover_data_9':'HCN3 Conductance (S/cm2)', 'hover_data_10':'HCN4 Conductance (S/cm2)', 'hover_data_11':'Cacna1a Conductance (S/cm2)', 'hover_data_12':'Cacna1b Conductance (S/cm2)', 'hover_data_13':'Cacna1c Conductance (S/cm2)', 'hover_data_14':'Cacna1g Conductance (S/cm2)', 'hover_data_15':'Cacna1i Conductance (S/cm2)'})
+    fig.show()
     fig.write_image("3D_scatterplot.png")
-
 
     # Classification
 
@@ -212,5 +212,17 @@ def allAnalysis(df=df):
     dclass['Vton_susps'] = dclass.spkend.apply(lambda x: 2**3 if stimend+5<=x>=data[list(data)[0]]['simConfig']['duration']-50 else np.nan)
     dclass['Vton_brfps'] = dclass.spkend.apply(lambda x: 2**4 if stimend+5<=x<=data[list(data)[0]]['simConfig']['duration']-50 else np.nan)
 
-    
+    # Plotting
+
+    f=go.Figure()
+    f.add_trace(go.Scatter(x=dclass['cellnum'], y=dclass['Vsubth'], mode = 'markers', marker = dict(color = 'beige', size =20, line = dict(color='MediumPurple',width=2)), text = dclass.cellnum, name = 'Subthreshold', showlegend=True))
+    f.add_trace(go.Scatter(x=dclass['cellnum'], y=dclass['Vph'], mode = 'markers', marker = dict(color = 'LightPink', size =20, line = dict(color='MediumPurple',width=2)), text = dclass.cellnum, name = 'Phasic', showlegend=True))
+    f.add_trace(go.Scatter(x=dclass['cellnum'], y=dclass['Vton'], mode = 'markers', marker = dict(color = 'LightSkyBlue', size =20, line = dict(color='MediumPurple',width=2)), text = dclass.cellnum, name = 'Tonic', showlegend=True))
+    f.add_trace(go.Scatter(x=dclass['cellnum'], y=dclass['Vton_susps'], mode = 'markers', marker = dict(color = 'LightSteelBlue', size =20, line = dict(color='MediumPurple',width=2)), text = dclass.cellnum, name = 'Tonic with Sustained Post-stim', showlegend=True))
+    f.add_trace(go.Scatter(x=dclass['cellnum'], y=dclass['Vton_brfps'], mode = 'markers', marker = dict(color = 'LightSeagreen', size =20, line = dict(color='MediumPurple',width=2)), text = dclass.cellnum, name = 'Tonic with Brief Post-stim', showlegend=True))
+    f.update_layout(title='Classification of Responses',legend_orientation='h')
+    f.update_xaxes(title='Cell Number')
+    f.show()
+    f.write_image("classification.png")
+    return
 
