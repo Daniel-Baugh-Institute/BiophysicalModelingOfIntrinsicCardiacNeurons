@@ -39,7 +39,7 @@ def sobcall (pl, num, seed=33):
     sobolLogVals = sob(len(lMins), num, seed=seed)  # only log
     scaledVals = qmc.scale(sobolVals, Mins, Maxs) # only for those that are not 'indexed' and 'log'
     scaledLogVals = qmc.scale(sobolLogVals, lMins, lMaxs) # only log
-    scaledAlogVals = [10**x for x in scaledLogVals]
+    scaledAlogVals = 10**scaledLogVals
     combos = [[*p[0],*p[1]] for p in product(scaledVals.tolist(),list(product(*ivals)))]
     combos.insert(0, labels+ilabels)
     return combos
