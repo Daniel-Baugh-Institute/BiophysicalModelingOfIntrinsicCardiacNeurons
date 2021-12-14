@@ -191,6 +191,17 @@ def allAnalysis(df=df):
     dfss['sdur'] = df.spkt.apply(lambda x: x[-1] - x[0] if len(x)>1 else 0) # sdur: duration of spiking
     dfss['hz']   = dfss.scnt.div(dfss.sdur).mul(1e3).fillna(0).replace(np.inf,0) # >>> NaN
 
-    
+    stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
+    stimend = stim['dur'] + stim['delay']
+    dclass=df[['amp','cellnum']].copy()
+    dclass['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
+    dclass['Vrmp'] = dclass.Vlist.apply(lambda x: x[0])
+    dclass['spkend'] = df.spkt.apply(lambda x: x[len(x)-1] if len(x)>0 else -1)
+
+    dclass['Vsubth'] = dclass.Vlist.apply(lambda x: 2**0 if max(x)<0 else np.nan)
+    dclass['Vph'] = dfss.scnt.apply(lambda x: 2**1 if 0<x<=3 else np.nan)
+    dclass['Vton'] = df.spkt.apply(lambda x: 2**2 if len(x)>3 and stim['delay']<=x[-1]<=stimend+5 else np.nan)
+    dclass['Vton_susps'] = dclass.spkend.apply(lambda x: 2**3 if stimend+5<=x>=data[list(data)[0]]['simConfig']['duration']-50 else np.nan)
+    dclass['Vton_brfps'] = dclass.spkend.apply(lambda x: 2**4 if stimend+5<=x<=data[list(data)[0]]['simConfig']['duration']-50 else np.nan)
 
 
