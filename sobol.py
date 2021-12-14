@@ -12,7 +12,7 @@ def parseBatchParams (b):
         print(f'Reading {os.getcwd()+"/"+b}')
     except Exception as e:
         print(f"ERROR >>>{e}<<<")
-    p = re.compile(r'''\s+params[^a-z]+([^]']+)'\]\s*=\s*(\[[^]]+\])\s*#*\s*(indexed|log)*''') # 'indexed' is the keyword to NOT sobolize eg amp or cellnum
+    p = re.compile(r'''\s+params[^a-z]+([^]']+)'\]\s*=\s*(\[[^]]+\])\s*#*\s*(indexed)*''') # 'indexed' is the keyword to NOT sobolize eg amp or cellnum
     bl, pl = [(i, p.match(l)) for i,l in enumerate(lines)], [] # bl: lines that match regexp
     for i,m in bl:
         if m:
@@ -25,12 +25,10 @@ def parseBatchParams (b):
 
 def sobcall (pl, num, seed=33):
     ''' determine the min, max of sobolized params and do the combos with indexed params '''
-    labels, Mins, Maxs, ilabels, ivals, llabels, lMins, lMaxs = [],[],[],[],[],[],[],[]
+    labels, Mins, Maxs, ilabels, ivals = [],[],[],[],[]
     for x in pl:
         if not x[2]:
             labels.append(x[0]); Mins.append(min(x[1])); Maxs.append(max(x[1]))
-        elif x[2]=='log'
-            llabels.append(x[0]); lMins.append(min(np.log(x[1]))); lMaxs.append(max(np.log(x[1])))
         else:
             ilabels.append(x[0]); ivals.append(x[1])
     print(f'Mins/Maxs for {labels}: Mins:{Mins}, Maxs:{Maxs}')
