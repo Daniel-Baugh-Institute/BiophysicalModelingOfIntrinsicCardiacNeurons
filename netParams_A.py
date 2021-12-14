@@ -34,4 +34,8 @@ netParams.popParams['U'] = {'cellType': 'CEL', 'numCells': 1}
 if cfg.stim == 'IClamp':
     netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': cfg.amp, 'dur': 500, 'delay': 100} 
     netParams.stimTargetParams['iclamp->CEL'] = {'source': 'iclamp', 'conds': {'cellType': 'CEL'}, 'sec': 'soma', 'loc': 0.5}
+elif cfg.stim == 'syn':
+    netParams.synMechParams['exc'] = {'mod': 'Exp2Syn', 'tau1': cfg.tau1, 'tau2': cfg.tau2, 'e': cfg.e}
+    netParams.stimSourceParams['bkg'] = {'type': 'NetStim', 'rate': cfg.rate, 'noise': cfg.noise}
+    netParams.stimTargetParams['bkg->exc'] = {'source': 'bkg', 'conds': {'cellType': 'CEL'}, 'weight': cfg.weight, 'delay': cfg.delay, 'synMech': 'exc'}
 
