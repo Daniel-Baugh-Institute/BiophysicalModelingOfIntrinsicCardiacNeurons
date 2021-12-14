@@ -8,7 +8,10 @@ import numpy as np
 import os,sys
 import re
 from collections import OrderedDict
-from itertools import product
+from itertools import 
+import plotly.graph_objects as go
+import plotly_express as px
+import matplotlib.pyplot as plt
 df = dfss = filenamepkl = None
 
 def readAllData(filename, dfonly=True):
@@ -174,5 +177,20 @@ def svSpikeStats(dataFolder, batchLabel, dfss=dfss):
     dfss.to_json(filenamejson)
 
 def ldSpikeStats(f=filenamepkl): return pd.read_pickle(f) 
+
+def allAnalysis(df=df):
+    # Is a Temp. function that analyses and plots. Need to separate plotting
+
+    # Spiking Data 
+    dfss=df[['amp', 'cellnum', 'avgRate']].copy()  # note double brackets
+    dfss.scnt    = df.spkt.apply(len) # number of spikes (spikecount) * IGNORE WARNING, creates dfss.scnt anyway
+    dfss['scnt'] = df.spkt.apply(len)
+    dfss['spk1'] = df.spkt.apply(lambda x: x[0] if len(x)>0 else -1) # spk1; time of first spike
+    dfss['f1']   = df.spkt.apply(lambda x: 1e3/(x[1] - x[0]) if len(x)>1 else 0) # f1: freq for 1st ISI
+    dfss['f2']   = df.spkt.apply(lambda x: 1e3/(x[2] - x[1]) if len(x)>2 else 0) # f2: freq for 2nd ISI
+    dfss['sdur'] = df.spkt.apply(lambda x: x[-1] - x[0] if len(x)>1 else 0) # sdur: duration of spiking
+    dfss['hz']   = dfss.scnt.div(dfss.sdur).mul(1e3).fillna(0).replace(np.inf,0) # >>> NaN
+
+    
 
 
