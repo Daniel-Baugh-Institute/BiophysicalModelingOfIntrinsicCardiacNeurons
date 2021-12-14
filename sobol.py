@@ -3,6 +3,7 @@
 import math, re, csv, os
 from scipy.stats import qmc
 from itertools import product
+import numpy as np
 
 def parseBatchParams (b):
     ''' read a batch.py file for NetPyNE param search; returning list of (name, valueList, [indexed]) where optional indexed means to use all the values '''
@@ -24,10 +25,12 @@ def parseBatchParams (b):
 
 def sobcall (pl, num, seed=33):
     ''' determine the min, max of sobolized params and do the combos with indexed params '''
-    labels, Mins, Maxs, ilabels, ivals = [],[],[],[],[]
+    labels, Mins, Maxs, ilabels, ivals, llabels, lMins, lMaxs = [],[],[],[],[],[],[],[]
     for x in pl:
         if not x[2]:
             labels.append(x[0]); Mins.append(min(x[1])); Maxs.append(max(x[1]))
+        elif x[2]=='log'
+            llabels.append(x[0]); lMins.append(min(np.log(x[1]))); lMaxs.append(max(np.log(x[1])))
         else:
             ilabels.append(x[0]); ivals.append(x[1])
     print(f'Mins/Maxs for {labels}: Mins:{Mins}, Maxs:{Maxs}')
