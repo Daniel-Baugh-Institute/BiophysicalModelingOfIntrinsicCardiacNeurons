@@ -8,7 +8,7 @@ import numpy as np
 import os,sys
 import re
 from collections import OrderedDict
-from itertools import 
+from itertools import product
 import plotly.graph_objects as go
 import plotly_express as px
 import matplotlib.pyplot as plt
