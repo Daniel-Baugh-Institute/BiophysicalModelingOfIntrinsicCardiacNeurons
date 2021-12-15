@@ -97,7 +97,7 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
         params=[]
         for lab in labelList:
             params.append({'label':lab,'values':list(dfParam[lab])})
-        for datafile,paralist in zip(fileList,dfParam.values):
+        for (iloc,datafile),paralist in zip(enumerate(fileList),dfParam.values):
             outFile = f'{dataFolder}/{datafile}'
             indexComb=int(re.split(f'{batchLabel}|[_.]',datafile)[1])
             data[indexComb] = {}
@@ -105,7 +105,7 @@ def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None,
             data[indexComb]['paramValues'] = paraComb
             with open(outFile, 'r') as fileObj:
                 output = json.load(fileObj, object_pairs_hook=OrderedDict)
-                if all([output['simConfig'][x]!=y for x,y in zip(labelList,dfParam.loc[output['simConfig']['cellnum']])]):
+                if all([output['simConfig'][x]!=y for x,y in zip(labelList,dfParam.loc[iloc])]):
                     raise Exception(f"Parameter values in {paramFile} and in the json files do not match")
             if not vars: vars = list(output.keys())
             for key in vars:
