@@ -13,11 +13,12 @@ def parseBatchParams (b):
     except Exception as e:
         print(f"ERROR >>>{e}<<<")
     p = re.compile(r'''\s+params[^a-z]+([^]']+)'\]\s*=\s*(\[[^]]+\])\s*#*\s*(indexed|log|linear)*''') # keywords as comments in batch.py: indexed|log|linear
-    bl, pl = [(i, p.match(l)) for i,l in enumerate(lines)], [] # bl: lines that match regexp
+    bl = [(i, p.match(l)) for i,l in enumerate(lines)] # bl: lines that match regexp
+    pl = {}
     for i,m in bl:
         if m:
             try:
-                pl.append((m.group(1), eval(m.group(2)), m.group(3) or 'linear')) # strings: name, valueList, [indexed]
+                pl[m.group(1)] = {'vals': eval(m.group(2)), 'type':m.group(3) or 'linear'} # strings: name, valueList, [indexed]
             except Exception as e:
                 print(f"ERROR >>>{e}<<<\n\tunable to evaluate '{m.group(2)}':\n\tline {i}: {m.string.strip()}")
     return pl
