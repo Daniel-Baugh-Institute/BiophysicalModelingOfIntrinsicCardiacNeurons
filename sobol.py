@@ -18,7 +18,6 @@ def parseBatchParams (b):
         if m:
             try:
                 pl.append((m.group(1), eval(m.group(2)), m.group(3))) # strings: name, valueList, [indexed]
-                print(f'\tsetting {m.group(1)} to {m.group(3) if m.group(3) else "continuous"} in range {(lambda x:(min(x),max(x)))(eval(m.group(2)))}')
             except Exception as e:
                 print(f"ERROR >>>{e}<<<\n\tunable to evaluate '{m.group(2)}':\n\tline {i}: {m.string.strip()}")
     return pl
@@ -61,6 +60,7 @@ def output (out):
         print(f"ERROR >>>{e}<<<")
 
 def getArgs ():
+    global verbose
     import argparse
     msg = '''Generate at least cnt lines of sobol samples based on params definitions in batch.py.
              Params may be indicated as '# indexed' in which case the batch values given will be used.
@@ -71,10 +71,13 @@ def getArgs ():
     # parser.add_argument("-r", default='sobol.csv', help='raw output from sobol call (default ./sobol.csv)')
     parser.add_argument("-f", default='params.csv', help='file for saving param lists (default ./params.csv)')
     parser.add_argument("-s", default=1234, type=int, help='seed')
-    # parser.add_argument("-v", action='store_true', default=False, help='verbose output to terminal')
+    parser.add_argument("-v", action='store_true', default=False, help='verbose output to terminal')
     parser.add_argument("-b", default='batch.py', help='name of batchfile with "params" ranges (default ./batch.py)')
-    return parser.parse_args()
+    ag = parser.parse_args()
+    verbose = True if ag.v else True
+    return ag
 
 if __name__ == '__main__':
     ag = getArgs()
+    if verbose: print('Verbose output')
     output(sobcall(parseBatchParams(ag.b), ag.cnt))
