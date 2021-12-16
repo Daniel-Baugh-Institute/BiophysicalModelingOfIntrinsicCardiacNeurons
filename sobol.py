@@ -25,7 +25,6 @@ def parseBatchParams (b):
 
 def sobcall (pl, num, seed=33):
     ''' determine the min, max of sobolized params and do the combos with indexed params '''
-    labels, Mins, Maxs, ilabels, ivals, llabels, lMins, lMaxs = [],[],[],[],[],[],[],[]
     for k,v in pl.items():
         if v['type'] == 'linear':
             v['min'], v['max'] = min(v['vals']), max(v['vals'])
@@ -33,12 +32,10 @@ def sobcall (pl, num, seed=33):
             v['min'], v['max'] = np.log10(min(v['vals'])), np.log10(max(v['vals']))
         elif v['type'] != 'indexed':
             raise Exception(f"{v['type']} unrecognized key word")
-    return pl
-    if verbose: print(f'Mins/Maxs for {labels}: Mins:{Mins}, Maxs:{Maxs}')
-    sobolVals = sob(len(Mins)+len(lMins), num, seed=seed) # linear,log
-    scaledVals = qmc.scale(sobolVals, Mins, Maxs)
-    scaledLogVals = qmc.scale(sobolLogVals, lMins, lMaxs) # only log
-    scaledAlogVals = 10**scaledLogVals
+    sobpl = {k:v for k,v in pl.items() if v['type'] in ('linear', 'log')}
+    sobolVals = sob(len(sobpl), num, seed=seed)
+    scaledVals = qmc.scale(sobolVals, [v['min'] for v in sobpl.values()], [v['max'] for v in sobpl.values()]) # dict order guaranteed in py>=3.7
+    return scaledVals
     combos = [[*p[0],*p[1], *p[2]] for p in product(scaledVals.tolist(),scaledAlogVals.tolist(),list(product(*ivals)))]
     combos.insert(0, labels+llabels+ilabels)
     return combos
@@ -47,9 +44,8 @@ def sob (dim=4, num=4096, seed=1234):
     sm = qmc.Sobol(d=dim, scramble=True, seed=seed)
     m = math.floor(math.log(num)/math.log(2) + 0.99) # round up to nearest power of 2
     if 2**m != num: print(f'\t{2**m} samples (2^{m} ; {num} requested)')
-    vals = sm.random_base2(m=m) # 2^m points
-    return vals
-
+    return sm.random_base2(m=m) # 2^m points
+    
 def output (out):
     try: 
         with open(ag.f, 'w') as f:
