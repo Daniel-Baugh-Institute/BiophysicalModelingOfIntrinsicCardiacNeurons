@@ -26,15 +26,14 @@ def parseBatchParams (b):
 def sobcall (pl, num, seed=33):
     ''' determine the min, max of sobolized params and do the combos with indexed params '''
     labels, Mins, Maxs, ilabels, ivals, llabels, lMins, lMaxs = [],[],[],[],[],[],[],[]
-    for x in pl:
-        if x[2]=='index':
-            ilabels.append(x[0]); ivals.append(x[1])
-        elif x[2]=='linear':
-            labels.append(x[0]); Mins.append(min(x[1])); Maxs.append(max(x[1]))
-        elif x[2]=='log':
-            llabels.append(x[0]); Mins.append(np.log10(min(x[1]))); Maxs.append(np.log10(max(x[1])))
-        else:
-            raise Exception(f'{x[2]} unrecognized key word')
+    for k,v in pl.items():
+        if v['type'] == 'linear':
+            v['min'], v['max'] = min(v['vals']), max(v['vals'])
+        elif v['type'] == 'log':
+            v['min'], v['max'] = np.log10(min(v['vals'])), np.log10(max(v['vals']))
+        elif v['type'] != 'indexed':
+            raise Exception(f"{v['type']} unrecognized key word")
+    return pl
     if verbose: print(f'Mins/Maxs for {labels}: Mins:{Mins}, Maxs:{Maxs}')
     sobolVals = sob(len(Mins)+len(lMins), num, seed=seed) # linear,log
     scaledVals = qmc.scale(sobolVals, Mins, Maxs)
