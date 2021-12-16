@@ -12,7 +12,7 @@ def parseBatchParams (b):
         print(f'Reading {os.getcwd()+"/"+b}')
     except Exception as e:
         print(f"ERROR >>>{e}<<<")
-    p = re.compile(r'''\s+params[^a-z]+([^]']+)'\]\s*=\s*(\[[^]]+\])\s*#*\s*(indexed|log)*''') # 'indexed' is the keyword to NOT sobolize eg amp or cellnum
+    p = re.compile(r'''\s+params[^a-z]+([^]']+)'\]\s*=\s*(\[[^]]+\])\s*#*\s*(indexed|log|linear)*''') # keywords as comments in batch.py: indexed|log|linear
     bl, pl = [(i, p.match(l)) for i,l in enumerate(lines)], [] # bl: lines that match regexp
     for i,m in bl:
         if m:
@@ -26,17 +26,17 @@ def sobcall (pl, num, seed=33):
     ''' determine the min, max of sobolized params and do the combos with indexed params '''
     labels, Mins, Maxs, ilabels, ivals, llabels, lMins, lMaxs = [],[],[],[],[],[],[],[]
     for x in pl:
-        if not x[2]:
-            labels.append(x[0]); Mins.append(min(x[1])); Maxs.append(max(x[1]))
-        elif x[2]=="log":
-            llabels.append(x[0]); lMins.append(np.log10(min(x[1]))); lMaxs.append(np.log10(max(x[1])))
-        else:
+        if x[2]=='index':
             ilabels.append(x[0]); ivals.append(x[1])
-    print(f'Mins/Maxs for {labels}: Mins:{Mins}, Maxs:{Maxs}')
-    print(f'Mins/Maxs for {llabels}: Mins:{lMins}, Maxs:{lMaxs}')
-    sobolVals = sob(len(Mins), num, seed=seed)  # only None
-    sobolLogVals = sob(len(lMins), num, seed=seed)  # only log
-    scaledVals = qmc.scale(sobolVals, Mins, Maxs) # only for those that are not 'indexed' and 'log'
+        elif x[2]=='linear':
+            labels.append(x[0]); Mins.append(min(x[1])); Maxs.append(max(x[1]))
+        elif x[2]=='log':
+            llabels.append(x[0]); Mins.append(np.log10(min(x[1]))); Maxs.append(np.log10(max(x[1])))
+        else:
+            raise Exception(f'{x[2]} unrecognized key word')
+    if verbose: print(f'Mins/Maxs for {labels}: Mins:{Mins}, Maxs:{Maxs}')
+    sobolVals = sob(len(Mins)+len(lMins), num, seed=seed) # linear,log
+    scaledVals = qmc.scale(sobolVals, Mins, Maxs)
     scaledLogVals = qmc.scale(sobolLogVals, lMins, lMaxs) # only log
     scaledAlogVals = 10**scaledLogVals
     combos = [[*p[0],*p[1], *p[2]] for p in product(scaledVals.tolist(),scaledAlogVals.tolist(),list(product(*ivals)))]
