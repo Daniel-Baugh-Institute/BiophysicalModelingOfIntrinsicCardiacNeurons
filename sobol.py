@@ -32,10 +32,11 @@ def sobcall (pl, num, seed=33):
             v['min'], v['max'] = np.log10(min(v['vals'])), np.log10(max(v['vals']))
         elif v['type'] != 'indexed':
             raise Exception(f"{v['type']} unrecognized key word")
-    sobpl = {k:v for k,v in pl.items() if v['type'] in ('linear', 'log')}
+    sobpl = {k:v for k,v in pl.items() if v['type'] in ('linear',  'log')} # subset of pl without indexed tag
+    logcols = [i for i,v in enumerate(sobpl.values()) if v['type']=='log']
     sobolVals = sob(len(sobpl), num, seed=seed)
-    scaledVals = qmc.scale(sobolVals, [v['min'] for v in sobpl.values()], [v['max'] for v in sobpl.values()]) # dict order guaranteed in py>=3.7
-    return scaledVals
+    scaledVals = qmc.scale(sobolVals, [v['min'] for v in sobpl.values()], [v['max'] for v in sobpl.values()]) # dict order guaranteed in py>=3.7; transpose
+    return (pl,sobpl,scaledVals,logcols)
     combos = [[*p[0],*p[1], *p[2]] for p in product(scaledVals.tolist(),scaledAlogVals.tolist(),list(product(*ivals)))]
     combos.insert(0, labels+llabels+ilabels)
     return combos
