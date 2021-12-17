@@ -37,9 +37,9 @@ def sobcall (pl, num, seed=33):
     sobolVals = sob(len(sobpl), num, seed=seed)
     scaledVals = qmc.scale(sobolVals, [v['min'] for v in sobpl.values()], [v['max'] for v in sobpl.values()]) # dict order guaranteed in py>=3.7; transpose
     scaledVals[:,logcols] = 10**scaledVals[:,logcols]
-    return (pl,sobpl,scaledVals,logcols)
-    combos = [[*p[0],*p[1], *p[2]] for p in product(scaledVals.tolist(),scaledAlogVals.tolist(),list(product(*ivals)))]
-    combos.insert(0, labels+llabels+ilabels)
+    icombo, scombo = product(*[v['vals'] for v in pl.values() if v['type']=='indexed']), product(*scaledVals.T)
+    combos = [[*p[0],*p[1]] for p in product(icombo,scombo)]
+    combos.insert(0, [k for k,v in pl.items() if v['type']=='indexed'] + [k for k,v in pl.items() if v['type']!='indexed'])
     return combos
 
 def sob (dim=4, num=4096, seed=1234):
