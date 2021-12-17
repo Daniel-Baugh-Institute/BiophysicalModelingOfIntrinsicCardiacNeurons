@@ -32,6 +32,10 @@ def sobcall (pl, num, seed=33):
             v['min'], v['max'] = np.log10(min(v['vals'])), np.log10(max(v['vals']))
         elif v['type'] != 'indexed':
             raise Exception(f"{v['type']} unrecognized key word")
+    if verbose:
+        for k,v in pl.items():
+            ty, ind, vl = v['type'], v['type']=='indexed', v['vals']
+            print(f'''{k} {ty} {'among' if ind else 'between'} {str(len(vl))+" values" if ind else (min(vl),max(vl))}''')
     sobpl = {k:v for k,v in pl.items() if v['type'] in ('linear',  'log')} # subset of pl without indexed tag
     logcols = [i for i,v in enumerate(sobpl.values()) if v['type']=='log'] # col numbers for log
     sobolVals = sob(len(sobpl), num, seed=seed)
