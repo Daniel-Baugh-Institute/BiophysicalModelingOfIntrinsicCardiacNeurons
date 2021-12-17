@@ -9,7 +9,7 @@ def parseBatchParams (b):
     ''' read a batch.py file for NetPyNE param search; returning list of (name, valueList, [indexed]) where optional indexed means to use all the values '''
     try: 
         with open(b,'r') as fb: lines = fb.readlines()
-        print(f'Reading {os.getcwd()+"/"+b}')
+        if verbose: print(f'Reading {os.getcwd()+"/"+b}')
     except Exception as e:
         print(f"ERROR >>>{e}<<<")
     p = re.compile(r'''\s+params[^a-z]+([^]']+)'\]\s*=\s*(\[[^]]+\])\s*#*\s*(indexed|log|linear)*''') # keywords as comments in batch.py: indexed|log|linear
@@ -53,7 +53,7 @@ def output (out):
         with open(ag.f, 'w') as f:
             wr = csv.writer(f)
             wr.writerows(out)
-        print(f'Output of {len(out)-1} param combinations to {os.getcwd()+"/"+ag.f}')
+        if verbose: print(f'Output of {len(out)-1} param combinations to {os.getcwd()+"/"+ag.f}')
     except Exception as e:
         print(f"ERROR >>>{e}<<<")
 
@@ -65,17 +65,16 @@ def getArgs ():
              Other params will be scaled using a sobol quasi-monte carlo distribution'''
     parser = argparse.ArgumentParser(description=msg, )
     # parser.add_argument('-d', '--dims', nargs='?', type=int, default=4, help='dim of space to be sampled')
-    parser.add_argument('-c', '--cnt', nargs='?', type=int, default=10, help='num of samples: will be rounded up to a power of 2') # input as `--` name
+    parser.add_argument('-c', '--cnt', nargs='?', type=int, default=16, help='num of samples: will be rounded up to a power of 2') # input as `--` name
     # parser.add_argument("-r", default='sobol.csv', help='raw output from sobol call (default ./sobol.csv)')
     parser.add_argument("-f", default='params.csv', help='file for saving param lists (default ./params.csv)')
     parser.add_argument("-s", default=1234, type=int, help='seed')
-    parser.add_argument("-v", action='store_true', default=False, help='verbose output to terminal')
+    parser.add_argument("-q", action='store_true', default=False, help='quiet terminal output')
     parser.add_argument("-b", default='batch.py', help='name of batchfile with "params" ranges (default ./batch.py)')
     ag = parser.parse_args()
-    verbose = True if ag.v else True
+    verbose = False if ag.q else True
     return ag
 
 if __name__ == '__main__':
     ag = getArgs()
-    if verbose: print('Verbose output')
     output(sobcall(parseBatchParams(ag.b), ag.cnt))
