@@ -25,9 +25,18 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
                     # 'ihcn2':{'sec': 'soma', 'loc': 0.5,'var': 'ihcn2_ch_Hcn2_cp10'},
                     # 'ihcn3':{'sec': 'soma', 'loc': 0.5,'var': 'ihcn3_ch_Hcn3_cp11'},
                     # 'ihcn4':{'sec': 'soma', 'loc': 0.5,'var': 'ihcn4_ch_Hcn4_cp12'}}
-
+"""
 cfg.stim = 'IClamp'
-cfg.amp = 0.6    
+cfg.amp = 0.6  
+"""
+cfg.stim = 'syn'
+cfg.tau1 = 5.0
+cfg.tau2 = 18.0
+cfg.e = 0 
+cfg.rate = 4.1
+cfg.noise = 0.0
+cfg.weight = 0.01
+cfg.delay = 5
 cfg.cellnum = 0
 cfg.ka = 0.13
 cfg.na = 1
