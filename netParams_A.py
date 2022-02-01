@@ -14,7 +14,7 @@ genemod = {'ch_Cacna1a_cp5':{'gCav2_1bar': cfg.c1a},  'ch_Cacna1b_cp6':{'gCav2_2
            'ch_Hcn2_cp10':{'gHCN2bar': cfg.h2},           'ch_Hcn3_cp11':{'gHCN3bar': cfg.h3},    
            'ch_Hcn4_cp12':{'gHCN4bar': cfg.h4},           'ch_Kcna1ab1_md80769':{'gbar': cfg.kcnab},   #0.015; 0.0054 
            'ch_Kcnc1_md74298':{'gk': cfg.kcnc},            'ch_Scn1a_md264834':{'gNav11bar': cfg.na}}     #1.0    #0.015
-cell_identities = np.bool_(np.transpose(np.genfromtxt('sp_reduced.csv', delimiter=',')))
+cell_identities = np.bool_(np.transpose(np.genfromtxt('nsp_reduced.csv', delimiter=',')))
 cell = cell_identities[cfg.cellnum]
 
 ## Cell parameters/rules

@@ -9,7 +9,7 @@ from netpyne.batch import Batch
 def batch():
         params = specs.ODict()
         params['amp'] = [0.6] #[0.6, 0.7, 0.8, 0.9] # indexed
-        params['cellnum'] = [x for x in range(33)] # indexed
+        params['cellnum'] = [x for x in range(39)] # indexed
         # params['sze'] = [15,18,20,23,25,27,30]
         #params['rybak'] = [0, 0.01, 0.03, 0.05, 0.07, 0.1, 0.12, 0.15] 
         # params['ka'] = [0.08, 0.15]
@@ -28,7 +28,7 @@ def batch():
 
         b = Batch(params=params, cfgFile='cfg.py', netParamsFile='netParams_A.py')
         # Set output folder, grid method (all param combinations), and run configuration
-        b.batchLabel = '22feb01a'
+        b.batchLabel = '22feb01b'
         b.saveFolder = '/tera/' + os.getlogin() + '/' + b.batchLabel
         b.method = 'grid'  # params.csv will be read by default; else need name in cfg.paramListFile
         b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
