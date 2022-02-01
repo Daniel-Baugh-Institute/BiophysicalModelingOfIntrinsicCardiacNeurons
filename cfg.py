@@ -28,7 +28,7 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
 
 cfg.stim = 'IClamp'
 cfg.amp = 0.6    
-cfg.cellnum = 0
+cfg.cellnum = 32 #30
 cfg.sze = 30
 # cfg.ka = 0.13
 cfg.na = 1
@@ -46,7 +46,7 @@ cfg.c1i = 0.00027
 
 cfg.recordStep = 0.1       
 # cfg.filename = '21sep14d/'
-cfg.simLabel = '21nov23a'
+cfg.simLabel = '22feb01c'
 cfg.saveFolder = cfg.simLabel
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
