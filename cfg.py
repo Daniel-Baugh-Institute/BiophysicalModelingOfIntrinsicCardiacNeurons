@@ -9,7 +9,8 @@ cfg.dt = 0.01
 cfg.verbose = False     
 cfg.recordCells = ['all']
 cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
-                    'isyn' : {'synMech': 'exc', 'var': 'i'}}
+                    'isyn' : {'synMech': 'exc', 'var': 'i'},
+                    'gsyn' : {'synMech': 'exc', 'var': 'g'},}
 """
                      'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'},
                      'epas' : {'sec': 'soma', 'loc': 0.5,'var': 'e_pas'},
@@ -40,21 +41,17 @@ cfg.amp = 0.6
 """
 
 ih_scale=1
-cfg.hyp = -1.5
-cfg.stim = 'fdexp2syn'
+cfg.hyp =0 
+cfg.stim = 'dexp2syn'
 cfg.tau1 = 5
 cfg.tau2 = 18
-cfg.d1 = 1
-cfg.d2 = 1
-cfg.f = 1
-cfg.tau_D1 = 1
-cfg.tau_D2 = 1
-cfg.tau_F = 1
+cfg.rrate = 0.31177/0.43708360077316477 # for hyp=0
+cfg.d = 0.2
 cfg.e = 0 
 cfg.rate = 2.1
 interval = 1000/cfg.rate
-cfg.noise = 1-10/interval
-cfg.weight = 0.1
+cfg.noise = 1-10/interval # 10ms min interval
+cfg.weight = 0.06
 cfg.delay = 5 
 cfg.cellnum = 94
 cfg.ka = 0.1100761264562606
@@ -74,7 +71,7 @@ cfg.c1i = 0.0021365472203493
 cfg.recordStep = 0.02
 cfg.recordStim = True 
 # cfg.filename = '21sep14d/'
-cfg.simLabel = '12jan22_mod_10_1'
+cfg.simLabel = '31jan22_d02_pl_w006'
 cfg.saveFolder = cfg.simLabel
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}

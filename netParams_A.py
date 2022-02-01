@@ -51,13 +51,13 @@ elif cfg.stim ==  'fdexp2syn':
                                       'tau_D2': cfg.tau_D2}
     netParams.stimSourceParams['bkg'] = {'type': 'NetStim', 'rate': cfg.rate, 'noise': cfg.noise}
     netParams.stimTargetParams['bkg->exc'] = {'source': 'bkg', 'conds': {'cellType': 'CEL'}, 'weight': cfg.weight, 'delay': cfg.delay, 'synMech': 'exc'}
-if cfg.hyp != 0:
-    netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': cfg.hyp, 'dur': 1e9, 'delay': 100}
-    netParams.stimTargetParams['iclamp->CEL'] = {'source': 'iclamp', 'conds': {'cellType': 'CEL'}, 'sec': 'soma', 'loc': 0.5}
 elif cfg.stim == 'dexp2syn':
     netParams.synMechParams['exc'] = {'mod': 'DExp2Syn', 'tau1': cfg.tau1,
                                       'tau2' : cfg.tau2, 'e': cfg.e,
                                       'd': cfg.d, 'rrate': cfg.rrate}
     netParams.stimSourceParams['bkg'] = {'type': 'NetStim', 'rate': cfg.rate, 'noise': cfg.noise}
     netParams.stimTargetParams['bkg->exc'] = {'source': 'bkg', 'conds': {'cellType': 'CEL'}, 'weight': cfg.weight, 'delay': cfg.delay, 'synMech': 'exc'}
+if cfg.hyp != 0:
+    netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': cfg.hyp, 'dur': 1e9, 'delay': 100}
+    netParams.stimTargetParams['iclamp->CEL'] = {'source': 'iclamp', 'conds': {'cellType': 'CEL'}, 'sec': 'soma', 'loc': 0.5}
 
