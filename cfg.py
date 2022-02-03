@@ -43,7 +43,7 @@ cfg.c1b = 0.0001
 cfg.c1c = 0.0001
 cfg.c1g = 0.00001
 # cfg.c1i = 0.00027
-cfg.kcna = 0.01592
+cfg.kcna = 0.001 #0.01592
 
 cfg.recordStep = 0.1       
 # cfg.filename = '21sep14d/'
