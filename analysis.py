@@ -179,10 +179,9 @@ def svSpikeStats(dataFolder, batchLabel, dfss=dfss):
 def ldSpikeStats(f=filenamepkl): return pd.read_pickle(f) 
 
 def allAnalysis(df=df):
-    # Is a Temp. function that analyses and plots. Need to separate plotting
 
     # Spiking Data 
-    dfss=df[['amp', 'cellnum', 'avgRate']].copy()  # note double brackets
+    dfss=df[['cellnum', 'avgRate']].copy()  # note double brackets
     dfss.scnt    = df.spkt.apply(len) # number of spikes (spikecount) * IGNORE WARNING, creates dfss.scnt anyway
     dfss['scnt'] = df.spkt.apply(len)
     dfss['spk1'] = df.spkt.apply(lambda x: x[0] if len(x)>0 else -1) # spk1; time of first spike
@@ -191,16 +190,10 @@ def allAnalysis(df=df):
     dfss['sdur'] = df.spkt.apply(lambda x: x[-1] - x[0] if len(x)>1 else 0) # sdur: duration of spiking
     dfss['hz']   = dfss.scnt.div(dfss.sdur).mul(1e3).fillna(0).replace(np.inf,0) # >>> NaN
 
-    # Plotting
-
-    fig = px.scatter_3d(dfss, x='cellnum', y='amp', z='hz',color='hz', hover_data=['cellnum','hz','amp',df.ka,df.na, df.kcnc, df.kcnab, df.h1, df.h2, df.h3, df.h4, df.c1a, df.c1b, df.c1c, df.c1g, df.c1i],labels={'cellnum':'Cell Number','hz':'Firing Frequency (Hz)', 'amp':'Current Clamp (nA)','hover_data_3':'Ka Conductance (S/cm2)', 'hover_data_4':'Na Conductance (S/cm2)', 'hover_data_5':'Kcnc Conductance (S/cm2)', 'hover_data_6':'Kcnab Conductance (S/cm2)', 'hover_data_7':'HCN1 Conductance (S/cm2)', 'hover_data_8':'HCN2 Conductance (S/cm2)', 'hover_data_9':'HCN3 Conductance (S/cm2)', 'hover_data_10':'HCN4 Conductance (S/cm2)', 'hover_data_11':'Cacna1a Conductance (S/cm2)', 'hover_data_12':'Cacna1b Conductance (S/cm2)', 'hover_data_13':'Cacna1c Conductance (S/cm2)', 'hover_data_14':'Cacna1g Conductance (S/cm2)', 'hover_data_15':'Cacna1i Conductance (S/cm2)'})
-    fig.write_image("3D_scatterplot.png")
-
-    # Classification
 
     stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
     stimend = stim['dur'] + stim['delay']
-    dclass=df[['amp','cellnum']].copy()
+    dclass=df[['cellnum']].copy()
     dclass['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
     dclass['Vrmp'] = dclass.Vlist.apply(lambda x: x[0])
     dclass['spkend'] = df.spkt.apply(lambda x: x[len(x)-1] if len(x)>0 else -1)
