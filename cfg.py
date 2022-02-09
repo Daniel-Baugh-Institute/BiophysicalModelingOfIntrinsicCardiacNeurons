@@ -41,17 +41,17 @@ cfg.amp = 0.6
 """
 
 ih_scale=1
-cfg.hyp =-0.1 
+cfg.hyp = 0
 cfg.stim = 'dexp2syn'
 cfg.tau1 = 5
 cfg.tau2 = 18
-cfg.rrate = 0.31177/.375 #/0.80728812 #0.49873788 #/0.43708360077316477 # for hyp=0
+cfg.rrate = 0.31177/0.43708360077316477 # for hyp=0
 cfg.d = 0.2
 cfg.e = 0 
 cfg.rate = 2.1
 interval = 1000/cfg.rate
 cfg.noise = 1-10/interval # 10ms min interval
-cfg.weight = 0.05
+cfg.weight = 0.055
 cfg.delay = 5 
 cfg.cellnum = 94
 cfg.ka = 0.1100761264562606
@@ -71,7 +71,7 @@ cfg.c1i = 0.0021365472203493
 cfg.recordStep = 0.02
 cfg.recordStim = True 
 # cfg.filename = '21sep14d/'
-cfg.simLabel = '07feb22_hyp02_w005'
+cfg.simLabel = '09feb22_hyp0_w0055_d02'
 cfg.saveFolder = cfg.simLabel
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}
