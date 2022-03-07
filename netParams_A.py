@@ -22,12 +22,22 @@ cell = cell_identities[cfg.cellnum]
 CEL = {'secs': {}}
 
 CEL['secs']['soma'] = {'geom': {'diam': 30, 'L': 30, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 1.8e-6, 'e': -65}} }
-                                                                            
-#KAAR_rybak; gAbar
+
+# mechanisms to modulate
+neuromod = {'achmod' : 
+            {mech : {'achmod': cfg.achmod}
+                for mech in ['ch_Cacna1a_cp5' 'KAAR_rybak', 'km', 'Inic']}}
 
 for mod,onoff in zip(genemod,cell):
     if onoff:
         CEL['secs']['soma']['mechs'][mod]=genemod[mod]
+
+# set neuromodulation for relevant mechanism 
+for modulation in neuromod.values():
+    for mod,param in modulation.items():
+        CEL['secs']['soma']['mechs'][mod]=param
+        
+    
 netParams.cellParams['CEL'] = CEL
 netParams.popParams['U'] = {'cellType': 'CEL', 'numCells': 1}
 

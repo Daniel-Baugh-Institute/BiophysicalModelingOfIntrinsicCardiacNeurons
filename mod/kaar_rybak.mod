@@ -6,6 +6,7 @@ NEURON {
 	RANGE gAbar, gA, ik, gARbar, iar, ia
 	RANGE miA1, tmA1, hiA1, thA1, miA2, tmA2, hiA2, thA2, moA1, moA2, hoA1, hoA2
 	GLOBAL z,T
+    RANGE achmod
 }
 
 UNITS {
@@ -27,6 +28,9 @@ PARAMETER {
 	gARbar = 0.002122066 (S/cm2)
 	z = 2
 	T = 308
+    achmod = 0  <0, 1>
+    modmax = 0.575 
+
 }
 
 STATE {
@@ -64,7 +68,7 @@ BREAKPOINT {
 	gA=gAbar*((0.6*hA1*(mA1^4))+(0.4*hA2*(mA2^4)))
 	ia = gA*(v-(-94)) 		: based on M/P code of PN Neuron
 	iar = (gARbar*((v-(-94)+5.66)/(1+(exp(((v-(-94)-15.3)*z*FARADAY)/(R*T))))))		: based on M/P code of PN Neuron
-	ik = (ia+iar)
+	ik = (ia+iar)*(1 - achmod*(1.0-modmax))
 }
 
 DERIVATIVE states {	

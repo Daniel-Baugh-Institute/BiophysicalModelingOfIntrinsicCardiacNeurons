@@ -29,6 +29,7 @@ NEURON	{
 	RANGE gCav2_1bar, gCav2_1, ica, BBiD
 	RANGE ggk, ica1a, mInf, mTau				:SG mm
 	GLOBAL USEGHK			 					:SG mm
+    RANGE achmod
 }
 
 UNITS	{
@@ -47,6 +48,8 @@ PARAMETER	{
 	BBiD = 5 
 	:SG
   	USEGHK=1
+    achmod = 0  <0, 1>
+    modmax = 0.75
 }
 
 ASSIGNED	{
@@ -79,7 +82,7 @@ BREAKPOINT	{
 	} else {
 		ggk = (v-eca)
 	}
-	ica1a = gCav2_1*ggk
+	ica1a = gCav2_1*ggk*(1 - achmod*(1.0-modmax))
 	ica = ica1a
 	:ica = gCav2_1*(v-eca)
 }
