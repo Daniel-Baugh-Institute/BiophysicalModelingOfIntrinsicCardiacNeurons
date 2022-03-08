@@ -40,9 +40,9 @@ for mod,onoff in zip(genemod,cell):
         CEL['secs']['soma']['mechs'][mod]=genemod[mod]
 
 # set neuromodulation for relevant mechanism 
-for modulation in neuromod.values():
-    for mod,param in modulation.items():
-        CEL['secs']['soma']['mechs'][mod]=param
+#for modulation in neuromod.values():
+#    for mod,param in modulation.items():
+#        CEL['secs']['soma']['mechs'][mod]=param
         
     
 netParams.cellParams['CEL'] = CEL
