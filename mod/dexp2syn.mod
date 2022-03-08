@@ -74,7 +74,7 @@ NET_RECEIVE(weight (umho), D, tsyn(ms)) {
     if (D > 1) {
         D = 1
     }
-    printf("%g\t%g\t%g\t%g\n", t, ((t-tsyn)*1e-3), D,  weight*D)
+    :printf("%g\t%g\t%g\t%g\n", t, ((t-tsyn)*1e-3), D,  weight*D)
     tsyn = t
 	state_discontinuity(A, A + weight*factor*D)
 	state_discontinuity(B, B + weight*factor*D)

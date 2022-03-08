@@ -31,6 +31,7 @@ NEURON	{
 	RANGE gLbar, gL, ica, BBiD 
 	RANGE ggk, ica1c, mInf, mTau, hInf, hTau	:SG mm
 	GLOBAL USEGHK								:SG mm
+    RANGE npymod
 }
 
 UNITS	{
@@ -49,6 +50,8 @@ PARAMETER	{
 	BBiD = 212 
 	:SG
   	USEGHK=1
+    npymod = 0 <0,1>
+    npymax = 0.69
 }
 
 ASSIGNED	{
@@ -82,7 +85,7 @@ BREAKPOINT	{
 	} else {
 		ggk = (v-eca)
 	}
-	ica1c = gL*ggk
+	ica1c = gL*ggk*(1.0 - npymod*(1.0 - npymax))
 	ica = ica1c
 	:ica = gL*(v-eca)
 }

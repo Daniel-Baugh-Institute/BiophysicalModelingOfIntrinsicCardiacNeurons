@@ -32,6 +32,7 @@ NEURON	{
 	RANGE ggk, ica1b, mInf, mTau, hInf, hTau	:SG mm
 	GLOBAL USEGHK								:SG mm
     RANGE achmod
+    RANGE npymod
 
 }
 
@@ -54,6 +55,8 @@ PARAMETER	{
   	USEGHK=1
     achmod = 0  <0, 1>
     modmax = 0.75
+    npymod = 0
+    npymax = 0
 
 }
 
@@ -92,7 +95,8 @@ BREAKPOINT	{
 	} else {
 		ggk = (v-eca)
 	}
-	ica1b = gCav2_2*ggk*(1 - achmod*(1.0-modmax))
+	ica1b = gCav2_2*ggk*(1.0 - achmod*(1.0-modmax))*(1.0 - npymod*(1.0-npymax))
+
 	ica = ica1b
 	:ica = gCav2_2*(v-eca)
 }

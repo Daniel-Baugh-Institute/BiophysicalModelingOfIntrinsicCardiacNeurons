@@ -26,7 +26,14 @@ CEL['secs']['soma'] = {'geom': {'diam': 30, 'L': 30, 'Ra': 35.4, 'cm':1}, 'mechs
 # mechanisms to modulate
 neuromod = {'achmod' : 
             {mech : {'achmod': cfg.achmod}
-                for mech in ['ch_Cacna1a_cp5' 'KAAR_rybak', 'km', 'Inic']}}
+                for mech in ['ch_Cacna1a_cp5' 'KAAR_rybak', 'km', 'Inic']},
+            'npymod' :
+            {mech : {'npymod': cfg.npymod}
+                for mech in ['ch_Cacna1a_cp5', 'ch_Cacna1b_cp6',
+                             'ch_Cacna1c_cp3',
+                             'ch_Hcn1_cp9', 'ch_Hcn2_cp10', 'ch_Hcn3_cp11',
+                             'ch_Hcn4_cp12']}}
+
 
 for mod,onoff in zip(genemod,cell):
     if onoff:

@@ -17,6 +17,7 @@ NEURON	{
 	SUFFIX ch_Hcn4_cp12
 	USEION other WRITE iother VALENCE 1.0 					:Added by SG
 	RANGE gHCN4bar, gHCN4, ihcn4, ehcn, BBiD, mInf, mTau
+    RANGE npymod
 }	
 
 UNITS	{
@@ -28,7 +29,10 @@ UNITS	{
 PARAMETER	{
 	gHCN4bar = 0.00001 (S/cm2) 
 	BBiD = 64 
-	ehcn = -45.0 (mV)	
+	ehcn = -45.0 (mV)
+    npymod = 0 <0,1>
+    npymax = 0.7
+	
 }
 
 ASSIGNED	{
@@ -47,7 +51,7 @@ STATE	{
 BREAKPOINT	{
 	SOLVE states METHOD cnexp
 	gHCN4 = gHCN4bar*m
-	ihcn4 = gHCN4*(v-ehcn)
+	ihcn4 = gHCN4*(v-ehcn)*(1.0 - npymod*(1.0-npymax))
 	iother = ihcn4				:Added by SG
 }
 

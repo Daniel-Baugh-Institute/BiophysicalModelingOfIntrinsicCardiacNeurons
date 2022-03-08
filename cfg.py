@@ -39,7 +39,8 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
 cfg.stim = 'IClamp'
 cfg.amp = 0.6  
 """
-cfg.achmod = 1
+cfg.achmod = 0
+cfg.npymod = 1
 ih_scale=1
 cfg.hyp = 0
 cfg.stim = 'dexp2syn'
