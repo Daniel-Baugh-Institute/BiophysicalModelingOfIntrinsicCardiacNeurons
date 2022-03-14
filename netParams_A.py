@@ -39,6 +39,7 @@ addtional_mech = {'km' : {'ach': 0}, 'Inic' : {'ach': 0}}
 for mod,onoff in zip(genemod,cell):
     if onoff:
         CEL['secs']['soma']['mechs'][mod]=genemod[mod]
+
 for mech,param in addtional_mech.items():
     CEL['secs']['soma']['mechs'][mech] = param
      

@@ -39,9 +39,9 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
 cfg.stim = 'IClamp'
 cfg.amp = 0.6  
 """
+cfg.sze = 30
 cfg.npy = 0
-cfg.ach = 1e6
-ih_scale=1
+cfg.ach = 0
 cfg.hyp = 0
 cfg.stim = 'dexp2syn'
 cfg.tau1 = 5
@@ -52,12 +52,28 @@ cfg.e = 0
 cfg.rate = 2.1
 interval = 1000/cfg.rate
 cfg.noise = 1-10/interval # 10ms min interval
-cfg.weight = 0.04
+cfg.weight = 0.0
 cfg.delay = 5 
-cfg.cellnum = 94
+cfg.cellnum = 3
+
+cfg.na = 1
+cfg.kcnc= 0.015
+cfg.kcnab=0.015
+cfg.h1 = 0.00001
+cfg.h2 = 0.009
+cfg.h3 = 0.0001
+cfg.h4 = 0.0002
+cfg.c1a = 0.00001
+cfg.c1b = 0.0001
+cfg.c1c = 0.0001
+cfg.c1g = 0.00001
+cfg.c1i = 0.00027
+cfg.kcna = 0.01592
+"""
+ih_scale=1
 cfg.ka = 0.1100761264562606
 cfg.na = 1.25*0.8412111341953278
-cfg.kcnc = 0.5*0.012420394539833
+cfg.kcna = 0.5*0.012420394539833
 cfg.kcnab = 0.0125053287744522
 cfg.h1 = ih_scale*1.5432371459901335e-05
 cfg.h2 = ih_scale*0.0554111278653144
@@ -68,7 +84,7 @@ cfg.c1b = 0.0009565910220146
 cfg.c1c = 0.0002832042902708
 cfg.c1g = 2.3639085143804552e-05
 cfg.c1i = 0.0021365472203493
-
+"""
 cfg.recordStep = 0.02
 cfg.recordStim = True 
 cfg.simLabel = '10mar22ach10_w0_04'

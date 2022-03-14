@@ -15,9 +15,8 @@ def fi(seg):
                     setattr(getattr(seg,mod),k,v)
     print(cfg.cellnum, seg.e_pas)
 
-def simSim (np0, sc0):
+def simSim(np0, sc0):
     sim.createSimulateAnalyze(netParams=np0, simConfig=sc0)
-    print(np0.neuromod)
     print(netParams.neuromod)
     fih = [h.FInitializeHandler(2, lambda: fi(sim.net.cells[0].secs.soma.hObj(0.5)))]
     print('BEFORE simulate')
