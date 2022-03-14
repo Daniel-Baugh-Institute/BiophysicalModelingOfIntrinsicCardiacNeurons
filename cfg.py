@@ -4,7 +4,7 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig() 
 
 cfg.hParams = {'celsius':35, 'v_init':-61}
-cfg.duration = 60000  #1500 #1*1e3 #(ms)
+cfg.duration = 20000  #1500 #1*1e3 #(ms)
 cfg.dt = 0.01
 cfg.verbose = False     
 cfg.recordCells = ['all']
@@ -39,8 +39,8 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
 cfg.stim = 'IClamp'
 cfg.amp = 0.6  
 """
-cfg.achmod = 0
-cfg.npymod = 1
+cfg.npy = 0
+cfg.ach = 1e6
 ih_scale=1
 cfg.hyp = 0
 cfg.stim = 'dexp2syn'
@@ -52,7 +52,7 @@ cfg.e = 0
 cfg.rate = 2.1
 interval = 1000/cfg.rate
 cfg.noise = 1-10/interval # 10ms min interval
-cfg.weight = 0.055
+cfg.weight = 0.04
 cfg.delay = 5 
 cfg.cellnum = 94
 cfg.ka = 0.1100761264562606
@@ -72,7 +72,7 @@ cfg.c1i = 0.0021365472203493
 cfg.recordStep = 0.02
 cfg.recordStim = True 
 # cfg.filename = '21sep14d/'
-cfg.simLabel = '09feb22_hyp0_w0055_d02'
+cfg.simLabel = '10mar22ach10_w0_04'
 cfg.saveFolder = cfg.simLabel
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}

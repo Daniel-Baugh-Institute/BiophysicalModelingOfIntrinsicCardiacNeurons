@@ -14,6 +14,7 @@ NEURON {
  SUFFIX ch_Kcnq1_md183949
  USEION k READ ek WRITE ik
  RANGE gmax, iKCNQ
+ RANGE ach, achmod
 }
 
 PARAMETER {
@@ -30,6 +31,9 @@ PARAMETER {
  phi_m = -61.0 (mV)
  sigma_m0 = 35.0 (mV)
  sigma_m1 = -25.0 (mV)
+ ach = 0 (mM)
+ achmodmax = 0.82
+ achic50 = 4.4e-3 : CHANGE
 }
 
 STATE {
@@ -40,11 +44,13 @@ ASSIGNED {
  ik (mA/cm2)
  minf
  taum (ms)
+ achmod
 }
 
 BREAKPOINT {
  SOLVE states METHOD cnexp
- ik  = gmax*m*m*m*m*(v-ek)
+ achmod = achmodmax*(ach/(ach+achic50))
+ ik  = gmax*m*m*m*m*(v-ek)*(1.0-achmod)
  iKCNQ = ik
 }
 

@@ -22,7 +22,7 @@ NEURON {
 	RANGE ninf, ntau
 	GLOBAL Ra, Rb
 	GLOBAL q10, temp, tadj, vmin, vmax
-    RANGE achmod
+    RANGE ach, achmod
 
 }
 
@@ -34,7 +34,7 @@ UNITS {
 } 
 
 PARAMETER {
-	gbar = 10   	(pS/um2)	: 0.03 mho/cm2
+	gbar = 0   	(pS/um2)	: 0.03 mho/cm2
 	v 		(mV)
 								
 	tha  = -30	(mV)		: v 1/2 for inf
@@ -50,8 +50,9 @@ PARAMETER {
 
 	vmin = -120	(mV)
 	vmax = 100	(mV)
-    achmod = 0  <0, 1>
-    modmax = 0
+    ach = 0 (mM) 
+    achic50 = 4.44e-3 (mM)
+    achmodmax = 5.0
 
 } 
 
@@ -65,6 +66,7 @@ ASSIGNED {
 	ninf
 	ntau (ms)	
 	tadj
+    achmod
 }
  
 
@@ -77,7 +79,8 @@ INITIAL {
 
 BREAKPOINT {
         SOLVE states METHOD cnexp
-	gk = tadj*gbar*n*(1.0 - achmod*(1.0-modmax))
+    achmod = achmodmax*(ach/(ach+achic50))
+	gk = tadj*gbar*n*achmod
 	ik = (1e-4) * gk * (v - ek)
 } 
 

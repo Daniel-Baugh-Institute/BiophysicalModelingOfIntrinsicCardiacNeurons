@@ -24,26 +24,25 @@ CEL = {'secs': {}}
 CEL['secs']['soma'] = {'geom': {'diam': 30, 'L': 30, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 1.8e-6, 'e': -65}} }
 
 # mechanisms to modulate
-neuromod = {'achmod' : 
-            {mech : {'achmod': cfg.achmod}
-                for mech in ['ch_Cacna1a_cp5' 'KAAR_rybak', 'km', 'Inic']},
-            'npymod' :
-            {mech : {'npymod': cfg.npymod}
+netParams.neuromod = {'ach' : 
+            {mech : {'ach': cfg.ach}
+                for mech in ['ch_Cacna1a_cp5', 'KAAR_rybak', 'km', 'Inic','ka']},
+            'npy' :
+            {mech : {'npy': cfg.npy}
                 for mech in ['ch_Cacna1a_cp5', 'ch_Cacna1b_cp6',
                              'ch_Cacna1c_cp3',
                              'ch_Hcn1_cp9', 'ch_Hcn2_cp10', 'ch_Hcn3_cp11',
                              'ch_Hcn4_cp12']}}
 
+# add mechanism to the model -- blocked by default but can be changed by cfg 
+addtional_mech = {'km' : {'ach': 0}, 'Inic' : {'ach': 0}}
 
 for mod,onoff in zip(genemod,cell):
     if onoff:
         CEL['secs']['soma']['mechs'][mod]=genemod[mod]
-
-# set neuromodulation for relevant mechanism 
-#for modulation in neuromod.values():
-#    for mod,param in modulation.items():
-#        CEL['secs']['soma']['mechs'][mod]=param
-        
+for mech,param in addtional_mech.items():
+    CEL['secs']['soma']['mechs'][mech] = param
+     
     
 netParams.cellParams['CEL'] = CEL
 netParams.popParams['U'] = {'cellType': 'CEL', 'numCells': 1}
