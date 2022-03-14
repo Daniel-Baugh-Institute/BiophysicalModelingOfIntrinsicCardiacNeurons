@@ -71,11 +71,10 @@ cfg.c1i = 0.0021365472203493
 
 cfg.recordStep = 0.02
 cfg.recordStim = True 
-# cfg.filename = '21sep14d/'
 cfg.simLabel = '10mar22ach10_w0_04'
 cfg.saveFolder = cfg.simLabel
 cfg.saveJson = True
-cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}
+cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
 
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
