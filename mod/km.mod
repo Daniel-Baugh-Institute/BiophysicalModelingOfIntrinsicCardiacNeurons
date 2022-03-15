@@ -34,7 +34,7 @@ UNITS {
 } 
 
 PARAMETER {
-	gbar = 0   	(pS/um2)	: 0.03 mho/cm2
+	gbar = 10   	(pS/um2)	: 0.03 mho/cm2
 	v 		(mV)
 								
 	tha  = -30	(mV)		: v 1/2 for inf
@@ -52,7 +52,7 @@ PARAMETER {
 	vmax = 100	(mV)
     ach = 0 (mM) 
     achic50 = 4.44e-3 (mM)
-    achmodmax = 5.0
+    achmodmax = 4.0
 
 } 
 
@@ -80,7 +80,7 @@ INITIAL {
 BREAKPOINT {
         SOLVE states METHOD cnexp
     achmod = achmodmax*(ach/(ach+achic50))
-	gk = tadj*gbar*n*achmod
+	gk = tadj*gbar*n*(1.0+achmod)
 	ik = (1e-4) * gk * (v - ek)
 } 
 
