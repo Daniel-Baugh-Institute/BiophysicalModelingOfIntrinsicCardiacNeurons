@@ -1,0 +1,3 @@
+* 21aug04 errors when running mpi_bulletin
+** mpi choice (not documented); runCfg types are 'mpi_bulletin', 'mpi_direct', 'hpc_slurm', 'hpc_torque'
+** mpiexec -np 32 nrniv -python -mpi batch.py
