@@ -13,8 +13,8 @@ genemod = {'ch_Cacna1a_cp5':{'gCav2_1bar': 0.00001},  'ch_Cacna1b_cp6':{'gCav2_2
            'ch_Cacna1g_cp41':{'gCav3_1bar': 0.00001},  'ch_Cacna1i_md279':{'gcabar': 0.00027},
             'ch_Hcn1_cp9':{'gHCN1bar': 0.00001},         'ch_Hcn2_cp10':{'gHCN2bar': 0.009},           
             'ch_Hcn3_cp11':{'gHCN3bar': 0.0001},        'ch_Hcn4_cp12':{'gHCN4bar': 0.0002},           
-            'ch_Kcna1ab1_md80769':{'gbar': 0.011},  'ch_Kcnc1_rothman':{'gbar': 0.011, 'phi':0.85},  #0.0011          
-            'ch_Kcnj3_md2488':{'gbar': 0.0015},                 'ch_Scn1a_md264834':{'gNav11bar': 0.1}}     #0.0015
+            'ch_Kcna1ab1_md80769':{'gbar': 0.018},  'ch_Kcnc1_rothman':{'gbar': 0.018, 'phi':0.2},  #0.0011          
+            'ch_Kcnj3_md2488':{'gbar': 0.0018},                 'ch_Scn1a_md264834':{'gNav11bar': 0.1}}     #0.0015
 cell_identities = np.bool_(np.transpose(np.genfromtxt('red_tdata_all_15.csv', delimiter=',')))
 cell = cell_identities[cfg.cellnum]
 
@@ -31,9 +31,10 @@ netParams.cellParams['CEL'] = CEL
 netParams.popParams['U'] = {'cellType': 'CEL', 'numCells': 1}
 
 if cfg.stim == 'IClamp':
-    netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': 0.6, 'dur': 500, 'delay': 100} 
+    netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': cfg.amp, 'dur': 400, 'delay': 100} 
     netParams.stimTargetParams['iclamp->CEL'] = {'source': 'iclamp', 'conds': {'cellType': 'CEL'}, 'sec': 'soma', 'loc': 0.5}
 
 #'ch_Kcna1ab1_md80769':{'gbar': 0.011},
 # 'ch_Kcna1_gupta':{'gbar': 0.011,'zeta':1}
 # 'ch_Kcna_cp18':{'gKv1_1bar': 0.01},
+# 'ch_Kcnc1_md74298':{'gk': cfg.kcnc}
