@@ -235,6 +235,7 @@ def plotEpas(df = df):
     else:
         indx = -1
     # import IPython; IPython.embed()
+    print(indx)
     cells = df['cellnum'].tolist()
     vm = {}
     pasv = {}
