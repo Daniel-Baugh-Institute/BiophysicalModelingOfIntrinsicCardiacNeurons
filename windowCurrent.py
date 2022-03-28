@@ -178,7 +178,7 @@ axs[2].legend()
 axs[2].set_xlabel('Membrane Potential (mV)')
 
 f4,axs = plt.subplots(2,3)
-f3.suptitle('Calcium Channels')
+f4.suptitle('Calcium Channels')
 axs[0,0].set_title('Cacna1a')
 axs[0,0].plot(volt,mc1a, label = 'Activation', color='purple')
 axs[0,0].axvline(x = -61, color = 'k', label = 'RMP = -61 mV')
