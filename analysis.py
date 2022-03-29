@@ -251,3 +251,29 @@ def plotEpas(df = df):
     plt.xlabel('Cell Numbers')
     plt.savefig(batchLabel+'_epas.png')
     return
+
+def plotRin (df=df):
+    rsag = {}
+    rss = {}
+
+    stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
+    cells = df['cellnum'].tolist()
+
+    for c in cells:
+        for i in df['t'][c]:
+            if i<(stim['delay']):
+                init = df['t'][c].index(i)
+            if i<(stim['delay']+stim['dur'])/2:
+                ss = df['t'][c].index(i)
+        rsag[c] = (min(df['V_soma'][c]['cell_0'])-df['V_soma'][c]['cell_0'][init])/stim['amp']
+        rss[c] = (df['V_soma'][c]['cell_0'][ss]-df['V_soma'][c]['cell_0'][init])/stim['amp']
+
+    fig, axs = plt.subplots(2,1)
+    axs[0].scatter(list(rsag),list(rsag.values()),c='red')
+    axs[0].set_ylabel(r'Rin sag (M$\Omega$)')
+    axs[1].scatter(list(rss),list(rss.values()))
+    axs[1].set_ylabel(r'Rin steady-state (M$\Omega$)')
+    plt.xlabel('Cell Numbers')
+    plt.suptitle(r'Rin (M$\Omega$)')
+    plt.show()
+    return
