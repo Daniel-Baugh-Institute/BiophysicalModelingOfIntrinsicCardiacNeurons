@@ -31,7 +31,7 @@ netParams.cellParams['CEL'] = CEL
 netParams.popParams['U'] = {'cellType': 'CEL', 'numCells': 1}
 
 if cfg.stim == 'IClamp':
-    netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': -0.0001, 'dur': 50, 'delay': 50} 
+    netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': -1e-5, 'dur': 200, 'delay': 100} 
     netParams.stimTargetParams['iclamp->CEL'] = {'source': 'iclamp', 'conds': {'cellType': 'CEL'}, 'sec': 'soma', 'loc': 0.5}
 
 #'ch_Kcna1ab1_md80769':{'gbar': 0.011},
