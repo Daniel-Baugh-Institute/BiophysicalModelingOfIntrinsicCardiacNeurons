@@ -21,7 +21,7 @@ cell = cell_identities[cfg.cellnum]
 ## Cell parameters/rules
 CEL = {'secs': {}}
 
-CEL['secs']['soma'] = {'geom': {'diam': cfg.sze, 'L': cfg.sze, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 4e-4, 'e': -65}, 'nm_In_md149739':{'gbar':0}} } #1e-5
+CEL['secs']['soma'] = {'geom': {'diam': cfg.sze, 'L': cfg.sze, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 1.8e-6, 'e': -65}, 'nm_In_md149739':{'gbar':0}} } #1e-5
                                                                             
 
 for mod,onoff in zip(genemod,cell):
