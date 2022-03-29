@@ -6,6 +6,7 @@ import pickle
 import pandas as pd
 import numpy as np
 import os,sys
+from os import makedirs
 import re
 from collections import OrderedDict
 from itertools import product
@@ -276,4 +277,16 @@ def plotRin (df=df):
     plt.xlabel('Cell Numbers')
     plt.suptitle(r'Rin (M$\Omega$)')
     plt.show()
+    return
+
+def plotVm(df=df,batchLabel):
+    makedirs(f'{batchLabel}/vmPlots_b')
+    for indx in df.index:
+        f = plt.figure()
+        plt.plot(df['t'][indx],df['V_soma'][indx]['cell_0'],c='C0')
+        plt.xlabel('Time (ms)')
+        plt.ylabel('Membrane Voltage (mV)')
+        plt.title(f"Cell Number: {df['cellnum'][indx]}")
+        plt.savefig(f"{batchLabel}/vmPlots_b/{df['simLabel'][indx]}.png")
+        plt.close()
     return
