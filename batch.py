@@ -10,7 +10,7 @@ def batch():
         params = specs.ODict()
         # params['amp'] = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5] # indexed
         params['cellnum'] = [x for x in range(104)] # indexed          all_15: 104
-        params['g']=[4e-4,6e-4,7e-4,8e-4,9e-4]
+        params['g']=[5e-4,6e-4,7e-4,8e-4,9e-4]
         # params['phi']=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]
         # params['sze'] = [16,18,20,23,25,27,30] 
         # params['na'] = [0.1, 1]                 # log
