@@ -254,24 +254,19 @@ def plotEpas(df = df):
     return
 
 def plotRin (df=df):
-    rss = {}
+    ripk = {}
 
     stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
     cells = df['cellnum'].tolist()
-
-    for c in cells:
-        for i in df['t'][c]:
-            if i<(stim['delay']):
-                init = df['t'][c].index(i)
-            if i<(stim['delay']+stim['dur']):
-                ss = df['t'][c].index(i)-1000
-        rss[c] = (df['V_soma'][c]['cell_0'][ss]-df['V_soma'][c]['cell_0'][init])/stim['amp']
-        
-    plt.figure()
-    plt.scatter(list(rss),list(rss.values()))
-    plt.xlabel('Cell Numbers')
-    plt.ylabel(r'Rin (M$\Omega$)')
-    plt.show()
+    for i in df['t'][0]:        #dt is same so time array is same for all cells
+        if i<(stim['delay']):
+            init = df['t'][0].index(i)
+        if i<(stim['delay']+stim['dur']):
+            end = df['t'][0].index(i)
+    d = df[['cellnum','V_soma']].copy()
+    d['ripk']=d.V_soma.apply(lambda x:(min(x['cell_0'][init:end])-x['cell_0'][init])/stim['amp'])
+    fr = px.scatter(d, x='cellnum', y='ripk', hover_data=['cellnum','ripk',df.index], labels={'cellnum':'Cell Number','ripk':'Rin (MOhm)'}, title = 'Calculated from Negative Peak',template="simple_white")
+    fr.show()
     return
 
 def plotVm(df,batchLabel):
