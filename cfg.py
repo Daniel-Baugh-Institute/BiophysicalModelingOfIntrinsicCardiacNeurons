@@ -36,7 +36,7 @@ cfg.stim = 'IClamp'
 cfg.cellnum = 84
 cfg.sze = 21
 cfg.amp = 0.6
-# cfg.phi = 0.2
+cfg.phi = 0.2
 
 cfg.recordStep = 0.1       
 # cfg.filename = '21sep14d/'
