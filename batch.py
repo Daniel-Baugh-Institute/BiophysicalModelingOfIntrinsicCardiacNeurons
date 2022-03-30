@@ -8,19 +8,17 @@ from netpyne.batch import Batch
 
 def batch():
         params = specs.ODict()
-        params['amp'] = [0.6] # indexed
+        # params['amp'] = [0.6] # indexed
         params['cellnum'] = [x for x in range(104)] # indexed          all_15: 104
         # params['g']=[5e-4,6e-4,7e-4,8e-4,9e-4]
-        params['phi']=[0.1,0.2,0.4] # indexed
-        params['kc'] = [0.011, 0.015, 0.03, 0.05, 0.08, 0.1]
-        # params['sze'] = [16,18,20,23,25,27,30] 
-        # params['na'] = [0.1, 1]                 # log
-        # params['h1'] =[0.0001, 0.00001]         # log
+        # params['phi']=[0.1,0.2,0.4] # indexed
+        # params['kc'] = [0.011, 0.015, 0.03, 0.05, 0.08, 0.1]
+        params['kj'] = [0.001,0.003,0.005,0.007,0.009]
 
 
         b = Batch(params=params, cfgFile='cfg.py', netParamsFile='netParams_M1.py')
         # Set output folder, grid method (all param combinations), and run configuration
-        b.batchLabel = '22mar30c'
+        b.batchLabel = '22mar30d'
         b.saveFolder = '/tera/' + os.getlogin() + '/' + b.batchLabel
         b.method = 'grid'  # params.csv will be read by default; else need name in cfg.paramListFile
         b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
