@@ -39,6 +39,7 @@ cfg.amp = 0.6
 cfg.phi = 0.2
 cfg.kc = 0.018
 cfg.kj = 0.0018
+cfg.c1i = 0.00027
 
 cfg.recordStep = 0.1       
 # cfg.filename = '21sep14d/'
