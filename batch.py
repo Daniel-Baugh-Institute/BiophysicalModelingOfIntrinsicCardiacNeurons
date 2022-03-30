@@ -8,9 +8,9 @@ from netpyne.batch import Batch
 
 def batch():
         params = specs.ODict()
-        params['amp'] = [0.5,0.6,0.8] # indexed
+        params['amp'] = [0.6,0.8] # indexed
         params['cellnum'] = [x for x in range(104)] # indexed          all_15: 104
-        params['phi']=[0,0.2,0.5,1] # indexed
+        params['phi']=[0,0.2,1] # indexed
         params['na'] = [0.8, 1]
         params['ka'] = [0.011, 0.06]
         params['kc'] = [0.011, 0.1]
