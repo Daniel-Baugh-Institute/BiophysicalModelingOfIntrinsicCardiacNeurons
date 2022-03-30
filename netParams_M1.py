@@ -21,7 +21,7 @@ cell = cell_identities[cfg.cellnum]
 ## Cell parameters/rules
 CEL = {'secs': {}}
 
-CEL['secs']['soma'] = {'geom': {'diam': cfg.sze, 'L': cfg.sze, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 7e-4, 'e': -65}, 'nm_In_md149739':{'gbar':0}} } #1e-5
+CEL['secs']['soma'] = {'geom': {'diam': cfg.sze, 'L': cfg.sze, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 0.00075, 'e': -65}, 'nm_In_md149739':{'gbar':0}} } #1e-5
                                                                             
 
 for mod,onoff in zip(genemod,cell):
@@ -31,7 +31,7 @@ netParams.cellParams['CEL'] = CEL
 netParams.popParams['U'] = {'cellType': 'CEL', 'numCells': 1}
 
 if cfg.stim == 'IClamp':
-    netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': -1e-5, 'dur': 200, 'delay': 100} 
+    netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': -1e-5, 'dur': 400, 'delay': 100} 
     netParams.stimTargetParams['iclamp->CEL'] = {'source': 'iclamp', 'conds': {'cellType': 'CEL'}, 'sec': 'soma', 'loc': 0.5}
 
 #'ch_Kcna1ab1_md80769':{'gbar': 0.011},
