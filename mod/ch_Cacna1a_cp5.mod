@@ -53,8 +53,9 @@ PARAMETER	{
     npymodmax = 0.15    : maximum 15% reduction
     npyic50 = 1.72e-6 (mM)
     ach = 0  (mM)
-    achic50 = 39e-3 (mM)
-    achmodmax = 0.25
+    achic50 = 36.5e-6 (mM)
+    achmodmax = 0.756
+    achmodv = 28.44 (mV)
 
 }
 
@@ -91,7 +92,7 @@ BREAKPOINT	{
 		ggk = (v-eca)
 	}
     npymod = npymodmax*(npy/(npy+npyic50))
-    achmod = achmodmax*(ach/(ach+achic50))
+    achmod = achmodmax*exp(-(v/achmodv)^2)*(ach/(ach+achic50))
 	ica1a = gCav2_1*ggk*(1.0 - npymod)*(1.0 - achmod)
 	ica = ica1a
 	:ica = gCav2_1*(v-eca)

@@ -52,7 +52,7 @@ PARAMETER {
 	vmax = 100	(mV)
     ach = 0 (mM) 
     achic50 = 4.44e-3 (mM)
-    achmodmax = 4.0
+    achmodmax = 5.0     : closed by ACh
 
 } 
 
@@ -79,8 +79,8 @@ INITIAL {
 
 BREAKPOINT {
         SOLVE states METHOD cnexp
-    achmod = achmodmax*(ach/(ach+achic50))
-	gk = tadj*gbar*n*(1.0+achmod)
+    achmod = achmodmax*(1.0 - ach/(ach+achic50))
+	gk = tadj*gbar*n*achmod
 	ik = (1e-4) * gk * (v - ek)
 } 
 

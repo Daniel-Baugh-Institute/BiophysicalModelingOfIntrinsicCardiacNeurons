@@ -4,14 +4,13 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig() 
 
 cfg.hParams = {'celsius':35, 'v_init':-61}
-cfg.duration = 20000  #1500 #1*1e3 #(ms)
+cfg.duration = 500  #1500 #1*1e3 #(ms)
 cfg.dt = 0.01
 cfg.verbose = False     
 cfg.recordCells = ['all']
 cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
                     'isyn' : {'synMech': 'exc', 'var': 'i'},
-                    'gsyn' : {'synMech': 'exc', 'var': 'g'}}
-"""
+                    'gsyn' : {'synMech': 'exc', 'var': 'g'},
                      'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'},
                      'epas' : {'sec': 'soma', 'loc': 0.5,'var': 'e_pas'},
                      'ih':{'sec': 'soma', 'loc': 0.5,'var': 'iother'}, 
@@ -36,39 +35,38 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
                      'ikar':{'sec': 'soma', 'loc': 0.5,'var': 'ik_KAAR_rybak'},
                      'ika':{'sec': 'soma', 'loc': 0.5,'var': 'ik_ka'}
                     }
-cfg.stim = 'IClamp'
-cfg.amp = 0.6  
-"""
 cfg.sze = 30
 cfg.npy = 0
-cfg.ach = 0
+cfg.ach = 1e-6 
 cfg.hyp = 0
 cfg.stim = 'dexp2syn'
 cfg.tau1 = 5
 cfg.tau2 = 18
 cfg.rrate = 0.31177/0.43708360077316477 # for hyp=0
 cfg.d = 0.2
-cfg.e = 0 
-cfg.rate = 2.1
+cfg.e = -7.0 
+cfg.rate = 5.0
 interval = 1000/cfg.rate
-cfg.noise = 1-10/interval # 10ms min interval
-cfg.weight = 0.0
+cfg.noise = 1-100/interval # 10ms min interval
+cfg.weight = 0.05
 cfg.delay = 5 
-cfg.cellnum = 3
 
-cfg.na = 1
-cfg.kcnc= 0.015
-cfg.kcnab=0.015
-cfg.h1 = 0.00001
+cfg.c1a = 1e-05
+cfg.c1b = 0.0001
+cfg.c1c = 0.0001
+cfg.c1g = 1e-05
+cfg.c1i = 0.00027
+cfg.cellnum = 5
+cfg.h1 = 1e-05
 cfg.h2 = 0.009
 cfg.h3 = 0.0001
 cfg.h4 = 0.0002
-cfg.c1a = 0.00001
-cfg.c1b = 0.0001
-cfg.c1c = 0.0001
-cfg.c1g = 0.00001
-cfg.c1i = 0.00027
-cfg.kcna = 0.01592
+cfg.ka = 0.15
+cfg.kcna = 0.001
+cfg.kcnab = 0.015
+cfg.kcnc = 0.011
+cfg.km = 0.1
+cfg.na = 0.2
 """
 ih_scale=1
 cfg.ka = 0.1100761264562606
@@ -87,7 +85,7 @@ cfg.c1i = 0.0021365472203493
 """
 cfg.recordStep = 0.02
 cfg.recordStim = True 
-cfg.simLabel = '10mar22ach10_w0_04'
+cfg.simLabel = '28mar22ach1e-6_w0_05'
 cfg.saveFolder = cfg.simLabel
 cfg.saveJson = True
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}

@@ -25,7 +25,6 @@ NEURON {
 	USEION ttx READ ttxo, ttxi VALENCE 1
 	RANGE gNav11bar, gNav11, ina,mh,ms,hh,hs, iscn
 	RANGE mInf, mTau, hInf, hTau										:SG
-    RANGE ach, achmod
 }
 
 UNITS	{
@@ -40,9 +39,6 @@ PARAMETER	{
 	ms=7.91   : activation slope
 	hh=-48.8 : inactivation vh
 	hs=6.25   : inactivation slope
-    ach = 0 (mM)
-    achmodmax = 0.2         : 20% increase
-    achic50 = 4.44e-3 (mM)  : search for better value 
 }
 
 ASSIGNED {
@@ -68,8 +64,7 @@ STATE	{
 BREAKPOINT	{
 	SOLVE states METHOD cnexp
 	gNav11 = gNav11bar*m*m*m*h
-    achmod = achmodmax*(ach/(ach+achic50))
-	iscn = gNav11*(v-ena)*(1.0+achmod)
+	iscn = gNav11*(v-ena)
 	ina = iscn
 }
 

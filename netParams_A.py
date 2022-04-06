@@ -19,12 +19,12 @@ cell = cell_identities[cfg.cellnum]
 ## Cell parameters/rules
 CEL = {'secs': {}}
 
-CEL['secs']['soma'] = {'geom': {'diam': cfg.sze, 'L': cfg.sze, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 1.8e-6, 'e': -65}} }
+CEL['secs']['soma'] = {'geom': {'diam': cfg.sze, 'L': cfg.sze, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 4e-4, 'e': -65}} }
 
 # mechanisms to modulate
 netParams.neuromod = {'ach' : 
             {mech : {'ach': cfg.ach}
-                for mech in ['ch_Cacna1a_cp5', 'km', 'Inic','ka']},
+                for mech in ['ch_Cacna1a_cp5', 'ch_Cacna1b_cp6', 'km']},
             'npy' :
             {mech : {'npy': cfg.npy}
                 for mech in ['ch_Cacna1a_cp5', 'ch_Cacna1b_cp6',
@@ -33,7 +33,7 @@ netParams.neuromod = {'ach' :
                              'ch_Hcn4_cp12']}}
 
 # add mechanism to the model -- blocked by default but can be changed by cfg 
-addtional_mech = {'km' : {'ach': 0}, 'Inic' : {'ach': 0}}
+addtional_mech = {'km' : {'ach': 0}}
                                                                             
 
 for mod,onoff in zip(genemod,cell):
