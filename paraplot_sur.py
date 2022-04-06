@@ -3,7 +3,7 @@ from neuron import h
 import numpy as np
 import matplotlib.pyplot as plt
 
-sec = h.Section(name = 'sec')
+sec = h.Section(name="sec")
 # m1 = []
 # tm1 = []
 # m2 = []
@@ -74,22 +74,22 @@ htau = []
 # 	mtau.append(sec.mTau_ch_Cacna1i_cp42)
 # 	htau.append(sec.hTau_ch_Cacna1i_cp42)
 
-mech = 'ch_Cacna1i_md279' #hh
+mech = "ch_Cacna1i_md279"  # hh
 sec.insert(mech)
 # h.setdata_itGHK(sec(0.5))
-volt = [v for v in np.arange(-100,100,1)] 
+volt = [v for v in np.arange(-100, 100, 1)]
 
 h.setdata_ch_Cacna1i_md279(sec(0.5))
 # import IPython; IPython.embed()
 
 for v in volt:
-	h.evaluate_fct_ch_Cacna1i_md279(v)
-	minf.append(sec.m_inf_ch_Cacna1i_md279)
-	hinf.append(sec.h_inf_ch_Cacna1i_md279)
+    h.evaluate_fct_ch_Cacna1i_md279(v)
+    minf.append(sec.m_inf_ch_Cacna1i_md279)
+    hinf.append(sec.h_inf_ch_Cacna1i_md279)
 
 
 plt.figure()
-plt.plot(volt,minf, volt,hinf)
+plt.plot(volt, minf, volt, hinf)
 plt.show()
 
 # fig, axs = plt. subplots(1,2)
