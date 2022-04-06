@@ -5,7 +5,7 @@ import json
 import pickle
 import pandas as pd
 import numpy as np
-import os,sys
+from os import makedirs
 import re
 from collections import OrderedDict
 from itertools import product
@@ -179,7 +179,6 @@ def svSpikeStats(dataFolder, batchLabel, dfss=dfss):
 def ldSpikeStats(f=filenamepkl): return pd.read_pickle(f) 
 
 def allAnalysis(df=df):
-
     # Spiking Data 
     dfss=df[['cellnum', 'avgRate']].copy()  # note double brackets
     dfss.scnt    = df.spkt.apply(len) # number of spikes (spikecount) * IGNORE WARNING, creates dfss.scnt anyway
@@ -339,3 +338,59 @@ def processBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=No
     else:
         return params, data
 
+
+def plotEpas(df = df):
+    stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
+    if (stim['amp'] and stim['dur'] and stim['delay']==0):
+        raise Exception("Epas cannot be computed in the presence of an ongoing stimulus")
+    elif (stim['amp'] and stim['dur'] and stim['delay']<=data[list(data)[0]]['simConfig']['duration']):
+        for i in df['t'][0]:
+            if i<stim['delay']:
+                indx=df['t'][0].index(i)
+    else:
+        indx = -1
+    # import IPython; IPython.embed()
+    print(indx)
+    cells = df['cellnum'].tolist()
+    vm = {}
+    pasv = {}
+    for c in cells:
+        vm[c] = df['V_soma'][c]['cell_0'][indx]
+        pasv[c] = df['epas'][c]['cell_0'][indx]
+
+    fig, axs = plt.subplots(2,1)
+    axs[0].scatter(list(pasv),list(pasv.values()),c='red')
+    axs[0].set_title('epas (mV)')
+    axs[1].scatter(list(vm),list(vm.values()))
+    axs[1].set_title('membrane voltage (mV)')
+    plt.xlabel('Cell Numbers')
+    plt.savefig(batchLabel+'_epas.png')
+    return
+
+def plotRin (df=df):
+    ripk = {}
+
+    stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
+    cells = df['cellnum'].tolist()
+    for i in df['t'][0]:        #dt is same so time array is same for all cells
+        if i<(stim['delay']):
+            init = df['t'][0].index(i)
+        if i<(stim['delay']+stim['dur']):
+            end = df['t'][0].index(i)
+    d = df[['cellnum','V_soma']].copy()
+    d['ripk']=d.V_soma.apply(lambda x:(min(x['cell_0'][init:end])-x['cell_0'][init])/stim['amp'])
+    fr = px.scatter(d, x='cellnum', y='ripk', hover_data=['cellnum','ripk',df.index], labels={'cellnum':'Cell Number','ripk':'Rin (MOhm)'}, title = 'Calculated from Negative Peak',template="simple_white")
+    fr.show()
+    return
+
+def plotVm(df,batchLabel):
+    makedirs(f'{batchLabel}/vmPlots')
+    for indx in df.index:
+        f = plt.figure()
+        plt.plot(df['t'][indx],df['V_soma'][indx]['cell_0'],c='C0')
+        plt.xlabel('Time (ms)')
+        plt.ylabel('Membrane Voltage (mV)')
+        plt.title(f"Cell Number: {df['cellnum'][indx]}")
+        plt.savefig(f"{batchLabel}/vmPlots/{df['simLabel'][indx]}.png")
+        plt.close()
+    return

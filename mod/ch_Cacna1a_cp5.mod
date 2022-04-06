@@ -56,7 +56,6 @@ PARAMETER	{
     achic50 = 36.5e-6 (mM)
     achmodmax = 0.756
     achmodv = 28.44 (mV)
-
 }
 
 ASSIGNED	{

@@ -34,8 +34,6 @@ PARAMETER	{
     npymaxG = 0.11     : maximum 11% reduction in conductance
     npymaxV = 12       : maximum 12mV reduction in Erev
     npyic50 = 404e-6 (mM)
-
-	
 }
 
 ASSIGNED	{

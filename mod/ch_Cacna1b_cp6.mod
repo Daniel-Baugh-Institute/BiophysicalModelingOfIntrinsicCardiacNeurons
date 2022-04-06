@@ -33,7 +33,6 @@ NEURON	{
 	GLOBAL USEGHK								:SG mm
     RANGE ach, achmod
     RANGE npy, npymod
-
 }
 
 UNITS	{
@@ -60,8 +59,6 @@ PARAMETER	{
     npy = 0
     npymodmax = 0.32    : maximum 32% reduction
     npyic50 = 1.72e-6 (mM)
-
-
 }
 
 ASSIGNED	{
@@ -85,7 +82,6 @@ ASSIGNED	{
 	ica1b (mA/cm2)
     npymod
     achmod
-
 }
 
 STATE	{ 
@@ -105,7 +101,6 @@ BREAKPOINT	{
 		ggk = (v-eca)
 	}
 	ica1b = gCav2_2*ggk*(1.0 - achmod)*(1.0 - npymod)
-
 	ica = ica1b
 	:ica = gCav2_2*(v-eca)
 }

@@ -32,7 +32,6 @@ NEURON	{
 	RANGE ggk, ica1c, mInf, mTau, hInf, hTau	:SG mm
 	GLOBAL USEGHK								:SG mm
     RANGE npy, npymod
-
 }
 
 UNITS	{
@@ -54,7 +53,6 @@ PARAMETER	{
     npy = 0 (mM)
     npymodmax = 0.31    : maximum 31% reduction
     npyic50 = 1.72e-6 (mM)
-
 }
 
 ASSIGNED	{
@@ -91,7 +89,6 @@ BREAKPOINT	{
 		ggk = (v-eca)
 	}
     npymod = npymodmax*(npy/(npy+npyic50))
-
 	ica1c = gL*ggk*(1.0 - npymod)
 	ica = ica1c
 	:ica = gL*(v-eca)

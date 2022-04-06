@@ -34,7 +34,6 @@ PARAMETER	{
     npymaxG = 0.11     : maximum 11% reduction in conductance
     npymaxV = 12       : maximum 12mV reduction in Erev
     npyic50 = 404e-6 (mM)
-
 }
 
 ASSIGNED	{
@@ -56,7 +55,6 @@ BREAKPOINT	{
 	gHCN3 = gHCN3bar*m
     npymod = (npy/(npy+npyic50))
 	ihcn3 = gHCN3*(v-ehcn + npymaxV*npymod)*(1.0 - npymaxG*npymod)
-
 	iother = ihcn3				:Added by SG
 }
 
