@@ -28,7 +28,7 @@ genemod = {
     "ch_Scn1a_md264834": {"gNav11bar": cfg.na},
 }  # 0.0015
 cell_identities = np.bool_(
-    np.transpose(np.genfromtxt("rat_10ch_unique.csv", delimiter=","))
+    np.transpose(np.genfromtxt("red_tdata_all_15.csv", delimiter=","))
 )
 cell = cell_identities[cfg.cellnum]
 
@@ -44,7 +44,8 @@ CEL["secs"]["soma"] = {
 # mechanisms to modulate
 netParams.neuromod = {
     "ach": {
-        mech: {"ach": cfg.ach} for mech in ["ch_Cacna1a_cp5", "ch_Cacna1b_cp6", "km"]
+        mech: {"ach": cfg.ach}
+        for mech in ["ch_Cacna1a_cp5", "ch_Cacna1b_cp6", "ch_Kcnj3_md2488.mod"]
     },
     "npy": {
         mech: {"npy": cfg.npy}
@@ -61,7 +62,7 @@ netParams.neuromod = {
 }
 
 # add mechanism to the model -- blocked by default but can be changed by cfg
-addtional_mech = {"km": {"ach": 0}}
+addtional_mech = {}
 
 
 for mod, onoff in zip(genemod, cell):

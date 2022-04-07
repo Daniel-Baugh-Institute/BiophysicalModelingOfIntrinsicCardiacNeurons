@@ -4,16 +4,22 @@ from netpyne.specs import simConfig
 
 cfg = specs.SimConfig()
 
-cfg.hParams = {"celsius": 35, "v_init": -61}
-cfg.duration = 500  # 1500 #1*1e3 #(ms)
+# simulation configuration
+cfg.duration = 500
 cfg.dt = 0.01
+cfg.recordStep = 0.02
+cfg.simLabel = "22apr07test"
+cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
-cfg.recordCells = ["all"]
 cfg.saveJson = True
-cfg.analysis["plotTraces"] = {"include": [0], "saveFig": True}
+cfg.recordStim = True
+
+
+# recording
+cfg.recordCells = ["all"]
 cfg.recordTraces = {
     "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"},
-    # 'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'},
+    #'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
     "epas": {"sec": "soma", "loc": 0.5, "var": "e_pas"},
     "ih": {"sec": "soma", "loc": 0.5, "var": "iother"},
     "ina": {"sec": "soma", "loc": 0.5, "var": "ina"},
@@ -36,11 +42,27 @@ cfg.recordTraces = {
     "ikcnc": {"sec": "soma", "loc": 0.5, "var": "ikcnc_ch_Kcnc1_rothman"},
     "ikcnj3": {"sec": "soma", "loc": 0.5, "var": "ikcnj3_ch_Kcnj3_md2488"},
 }
+cfg.recordStim = True
+cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
+cfg.analysis["plotRaster"] = {"saveFig": False}
+cfg.saveDataInclude = ["simData", "simConfig", "netParams", "net"]
 
-cfg.cellnum = 7
+# globals
+cfg.hParams = {"celsius": 35, "v_init": -61}
+
+# cell id
+cfg.cellnum = 1
+
+# cell size
+cfg.sze = 21
+
+# modulation
 cfg.npy = 0
-cfg.ach = 1e-6
+cfg.ach = 0
+
+# stimulus
 cfg.hyp = 0
+cfg.amp = 0
 cfg.stim = "dexp2syn"
 cfg.tau1 = 5
 cfg.tau2 = 18
@@ -53,8 +75,8 @@ cfg.noise = 1 - 100 / interval  # 10ms min interval
 cfg.weight = 0.05
 cfg.delay = 5
 
-cfg.sze = 21
-cfg.amp = 0.0
+
+# channel parameters
 cfg.phi = 0.2
 
 cfg.na = 1
@@ -74,12 +96,3 @@ cfg.c1d = 1.7e-4
 cfg.c1c = 0.0001
 cfg.c1b = 0.0001
 cfg.c1a = 0.00001
-
-cfg.recordStep = 0.02
-cfg.recordStim = True
-cfg.simLabel = "22apr06test"
-cfg.saveFolder = cfg.simLabel
-cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
-cfg.analysis["plotRaster"] = {"saveFig": False}
-
-cfg.saveDataInclude = ["simData", "simConfig", "netParams", "net"]
