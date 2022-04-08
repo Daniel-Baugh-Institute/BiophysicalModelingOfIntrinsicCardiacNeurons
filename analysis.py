@@ -5,6 +5,7 @@ import json
 import pickle
 import pandas as pd
 import numpy as np
+import os
 from os import makedirs
 import re
 from collections import OrderedDict
@@ -14,6 +15,17 @@ import plotly_express as px
 import matplotlib.pyplot as plt
 
 df = dfss = filenamepkl = None
+
+
+class NumpyEncode(json.JSONEncoder):
+    """convert numpy data types for use in JSON format"""
+
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super(NumpyEncode, self).default(obj)
 
 
 def readAllData(filename, dfonly=True):
@@ -39,6 +51,7 @@ def readBatchData(
     vars=None,
     maxCombs=None,
     listCombs=None,
+    EPSPsOnly=False,
 ):
     """gather data from dataFolder with batchLabel and save back to dataFolder or to target"""
     params, data = None, None
@@ -139,10 +152,21 @@ def readBatchData(
                     raise Exception(
                         f"Parameter values in {paramFile} and in the json files do not match"
                     )
+                if EPSPsOnly:
+                    EPSPdata = processEPSPs(output)
+
             if not vars:
                 vars = list(output.keys())
-            for key in vars:
-                data[indexComb][key] = output[key]
+            if EPSPsOnly:
+                for key in vars:
+                    if key == "simData":
+                        continue
+                    data[indexComb][key] = output[key]
+                for key in EPSPdata:
+                    data[indexComb][key] = EPSPdata[key]
+            else:
+                for key in vars:
+                    data[indexComb][key] = output[key]
 
     # pass
 
@@ -156,7 +180,7 @@ def readBatchData(
         filename = f"{batchLabel}_allData.json"
         dataSave = {"params": params, "data": data}
         with open(filename, "w") as fileObj:
-            json.dump(dataSave, fileObj)
+            json.dump(dataSave, fileObj, cls=NumpyEncode)
     else:
         return params, data
 
@@ -371,6 +395,7 @@ def allAnalysis(df=df):
 
 
 def processEPSPs(data):
+    """extract EPSP times and amplitude from synaptic stimulus"""
     sd = data["simData"]
     sd["t"] = np.array(sd["t"])
     # TODO: replace with values from config  -- 5 is cfg.delay ~ 250 record steps
@@ -381,146 +406,14 @@ def processEPSPs(data):
         -sd["V_soma"]["cell_0"][i] + max(sd["V_soma"]["cell_0"][i + 250 : i + 1250])
         for i in times
     ]
-    stims = [max(sd["isyn"]["cell_0"]["soma_0.5"][i + 250 : i + 700]) for i in times]
+    if "isyn" in sd:
+        stims = [
+            max(sd["isyn"]["cell_0"]["soma_0.5"][i + 250 : i + 700]) for i in times
+        ]
+    else:
+        stims = None
     processData = {"times": times, "epsps": amps, "stims": stims}
     return processData
-
-
-def processBatchData(
-    dataFolder,
-    batchLabel,
-    paramFile="params.csv",
-    target=None,
-    saveAll=True,
-    vars=None,
-    maxCombs=None,
-    listCombs=None,
-):
-    """gather data from dataFolder with batchLabel and save back to dataFolder or to target"""
-    params, data = None, None
-    # read the batch file and cfg
-    batchFile = f"{dataFolder}/{batchLabel}_batch.json"
-    with open(batchFile, "r") as fileObj:
-        b = json.load(fileObj)["batch"]
-
-    if b["method"] == "grid":
-        if isinstance(listCombs, str):
-            filename = str(listCombs)
-            with open(filename, "r") as fileObj:
-                dataLoad = json.load(fileObj)
-            listCombs = dataLoad["paramsMatch"]
-
-        # read params labels and ranges
-        params = b["params"]
-
-        # reorder so grouped params come first
-        preorder = [p for p in params if "group" in p and p["group"]]
-        for p in params:
-            if p not in preorder:
-                preorder.append(p)
-        params = preorder
-
-        # read vars from all files - store in dict
-        labelList, valuesList = list(zip(*[(p["label"], p["values"]) for p in params]))
-        valueCombinations = product(*(valuesList))
-        indexCombinations = product(*[list(range(len(x))) for x in valuesList])
-        data = {}
-        print("Reading data...")
-        missing = 0
-        for i, (iComb, pComb) in enumerate(zip(indexCombinations, valueCombinations)):
-            if (not maxCombs or i <= maxCombs) and (
-                not listCombs or list(pComb) in listCombs
-            ):
-                print(i, iComb)
-                # read output file
-                iCombStr = "".join(["".join("_" + str(i)) for i in iComb])
-                simLabel = b["batchLabel"] + iCombStr
-                outFile = b["saveFolder"] + "/" + simLabel + "_data.json"
-                try:
-                    with open(outFile, "r") as fileObj:
-                        output = json.load(fileObj, object_pairs_hook=OrderedDict)
-                    # save output file in data dict
-                    data[iCombStr] = {}
-                    data[iCombStr]["paramValues"] = pComb  # store param values
-                    if not vars:
-                        vars = list(output.keys())
-
-                    for key in vars:
-                        if isinstance(key, tuple):
-                            container = output
-                            for ikey in range(len(key) - 1):
-                                container = container[key[ikey]]
-                            data[iCombStr][key[1]] = container[key[-1]]
-
-                        elif isinstance(key, str):
-                            data[iCombStr][key] = output[key]
-
-                except:
-                    print("... file missing")
-                    missing = missing + 1
-                    output = {}
-            else:
-                missing = missing + 1
-
-        print("%d files missing" % (missing))
-    elif b["method"] == "list":
-        fileList = [
-            x.name for x in os.scandir(dataFolder) if x.name.endswith("_data.json")
-        ]
-        fileList.sort(key=lambda x: int(re.split(f"{batchLabel}|[_.]", x)[1]))
-        dfParam = pd.read_csv(paramFile, delimiter=",")
-        data = {}
-        if len(dfParam) != len(fileList):
-            raise Exception(
-                f"The number of files in {dataFolder} and the no. of parameters in {paramFile} do not match. {paramFile} cannot be read"
-            )
-        labelList = list(dfParam.columns)
-        params = []
-        for lab in labelList:
-            params.append({"label": lab, "values": list(dfParam[lab])})
-        for (iloc, datafile), paralist in zip(enumerate(fileList), dfParam.values):
-            outFile = f"{dataFolder}/{datafile}"
-            indexComb = int(re.split(f"{batchLabel}|[_.]", datafile)[1])
-            data[indexComb] = {}
-            paraComb = tuple(paralist)
-            data[indexComb]["paramValues"] = paraComb
-            with open(outFile, "r") as fileObj:
-                output = json.load(fileObj, object_pairs_hook=OrderedDict)
-                if all(
-                    [
-                        output["simConfig"][x] != y
-                        for x, y in zip(labelList, dfParam.loc[iloc])
-                    ]
-                ):
-                    raise Exception(
-                        f"Parameter values in {paramFile} and in the json files do not match"
-                    )
-                EPSPdata = processEPSPs(output)
-
-            if not vars:
-                vars = list(output.keys())
-            for key in vars:
-                if key == "simData":
-                    continue
-                data[indexComb][key] = output[key]
-            for key in EPSPdata:
-                data[indexComb][key] = EPSPdata[key]
-
-    # pass
-
-    else:
-        raise Exception(
-            f"Method {b['method'] if b['method'] else 'No method'} files cannot be read."
-        )
-    # save
-    if saveAll:
-        print("Saving to single file with all data")
-        filename = f"{batchLabel}_allData.json"
-        dataSave = {"params": params, "data": data}
-        with open(filename, "w") as fileObj:
-            json.dump(dataSave, fileObj)
-    else:
-        return params, data
 
 
 def plotEpas(df=df):
