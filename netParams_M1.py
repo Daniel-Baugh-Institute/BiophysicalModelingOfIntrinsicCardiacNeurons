@@ -1,6 +1,7 @@
 from netpyne import specs, sim
 import numpy as np
 import csv
+from collections import defaultdict
 
 netParams = specs.NetParams()
 try:
@@ -30,12 +31,12 @@ genemod = {
 cell_identities = np.bool_(
     np.transpose(np.genfromtxt("red_tdata_all_15.csv", delimiter=","))
 )
-cell = cell_identities[cfg.cellnum]
+
 
 ## Cell parameters/rules
-CEL = {"secs": {}}
+cell_base = {"secs": {}}
 
-CEL["secs"]["soma"] = {
+cell_base["secs"]["soma"] = {
     "geom": {"diam": cfg.sze, "L": cfg.sze, "Ra": 35.4, "cm": 1},
     "mechs": {"pas": {"g": 0.00078, "e": -65}, "nm_In_md149739": {"gbar": 0}},
 }  # 1e-5
@@ -64,15 +65,33 @@ netParams.neuromod = {
 # add mechanism to the model -- blocked by default but can be changed by cfg
 addtional_mech = {}
 
+np.random.seed(cfg.seed)
+phasic_cells = [i for i in range(cell_identities.shape[0]) if i not in cfg.tonic_cells]
+tonic_count = int(cfg.ganglion_size * cfg.tonic_ratio)
+phasic_count = cfg.ganglion_size - tonic_count
+for idx in range(cfg.num_ganglion):
+    # generate a random sample of cell types
+    cell_count = defaultdict(lambda: 0)
+    for i in np.random.randint(len(cfg.tonic_cells), size=tonic_count):
+        cell_count[cfg.tonic_cells[i]] += 1
+    for i in np.random.randint(len(cfg.tonic_cells), size=phasic_count):
+        cell_count[phasic_cells[i]] += 1
 
-for mod, onoff in zip(genemod, cell):
-    if onoff:
-        CEL["secs"]["soma"]["mechs"][mod] = genemod[mod]
+    # add population of each cell type to the ganglion
+    cells = {}
+    for k, v in cell_count.items():
+        CEL = cell_base.copy()
+        for mod, onoff in zip(genemod, cell_identities[k]):
+            if onoff:
+                CEL["secs"]["soma"]["mechs"][mod] = genemod[mod]
 
-for mech, param in addtional_mech.items():
-    CEL["secs"]["soma"]["mechs"][mech] = param
-netParams.cellParams["CEL"] = CEL
-netParams.popParams["U"] = {"cellType": "CEL", "numCells": 1}
+        for mech, param in addtional_mech.items():
+            CEL["soma"]["mechs"][mech] = param
+        netParams.cellParams[f"CEL{k}"] = CEL
+        netParams.popParams[f"ganglion{idx}_CEL{k}"] = {
+            "cellType": f"CEL{k}",
+            "numCells": v,
+        }
 
 if cfg.stim == "IClamp":
     netParams.stimSourceParams["iclamp"] = {
@@ -154,16 +173,66 @@ elif cfg.stim == "dexp2syn":
         "d": cfg.d,
         "rrate": cfg.rrate,
     }
-    netParams.stimSourceParams["bkg"] = {
+    netParams.stimSourceParams["vagal"] = {
         "type": "NetStim",
-        "rate": cfg.rate,
-        "noise": cfg.noise,
+        "rate": cfg.vagal_rate,
+        "noise": cfg.vagal_noise,
     }
-    netParams.stimTargetParams["bkg->exc"] = {
-        "source": "bkg",
-        "conds": {"cellType": "CEL"},
-        "weight": cfg.weight,
-        "delay": cfg.delay,
+
+    vagal_cells = [f"CEL{i}" for i in cfg.tonic_cells]
+    symp_cells = [
+        f"CEL{i}" for i in range(cell_identities.shape[0]) if i not in cfg.tonic_cells
+    ]
+
+    vagal_pop = [f"ganglion0_CEL{i}" for i in cfg.tonic_cells]
+    symp_pop = [
+        f"ganglion0_CEL{i}"
+        for i in range(cell_identities.shape[0])
+        if i not in cfg.tonic_cells
+    ]
+    netParams.stimTargetParams["vagal->exc"] = {
+        "source": "vagal",
+        "conds": {"cellType": vagal_cells},
+        "weight": cfg.vagal_weight,
+        "delay": cfg.vagal_delay,
+        "synMech": "exc",
+    }
+    netParams.stimSourceParams["symp"] = {
+        "type": "NetStim",
+        "rate": cfg.symp_rate,
+        "noise": cfg.symp_noise,
+    }
+    netParams.stimTargetParams["symp->exc"] = {
+        "source": "symp",
+        "conds": {"cellType": symp_cells},
+        "weight": cfg.symp_weight,
+        "delay": cfg.symp_delay,
+        "synMech": "exc",
+    }
+    netParams.connParams["symp->symp"] = {
+        "preConds": {"cellType": symp_cells},
+        "postConds": {"cellType": symp_cells},
+        "probability": cfg.symp_symp_prob,
+        "weight": cfg.symp_symp_weight,
+        "delay": cfg.symp_symp_delay,
+        "synMech": "exc",
+    }
+
+    netParams.connParams["symp->vagal"] = {
+        "preConds": {"cellType": symp_cells},
+        "postConds": {"cellType": symp_cells},
+        "probability": cfg.symp_vagal_prob,
+        "weight": cfg.symp_vagal_weight,
+        "delay": cfg.symp_vagal_delay,
+        "synMech": "exc",
+    }
+
+    netParams.connParams["vagal->vagal"] = {
+        "preConds": {"cellType": vagal_cells},
+        "postConds": {"cellType": vagal_cells},
+        "probability": cfg.vagal_vagal_prob,
+        "weight": cfg.vagal_vagal_weight,
+        "delay": cfg.vagal_vagal_delay,
         "synMech": "exc",
     }
 if cfg.hyp != 0:

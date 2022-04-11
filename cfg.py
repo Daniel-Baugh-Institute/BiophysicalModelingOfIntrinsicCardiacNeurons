@@ -5,10 +5,10 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 10_000
+cfg.duration = 1_000
 cfg.dt = 0.01
 cfg.recordStep = 0.05
-cfg.simLabel = "22apr11testd0"
+cfg.simLabel = "22apr11net"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
@@ -16,7 +16,7 @@ cfg.recordStim = True
 
 
 # recording
-cfg.recordCells = ["all"]
+cfg.recordCells = ["ganglion0_CEL1"]
 cfg.recordTraces = {
     "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"},
     "isyn": {"synMech": "exc", "var": "i"},
@@ -49,14 +49,40 @@ cfg.recordTraces = {
 """
 cfg.recordStim = True
 cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
-cfg.analysis["plotRaster"] = {"saveFig": False}
+cfg.analysis["plotRaster"] = {"saveFig": True}
 cfg.saveDataInclude = ["simData", "simConfig", "netParams", "net"]
 
 # globals
 cfg.hParams = {"celsius": 35, "v_init": -61}
 
-# cell id
-cfg.cellnum = 1
+# ganglion parameters
+cfg.num_ganglion = 1
+cfg.ganglion_size = 100
+cfg.tonic_ratio = 13 / 32
+cfg.tonic_cells = [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    10,
+    11,
+    12,
+    13,
+    14,
+    16,
+    17,
+    18,
+    20,
+    21,
+    55,
+    58,
+]
+cfg.seed = 0
 
 # cell size
 cfg.sze = 21
@@ -66,7 +92,7 @@ cfg.npy = 0
 cfg.ach = 0
 
 # stimulus
-cfg.hyp = -2.0
+cfg.hyp = 0
 cfg.amp = 0
 cfg.stim = "dexp2syn"
 cfg.tau1 = 5
@@ -74,11 +100,30 @@ cfg.tau2 = 18
 cfg.rrate = 0.31177 / 0.43708360077316477  # for hyp=0
 cfg.d = 0.15
 cfg.e = -7.0
-cfg.rate = 5.0
-interval = 1000 / cfg.rate
-cfg.noise = 1 - 10 / interval  # 10ms min interval
-cfg.weight = 0.025
-cfg.delay = 5
+
+# sympathetic
+cfg.symp_rate = 5.0
+interval = 1000 / cfg.symp_rate
+cfg.symp_noise = 1 - 10 / interval  # 10ms min interval
+cfg.symp_weight = 0.05
+cfg.symp_delay = 5
+cfg.symp_symp_prob = 0.5
+cfg.symp_symp_weight = 0.05
+cfg.symp_symp_delay = 5
+cfg.symp_vagal_prob = 0.5
+cfg.symp_vagal_weight = 0.05
+cfg.symp_vagal_delay = 5
+
+
+# vagal
+cfg.vagal_rate = 5.0
+interval = 1000 / cfg.vagal_rate
+cfg.vagal_noise = 1 - 10 / interval  # 10ms min interval
+cfg.vagal_weight = 0.05
+cfg.vagal_delay = 5
+cfg.vagal_vagal_prob = 0.05
+cfg.vagal_vagal_weight = 0.05
+cfg.vagal_vagal_delay = 5
 
 
 # channel parameters

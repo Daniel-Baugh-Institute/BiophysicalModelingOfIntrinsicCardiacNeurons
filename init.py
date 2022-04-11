@@ -21,12 +21,11 @@ def fi(seg):
             if hasattr(seg, mod):
                 for k, v in param.items():
                     setattr(getattr(seg, mod), k, v)
-    print(cfg.cellnum, seg.e_pas)
 
 
 def simSim(np0, sc0):
     sim.createSimulateAnalyze(netParams=np0, simConfig=sc0)
-    fih = [h.FInitializeHandler(2, lambda: fi(sim.net.cells[0].secs.soma.hObj(0.5)))]
+    fih = [h.FInitializeHandler(2, lambda: fi(cell.secs.soma.hObj(0.5))) for cell in sim.net.cells]
     print("BEFORE simulate")
     sim.simulate()
     sim.saveData()
