@@ -16,7 +16,7 @@ def parseBatchParams(b):
     except Exception as e:
         print(f"ERROR >>>{e}<<<")
     p = re.compile(
-        r"""\s+params[^a-z]+([^]']+)'\]\s*=\s*(\[[^]]+\])\s*#*\s*(indexed|log|linear)*"""
+        r"""\s+params[^a-z]+([^]'"]+)['"]\]\s*=\s*(\[[^]]+\])\s*#*\s*(indexed|log|linear)*"""
     )  # keywords as comments in batch.py: indexed|log|linear
     bl = [(i, p.match(l)) for i, l in enumerate(lines)]  # bl: lines that match regexp
     pl = {}

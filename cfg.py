@@ -72,7 +72,11 @@ cfg.e = -7.0
 cfg.rate = 5.0
 interval = 1000 / cfg.rate
 cfg.noise = 1 - 10 / interval  # 10ms min interval
+<<<<<<< HEAD
 cfg.weight = 0.025
+=======
+cfg.weight = 0.05
+>>>>>>> 4a87b8b029e85b7a0bffbc086d05d67358ad36bc
 cfg.delay = 5
 
 
