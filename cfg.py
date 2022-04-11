@@ -19,6 +19,10 @@ cfg.recordStim = True
 cfg.recordCells = ["all"]
 cfg.recordTraces = {
     "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"},
+    "isyn": {"synMech": "exc", "var": "i"},
+    "gsyn": {"synMech": "exc", "var": "g"},
+}
+"""
     #'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
     "epas": {"sec": "soma", "loc": 0.5, "var": "e_pas"},
     "ih": {"sec": "soma", "loc": 0.5, "var": "iother"},
@@ -42,6 +46,7 @@ cfg.recordTraces = {
     "ikcnc": {"sec": "soma", "loc": 0.5, "var": "ikcnc_ch_Kcnc1_rothman"},
     "ikcnj3": {"sec": "soma", "loc": 0.5, "var": "ikcnj3_ch_Kcnj3_md2488"},
 }
+"""
 cfg.recordStim = True
 cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
 cfg.analysis["plotRaster"] = {"saveFig": False}
@@ -61,11 +66,11 @@ cfg.npy = 0
 cfg.ach = 0
 
 # stimulus
-cfg.hyp = -1.75
+cfg.hyp = -2.0
 cfg.amp = 0
 cfg.stim = "dexp2syn"
-cfg.tau1 = 1
-cfg.tau2 = 2 
+cfg.tau1 = 5
+cfg.tau2 = 18
 cfg.rrate = 0.31177 / 0.43708360077316477  # for hyp=0
 cfg.d = 0.15
 cfg.e = -7.0
