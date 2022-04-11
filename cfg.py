@@ -5,10 +5,10 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 500
+cfg.duration = 10_000
 cfg.dt = 0.01
-cfg.recordStep = 0.02
-cfg.simLabel = "22apr07test"
+cfg.recordStep = 0.05
+cfg.simLabel = "22apr11testd0"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
@@ -61,18 +61,18 @@ cfg.npy = 0
 cfg.ach = 0
 
 # stimulus
-cfg.hyp = 0
+cfg.hyp = -1.75
 cfg.amp = 0
 cfg.stim = "dexp2syn"
-cfg.tau1 = 5
-cfg.tau2 = 18
+cfg.tau1 = 1
+cfg.tau2 = 2 
 cfg.rrate = 0.31177 / 0.43708360077316477  # for hyp=0
-cfg.d = 0.2
+cfg.d = 0.15
 cfg.e = -7.0
 cfg.rate = 5.0
 interval = 1000 / cfg.rate
-cfg.noise = 1 - 100 / interval  # 10ms min interval
-cfg.weight = 0.05
+cfg.noise = 1 - 10 / interval  # 10ms min interval
+cfg.weight = 0.025
 cfg.delay = 5
 
 
