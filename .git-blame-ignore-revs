@@ -1,0 +1,3 @@
+# .git-blame-ignore-revs
+# ran black on the python code
+78f4e17e44525ce334c62cfb303de0a0b88122fd

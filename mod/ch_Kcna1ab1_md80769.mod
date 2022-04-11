@@ -43,6 +43,7 @@ NEURON {
 	SUFFIX ch_Kcna1ab1_md80769
 	USEION k READ ek WRITE ik
 	RANGE gk, gbar, ik, ikcna, ninf, taun
+	RANGE xinf, taux
 }
 
 UNITS {
@@ -88,20 +89,23 @@ ASSIGNED {
 	betan (1/ms)
 	qt
 	ikcna (mA/cm2)
+	xinf
+	taux (ms)
 }
 
-STATE { n }
+STATE { n x}
 
 INITIAL {
 	:q10^((celsius-22 (degC))/10 (degC))		:removed by SG
 	qt = q10^((celsius-22 (degC))/10 (degC))	
 	rates(v)
 	n = ninf
+	x = xinf
 }
 
 BREAKPOINT {
 	SOLVE states METHOD cnexp
-    gk = gbar * n^4 
+    gk = gbar * n^4 * x
 	ikcna = gk * (v - ek)
 	ik = ikcna
 }
@@ -109,13 +113,16 @@ BREAKPOINT {
 DERIVATIVE states {
 	rates(v)
 	n' = (ninf-n)/taun 
+	x' = (xinf-x)/taux 
 }
 
 PROCEDURE rates(v (mV)) {
-	alphan = alphanfkt(v)
-	betan = betanfkt(v)
+	alphan = 0.12889 * exp(-(v+45)/-33.90877) 
+	betan = 0.12889 * exp(-(v+45)/12.42101)
 	ninf = alphan/(alphan+betan) 
-	taun = 1/(qt*(alphan + betan))       
+	taun = 1/(4.171167511*(alphan + betan)) 
+	xinf = (0.95 / (1 + exp((v + 59) / 3))^0.5)+0.05
+	taux = (500 / (14*exp((v+28) / 20) + 29*exp(-(v+28) / 10))) + 6      
 }
 
 FUNCTION alphanfkt(v (mV)) (1/ms) {

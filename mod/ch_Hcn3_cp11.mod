@@ -16,7 +16,8 @@ ENDCOMMENT
 NEURON	{
 	SUFFIX ch_Hcn3_cp11
 	USEION other WRITE iother VALENCE 1.0 					:Added by SG
-	RANGE gHCN3bar, gHCN3, ihcn3, ehcn, BBiD, mInf, mTau	 
+	RANGE gHCN3bar, gHCN3, ihcn3, ehcn, BBiD, mInf, mTau
+    RANGE npy, npymod	 
 }
 
 UNITS	{
@@ -29,6 +30,10 @@ PARAMETER	{
 	gHCN3bar = 0.00001 (S/cm2) 
 	BBiD = 11 
 	ehcn = -45.0 (mV)
+    npy = 0 (mM)
+    npymaxG = 0.11     : maximum 11% reduction in conductance
+    npymaxV = 12       : maximum 12mV reduction in Erev
+    npyic50 = 404e-6 (mM)
 }
 
 ASSIGNED	{
@@ -38,6 +43,7 @@ ASSIGNED	{
 	mInf
 	mTau
 	iother (mA/cm2)
+    npymod
 }
 
 STATE	{ 
@@ -47,7 +53,8 @@ STATE	{
 BREAKPOINT	{
 	SOLVE states METHOD cnexp
 	gHCN3 = gHCN3bar*m
-	ihcn3 = gHCN3*(v-ehcn)
+    npymod = (npy/(npy+npyic50))
+	ihcn3 = gHCN3*(v-ehcn + npymaxV*npymod)*(1.0 - npymaxG*npymod)
 	iother = ihcn3				:Added by SG
 }
 

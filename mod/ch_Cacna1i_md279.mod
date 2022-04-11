@@ -30,7 +30,7 @@ NEURON {
 	SUFFIX ch_Cacna1i_md279
 	USEION ca READ cai,cao WRITE ica
 	RANGE gcabar, m_inf, tau_m, h_inf, tau_h, shift, actshift, ica1i
-	GLOBAL qm, qh
+	:GLOBAL qm, qh
 }
 
 UNITS {
@@ -51,8 +51,8 @@ PARAMETER {
 	actshift = 0 	(mV)	: shift of activation curve (towards hyperpol)
 	cai	= 2.4e-4 (mM)	: adjusted for eca=120 mV
 	cao	= 2	(mM)
-	qm	= 5		: q10's for activation and inactivation
-	qh	= 3		: from Coulter et al., J Physiol 414: 587, 1989
+	:qm	= 5		: q10's for activation and inactivation
+	:qh	= 3		: from Coulter et al., J Physiol 414: 587, 1989
 }
 
 STATE {
@@ -65,8 +65,8 @@ ASSIGNED {
 	tau_m	(ms)
 	h_inf
 	tau_h	(ms)
-	phi_m
-	phi_h
+	:phi_m
+	:phi_h
 	ica1i (mA/cm2)
 }
 
@@ -86,8 +86,8 @@ DERIVATIVE castate {
 
 UNITSOFF
 INITIAL {
-	phi_m = qm ^ ((celsius-24)/10)
-	phi_h = qh ^ ((celsius-24)/10)
+	:phi_m = qm ^ ((celsius-24)/10)
+	:phi_h = qh ^ ((celsius-24)/10)
 
 	evaluate_fct(v)
 
@@ -96,7 +96,7 @@ INITIAL {
 }
 
 PROCEDURE evaluate_fct(v(mV)) {
-:
+:	
 :   The kinetic functions are taken as described in the model of 
 :   Huguenard & McCormick, and corresponds to a temperature of 23-25 deg.
 :   Transformation to 36 deg assuming Q10 of 5 and 3 for m and h
@@ -111,14 +111,16 @@ PROCEDURE evaluate_fct(v(mV)) {
 :   using these values reproduce more closely the voltage clamp experiments.
 :   (cfr. Huguenard & McCormick, J Neurophysiol, 1992).
 :
+	shift	= 2 
+	actshift = 0
 	m_inf = 1.0 / ( 1 + exp(-(v+shift+actshift+57)/6.2) )
 	h_inf = 1.0 / ( 1 + exp((v+shift+81)/4.0) )
 
-	tau_m = ( 0.612 + 1.0 / ( exp(-(v+shift+actshift+132)/16.7) + exp((v+shift+actshift+16.8)/18.2) ) ) / phi_m
+	tau_m = ( 0.612 + 1.0 / ( exp(-(v+shift+actshift+132)/16.7) + exp((v+shift+actshift+16.8)/18.2) ) ) / 6.898648307
 	if( (v+shift) < -80) {
-		tau_h = exp((v+shift+467)/66.6) / phi_h
+		tau_h = exp((v+shift+467)/66.6) / 3.737192819
 	} else {
-		tau_h = ( 28 + exp(-(v+shift+22)/10.5) ) / phi_h
+		tau_h = ( 28 + exp(-(v+shift+22)/10.5) ) / 3.737192819
 	}
 }
 

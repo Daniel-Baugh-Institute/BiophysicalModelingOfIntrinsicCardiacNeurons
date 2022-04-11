@@ -31,6 +31,8 @@ NEURON	{
 	RANGE gCav2_2bar, gCav2_2, ica, BBiD 
 	RANGE ggk, ica1b, mInf, mTau, hInf, hTau	:SG mm
 	GLOBAL USEGHK								:SG mm
+    RANGE ach, achmod
+    RANGE npy, npymod
 }
 
 UNITS	{
@@ -50,6 +52,13 @@ PARAMETER	{
 	BBiD = 79
 	:SG
   	USEGHK=1
+    ach = 0 (mM)
+    achic50 = 36.5e-6 (mM)
+    achmodmax = 0.756
+    achmodv = 28.44 (mV)    
+    npy = 0
+    npymodmax = 0.32    : maximum 32% reduction
+    npyic50 = 1.72e-6 (mM)
 }
 
 ASSIGNED	{
@@ -71,6 +80,8 @@ ASSIGNED	{
 	cai (mM)
 	cao (mM)
 	ica1b (mA/cm2)
+    npymod
+    achmod
 }
 
 STATE	{ 
@@ -80,14 +91,16 @@ STATE	{
 
 BREAKPOINT	{
 	SOLVE states METHOD cnexp
-	gCav2_2 = gCav2_2bar*m*m*h
+    npymod = npymodmax*(npy/(npy+npyic50))
+    achmod = achmodmax*exp(-(v/achmodv)^2)*(ach/(ach+achic50))	
+    gCav2_2 = gCav2_2bar*m*m*h
 	:Added by SG
 	if(USEGHK ==1)	{
 		ggk = ghk(v,cai,cao,celsius)
 	} else {
 		ggk = (v-eca)
 	}
-	ica1b = gCav2_2*ggk
+	ica1b = gCav2_2*ggk*(1.0 - achmod)*(1.0 - npymod)
 	ica = ica1b
 	:ica = gCav2_2*(v-eca)
 }

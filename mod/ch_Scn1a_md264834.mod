@@ -22,7 +22,7 @@ ENDCOMMENT
 NEURON {
 	SUFFIX ch_Scn1a_md264834
 	USEION na READ ena WRITE ina
-	USEION ttx READ ttxo, ttxi VALENCE 1
+	:USEION ttx READ ttxo, ttxi VALENCE 1
 	RANGE gNav11bar, gNav11, ina,mh,ms,hh,hs, iscn
 	RANGE mInf, mTau, hInf, hTau										:SG
 }
@@ -42,8 +42,8 @@ PARAMETER	{
 }
 
 ASSIGNED {
-	ttxo (mM)
-	ttxi (mM)
+	:ttxo (mM)
+	:ttxi (mM)
 	v	(mV)
 	ena	(mV)
 	ina	(mA/cm2)
@@ -53,6 +53,7 @@ ASSIGNED {
 	hInf
 	hTau
 	iscn (mA/cm2)
+    achmod
 }
 
 STATE	{
@@ -68,6 +69,7 @@ BREAKPOINT	{
 }
 
 DERIVATIVE states	{
+COMMENT
 	if (ttxi == 0.015625 && ttxo > 1e-12) {
 		mInf = 0.0
 		mTau = 1e-12
@@ -76,11 +78,14 @@ DERIVATIVE states	{
 	} else {
 		rates(v)
 	}
+ENDCOMMENT
+	rates(v)
 	m' = (mInf-m)/mTau
 	h' = (hInf-h)/hTau
 }
 
 INITIAL{
+COMMENT
 	if (ttxi == 0.015625 && ttxo > 1e-12) {
 		mInf = 0.0
 		mTau = 1e-12
@@ -89,6 +94,7 @@ INITIAL{
 	} else {
 		rates(v)
 	}
+ENDCOMMENT
 	m = mInf
 	h = hInf
 }
@@ -111,9 +117,3 @@ PROCEDURE rates(v (mV)){
 		hInf = 1.0/(1.0+exp((v-hh)/hs))
 	UNITSON
 }
-
-
-
-
-
-
