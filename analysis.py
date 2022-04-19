@@ -240,17 +240,21 @@ def plotEpas(df = df):
     cells = df['cellnum'].tolist()
     vm = {}
     pasv = {}
-    for c in cells:
-        vm[c] = df['V_soma'][c]['cell_0'][indx]
-        pasv[c] = df['epas'][c]['cell_0'][indx]
 
-    fig, axs = plt.subplots(2,1)
-    axs[0].scatter(list(pasv),list(pasv.values()),c='red')
-    axs[0].set_title('epas (mV)')
-    axs[1].scatter(list(vm),list(vm.values()))
-    axs[1].set_title('membrane voltage (mV)')
-    plt.xlabel('Cell Numbers')
-    plt.savefig(batchLabel+'_epas.png')
+    dfep = df[['cellnum','V_soma','epas']].copy()
+    dfep['vm']=dfep.V_soma.apply(lambda x:x['cell_0'][indx])
+    dfep['pasv']=dfep.epas.apply(lambda x:x['cell_0'][indx])
+
+    font = 20
+
+    f=go.Figure()
+    f.add_trace(go.Scatter(x=dfep['cellnum'], y=dfep['pasv'], mode = 'markers', marker = dict(color = 'LightPink', size =20, line = dict(color='MediumPurple',width=2)), text = dfep.cellnum, name = 'Reversal Potential (mV)', showlegend=True))
+
+    f.add_trace(go.Scatter(x=dfep['cellnum'], y=dfep['vm'], mode = 'markers', marker = dict(color = 'black', size =5, line = dict(color='MediumPurple',width=2)), text = dfep.cellnum, name = 'Resting Membrane Potential', showlegend=True))
+    f.update_layout(width=1200,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font),template='simple_white')
+    f.update_xaxes(title='Cell Number')
+    f.write_image('epas.png')
+    # f.show()
     return
 
 def plotRin (df=df):
@@ -265,8 +269,12 @@ def plotRin (df=df):
             end = df['t'][0].index(i)
     d = df[['cellnum','V_soma']].copy()
     d['ripk']=d.V_soma.apply(lambda x:(min(x['cell_0'][init:end])-x['cell_0'][init])/stim['amp'])
-    fr = px.scatter(d, x='cellnum', y='ripk', hover_data=['cellnum','ripk',df.index], labels={'cellnum':'Cell Number','ripk':'Rin (MOhm)'}, title = 'Calculated from Negative Peak',template="simple_white")
-    fr.show()
+    font = 20
+    fr = px.scatter(d, x='cellnum', y='ripk', hover_data=['cellnum','ripk',df.index], labels={'cellnum':'Cell Number','ripk':"Rin (M\u03A9)"},template="simple_white")
+    fr.update_traces(marker=dict(color = 'LightSteelBlue',size=font,line = dict(color='MediumPurple',width=2)))
+    fr.update_layout(width=1200,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font))
+    fr.write_image('Rin.png')
+    # fr.show()
     return
 
 def plotVm(df,batchLabel):
