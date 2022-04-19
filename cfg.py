@@ -38,7 +38,7 @@ cfg.sze = 21
 cfg.amp = 0 #-1e-5 #0.6
 cfg.phi = 0.2
 
-cfg.na = 1
+cfg.na = 0.1 #1
 
 cfg.ka = 0.018
 cfg.kc = 0.018
