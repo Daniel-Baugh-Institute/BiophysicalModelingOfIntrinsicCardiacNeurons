@@ -25,11 +25,12 @@ def fi(seg):
 
 
 def simSim(np0, sc0):
-    sim.createSimulateAnalyze(netParams=np0, simConfig=sc0)
+    sim.create(netParams=np0, simConfig=sc0)
     fih = [h.FInitializeHandler(2, lambda: fi(sim.net.cells[0].secs.soma.hObj(0.5)))]
     print("BEFORE simulate")
     sim.simulate()
     sim.saveData()
+    sim.analyze()
     print("AFTER save")
 
 

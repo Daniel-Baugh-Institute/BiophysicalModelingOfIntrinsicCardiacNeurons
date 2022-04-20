@@ -95,6 +95,7 @@ COMMENT
 		rates(v)
 	}
 ENDCOMMENT
+    rates(v)
 	m = mInf
 	h = hInf
 }
