@@ -16,13 +16,13 @@ genemod = {'ch_Hcn3_cp11':{'gHCN3bar': cfg.h3},  'ch_Hcn1_cp9':{'gHCN1bar': cfg.
             'ch_Cacna1b_cp6':{'gCav2_2bar': cfg.c1b},  'ch_Hcn2_cp10':{'gHCN2bar': cfg.h2},  #0.0011          
             'ch_Kcnc1_rothman':{'gbar': cfg.kc, 'phi':cfg.phi}, 'ch_Scn1a_md264834':{'gNav11bar': cfg.na}}     #0.0015
 
-cell_identities = np.bool_(np.transpose(np.genfromtxt('cell_sort_m2l.csv', delimiter=',')))
+cell_identities = np.bool_(np.transpose(np.genfromtxt('', delimiter=',')))
 cell = cell_identities[cfg.cellnum]
 
 ## Cell parameters/rules
 CEL = {'secs': {}}
 
-CEL['secs']['soma'] = {'geom': {'diam': cfg.sze, 'L': cfg.sze, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 0.00078, 'e': -65}, 'nm_In_md149739':{'gbar':1e-3}} } #1e-5
+CEL['secs']['soma'] = {'geom': {'diam': cfg.sze, 'L': cfg.sze, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 0.00078, 'e': -65}, 'nm_In_md149739':{'gbar':0}} } #1e-5
                                                                             
 
 for mod,onoff in zip(genemod,cell):
