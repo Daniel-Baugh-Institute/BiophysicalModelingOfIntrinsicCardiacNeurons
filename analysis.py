@@ -254,7 +254,7 @@ def plotEpas(df = df):
     f.update_layout(width=1200,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font),template='simple_white')
     f.update_xaxes(title='Cell Number')
     f.write_image('epas.png')
-    # f.show()
+    f.show()
     return
 
 def plotRin (df=df):
@@ -274,7 +274,7 @@ def plotRin (df=df):
     fr.update_traces(marker=dict(color = 'LightSteelBlue',size=font,line = dict(color='MediumPurple',width=2)))
     fr.update_layout(width=1200,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font))
     fr.write_image('Rin.png')
-    # fr.show()
+    fr.show()
     return
 
 def plotVm(df,batchLabel):
