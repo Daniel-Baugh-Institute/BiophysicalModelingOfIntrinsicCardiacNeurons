@@ -16,7 +16,7 @@ genemod = {'ch_Hcn3_cp11':{'gHCN3bar': cfg.h3},  'ch_Hcn1_cp9':{'gHCN1bar': cfg.
             'ch_Cacna1b_cp6':{'gCav2_2bar': cfg.c1b},  'ch_Hcn2_cp10':{'gHCN2bar': cfg.h2},  #0.0011          
             'ch_Kcnc1_rothman':{'gbar': cfg.kc, 'phi':cfg.phi}, 'ch_Scn1a_md264834':{'gNav11bar': cfg.na}}     #0.0015
 
-cell_identities = np.bool_(np.transpose(np.genfromtxt('', delimiter=',')))
+cell_identities = np.bool_(np.transpose(np.genfromtxt('red_tdata_all_15_m2l.csv', delimiter=',')))
 cell = cell_identities[cfg.cellnum]
 
 ## Cell parameters/rules
