@@ -8,9 +8,9 @@ cfg.duration = 1000  #1500 #1*1e3 #(ms)
 cfg.dt = 0.025          
 cfg.verbose = False     
 cfg.recordCells = ['all']
-cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
+cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
                          #'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
-                        'epas' : {'sec': 'soma', 'loc': 0.5,'var': 'e_pas'}}
+                     #   'epas' : {'sec': 'soma', 'loc': 0.5,'var': 'e_pas'}}
                     # 'ih':{'sec': 'soma', 'loc': 0.5,'var': 'iother'}, 
                     # 'ina': {'sec': 'soma', 'loc': 0.5,'var': 'ina'},
                     # 'ica': {'sec': 'soma', 'loc': 0.5,'var': 'ica'},
@@ -35,10 +35,10 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
 cfg.stim = 'IClamp'   
 cfg.cellnum = 84
 cfg.sze = 21
-cfg.amp = 0 #-1e-5 #0.6
+cfg.amp = 0.6 #-1e-5 #0.6
 cfg.phi = 0.2
 
-cfg.na = 0.1 #1
+cfg.na = 1 #1
 
 cfg.ka = 0.018
 cfg.kc = 0.018
