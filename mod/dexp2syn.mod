@@ -68,7 +68,7 @@ NET_RECEIVE(weight (umho), D, tsyn(ms)) {
     INITIAL {
         : these are in NET_RECEIVE to be per-stream
         D = 1
-        tsyn = 0
+        tsyn = -1e9
     }
     D = d + (1-d)*pow(((t-tsyn)*1e-3),rrate)
     if (D > 1) {
