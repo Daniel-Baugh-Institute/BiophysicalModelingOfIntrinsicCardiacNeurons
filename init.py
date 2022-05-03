@@ -4,6 +4,7 @@ from neuron import h
 
 def fi(seg):
     """set steady state RMP for 1 cell"""
+    print(seg.v)
     isum = 0
     isum = (
         (seg.ina if h.ismembrane("na_ion") else 0)

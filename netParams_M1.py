@@ -67,17 +67,18 @@ addtional_mech = {}
 
 np.random.seed(cfg.seed)
 phasic_cells = [i for i in range(cell_identities.shape[0]) if i not in cfg.tonic_cells]
-tonic_count = int(cfg.ganglion_size * cfg.tonic_ratio)
-phasic_count = cfg.ganglion_size - tonic_count
-for idx in range(cfg.num_ganglion):
+for idx in range(cfg.num_cluster):
+    cluster_size = cfg.cluster_size[idx] if hasattr(cfg.cluster_size, '__len__') else cfg.cluster_size
+    tonic_count = int(cluster_size * cfg.tonic_ratio)
+    phasic_count = cluster_size - tonic_count
     # generate a random sample of cell types
     cell_count = defaultdict(lambda: 0)
     for i in np.random.randint(len(cfg.tonic_cells), size=tonic_count):
         cell_count[cfg.tonic_cells[i]] += 1
-    for i in np.random.randint(len(cfg.tonic_cells), size=phasic_count):
+    for i in np.random.randint(len(phasic_cells), size=phasic_count):
         cell_count[phasic_cells[i]] += 1
 
-    # add population of each cell type to the ganglion
+    # add population of each cell type to the cluster
     cells = {}
     for k, v in cell_count.items():
         CEL = cell_base.copy()
@@ -87,11 +88,25 @@ for idx in range(cfg.num_ganglion):
 
         for mech, param in addtional_mech.items():
             CEL["soma"]["mechs"][mech] = param
+        if k in cfg.tonic_cells:
+            CEL['conds'] = {'cellType': 'tonic'}
+            CEL['diversityFraction'] =  v/tonic_count
+        else:
+            CEL['conds'] = {'cellType': 'phasic'}
+            CEL['diversityFraction'] =  v/phasic_count
         netParams.cellParams[f"CEL{k}"] = CEL
-        netParams.popParams[f"ganglion{idx}_CEL{k}"] = {
-            "cellType": f"CEL{k}",
-            "numCells": v,
-        }
+    netParams.popParams[f"cluster{idx}_tonic"] = {
+        "cellType": "tonic",
+        "numCells": tonic_count,
+        'diversity': True
+    }
+    netParams.popParams[f"cluster{idx}_phasic"] = {
+        "cellType": "tonic",
+        "numCells": phasic_count,
+        'diversity': True
+    }
+
+    
 
 if cfg.stim == "IClamp":
     netParams.stimSourceParams["iclamp"] = {
@@ -159,7 +174,7 @@ elif cfg.stim == "fdexp2syn":
     }
     netParams.stimTargetParams["bkg->exc"] = {
         "source": "bkg",
-        "conds": {"cellType": "CEL"},
+        "conds": {"pop": "cluster0_tonic"},
         "weight": cfg.weight,
         "delay": cfg.delay,
         "synMech": "exc",
@@ -173,68 +188,59 @@ elif cfg.stim == "dexp2syn":
         "d": cfg.d,
         "rrate": cfg.rrate,
     }
-    netParams.stimSourceParams["vagal"] = {
+    netParams.stimSourceParams["drive A"] = {
         "type": "NetStim",
-        "rate": cfg.vagal_rate,
-        "noise": cfg.vagal_noise,
+        "rate": cfg.tonic_rate,
+        "noise": cfg.tonic_noise,
     }
 
-    vagal_cells = [f"CEL{i}" for i in cfg.tonic_cells]
-    symp_cells = [
-        f"CEL{i}" for i in range(cell_identities.shape[0]) if i not in cfg.tonic_cells
-    ]
-
-    vagal_pop = [f"ganglion0_CEL{i}" for i in cfg.tonic_cells]
-    symp_pop = [
-        f"ganglion0_CEL{i}"
-        for i in range(cell_identities.shape[0])
-        if i not in cfg.tonic_cells
-    ]
-    netParams.stimTargetParams["vagal->exc"] = {
-        "source": "vagal",
-        "conds": {"cellType": vagal_cells},
-        "weight": cfg.vagal_weight,
-        "delay": cfg.vagal_delay,
-        "synMech": "exc",
-    }
-    netParams.stimSourceParams["symp"] = {
+    netParams.stimSourceParams["drive B"] = {
         "type": "NetStim",
-        "rate": cfg.symp_rate,
-        "noise": cfg.symp_noise,
-    }
-    netParams.stimTargetParams["symp->exc"] = {
-        "source": "symp",
-        "conds": {"cellType": symp_cells},
-        "weight": cfg.symp_weight,
-        "delay": cfg.symp_delay,
-        "synMech": "exc",
-    }
-    netParams.connParams["symp->symp"] = {
-        "preConds": {"cellType": symp_cells},
-        "postConds": {"cellType": symp_cells},
-        "probability": cfg.symp_symp_prob,
-        "weight": cfg.symp_symp_weight,
-        "delay": cfg.symp_symp_delay,
-        "synMech": "exc",
+        "rate": cfg.phasic_rate,
+        "noise": cfg.phasic_noise,
     }
 
-    netParams.connParams["symp->vagal"] = {
-        "preConds": {"cellType": symp_cells},
-        "postConds": {"cellType": symp_cells},
-        "probability": cfg.symp_vagal_prob,
-        "weight": cfg.symp_vagal_weight,
-        "delay": cfg.symp_vagal_delay,
-        "synMech": "exc",
-    }
-
-    netParams.connParams["vagal->vagal"] = {
-        "preConds": {"cellType": vagal_cells},
-        "postConds": {"cellType": vagal_cells},
-        "probability": cfg.vagal_vagal_prob,
-        "weight": cfg.vagal_vagal_weight,
-        "delay": cfg.vagal_vagal_delay,
-        "synMech": "exc",
-    }
+    for idx in range(cfg.num_cluster):
+        netParams.stimTargetParams[f"drive A->tonic{idx}"] = {
+            "source": "drive A",
+            "conds": {"pop": f"cluster{idx}_tonic"},
+            "weight": cfg.tonic_weight,
+            "delay": cfg.tonic_delay,
+            "synMech": "exc",
+        }
+        netParams.stimTargetParams[f"drive B->phasic{idx}"] = {
+            "source": "drive B",
+            "conds": {"pop": f"cluster{idx}_phasic"},
+            "weight": cfg.phasic_weight,
+            "delay": cfg.phasic_delay,
+            "synMech": "exc",
+        }
+        netParams.connParams[f"phasic{idx}->phasic{idx}"] = {
+            "preConds": {"pop": f"cluster{idx}_phasic"},
+            "postConds": {"pop": f"cluster{idx}_phasic"},
+            "probability": cfg.phasic_phasic_prob,
+            "weight": cfg.phasic_phasic_weight,
+            "delay": cfg.phasic_phasic_delay,
+            "synMech": "exc",
+        }
+    
+        netParams.connParams[f"phasic{idx}->tonic{idx}"] = {
+            "preConds": {"pop": f"cluster{idx}_phasic"},
+            "postConds": {"pop": f"cluster{idx}_tonic"},
+            "probability": cfg.phasic_tonic_prob,
+            "weight": cfg.phasic_tonic_weight,
+            "delay": cfg.phasic_tonic_delay,
+            "synMech": "exc",
+        }
+    
+        netParams.connParams[f"tonic{idx}->tonic{idx}"] = {
+            "preConds": {"pop": f"cluster{idx}_tonic"},
+            "postConds": {"pop": f"cluster{idx}_tonic"},
+            "probability": cfg.tonic_tonic_prob,
+            "weight": cfg.tonic_tonic_weight,
+            "delay": cfg.tonic_tonic_delay,
+            "synMech": "exc",
+        }
 if cfg.hyp != 0:
     netParams.stimSourceParams["iclamp"] = {
         "type": "IClamp",

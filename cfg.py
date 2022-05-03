@@ -16,7 +16,7 @@ cfg.recordStim = True
 
 
 # recording
-cfg.recordCells = ["ganglion0_CEL1"]
+cfg.recordCells = ["cluster0_tonic"]
 cfg.recordTraces = {
     "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"},
     "isyn": {"synMech": "exc", "var": "i"},
@@ -56,8 +56,8 @@ cfg.saveDataInclude = ["simData", "simConfig", "netParams", "net"]
 cfg.hParams = {"celsius": 35, "v_init": -61}
 
 # ganglion parameters
-cfg.num_ganglion = 1
-cfg.ganglion_size = 100
+cfg.num_cluster = 1
+cfg.cluster_size = 100
 cfg.tonic_ratio = 13 / 32
 cfg.tonic_cells = [
     0,
@@ -101,29 +101,29 @@ cfg.rrate = 0.31177 / 0.43708360077316477  # for hyp=0
 cfg.d = 0.15
 cfg.e = -7.0
 
-# sympathetic
-cfg.symp_rate = 5.0
-interval = 1000 / cfg.symp_rate
-cfg.symp_noise = 1 - 10 / interval  # 10ms min interval
-cfg.symp_weight = 0.05
-cfg.symp_delay = 5
-cfg.symp_symp_prob = 0.5
-cfg.symp_symp_weight = 0.05
-cfg.symp_symp_delay = 5
-cfg.symp_vagal_prob = 0.5
-cfg.symp_vagal_weight = 0.05
-cfg.symp_vagal_delay = 5
+# phasic connections
+cfg.phasic_rate = 5.0
+interval = 1000 / cfg.phasic_rate
+cfg.phasic_noise = 1 - 10 / interval  # 10ms min interval
+cfg.phasic_weight = 0.07
+cfg.phasic_delay = 5
+cfg.phasic_phasic_prob = 0.5
+cfg.phasic_phasic_weight = 0.05
+cfg.phasic_phasic_delay = 5
+cfg.phasic_tonic_prob = 0.25
+cfg.phasic_tonic_weight = 5e-3
+cfg.phasic_tonic_delay = 5
 
 
-# vagal
-cfg.vagal_rate = 5.0
-interval = 1000 / cfg.vagal_rate
-cfg.vagal_noise = 1 - 10 / interval  # 10ms min interval
-cfg.vagal_weight = 0.05
-cfg.vagal_delay = 5
-cfg.vagal_vagal_prob = 0.05
-cfg.vagal_vagal_weight = 0.05
-cfg.vagal_vagal_delay = 5
+# tonic connections
+cfg.tonic_rate = 5.0
+interval = 1000 / cfg.tonic_rate
+cfg.tonic_noise = 1 - 10 / interval  # 10ms min interval
+cfg.tonic_weight = 0.07
+cfg.tonic_delay = 5
+cfg.tonic_tonic_prob = 0.05
+cfg.tonic_tonic_weight = 5e-3
+cfg.tonic_tonic_delay = 5
 
 
 # channel parameters
