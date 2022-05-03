@@ -13,7 +13,7 @@ from itertools import product
 import plotly.graph_objects as go
 import plotly_express as px
 import matplotlib.pyplot as plt
-
+from scipy.optimize import curve_fit
 df = dfss = filenamepkl = None
 
 
@@ -394,7 +394,7 @@ def allAnalysis(df=df):
     return
 
 
-def processEPSPs(data):
+def processEPSPs(data, do_fit=True):
     """extract EPSP times and amplitude from synaptic stimulus"""
     sd = data["simData"]
     sd["t"] = np.array(sd["t"])
@@ -420,8 +420,17 @@ def processEPSPs(data):
         ]
     else:
         stims = None
-    processData = {"times": times, "epsps": amps, "stims": stims}
-    return processData
+    process_data = {"times": times, "epsps": amps, "stims": stims}
+    if do_fit:
+        amps = np.array(amps[1:])
+        t = np.diff(times)*dt*1e-3  # fit for time in sec
+        ftA, _ = curve_fit(lambda x,a,b: a*x**b,t,amps,p0=[1,1])
+        famps = amps[amps<80]
+        tt = t[amps<80]
+        ftB, _ = curve_fit(lambda x,a,b: a*x**b,tt,famps,p0=[1,1])
+        process_data['full_fit'] = ftA
+        process_data['filter_fit'] =  ftB
+    return process_data
 
 
 def plotEpas(df=df):

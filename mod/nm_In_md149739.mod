@@ -5,7 +5,6 @@ NEURON {
 	SUFFIX nm_In_md149739
 	NONSPECIFIC_CURRENT i
 	RANGE i, enic, gbar
-    RANGE ach, achmod
 }
 
 UNITS {
@@ -16,9 +15,6 @@ UNITS {
 PARAMETER {
 	gbar = 1e-3 (siemens/cm2) < 0, 1e9 >
 	enic = 3.2  (mV)
-    ach = 0 (mM)
-    achic50 = 75.5e-3 (mM)
-    achmodmax = 1.0
 }
 
 ASSIGNED {
@@ -26,7 +22,7 @@ ASSIGNED {
 	i (mA/cm2)
 }
 
-BREAKPOINT { 
+BREAKPOINT {
 	i = gbar*(v - enic)
 }
 
