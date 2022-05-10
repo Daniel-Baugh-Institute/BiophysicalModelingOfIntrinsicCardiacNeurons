@@ -107,12 +107,13 @@ interval = 1000 / cfg.phasic_rate
 cfg.phasic_noise = 1 - 10 / interval  # 10ms min interval
 cfg.phasic_weight = 0.07
 cfg.phasic_delay = 5
-cfg.phasic_phasic_prob = 0.5
-cfg.phasic_phasic_weight = 0.05
-cfg.phasic_phasic_delay = 5
-cfg.phasic_tonic_prob = 0.25
-cfg.phasic_tonic_weight = 5e-3
-cfg.phasic_tonic_delay = 5
+cfg.phasic_phasic_prob = [0.5, 0]
+cfg.phasic_phasic_weight = [0.05, 0.05]
+cfg.phasic_phasic_delay = [5, 5]
+
+cfg.phasic_tonic_prob = [0.25, 0.0]
+cfg.phasic_tonic_weight = [5e-3, 5e-3]
+cfg.phasic_tonic_delay = [5, 5]
 
 
 # tonic connections
@@ -121,9 +122,9 @@ interval = 1000 / cfg.tonic_rate
 cfg.tonic_noise = 1 - 10 / interval  # 10ms min interval
 cfg.tonic_weight = 0.07
 cfg.tonic_delay = 5
-cfg.tonic_tonic_prob = 0.05
-cfg.tonic_tonic_weight = 5e-3
-cfg.tonic_tonic_delay = 5
+cfg.tonic_tonic_prob = [0.05, 0.0]
+cfg.tonic_tonic_weight = [5e-3, 5e-3]
+cfg.tonic_tonic_delay = [5, 5]
 
 
 # channel parameters
