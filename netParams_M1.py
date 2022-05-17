@@ -12,7 +12,7 @@ genemod = {'ch_Hcn3_cp11':{'gHCN3bar': cfg.h3},  'ch_Hcn1_cp9':{'gHCN1bar': cfg.
            'ch_Cacna1g_cp41':{'gCav3_1bar': cfg.c1g},        'ch_Cacna1a_cp5':{'gCav2_1bar': cfg.c1a},
            'ch_Cacna1d_md150284':{'pcaLbar': cfg.c1d},  'ch_Hcn4_cp12':{'gHCN4bar': cfg.h4},
             'ch_Cacna1c_cp3':{'gLbar': cfg.c1c},         'ch_Cacna1i_md279':{'gcabar': cfg.c1i},           
-            'ch_Kcna1ab1_md80769':{'gbar': cfg.ka},        'ch_Kcnj3_md2488':{'gbar': cfg.kj},           
+            'ch_Kcna1ab1_md80769g':{'gbar': cfg.ka},        'ch_Kcnj3_md2488':{'gbar': cfg.kj},           
             'ch_Cacna1b_cp6':{'gCav2_2bar': cfg.c1b},  'ch_Hcn2_cp10':{'gHCN2bar': cfg.h2},  #0.0011          
             'ch_Kcnc1_rothman':{'gbar': cfg.kc, 'phi':cfg.phi}, 'ch_Scn1a_md264834':{'gNav11bar': cfg.na}}     #0.0015
 
