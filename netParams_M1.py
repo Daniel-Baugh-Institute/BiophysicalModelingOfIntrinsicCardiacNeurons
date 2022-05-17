@@ -14,7 +14,7 @@ genemod = {'ch_Hcn3_cp11':{'gHCN3bar': cfg.h3},  'ch_Hcn1_cp9':{'gHCN1bar': cfg.
             'ch_Cacna1c_cp3':{'gLbar': cfg.c1c},         'ch_Cacna1i_md279':{'gcabar': cfg.c1i},           
             'ch_Kcna1ab1_md80769':{'gbar': cfg.ka},        'ch_Kcnj3_md2488':{'gbar': cfg.kj},           
             'ch_Cacna1b_cp6':{'gCav2_2bar': cfg.c1b},  'ch_Hcn2_cp10':{'gHCN2bar': cfg.h2},  #0.0011          
-            'ch_Kcnc1_rothman':{'gbar': cfg.kc, 'phi':cfg.phi}, 'ch_Scn1a_md264834':{'gNav11bar': cfg.na}  }     #0.0015
+            'ch_Kcnc1_rothman':{'gbar': cfg.kc, 'phi':cfg.phi}, 'ch_Scn1a_cp35':{'gNabar': cfg.na}  }     #0.0015
 
 cell_identities = np.bool_(np.transpose(np.genfromtxt('red_tdata_all_15_m2l.csv', delimiter=',')))
 cell = cell_identities[cfg.cellnum]
