@@ -35,7 +35,6 @@ if cfg.stim == 'IClamp':
     netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': cfg.amp, 'dur': 400, 'delay': 100} 
     netParams.stimTargetParams['iclamp->CEL'] = {'source': 'iclamp', 'conds': {'cellType': 'CEL'}, 'sec': 'soma', 'loc': 0.5}
 
-#'ch_Kcna1ab1_md80769':{'gbar': 0.011},
-# 'ch_Kcna1_gupta':{'gbar': 0.011,'zeta':1}
-# 'ch_Kcna_cp18':{'gKv1_1bar': 0.01},
-# 'ch_Kcnc1_md74298':{'gk': cfg.kcnc}
+# 'ch_Kcna1ab1_md80769g':{'gbar': cfg.ka}
+# 'ch_Scn1a_cp35':{'gNabar': cfg.na}
+# 'ch_Scn1a_md264834':{'gNav11bar': cfg.na}
