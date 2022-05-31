@@ -270,7 +270,7 @@ def plotRin (df=df):
     d = df[['cellnum','V_soma']].copy()
     d['ripk']=d.V_soma.apply(lambda x:(min(x['cell_0'][init:end])-x['cell_0'][init])/stim['amp'])
     font = 20
-    fr = px.scatter(d, x='cellnum', y='ripk', hover_data=['cellnum','ripk',df.index], labels={'cellnum':'Cell Number','ripk':"Rin (M\u03A9)"},template="simple_white")
+    fr = px.scatter(d, x='cellnum', y='ripk', hover_data=['cellnum','ripk',df.index], labels={'cellnum':'Neuron ID','ripk':"Input Impedance (M\u03A9)"},template="simple_white")
     fr.update_traces(marker=dict(color = 'LightSteelBlue',size=font,line = dict(color='MediumPurple',width=2)))
     fr.update_layout(width=1200,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font))
     fr.write_image('Rin.png')
@@ -284,7 +284,7 @@ def plotVm(df,batchLabel):
         plt.plot(df['t'][indx],df['V_soma'][indx]['cell_0'],c='C0')
         plt.xlabel('Time (ms)')
         plt.ylabel('Membrane Voltage (mV)')
-        plt.title(f"Cell Number: {df['cellnum'][indx]}")
+        plt.title(f"Neuron ID: N{df['cellnum'][indx]}")
         plt.savefig(f"{batchLabel}/vmPlots/{df['simLabel'][indx]}.png")
         plt.close()
     return
