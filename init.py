@@ -32,6 +32,8 @@ def simSim(np0, sc0):
     sim.saveData()
     sim.analyze()
     print("AFTER save")
+    for k, v in sim.timingData.items():
+        print(f"{k}: {v:.2f} sec")
 
 
 simConfig, netParams = sim.readCmdLineArgs(

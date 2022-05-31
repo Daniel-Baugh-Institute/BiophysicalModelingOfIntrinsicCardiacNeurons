@@ -5,15 +5,14 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 10_000
+cfg.duration = 1_000
 cfg.dt = 0.01
 cfg.recordStep = 0.05
-cfg.simLabel = "22apr11testd0"
+cfg.simLabel = "26apr11newsyn2"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
 cfg.recordStim = True
-
 
 # recording
 cfg.recordCells = ["all"]
@@ -21,6 +20,12 @@ cfg.recordTraces = {
     "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"},
     "isyn": {"synMech": "exc", "var": "i"},
     "gsyn": {"synMech": "exc", "var": "g"},
+    "ica1a": {"sec": "soma", "loc": 0.5, "var": "ica1a_ch_Cacna1a_cp5"},
+    "ica1b": {"sec": "soma", "loc": 0.5, "var": "ica1b_ch_Cacna1b_cp6"},
+    "ica1c": {"sec": "soma", "loc": 0.5, "var": "ica1c_ch_Cacna1c_cp3"},
+    "ica1d": {"sec": "soma", "loc": 0.5, "var": "ica1d_ch_Cacna1d_md150284"},
+    "ica1g": {"sec": "soma", "loc": 0.5, "var": "ica1g_ch_Cacna1g_cp41"},
+    "ica1i": {"sec": "soma", "loc": 0.5, "var": "ica1i_ch_Cacna1i_md279"},
 }
 """
     #'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
@@ -64,22 +69,37 @@ cfg.sze = 21
 # modulation
 cfg.npy = 0
 cfg.ach = 0
+cfg.ne = 1.0
 
 # stimulus
-cfg.hyp = -2.0
+
+cfg.hyp = 0.0
 cfg.amp = 0
-cfg.stim = "dexp2syn"
-cfg.tau1 = 5
-cfg.tau2 = 18
-cfg.rrate = 0.31177 / 0.43708360077316477  # for hyp=0
-cfg.d = 0.15
-cfg.e = -7.0
 cfg.rate = 5.0
 interval = 1000 / cfg.rate
-cfg.noise = 1 - 10 / interval  # 10ms min interval
-cfg.weight = 0.025
+cfg.noise = 0  # 1 - 10 / interval  # 10ms min interval
+cfg.weight = 1e-2  # 0.0184014564752578
+interval = 1000.0 / cfg.rate
 cfg.delay = 5
+cfg.e = -7.0
+cfg.tau1 = 5
+cfg.tau2 = 18
 
+"""
+# power-law synapse model
+cfg.stim = "dexp2syn"
+cfg.rrate = 0.31177 / 0.43708360077316477  # for hyp=0
+cfg.d = 0.15
+"""
+
+# exp synapse model
+cfg.stim = "fdexp2syn"
+cfg.tau_D1 = 3000  # 2145.7055888921022
+cfg.tau_D2 = 100
+cfg.tau_F = 10
+cfg.d1 = 0.62
+cfg.d2 = 1.0
+cfg.f = 0.0
 
 # channel parameters
 cfg.phi = 0.2
