@@ -29,8 +29,15 @@ def simSim(np0, sc0):
     fih = [h.FInitializeHandler(2, lambda: fi(sim.net.cells[0].secs.soma.hObj(0.5)))]
     print("BEFORE simulate")
     sim.simulate()
-    sim.saveData()
     sim.analyze()
+    sim.saveData()
+
+    with open(f"{sim.cfg.filename}_nte.csv",'w') as f:
+        for target in ['cluster0_phasic', 'cluster0_tonic']:
+            for source in ['drive A', 'drive B', 'cluster0_phasic', 'cluster0_tonic']:
+                nte = sim.analysis.nTE(cells1=[source],cells2=[target],numShuffle=200)
+                f.write(f"{nte}, ")
+            f.write("\n")
     print("AFTER save")
 
 
