@@ -12,6 +12,7 @@ from collections import OrderedDict
 from itertools import product
 import plotly.graph_objects as go
 import plotly_express as px
+import plotly.io as pio
 import matplotlib.pyplot as plt
 df = dfss = filenamepkl = None
 
@@ -269,11 +270,11 @@ def plotRin (df=df):
             end = df['t'][0].index(i)
     d = df[['cellnum','V_soma']].copy()
     d['ripk']=d.V_soma.apply(lambda x:(min(x['cell_0'][init:end])-x['cell_0'][init])/stim['amp'])
-    font = 20
+    font = 18
     fr = px.scatter(d, x='cellnum', y='ripk', hover_data=['cellnum','ripk',df.index], labels={'cellnum':'Neuron ID','ripk':"Input Impedance (M\u03A9)"},template="simple_white")
-    fr.update_traces(marker=dict(color = 'LightSteelBlue',size=font,line = dict(color='MediumPurple',width=2)))
-    fr.update_layout(width=1200,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font))
-    fr.write_image('Rin.png')
+    fr.update_traces(marker=dict(color = 'LightSteelBlue',size=font/2,line = dict(color='MediumPurple',width=2)))
+    fr.update_layout(width=614.4,height=460.8,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font))
+    pio.write_image(fr,"Rin.png",format='png',scale=10,width=614.4,height=460.8, validate=True)
     fr.show()
     return
 
