@@ -280,12 +280,14 @@ def plotRin (df=df):
 
 def plotVm(df,batchLabel):
     makedirs(f'{batchLabel}/vmPlots')
+    font = 15
     for indx in df.index:
         f = plt.figure()
         plt.plot(df['t'][indx],df['V_soma'][indx]['cell_0'],c='C0')
-        plt.xlabel('Time (ms)')
-        plt.ylabel('Membrane Voltage (mV)')
-        plt.title(f"Neuron ID: N{df['cellnum'][indx]}")
-        plt.savefig(f"{batchLabel}/vmPlots/{df['simLabel'][indx]}.png")
+        plt.xlabel('Time (ms)', fontsize=font)
+        plt.ylabel('Membrane Voltage (mV)', fontsize=font)
+        plt.title(f"Neuron ID: N{df['cellnum'][indx]}", fontsize=font)
+        plt.tick_params(axis='both',labelsize=font)
+        plt.savefig(f"{batchLabel}/vmPlots/{df['simLabel'][indx]}.png",dpi=300,bbox_inches='tight')
         plt.close()
     return
