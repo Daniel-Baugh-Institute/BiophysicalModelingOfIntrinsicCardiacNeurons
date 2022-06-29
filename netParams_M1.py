@@ -7,6 +7,7 @@ try:
 except:
     from cfg import cfg  # if no simConfig in parent module, import directly from cfg.py:cfg
 
+netParams.defaultThreshold = -10
 # order in genemod MUST be preserved to match cell_identities channel order
 genemod = {'ch_Hcn3_cp11':{'gHCN3bar': cfg.h3},  'ch_Hcn1_cp9':{'gHCN1bar': cfg.h1},
            'ch_Cacna1g_cp41':{'gCav3_1bar': cfg.c1g},        'ch_Cacna1a_cp5':{'gCav2_1bar': cfg.c1a},
