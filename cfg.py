@@ -32,7 +32,7 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
                     'ikcnc':{'sec': 'soma', 'loc': 0.5,'var': 'ikcnc_ch_Kcnc1_rothman'},
                     'ikcnj3':{'sec': 'soma', 'loc': 0.5,'var': 'ikcnj3_ch_Kcnj3_md2488'}}
 
-cfg.stim = 'IClamp' #'IClamp'  
+cfg.stim = 'VClamp' #'IClamp'  
 cfg.cellnum = 103
 cfg.sze = 21
 cfg.amp = 0.05 #-1e-5 #0.6
