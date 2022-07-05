@@ -253,7 +253,7 @@ def plotEpas(df = df):
 
     f.add_trace(go.Scatter(x=dfep['cellnum'], y=dfep['vm'], mode = 'markers', marker = dict(color = 'black', size =5, line = dict(color='MediumPurple',width=2)), text = dfep.cellnum, name = 'Resting Membrane Potential', showlegend=True))
     f.update_layout(width=1200,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font),template='simple_white')
-    f.update_xaxes(title='Cell Number')
+    f.update_xaxes(title='Neuronal-Type ID (T#)')
     f.write_image('epas.png')
     f.show()
     return
@@ -271,7 +271,7 @@ def plotRin (df=df):
     d = df[['cellnum','V_soma']].copy()
     d['ripk']=d.V_soma.apply(lambda x:(min(x['cell_0'][init:end])-x['cell_0'][init])/stim['amp'])
     font = 18
-    fr = px.scatter(d, x='cellnum', y='ripk', hover_data=['cellnum','ripk',df.index], labels={'cellnum':'Neuron ID','ripk':"Input Impedance (M\u03A9)"},template="simple_white")
+    fr = px.scatter(d, x='cellnum', y='ripk', hover_data=['cellnum','ripk',df.index], labels={'cellnum':'Neuronal-Type ID (T#)','ripk':"Input Impedance (M\u03A9)"},template="simple_white")
     fr.update_traces(marker=dict(color = 'LightSteelBlue',size=font/2,line = dict(color='MediumPurple',width=2)))
     fr.update_layout(width=614.4,height=460.8,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font))
     pio.write_image(fr,"Rin.png",format='png',scale=10,width=614.4,height=460.8, validate=True)
@@ -286,7 +286,7 @@ def plotVm(df,batchLabel):
         plt.plot(df['t'][indx],df['V_soma'][indx]['cell_0'],c='C0')
         plt.xlabel('Time (ms)', fontsize=font)
         plt.ylabel('Membrane Voltage (mV)', fontsize=font)
-        plt.title(f"Neuron ID: N{df['cellnum'][indx]}", fontsize=font)
+        plt.title(f"Neuronal-Type ID: T{df['cellnum'][indx]}", fontsize=font)
         plt.tick_params(axis='both',labelsize=font)
         plt.savefig(f"{batchLabel}/vmPlots/{df['simLabel'][indx]}.png",dpi=300,bbox_inches='tight')
         plt.close()
