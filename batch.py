@@ -13,7 +13,7 @@ def batch():
         params['phi']= [0, 0.1,0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] # indexed
         # params['na'] = [0.09,0.12]  
         # params['ka'] = [0.015, 0.023]                  #[0.011, 0.014, 0.018, 0.025, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.06]
-        # params['kc'] = [0.00018, 0.00048, 0.00078, 0.0018, 0.0048, 0.0078, 0.018, 0.048, 0.078, 0.18]         #[0.011, 0.02]                      
+        params['kc'] = [0.00018, 0.00048, 0.00078, 0.0018, 0.0048, 0.0078, 0.018, 0.048, 0.078, 0.18]         #[0.011, 0.02]                      
         # params['kj'] = [0.0015, 0.0038]
         # params['h1'] = [0.00001, 0.01]           #log
         # params['h2'] = [0.009, 0.09]           
@@ -31,7 +31,7 @@ def batch():
 
         b = Batch(params=params, cfgFile='cfg.py', netParamsFile='netParams_M1.py')
         # Set output folder, grid method (all param combinations), and run configuration
-        b.batchLabel = '22jul05d'
+        b.batchLabel = '22jul05f'
         b.saveFolder = '/tera/' + os.getlogin() + '/' + b.batchLabel
         b.method = 'grid'  # params.csv will be read by default; else need name in cfg.paramListFile
         b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
