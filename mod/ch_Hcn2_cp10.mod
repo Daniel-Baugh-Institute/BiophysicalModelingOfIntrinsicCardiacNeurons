@@ -17,8 +17,9 @@ ENDCOMMENT
 NEURON	{
 	SUFFIX ch_Hcn2_cp10
 	USEION other WRITE iother VALENCE 1.0 				:Added by SG
+    USEION npy READ npyo CHARGE 1
 	RANGE gHCN2bar, gHCN2, ihcn2, ehcn, BBiD, mInf, mTau 
-    RANGE npy, npymod
+    RANGE npymod
 }
 
 UNITS	{
@@ -31,7 +32,6 @@ PARAMETER	{
 	gHCN2bar = 0.00001 (S/cm2) 
 	BBiD = 62 
 	ehcn = -45.0 (mV)
-    npy = 0 (mM)
     npymaxG = 0.11     : maximum 11% reduction in conductance
     npymaxV = 12       : maximum 15% reduction in Erev (to -51.75)
     npyic50 = 404e-6 (mM)
@@ -45,6 +45,7 @@ ASSIGNED	{
 	mTau
 	iother (mA/cm2)
     npymod
+    npyo (mM)
 }
 
 STATE	{ 
@@ -54,7 +55,7 @@ STATE	{
 BREAKPOINT	{
 	SOLVE states METHOD cnexp
 	gHCN2 = gHCN2bar*m
-    npymod = (npy/(npy+npyic50))
+    npymod = (npyo/(npyo+npyic50))
 	ihcn2 = gHCN2*(v-ehcn + npymaxV*npymod)*(1.0 - npymaxG*npymod)
 	iother = ihcn2				:Added by SG
 }

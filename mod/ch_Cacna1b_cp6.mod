@@ -30,10 +30,13 @@ NEURON	{
 	USEION ca READ cai, cao WRITE ica 			:SG mm
 	RANGE gCav2_2bar, gCav2_2, ica, BBiD 
 	RANGE ggk, ica1b, mInf, mTau, hInf, hTau	:SG mm
+    USEION ach READ acho CHARGE 1
+    USEION npy READ npyo CHARGE 1
+    USEION ne READ neo CHARGE 1
 	GLOBAL USEGHK								:SG mm
-    RANGE ach, achmod
-    RANGE npy, npymod
-    RANGE ne, nemod
+    RANGE achmod
+    RANGE npymod
+    RANGE nemod
 }
 
 UNITS	{
@@ -53,15 +56,13 @@ PARAMETER	{
 	BBiD = 79
 	:SG
   	USEGHK=1
-    ach = 0 (mM)
     achic50 = 36.5e-6 (mM)
     achmodmax = 0.756
     achmodv = 28.44 (mV)    
-    npy = 0
     npymodmax = 0.32    : maximum 32% reduction
     npyic50 = 1.72e-6 (mM)
-    ne = 0
-    nemodmax = 0.62     : maximum 62% reduction   
+    nemodmax = 0.62     : maximum 62% reduction  
+    neic50 = 4.3e-3 (mM) 
 }
 
 ASSIGNED	{
@@ -86,6 +87,9 @@ ASSIGNED	{
     npymod
     achmod
     nemod
+    npyo (mM)
+    neo (mM)
+    acho (mM)
 }
 
 STATE	{ 
@@ -95,13 +99,9 @@ STATE	{
 
 BREAKPOINT	{
 	SOLVE states METHOD cnexp
-    npymod = npymodmax*(npy/(npy+npyic50))
-    achmod = achmodmax*exp(-(v/achmodv)^2)*(ach/(ach+achic50))
-    if(ne > 0) {
-        nemod = nemodmax
-    } else {
-        nemod = 0
-    }
+    npymod = npymodmax*(npyo/(npyo+npyic50))
+    achmod = achmodmax*exp(-(v/achmodv)^2)*(acho/(acho+achic50))
+    nemod = nemodmax*(neo/(neo+neic50))
     gCav2_2 = gCav2_2bar*m*m*h
 	:Added by SG
 	if(USEGHK ==1)	{

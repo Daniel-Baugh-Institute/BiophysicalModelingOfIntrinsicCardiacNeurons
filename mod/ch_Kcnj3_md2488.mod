@@ -51,11 +51,13 @@ NEURON {
     THREADSAFE
 	SUFFIX ch_Kcnj3_md2488 
 	USEION k READ ek WRITE ik
+    USEION ach READ acho CHARGE 1
+    USEION ne READ neo CHARGE 1
 	RANGE n, gk, gbar
 	RANGE ninf, ntau, ikcnj3
 	GLOBAL Ra, Rb
 	GLOBAL q10, temp, tadj, vmin, vmax
-    RANGE ach, achmod, ne, nemod
+    RANGE achmod, nemod
 }
 
 UNITS {
@@ -81,11 +83,10 @@ PARAMETER {
 
 	vmin = -120	(mV)
 	vmax = 100	(mV)
-    ach = 0 (mM) 
     achic50 = 4.44e-3 (mM)
     achmodmax = 1.0     : closed by ACh
     nemodmax = 0.71
-    nemodic50 = 4.2e-3 (mM)
+    neic50 = 4.3e-3 (mM)
 } 
 
 
@@ -102,6 +103,9 @@ ASSIGNED {
 	tadj
     achmod
     ikcnj3		(mA/cm2)
+    acho (mM)
+    neo (mM)
+    nemod
 }
  
 
@@ -116,8 +120,8 @@ INITIAL {
 
 BREAKPOINT {
     SOLVE states METHOD cnexp
-    achmod = achmodmax*(1.0 - ach/(ach+achic50))
-    nemod = nemodmax*(ne/(ne + neic50))
+    achmod = achmodmax*(1.0 - acho/(acho+achic50))
+    nemod = nemodmax*(neo/(neo + neic50))
 	gk = tadj*gbar*n*achmod*nemod
 	ikcnj3 = gk * (v - ek)
     ik = ikcnj3

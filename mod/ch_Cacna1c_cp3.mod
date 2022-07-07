@@ -28,10 +28,11 @@ NEURON	{
 	SUFFIX ch_Cacna1c_cp3
 	:USEION ca READ eca WRITE ica 				:SG
 	USEION ca READ cai, cao WRITE ica 			:SG mm
+    USEION npy READ npyo CHARGE 1
 	RANGE gLbar, gL, ica, BBiD 
 	RANGE ggk, ica1c, mInf, mTau, hInf, hTau	:SG mm
 	GLOBAL USEGHK								:SG mm
-    RANGE npy, npymod
+    RANGE npymod
 }
 
 UNITS	{
@@ -50,7 +51,6 @@ PARAMETER	{
 	BBiD = 212 
 	:SG
   	USEGHK=1
-    npy = 0 (mM)
     npymodmax = 0.31    : maximum 31% reduction
     npyic50 = 1.72e-6 (mM)
 }
@@ -72,6 +72,7 @@ ASSIGNED	{
 	ica1c (mA/cm2)
     npymod
     achmod
+    npyo (mM)
 }
 
 STATE	{ 
@@ -88,7 +89,7 @@ BREAKPOINT	{
 	} else {
 		ggk = (v-eca)
 	}
-    npymod = npymodmax*(npy/(npy+npyic50))
+    npymod = npymodmax*(npyo/(npyo+npyic50))
 	ica1c = gL*ggk*(1.0 - npymod)
 	ica = ica1c
 	:ica = gL*(v-eca)

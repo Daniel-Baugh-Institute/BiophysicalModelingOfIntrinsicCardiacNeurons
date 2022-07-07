@@ -6,7 +6,7 @@ cfg = specs.SimConfig()
 
 # simulation configuration
 cfg.duration = 1_000
-cfg.dt = 0.01
+cfg.dt = 0.025
 cfg.recordStep = 0.05
 cfg.simLabel = "22apr11net"
 cfg.saveFolder = cfg.simLabel
@@ -15,7 +15,7 @@ cfg.saveJson = True
 cfg.recordStim = True
 
 # recording
-cfg.recordCells = ["cluster0_tonic"]
+cfg.recordCells = ["cluster0_typeT"]
 cfg.recordTraces = {
     "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"},
     "isyn": {"synMech": "exc", "var": "i"},
@@ -63,6 +63,11 @@ cfg.hParams = {"celsius": 35, "v_init": -61}
 # ganglion parameters
 cfg.num_cluster = 1
 cfg.cluster_size = 100
+cfg.SIFcount = 20
+cfg.xRange = [[0,100]]
+cfg.yRange = [[0,100]]
+cfg.zRange = [[0,100]]
+
 cfg.tonic_ratio = 13 / 32
 cfg.tonic_cells = [
     0,
@@ -87,30 +92,55 @@ cfg.tonic_cells = [
     55,
     58,
 ]
+cfg.cluster_shape = [100, 100, 100]
 cfg.seed = 0
 
 # cell size
 cfg.sze = 21
+cfg.SIFsze = 5
 
-# modulation
-cfg.npy = 0
-cfg.ach = 0
-cfg.ne = 0
+
+# modulation parameters
+cfg.dx = 20
+cfg.margin = 20
+
+## Boundary/Initial conditions
+cfg.BCne = 0.0
+cfg.BCnpy = 0.0
+cfg.BCach = 0.0
+cfg.BCser = 0.0
+cfg.BCda = 0.0
+
+## Diffusion coefficients
+cfg.Dne = 0.077 # Rice et al 1985
+cfg.Dnpy = 1.31e-5  # Sanghaiv et al 1994 (check temperature)
+D20 = 0.447 # (Sattarahmady et al 2013) room temperature ~20C?
+eta20 = 10e-4 # Pa s
+eta37 = 6.91e-4 # Pa s
+cfg.Dach = D20 * ((274.15+37)/eta37) * (eta20)/(274.15+25)
+
+eta25 = 8.9e-4 # Pa s
+D25 = 0.54 # Gerhardt et al 1982
+cfg.Dser = D25 * ((274.15+37)/eta37) * (eta25)/(274.15+25)
+cfg.Dda = 0.068 # Rice et al 1985
+
+
 
 # stimulus
 cfg.hyp = 0.0
 cfg.amp = 0
+cfg.stim = "dexp2syn"
 cfg.rate = 5.0
 interval = 1000 / cfg.rate
-cfg.noise = 0  # 1 - 10 / interval  # 10ms min interval
+cfg.noise = 1 - 10 / interval  # 10ms min interval
 cfg.weight = 1e-2  # 0.0184014564752578
 interval = 1000.0 / cfg.rate
 cfg.delay = 5
 cfg.e = -7.0
 cfg.tau1 = 5
 cfg.tau2 = 18
-
-cfg.e = -7.0
+cfg.rrate = 0.31177 / 0.43708360077316477  # for hyp=0
+cfg.d = 0.15
 
 # phasic connections
 cfg.phasic_rate = 5.0
@@ -119,7 +149,7 @@ cfg.phasic_noise = 1 - 10 / interval  # 10ms min interval
 cfg.phasic_weight = 0.07
 cfg.phasic_delay = 5
 cfg.phasic_phasic_prob = [0.25, 0.25]
-cfg.phasic_phasic_weight = [0.05, 0]
+cfg.phasic_phasic_weight = [0, 0.25]
 cfg.phasic_phasic_delay = [5, 5]
 
 cfg.phasic_tonic_prob = [0.25, 0.25]
@@ -134,8 +164,13 @@ cfg.tonic_noise = 1 - 10 / interval  # 10ms min interval
 cfg.tonic_weight = 0.07
 cfg.tonic_delay = 5
 cfg.tonic_tonic_prob = [0.25, 0.25]
-cfg.tonic_tonic_weight = [5e-3, 0]
+cfg.tonic_tonic_weight = [0, 5e-3]
 cfg.tonic_tonic_delay = [5, 5]
+
+# SIF
+cfg.SIFdelay = 5.0
+cfg.SIFweight = 1.0
+cfg.SIFprob = 1.0
 
 # channel parameters
 cfg.phi = 0.2
