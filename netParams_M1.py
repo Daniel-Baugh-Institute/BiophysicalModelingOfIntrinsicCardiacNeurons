@@ -1,6 +1,7 @@
 from netpyne import specs, sim
 import numpy as np
 import csv
+import json
 
 netParams = specs.NetParams()
 try:
@@ -74,6 +75,39 @@ for mech, param in addtional_mech.items():
     CEL["secs"]["soma"]["mechs"][mech] = param
 netParams.cellParams["CEL"] = CEL
 netParams.popParams["U"] = {"cellType": "CEL", "numCells": 1}
+
+# Load Gq Pathway Modulation
+## Regions
+regions = {}
+regions['cyt'] = {'cells': ['all'], 'secs': 'all', 'nrn_region': 'i'}
+# , 'geometry': {'class': 'FractionalVolume', 'args': {'volume_fraction': 1.0, 'surface_fraction': 1}}}
+#regions['er'] = {'cells': ['all'], 'secs': 'all', 'geometry': {'class': 'FractionalVolume', 'args': {'volume_fraction': constants['fe']}}}
+#regions['cyt_er_membrane'] = {'cells': ['all'], 'secs': 'all', 'geometry': {'class': 'ScalableBorder', 'args': {'scale': 1, 'on_cell_surface': False}}}
+netParams.rxdParams['regions'] = regions
+
+## Species
+species = json.load(open('GqSpecies.json','r'))
+species['AngII']['initial'] = cfg.angII
+netParams.rxdParams['species'] = species
+
+## Reactions
+GqParams = json.load(open('GqParams.json','r'))
+GqPath = json.load(open('GqPath.json','r'))
+rates = {}
+reactions = {}
+for r,v in GqPath.items():
+    if 'rate' in v:
+        v['rate'] = GqParams[v['rate']]
+        rates[r] = v
+    else:
+        v['rate_f'] = GqParams[v['rate_f']]
+        if 'rate_b' in v: v['rate_b'] = GqParams[v['rate_b']]
+        reactions[r] = v
+
+netParams.rxdParams['reactions'] = reactions
+netParams.rxdParams['rate'] = rates
+
+
 
 if cfg.stim == "IClamp":
     netParams.stimSourceParams["iclamp"] = {

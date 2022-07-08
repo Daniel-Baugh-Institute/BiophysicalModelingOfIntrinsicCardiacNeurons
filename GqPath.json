@@ -1,0 +1,1434 @@
+{
+    "v1_0": {
+        "reactant": "1345_3pase + IP3_134_",
+        "product": "IP3_134__3pase_cmplx",
+        "rate_f": "p_1_1",
+        "rate_b": "p_1_2"
+    },
+    "v2_0": {
+        "reactant": "1345_3pase + IP3_145_",
+        "product": "IP3_145__3pase_cmplx",
+        "rate_f": "p_2_1",
+        "rate_b": "p_2_2"
+    },
+    "v3_0": {
+        "reactant": "1345_3pase + IP4_3456_",
+        "product": "IP4_3pase_cmplx",
+        "rate_f": "p_3_1",
+        "rate_b": "p_3_2"
+    },
+    "v4_0": {
+        "reactant": "1345_3pase + IP5_13456_",
+        "product": "IP5_3pase_cmplx",
+        "rate_f": "p_4_1",
+        "rate_b": "p_4_2"
+    },
+    "v5_0": {
+        "reactant": "1345_3pase + IP6",
+        "product": "IP6_inhib_3pase_cmplx",
+        "rate_f": "p_5_1",
+        "rate_b": "p_5_2"
+    },
+    "v6_0": {
+        "reactant": "1345_3pase + IP4_1345_",
+        "product": "1345_3pase_ip4_3pase_complex",
+        "rate_f": "p_6_1",
+        "rate_b": "p_6_2"
+    },
+    "v7_0": {
+        "reactant": "IP3_3K_CaMs + IP4_1345_",
+        "product": "3kCaMs_ip3_cmplx",
+        "rate_f": "p_7_1",
+        "rate_b": "p_7_2"
+    },
+    "v8_0": {
+        "reactant": "IP3_145_ + IP3_3K_CaMs",
+        "product": "3kCaMs_ip3_cmplx",
+        "rate_f": "p_8_1",
+        "rate_b": "p_8_2"
+    },
+    "v9_0": {
+        "reactant": "IP3_3K_CaM + IP4_1345_",
+        "product": "3kCaM_ip3_cmplx",
+        "rate_f": "p_9_1",
+        "rate_b": "p_9_2"
+    },
+    "v10_0": {
+        "reactant": "IP3_145_ + IP3_3K_CaM",
+        "product": "3kCaM_ip3_cmplx",
+        "rate_f": "p_10_1",
+        "rate_b": "p_10_2"
+    },
+    "v11_0": {
+        "species": "BetaGamma + GsGDP",
+        "rate": "p_11_1"
+    },
+    "v12_0": {
+        "species": "Rec_AngII_Gq",
+        "rate": "p_12_1"
+    },
+    "v14_0": {
+        "reactant": "bisPP_IP4 + PP_IP5_K + ADP",
+        "product": "PP_IP5_K_complex",
+        "rate_f": "p_14_1",
+        "rate_b": "p_14_2"
+    },
+    "v15_0": {
+        "reactant": "bisPP_IP4 + DIPP1",
+        "product": "DIPP1_dipp_ip8_complex",
+        "rate_f": "p_15_1",
+        "rate_b": "p_15_2"
+    },
+    "v16_0": {
+        "reactant": "Rec_Gq + mGluRAntag",
+        "product": "Blocked_rec_Gq",
+        "rate_f": "p_16_1",
+        "rate_b": "p_16_2"
+    },
+    "v17_0": {
+        "reactant": "ca + PLC",
+        "product": "PLC_Ca",
+        "rate_f": "p_17_1",
+        "rate_b": "p_17_2"
+    },
+    "v18_0": {
+        "reactant": "ca + ca + CaTransp",
+        "product": "CaTransp_2Ca",
+        "rate_f": "p_18_1",
+        "rate_b": "p_18_2"
+    },
+    "v19_0": {
+        "reactant": "ca + IP_1pase",
+        "product": "Ca_1pase_cmplx",
+        "rate_f": "p_19_1",
+        "rate_b": "p_19_2"
+    },
+    "v20_0": {
+        "reactant": "ca + CaM_Ca3",
+        "product": "CaM_Ca4",
+        "rate_f": "p_20_1",
+        "rate_b": "p_20_2"
+    },
+    "v21_0": {
+        "reactant": "ca + ca + CaM",
+        "product": "CaM_TR2_Ca2",
+        "rate_f": "p_21_1",
+        "rate_b": "p_21_2"
+    },
+    "v22_0": {
+        "reactant": "ca + CaM_TR2_Ca2",
+        "product": "CaM_Ca3",
+        "rate_f": "p_22_1",
+        "rate_b": "p_22_2"
+    },
+    "v23_0": {
+        "reactant": "ca + PKC_cytosolic",
+        "product": "PKC_Ca",
+        "rate_f": "p_23_1",
+        "rate_b": "p_23_2"
+    },
+    "v24_0": {
+        "reactant": "ca + PLC_Gq",
+        "product": "PLC_Ca_Gq",
+        "rate_f": "p_24_1",
+        "rate_b": "p_24_2"
+    },
+    "v25_0": {
+        "species": "CaEPump_Ca_pump_out_complex",
+        "rate": "p_25_1"
+    },
+    "v26_0": {
+        "reactant": "Ca_sequester + Ca_leak_to_cytoplasm",
+        "product": "ca + Ca_leak_to_cytoplasm",
+        "rate_f": "p_26_1",
+        "rate_b": "p_26_1"
+    },
+    "v27_0": {
+        "reactant": "Ca_sequester + IP3Rs",
+        "product": "ca + IP3Rs",
+        "rate_f": "p_27_1",
+        "rate_b": "p_27_1"
+    },
+    "v28_0": {
+        "reactant": "Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca5_Cal",
+        "product": "Ca10_Cal",
+        "rate_f": "p_28_1",
+        "rate_b": "p_28_2"
+    },
+    "v29_0": {
+        "reactant": "Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca10_Cal",
+        "product": "Ca15_Cal",
+        "rate_f": "p_29_1",
+        "rate_b": "p_29_2"
+    },
+    "v30_0": {
+        "reactant": "Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca15_Cal",
+        "product": "Ca20_Cal",
+        "rate_f": "p_30_1",
+        "rate_b": "p_30_2"
+    },
+    "v31_0": {
+        "reactant": "Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca20_Cal",
+        "product": "Ca25_Cal",
+        "rate_f": "p_31_1",
+        "rate_b": "p_31_2"
+    },
+    "v32_0": {
+        "reactant": "Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca25_Cal",
+        "product": "Ca30_Cal",
+        "rate_f": "p_32_1",
+        "rate_b": "p_32_2"
+    },
+    "v33_0": {
+        "reactant": "Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca30_Cal",
+        "product": "Ca35_Cal",
+        "rate_f": "p_33_1",
+        "rate_b": "p_33_2"
+    },
+    "v34_0": {
+        "reactant": "Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca35_Cal",
+        "product": "Ca40_Cal",
+        "rate_f": "p_34_1",
+        "rate_b": "p_34_2"
+    },
+    "v35_0": {
+        "reactant": "Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Ca_sequester + Calseq",
+        "product": "Ca5_Cal",
+        "rate_f": "p_35_1",
+        "rate_b": "p_35_2"
+    },
+    "v36_0": {
+        "reactant": "Ca_sequester + Ca_sequester + capacitive_Ca_entrys",
+        "product": "inact_cap_entry",
+        "rate_f": "p_36_1",
+        "rate_b": "p_36_2"
+    },
+    "v37_0": {
+        "species": "CaTransp_2Ca",
+        "rate": "p_37_1"
+    },
+    "v38_0": {
+        "reactant": "ca + CaEPump",
+        "product": "CaEPump_Ca_pump_out_complex",
+        "rate_f": "p_38_1",
+        "rate_b": "p_38_2"
+    },
+    "v39_0": {
+        "reactant": "CaM_Ca4 + IP3_3Ks",
+        "product": "IP3_3K_CaMs",
+        "rate_f": "p_39_1",
+        "rate_b": "p_39_2"
+    },
+    "v40_0": {
+        "reactant": "CaM_Ca4 + IP3_3K",
+        "product": "IP3_3K_CaM",
+        "rate_f": "p_40_1",
+        "rate_b": "p_40_2"
+    },
+    "v41_0": {
+        "reactant": "CaM_Ca4 + CaMKII_thr286",
+        "product": "CaMKII_thr286s_CaM",
+        "rate_f": "p_41_1",
+        "rate_b": "p_41_2"
+    },
+    "v42_0": {
+        "reactant": "CaM_Ca4 + CaMKII",
+        "product": "CaMKII_CaM",
+        "rate_f": "p_42_1",
+        "rate_b": "p_42_2"
+    },
+    "v43_0": {
+        "reactant": "CaMK_thr306 + PP1_active",
+        "product": "PP1_active_Deph_thr306_complex",
+        "rate_f": "p_43_1",
+        "rate_b": "p_43_2"
+    },
+    "v44_0": {
+        "species": "PP1_active_Deph_thr286c_complex",
+        "rate": "p_44_1"
+    },
+    "v45_0": {
+        "species": "CaMKII",
+        "rate": "p_45_1"
+    },
+    "v46_0": {
+        "species": "PP1_active_Deph_thr306_complex",
+        "rate": "p_46_1"
+    },
+    "v47_0": {
+        "species": "PP1_active_Deph_thr286b_complex",
+        "rate": "p_47_1"
+    },
+    "v48_0": {
+        "reactant": "CaMKIIsss + PP1_active",
+        "product": "PP1_active_Deph_thr286c_complex",
+        "rate_f": "p_48_1",
+        "rate_b": "p_48_2"
+    },
+    "v49_0": {
+        "reactant": "CaMKIIsss + PP1_active",
+        "product": "PP1_active_Deph_thr305_complex",
+        "rate_f": "p_49_1",
+        "rate_b": "p_49_2"
+    },
+    "v50_0": {
+        "species": "tot_autonomous_CaMKII_auton_305_complex",
+        "rate": "p_50_1"
+    },
+    "v51_0": {
+        "species": "tot_CaM_CaMKII_CaM_act_305_complex",
+        "rate": "p_51_1"
+    },
+    "v52_0": {
+        "reactant": "CaMKIIsss + CaMKII_CaM",
+        "product": "tot_autonomous_CaMKII_auton_286_complex",
+        "rate_f": "p_52_1",
+        "rate_b": "p_52_2"
+    },
+    "v52_1": {
+        "reactant": "CaMKII_CaM + CaMKII_thr286",
+        "product": "tot_autonomous_CaMKII_auton_286_complex",
+        "rate_f": "p_52_1",
+        "rate_b": "p_52_2"
+    },
+    "v53_0": {
+        "reactant": "CaMKII_CaM + CaMKII_CaM",
+        "product": "tot_CaM_CaMKII_CaM_act_286_complex",
+        "rate_f": "p_53_1",
+        "rate_b": "p_53_2"
+    },
+    "v53_1": {
+        "reactant": "CaMKII_CaM + CaMKII_thr286s_CaM",
+        "product": "tot_CaM_CaMKII_CaM_act_286_complex",
+        "rate_f": "p_53_1",
+        "rate_b": "p_53_2"
+    },
+    "v54_0": {
+        "species": "PP1_active_Deph_thr286_complex",
+        "rate": "p_54_1"
+    },
+    "v55_0": {
+        "reactant": "CaMKII_thr286 + CaMKII_thr286",
+        "product": "tot_autonomous_CaMKII_auton_305_complex",
+        "rate_f": "p_55_1",
+        "rate_b": "p_55_2"
+    },
+    "v55_1": {
+        "reactant": "CaMKIIsss + CaMKII_thr286",
+        "product": "tot_autonomous_CaMKII_auton_305_complex",
+        "rate_f": "p_55_1",
+        "rate_b": "p_55_2"
+    },
+    "v56_0": {
+        "reactant": "CaMKII_CaM + CaMKII_thr286",
+        "product": "tot_CaM_CaMKII_CaM_act_305_complex",
+        "rate_f": "p_56_1",
+        "rate_b": "p_56_2"
+    },
+    "v56_1": {
+        "reactant": "CaMKII_thr286 + CaMKII_thr286s_CaM",
+        "product": "tot_CaM_CaMKII_CaM_act_305_complex",
+        "rate_f": "p_56_1",
+        "rate_b": "p_56_2"
+    },
+    "v57_0": {
+        "reactant": "CaMKII_thr286 + PP1_active",
+        "product": "PP1_active_Deph_thr286b_complex",
+        "rate_f": "p_57_1",
+        "rate_b": "p_57_2"
+    },
+    "v58_0": {
+        "species": "PP1_active_Deph_thr305_complex",
+        "rate": "p_58_1"
+    },
+    "v59_0": {
+        "reactant": "CaMKII_thr286s_CaM + PP1_active",
+        "product": "PP1_active_Deph_thr286_complex",
+        "rate_f": "p_59_1",
+        "rate_b": "p_59_2"
+    },
+    "v60_0": {
+        "species": "tot_autonomous_CaMKII_auton_286_complex",
+        "rate": "p_60_1"
+    },
+    "v61_0": {
+        "species": "tot_CaM_CaMKII_CaM_act_286_complex",
+        "rate": "p_61_1"
+    },
+    "v62_0": {
+        "species": "CaTransp_2Ca",
+        "rate": "p_62_1"
+    },
+    "v63_0": {
+        "species": "CaTransp_2Ca",
+        "rate": "p_63_1"
+    },
+    "v64_0": {
+        "species": "DAG",
+        "rate": "p_64_1"
+    },
+    "v65_0": {
+        "reactant": "DAG + PKC_Ca",
+        "product": "PKC_Ca_DAG",
+        "rate_f": "p_65_1",
+        "rate_b": "p_65_2"
+    },
+    "v66_0": {
+        "reactant": "DAG + PKC_cytosolic",
+        "product": "PKC_DAG",
+        "rate_f": "p_66_1",
+        "rate_b": "p_66_2"
+    },
+    "v67_0": {
+        "species": "PIP2",
+        "rate": "p_67_1"
+    },
+    "v68_0": {
+        "species": "PLC_complex",
+        "rate": "p_68_1"
+    },
+    "v69_0": {
+        "species": "PLC_Ca_complex",
+        "rate": "p_69_1"
+    },
+    "v70_0": {
+        "species": "PLC_Gq_complex",
+        "rate": "p_70_1"
+    },
+    "v71_0": {
+        "species": "PLC_Ca_Gq_PLCb_Ca_Gq_complex",
+        "rate": "p_71_1"
+    },
+    "v72_0": {
+        "reactant": "DIPP1 + IP5_13456_",
+        "product": "IP5_DIPPcmplx",
+        "rate_f": "p_72_1",
+        "rate_b": "p_72_2"
+    },
+    "v73_0": {
+        "reactant": "DIPP1 + IP6",
+        "product": "IP6_DIPPcmplx",
+        "rate_f": "p_73_1",
+        "rate_b": "p_73_2"
+    },
+    "v74_0": {
+        "reactant": "DIPP1 + PP_IP5",
+        "product": "DIPP1_dipp_ip7_complex",
+        "rate_f": "p_74_1",
+        "rate_b": "p_74_2"
+    },
+    "v75_0": {
+        "reactant": "bisPP_IP4 + DIPP1",
+        "product": "DIPP1_dipp_ip8_complex",
+        "rate_f": "p_75_1",
+        "rate_b": "p_75_2"
+    },
+    "v76_0": {
+        "species": "GsGTP",
+        "rate": "p_76_1"
+    },
+    "v77_0": {
+        "species": "PLC_Ca_Gq",
+        "rate": "p_77_1"
+    },
+    "v78_0": {
+        "reactant": "GsGTP + PLC_Ca",
+        "product": "PLC_Ca_Gq",
+        "rate_f": "p_78_1",
+        "rate_b": "p_78_2"
+    },
+    "v79_0": {
+        "reactant": "GsGTP + PLC",
+        "product": "PLC_Gq",
+        "rate_f": "p_79_1",
+        "rate_b": "p_79_2"
+    },
+    "v80_0": {
+        "reactant": "G_GDP + AT1R",
+        "product": "Rec_Gq",
+        "rate_f": "p_80_1",
+        "rate_b": "p_80_2"
+    },
+    "v81_0": {
+        "reactant": "G_GDP + Rec_AngII",
+        "product": "Rec_AngII_Gq",
+        "rate_f": "p_81_1",
+        "rate_b": "p_81_2"
+    },
+    "v82_0": {
+        "reactant": "IP1_1_ + IP1_pase",
+        "product": "ip1_1pase_cmplx",
+        "rate_f": "p_82_1",
+        "rate_b": "p_82_2"
+    },
+    "v83_0": {
+        "species": "inositol",
+        "rate": "p_83_1"
+    },
+    "v84_0": {
+        "species": "IP2_3pase1_ip2_3pase1_complex",
+        "rate": "p_84_1"
+    },
+    "v85_0": {
+        "species": "IP2_3pase2_ip2_3pase2_complex",
+        "rate": "p_85_1"
+    },
+    "v86_0": {
+        "reactant": "IP1_3_",
+        "product": "inositol",
+        "rate_f": "p_86_1",
+        "rate_b": "p_86_2"
+    },
+    "v87_0": {
+        "species": "IP_4pase_ip2_4pase_complex",
+        "rate": "p_87_1"
+    },
+    "v88_0": {
+        "reactant": "IP1_4_ + IP1_pase",
+        "product": "ip1_4pase_cmplx",
+        "rate_f": "p_88_1",
+        "rate_b": "p_88_2"
+    },
+    "v89_0": {
+        "species": "IP_1pase_ip2_1pase_complex",
+        "rate": "p_89_1"
+    },
+    "v90_0": {
+        "reactant": "IP1_pase + inositol",
+        "product": "ip1_1pase_cmplx",
+        "rate_f": "p_90_1",
+        "rate_b": "p_90_2"
+    },
+    "v91_0": {
+        "reactant": "IP1_pase + inositol",
+        "product": "ip1_4pase_cmplx",
+        "rate_f": "p_91_1",
+        "rate_b": "p_91_2"
+    },
+    "v92_0": {
+        "reactant": "IP2_13_ + IP2_3pase1",
+        "product": "IP2_3pase1_ip2_3pase1_complex",
+        "rate_f": "p_92_1",
+        "rate_b": "p_92_2"
+    },
+    "v93_0": {
+        "reactant": "IP2_13_ + IP2_3pase2",
+        "product": "IP2_3pase2_ip2_3pase2_complex",
+        "rate_f": "p_93_1",
+        "rate_b": "p_93_2"
+    },
+    "v94_0": {
+        "species": "IP_4pase_ip3_4pase_complex",
+        "rate": "p_94_1"
+    },
+    "v95_0": {
+        "reactant": "IP2_14_ + IP_1pase",
+        "product": "IP_1pase_ip2_1pase_complex",
+        "rate_f": "p_95_1",
+        "rate_b": "p_95_2"
+    },
+    "v96_0": {
+        "species": "IP_5pase1_ip3_5pase1_complex",
+        "rate": "p_96_1"
+    },
+    "v97_0": {
+        "species": "IP3_5pase2_ip3_5pase2_complex",
+        "rate": "p_97_1"
+    },
+    "v98_0": {
+        "reactant": "IP2_34_ + IP_4pase",
+        "product": "IP_4pase_ip2_4pase_complex",
+        "rate_f": "p_98_1",
+        "rate_b": "p_98_2"
+    },
+    "v99_0": {
+        "species": "IP_1pase_ip3_1pase_complex",
+        "rate": "p_99_1"
+    },
+    "v100_0": {
+        "reactant": "IP3_134_ + IP3_56K_IP4_1K",
+        "product": "IP3_56Kcmplx",
+        "rate_f": "p_100_1",
+        "rate_b": "p_100_2"
+    },
+    "v101_0": {
+        "reactant": "IP3_134_ + IP_1pase",
+        "product": "IP_1pase_ip3_1pase_complex",
+        "rate_f": "p_101_1",
+        "rate_b": "p_101_2"
+    },
+    "v102_0": {
+        "reactant": "IP3_134_ + IP_4pase",
+        "product": "IP_4pase_ip3_4pase_complex",
+        "rate_f": "p_102_1",
+        "rate_b": "p_102_2"
+    },
+    "v103_0": {
+        "species": "IP_5pase1_ip4_5pase_complex",
+        "rate": "p_103_1"
+    },
+    "v104_0": {
+        "species": "PIP2",
+        "rate": "p_104_1"
+    },
+    "v105_0": {
+        "reactant": "IP3_145__ER",
+        "product": "IP3_145_",
+        "rate_f": "p_105_1",
+        "rate_b": "p_105_2"
+    },
+    "v106_0": {
+        "species": "IP4_1456_",
+        "rate": "p_106_1"
+    },
+    "v107_0": {
+        "reactant": "IP3_145_ + IP3_3K",
+        "product": "IP3_3K_ip3_3k_complex",
+        "rate_f": "p_107_1",
+        "rate_b": "p_107_2"
+    },
+    "v108_0": {
+        "reactant": "IP3_145_ + IP3_3Ks",
+        "product": "IP3_3Ks_ip3_3ks_complex",
+        "rate_f": "p_108_1",
+        "rate_b": "p_108_2"
+    },
+    "v109_0": {
+        "reactant": "IP3_145_ + IP3_3Ks1",
+        "product": "IP3_3Ks1_ip3_3ks1_complex",
+        "rate_f": "p_109_1",
+        "rate_b": "p_109_2"
+    },
+    "v110_0": {
+        "reactant": "IP3_145_ + IP_5pase1",
+        "product": "IP_5pase1_ip3_5pase1_complex",
+        "rate_f": "p_110_1",
+        "rate_b": "p_110_2"
+    },
+    "v111_0": {
+        "reactant": "IP3_145_ + IP3_5pase2",
+        "product": "IP3_5pase2_ip3_5pase2_complex",
+        "rate_f": "p_111_1",
+        "rate_b": "p_111_2"
+    },
+    "v112_0": {
+        "species": "1345_3pase_ip4_3pase_complex",
+        "rate": "p_112_1"
+    },
+    "v113_0": {
+        "reactant": "IP3_145__ER",
+        "product": "IP3_145_",
+        "rate_f": "p_113_1",
+        "rate_b": "p_113_2"
+    },
+    "v114_0": {
+        "species": "MIPP_ip4_3pase_complex",
+        "rate": "p_114_1"
+    },
+    "v115_0": {
+        "reactant": "IP3_56K_IP4_1K + IP4_1345_",
+        "product": "IP3_56Kcmplx",
+        "rate_f": "p_115_1",
+        "rate_b": "p_115_2"
+    },
+    "v116_0": {
+        "species": "IP3_56Kcmplx",
+        "rate": "p_116_1"
+    },
+    "v117_0": {
+        "reactant": "IP3_56K_IP4_1K + IP4_3456_",
+        "product": "ip4_1k_cmplx",
+        "rate_f": "p_117_1",
+        "rate_b": "p_117_2"
+    },
+    "v118_0": {
+        "reactant": "IP3_56K_IP4_1K + IP5_13456_",
+        "product": "ip4_1k_cmplx",
+        "rate_f": "p_118_1",
+        "rate_b": "p_118_2"
+    },
+    "v119_0": {
+        "reactant": "IP3_145_ + IP3_145_ + IP3_145_ + IP3R",
+        "product": "IP3Rs",
+        "rate_f": "p_119_1",
+        "rate_b": "p_119_2"
+    },
+    "v120_0": {
+        "reactant": "CaMKII_CaM + IP3_3K",
+        "product": "tot_CaM_CaMKII_CaM_CaMK_phos_complex",
+        "rate_f": "p_120_1",
+        "rate_b": "p_120_2"
+    },
+    "v120_1": {
+        "reactant": "CaMKII_thr286s_CaM + IP3_3K",
+        "product": "tot_CaM_CaMKII_CaM_CaMK_phos_complex",
+        "rate_f": "p_120_1",
+        "rate_b": "p_120_2"
+    },
+    "v121_0": {
+        "reactant": "CaMKIIsss + IP3_3K",
+        "product": "tot_autonomous_CaMKII_CaMK_phos_complex",
+        "rate_f": "p_121_1",
+        "rate_b": "p_121_2"
+    },
+    "v121_1": {
+        "reactant": "CaMKII_thr286 + IP3_3K",
+        "product": "tot_autonomous_CaMKII_CaMK_phos_complex",
+        "rate_f": "p_121_1",
+        "rate_b": "p_121_2"
+    },
+    "v122_0": {
+        "reactant": "IP3_3K + PKC_AAs",
+        "product": "PKC_active_PKC_phos_complex",
+        "rate_f": "p_122_1",
+        "rate_b": "p_122_2"
+    },
+    "v122_1": {
+        "reactant": "IP3_3K + PKC_basals",
+        "product": "PKC_active_PKC_phos_complex",
+        "rate_f": "p_122_1",
+        "rate_b": "p_122_2"
+    },
+    "v122_2": {
+        "reactant": "IP3_3K + PKC_Ca_AAs",
+        "product": "PKC_active_PKC_phos_complex",
+        "rate_f": "p_122_1",
+        "rate_b": "p_122_2"
+    },
+    "v122_3": {
+        "reactant": "IP3_3K + PKC_Ca_membs",
+        "product": "PKC_active_PKC_phos_complex",
+        "rate_f": "p_122_1",
+        "rate_b": "p_122_2"
+    },
+    "v122_4": {
+        "reactant": "IP3_3K + PKC_DAG_AAs",
+        "product": "PKC_active_PKC_phos_complex",
+        "rate_f": "p_122_1",
+        "rate_b": "p_122_2"
+    },
+    "v122_5": {
+        "reactant": "IP3_3K + PKC_DAG_membs",
+        "product": "PKC_active_PKC_phos_complex",
+        "rate_f": "p_122_1",
+        "rate_b": "p_122_2"
+    },
+    "v123_0": {
+        "species": "tot_CaM_CaMKII_CaM_CaMK_phos_complex",
+        "rate": "p_123_1"
+    },
+    "v124_0": {
+        "species": "tot_autonomous_CaMKII_CaMK_phos_complex",
+        "rate": "p_124_1"
+    },
+    "v125_0": {
+        "species": "PKC_active_PKC_phos_complex",
+        "rate": "p_125_1"
+    },
+    "v126_0": {
+        "reactant": "CaMKII_CaM + IP3_3K_CaM",
+        "product": "tot_CaM_CaMKII_CaM_CaMK_phos1_complex",
+        "rate_f": "p_126_1",
+        "rate_b": "p_126_2"
+    },
+    "v126_1": {
+        "reactant": "CaMKII_thr286s_CaM + IP3_3K_CaM",
+        "product": "tot_CaM_CaMKII_CaM_CaMK_phos1_complex",
+        "rate_f": "p_126_1",
+        "rate_b": "p_126_2"
+    },
+    "v127_0": {
+        "reactant": "CaMKIIsss + IP3_3K_CaM",
+        "product": "tot_autonomous_CaMKII_CaMK_phos1_complex",
+        "rate_f": "p_127_1",
+        "rate_b": "p_127_2"
+    },
+    "v127_1": {
+        "reactant": "CaMKII_thr286 + IP3_3K_CaM",
+        "product": "tot_autonomous_CaMKII_CaMK_phos1_complex",
+        "rate_f": "p_127_1",
+        "rate_b": "p_127_2"
+    },
+    "v128_0": {
+        "species": "tot_CaM_CaMKII_CaM_CaMK_phos1_complex",
+        "rate": "p_128_1"
+    },
+    "v129_0": {
+        "species": "tot_autonomous_CaMKII_CaMK_phos1_complex",
+        "rate": "p_129_1"
+    },
+    "v130_0": {
+        "reactant": "IP4_1345__ER",
+        "product": "IP4_1345_",
+        "rate_f": "p_130_1",
+        "rate_b": "p_130_2"
+    },
+    "v131_0": {
+        "reactant": "1345_3pase + IP4_1345_",
+        "product": "1345_3pase_ip4_3pase_complex",
+        "rate_f": "p_131_1",
+        "rate_b": "p_131_2"
+    },
+    "v132_0": {
+        "reactant": "IP4_1345_ + IP_5pase1",
+        "product": "IP_5pase1_ip4_5pase_complex",
+        "rate_f": "p_132_1",
+        "rate_b": "p_132_2"
+    },
+    "v133_0": {
+        "species": "IP3_3K_ip3_3k_complex",
+        "rate": "p_133_1"
+    },
+    "v134_0": {
+        "species": "IP3_3Ks_ip3_3ks_complex",
+        "rate": "p_134_1"
+    },
+    "v135_0": {
+        "species": "IP3_3Ks1_ip3_3ks1_complex",
+        "rate": "p_135_1"
+    },
+    "v136_0": {
+        "reactant": "IP4_1345_",
+        "product": "IP4_1345__ER",
+        "rate_f": "p_136_1",
+        "rate_b": "p_136_2"
+    },
+    "v137_0": {
+        "reactant": "IP4_1345__ER + MIPP",
+        "product": "MIPP_ip4_3pase_complex",
+        "rate_f": "p_137_1",
+        "rate_b": "p_137_2"
+    },
+    "v138_0": {
+        "species": "IP4_1346_",
+        "rate": "p_138_1"
+    },
+    "v139_0": {
+        "species": "IP5_13456_",
+        "rate": "p_139_1"
+    },
+    "v140_0": {
+        "reactant": "IP4_1456_ + IP4_3K",
+        "product": "ip4_3k_cmplx",
+        "rate_f": "p_140_1",
+        "rate_b": "p_140_2"
+    },
+    "v141_0": {
+        "species": "IP4_1456_",
+        "rate": "p_141_1"
+    },
+    "v142_0": {
+        "reactant": "IP4_1456__ER",
+        "product": "IP4_1456_",
+        "rate_f": "p_142_1",
+        "rate_b": "p_142_2"
+    },
+    "v143_0": {
+        "species": "IP5_13456_",
+        "rate": "p_143_1"
+    },
+    "v144_0": {
+        "reactant": "IP4_1456_",
+        "product": "IP4_1456__ER",
+        "rate_f": "p_144_1",
+        "rate_b": "p_144_2"
+    },
+    "v145_0": {
+        "species": "MIPP_ip5_3pase_complex",
+        "rate": "p_145_1"
+    },
+    "v146_0": {
+        "species": "IP5_13456_",
+        "rate": "p_146_1"
+    },
+    "v147_0": {
+        "reactant": "IP4_3K + IP5_13456_",
+        "product": "ip4_3k_cmplx",
+        "rate_f": "p_147_1",
+        "rate_b": "p_147_2"
+    },
+    "v148_0": {
+        "reactant": "IP5_12456_",
+        "product": "IP5_12456__ER",
+        "rate_f": "p_148_1",
+        "rate_b": "p_148_2"
+    },
+    "v149_0": {
+        "species": "MIPP_ip6_pase_complex",
+        "rate": "p_149_1"
+    },
+    "v150_0": {
+        "reactant": "IP5_13456_ + IP_5pase1",
+        "product": "IP5_5pase_cmplx",
+        "rate_f": "p_150_1",
+        "rate_b": "p_150_2"
+    },
+    "v151_0": {
+        "species": "IP5_13456_",
+        "rate": "p_151_1"
+    },
+    "v152_0": {
+        "species": "IP6",
+        "rate": "p_152_1"
+    },
+    "v153_0": {
+        "species": "PP_IP4",
+        "rate": "p_153_1"
+    },
+    "v154_0": {
+        "reactant": "IP5_13456__ER",
+        "product": "IP5_13456_",
+        "rate_f": "p_154_1",
+        "rate_b": "p_154_2"
+    },
+    "v155_0": {
+        "reactant": "IP5_13456_ + IP6_K",
+        "product": "IP6_K_ip5_k1_complex",
+        "rate_f": "p_155_1",
+        "rate_b": "p_155_2"
+    },
+    "v156_0": {
+        "reactant": "IP5_13456_ + IP6_K2",
+        "product": "IP6_K2_ip5_k2_complex",
+        "rate_f": "p_156_1",
+        "rate_b": "p_156_2"
+    },
+    "v157_0": {
+        "reactant": "IP5_13456_",
+        "product": "IP5_13456__ER",
+        "rate_f": "p_157_1",
+        "rate_b": "p_157_2"
+    },
+    "v158_0": {
+        "reactant": "IP5_13456__ER + MIPP",
+        "product": "MIPP_ip5_3pase_complex",
+        "rate_f": "p_158_1",
+        "rate_b": "p_158_2"
+    },
+    "v159_0": {
+        "reactant": "IP6 + IP_5pase1",
+        "product": "IP6_5pase_inhib",
+        "rate_f": "p_159_1",
+        "rate_b": "p_159_2"
+    },
+    "v160_0": {
+        "reactant": "IP6 + IP6_K + ATP",
+        "product": "IP6_K_complex",
+        "rate_f": "p_160_1",
+        "rate_b": "p_160_2"
+    },
+    "v161_0": {
+        "reactant": "IP6_ER",
+        "product": "IP6",
+        "rate_f": "p_161_1",
+        "rate_b": "p_161_2"
+    },
+    "v162_0": {
+        "reactant": "IP6 + IP_4pase",
+        "product": "IP_4pase_inact",
+        "rate_f": "p_162_1",
+        "rate_b": "p_162_2"
+    },
+    "v163_0": {
+        "reactant": "IP6 + IP6_K2",
+        "product": "IP6_K2_ip6_k2_complex",
+        "rate_f": "p_163_1",
+        "rate_b": "p_163_2"
+    },
+    "v164_0": {
+        "species": "DIPP1_dipp_ip7_complex",
+        "rate": "p_164_1"
+    },
+    "v165_0": {
+        "reactant": "IP6_K + PP_IP5 + ADP",
+        "product": "IP6_K_complex",
+        "rate_f": "p_165_1",
+        "rate_b": "p_165_2"
+    },
+    "v166_0": {
+        "reactant": "IP6_K + PP_IP4",
+        "product": "IP6_K_pp_ip4_k1_complex",
+        "rate_f": "p_166_1",
+        "rate_b": "p_166_2"
+    },
+    "v167_0": {
+        "reactant": "IP6",
+        "product": "IP6_ER",
+        "rate_f": "p_167_1",
+        "rate_b": "p_167_2"
+    },
+    "v168_0": {
+        "reactant": "IP6_ER + MIPP",
+        "product": "MIPP_ip6_pase_complex",
+        "rate_f": "p_168_1",
+        "rate_b": "p_168_2"
+    },
+    "v169_0": {
+        "reactant": "IP6_K2 + PP_IP4",
+        "product": "IP6_K2_pp_ip4_k2_complex",
+        "rate_f": "p_169_1",
+        "rate_b": "p_169_2"
+    },
+    "v170_0": {
+        "reactant": "AT1R + AngII",
+        "product": "Rec_AngII",
+        "rate_f": "p_170_1",
+        "rate_b": "p_170_2"
+    },
+    "v171_0": {
+        "reactant": "PKC_cytosolic + AA",
+        "product": "PKC_AAs",
+        "rate_f": "p_171_1",
+        "rate_b": "p_171_2"
+    },
+    "v172_0": {
+        "species": "PKC_cytosolic",
+        "rate": "p_172_1"
+    },
+    "v173_0": {
+        "species": "PKC_basals",
+        "rate": "p_173_1"
+    },
+    "v174_0": {
+        "reactant": "PKC_Ca + AA",
+        "product": "PKC_Ca_AAs",
+        "rate_f": "p_174_1",
+        "rate_b": "p_174_2"
+    },
+    "v175_0": {
+        "species": "PKC_Ca",
+        "rate": "p_175_1"
+    },
+    "v176_0": {
+        "species": "PKC_Ca_membs",
+        "rate": "p_176_1"
+    },
+    "v177_0": {
+        "reactant": "ca + PKC_cytosolic",
+        "product": "PKC_Ca",
+        "rate_f": "p_177_1",
+        "rate_b": "p_177_2"
+    },
+    "v178_0": {
+        "species": "PKC_Ca_DAG",
+        "rate": "p_178_1"
+    },
+    "v179_0": {
+        "species": "PKC_DAG_membs",
+        "rate": "p_179_1"
+    },
+    "v180_0": {
+        "reactant": "PKC_DAG + AA",
+        "product": "PKC_DAG_AA",
+        "rate_f": "p_180_1",
+        "rate_b": "p_180_2"
+    },
+    "v181_0": {
+        "species": "PKC_DAG_AA",
+        "rate": "p_181_1"
+    },
+    "v182_0": {
+        "species": "PKC_DAG_AAs",
+        "rate": "p_182_1"
+    },
+    "v183_0": {
+        "reactant": "PLC + PIP2",
+        "product": "PLC_complex",
+        "rate_f": "p_183_1",
+        "rate_b": "p_183_2"
+    },
+    "v184_0": {
+        "species": "PLC_Ca_Gq",
+        "rate": "p_184_1"
+    },
+    "v185_0": {
+        "reactant": "PLC_Ca + PIP2",
+        "product": "PLC_Ca_complex",
+        "rate_f": "p_185_1",
+        "rate_b": "p_185_2"
+    },
+    "v186_0": {
+        "reactant": "PLC_Ca_Gq + PIP2",
+        "product": "PLC_Ca_Gq_PLCb_Ca_Gq_complex",
+        "rate_f": "p_186_1",
+        "rate_b": "p_186_2"
+    },
+    "v187_0": {
+        "reactant": "PLC_Gq + PIP2",
+        "product": "PLC_Gq_complex",
+        "rate_f": "p_187_1",
+        "rate_b": "p_187_2"
+    },
+    "v188_0": {
+        "species": "IP6_K_ip5_k1_complex",
+        "rate": "p_188_1"
+    },
+    "v189_0": {
+        "species": "IP6_K2_ip5_k2_complex",
+        "rate": "p_189_1"
+    },
+    "v190_0": {
+        "reactant": "PP_IP5 + PP_IP5_K + ATP",
+        "product": "PP_IP5_K_complex",
+        "rate_f": "p_190_1",
+        "rate_b": "p_190_2"
+    },
+    "v191_0": {
+        "species": "DIPP1_dipp_ip8_complex",
+        "rate": "p_191_1"
+    },
+    "v192_0": {
+        "species": "IP6_K2_ip6_k2_complex",
+        "rate": "p_192_1"
+    },
+    "v193_0": {
+        "species": "Rec_AngII",
+        "rate": "p_193_1"
+    },
+    "v194_0": {
+        "reactant": "Rec_Gq + AngII",
+        "product": "Rec_AngII_Gq",
+        "rate_f": "p_194_1",
+        "rate_b": "p_194_2"
+    },
+    "v195_0": {
+        "reactant": "ca + ca + CaTransp",
+        "product": "CaTransp_2Ca",
+        "rate_f": "p_18_1",
+        "rate_b": "p_195_1"
+    },
+    "v196_0": {
+        "reactant": "IP2_13_ + IP2_3pase1",
+        "product": "IP2_3pase1_ip2_3pase1_complex",
+        "rate_f": "p_92_1",
+        "rate_b": "p_196_1"
+    },
+    "v197_0": {
+        "reactant": "IP2_13_ + IP2_3pase2",
+        "product": "IP2_3pase2_ip2_3pase2_complex",
+        "rate_f": "p_93_1",
+        "rate_b": "p_197_1"
+    },
+    "v198_0": {
+        "reactant": "IP3_145_ + IP3_3K",
+        "product": "IP3_3K_ip3_3k_complex",
+        "rate_f": "p_107_1",
+        "rate_b": "p_198_1"
+    },
+    "v199_0": {
+        "reactant": "IP3_145_ + IP3_3Ks",
+        "product": "IP3_3Ks_ip3_3ks_complex",
+        "rate_f": "p_108_1",
+        "rate_b": "p_199_1"
+    },
+    "v200_0": {
+        "reactant": "IP3_145_ + IP3_3Ks1",
+        "product": "IP3_3Ks1_ip3_3ks1_complex",
+        "rate_f": "p_109_1",
+        "rate_b": "p_200_1"
+    },
+    "v201_0": {
+        "reactant": "IP3_145_ + IP3_5pase2",
+        "product": "IP3_5pase2_ip3_5pase2_complex",
+        "rate_f": "p_111_1",
+        "rate_b": "p_201_1"
+    },
+    "v202_0": {
+        "reactant": "IP5_13456_ + IP6_K",
+        "product": "IP6_K_ip5_k1_complex",
+        "rate_f": "p_155_1",
+        "rate_b": "p_202_1"
+    },
+    "v203_0": {
+        "reactant": "IP5_13456_ + IP6_K2",
+        "product": "IP6_K2_ip5_k2_complex",
+        "rate_f": "p_156_1",
+        "rate_b": "p_203_1"
+    },
+    "v204_0": {
+        "reactant": "IP6 + IP6_K2",
+        "product": "IP6_K2_ip6_k2_complex",
+        "rate_f": "p_163_1",
+        "rate_b": "p_204_1"
+    },
+    "v205_0": {
+        "reactant": "IP2_14_ + IP_1pase",
+        "product": "IP_1pase_ip2_1pase_complex",
+        "rate_f": "p_95_1",
+        "rate_b": "p_205_1"
+    },
+    "v206_0": {
+        "reactant": "IP3_134_ + IP_1pase",
+        "product": "IP_1pase_ip3_1pase_complex",
+        "rate_f": "p_101_1",
+        "rate_b": "p_206_1"
+    },
+    "v207_0": {
+        "reactant": "IP2_34_ + IP_4pase",
+        "product": "IP_4pase_ip2_4pase_complex",
+        "rate_f": "p_98_1",
+        "rate_b": "p_207_1"
+    },
+    "v208_0": {
+        "reactant": "IP3_134_ + IP_4pase",
+        "product": "IP_4pase_ip3_4pase_complex",
+        "rate_f": "p_102_1",
+        "rate_b": "p_208_1"
+    },
+    "v209_0": {
+        "reactant": "IP3_145_ + IP_5pase1",
+        "product": "IP_5pase1_ip3_5pase1_complex",
+        "rate_f": "p_110_1",
+        "rate_b": "p_209_1"
+    },
+    "v210_0": {
+        "reactant": "IP4_1345_ + IP_5pase1",
+        "product": "IP_5pase1_ip4_5pase_complex",
+        "rate_f": "p_132_1",
+        "rate_b": "p_210_1"
+    },
+    "v211_0": {
+        "reactant": "IP4_1345__ER + MIPP",
+        "product": "MIPP_ip4_3pase_complex",
+        "rate_f": "p_137_1",
+        "rate_b": "p_211_1"
+    },
+    "v212_0": {
+        "reactant": "IP5_13456__ER + MIPP",
+        "product": "MIPP_ip5_3pase_complex",
+        "rate_f": "p_158_1",
+        "rate_b": "p_212_1"
+    },
+    "v213_0": {
+        "reactant": "IP6_ER + MIPP",
+        "product": "MIPP_ip6_pase_complex",
+        "rate_f": "p_168_1",
+        "rate_b": "p_213_1"
+    },
+    "v214_0": {
+        "reactant": "IP6_K + PP_IP4",
+        "product": "IP6_K_pp_ip4_k1_complex",
+        "rate_f": "p_166_1",
+        "rate_b": "p_214_1"
+    },
+    "v215_0": {
+        "reactant": "IP6_K2 + PP_IP4",
+        "product": "IP6_K2_pp_ip4_k2_complex",
+        "rate_f": "p_169_1",
+        "rate_b": "p_215_1"
+    },
+    "v216_0": {
+        "reactant": "DIPP1 + PP_IP5",
+        "product": "DIPP1_dipp_ip7_complex",
+        "rate_f": "p_74_1",
+        "rate_b": "p_216_1"
+    },
+    "v217_0": {
+        "reactant": "CaMKII_thr286s_CaM + PP1_active",
+        "product": "PP1_active_Deph_thr286_complex",
+        "rate_f": "p_59_1",
+        "rate_b": "p_217_1"
+    },
+    "v218_0": {
+        "reactant": "CaMKIIsss + PP1_active",
+        "product": "PP1_active_Deph_thr286c_complex",
+        "rate_f": "p_48_1",
+        "rate_b": "p_218_1"
+    },
+    "v219_0": {
+        "reactant": "CaMKIIsss + PP1_active",
+        "product": "PP1_active_Deph_thr305_complex",
+        "rate_f": "p_49_1",
+        "rate_b": "p_219_1"
+    },
+    "v220_0": {
+        "reactant": "CaMK_thr306 + PP1_active",
+        "product": "PP1_active_Deph_thr306_complex",
+        "rate_f": "p_43_1",
+        "rate_b": "p_220_1"
+    },
+    "v221_0": {
+        "reactant": "CaMKII_thr286 + PP1_active",
+        "product": "PP1_active_Deph_thr286b_complex",
+        "rate_f": "p_57_1",
+        "rate_b": "p_221_1"
+    },
+    "v222_0": {
+        "reactant": "CaMKIIsss + CaMKII_CaM",
+        "product": "tot_autonomous_CaMKII_auton_286_complex",
+        "rate_f": "p_52_1",
+        "rate_b": "p_222_1"
+    },
+    "v222_1": {
+        "reactant": "CaMKII_CaM + CaMKII_thr286",
+        "product": "tot_autonomous_CaMKII_auton_286_complex",
+        "rate_f": "p_52_1",
+        "rate_b": "p_222_1"
+    },
+    "v223_0": {
+        "reactant": "CaMKII_thr286 + CaMKII_thr286",
+        "product": "tot_autonomous_CaMKII_auton_305_complex",
+        "rate_f": "p_55_1",
+        "rate_b": "p_223_1"
+    },
+    "v223_1": {
+        "reactant": "CaMKIIsss + CaMKII_thr286",
+        "product": "tot_autonomous_CaMKII_auton_305_complex",
+        "rate_f": "p_55_1",
+        "rate_b": "p_223_1"
+    },
+    "v224_0": {
+        "reactant": "CaMKII_CaM + IP3_3K",
+        "product": "tot_CaM_CaMKII_CaM_CaMK_phos_complex",
+        "rate_f": "p_120_1",
+        "rate_b": "p_224_1"
+    },
+    "v224_1": {
+        "reactant": "CaMKII_thr286s_CaM + IP3_3K",
+        "product": "tot_CaM_CaMKII_CaM_CaMK_phos_complex",
+        "rate_f": "p_120_1",
+        "rate_b": "p_224_1"
+    },
+    "v225_0": {
+        "reactant": "CaMKII_CaM + IP3_3K_CaM",
+        "product": "tot_CaM_CaMKII_CaM_CaMK_phos1_complex",
+        "rate_f": "p_126_1",
+        "rate_b": "p_225_1"
+    },
+    "v225_1": {
+        "reactant": "CaMKII_thr286s_CaM + IP3_3K_CaM",
+        "product": "tot_CaM_CaMKII_CaM_CaMK_phos1_complex",
+        "rate_f": "p_126_1",
+        "rate_b": "p_225_1"
+    },
+    "v226_0": {
+        "reactant": "CaMKIIsss + IP3_3K",
+        "product": "tot_autonomous_CaMKII_CaMK_phos_complex",
+        "rate_f": "p_121_1",
+        "rate_b": "p_226_1"
+    },
+    "v226_1": {
+        "reactant": "CaMKII_thr286 + IP3_3K",
+        "product": "tot_autonomous_CaMKII_CaMK_phos_complex",
+        "rate_f": "p_121_1",
+        "rate_b": "p_226_1"
+    },
+    "v227_0": {
+        "reactant": "CaMKIIsss + IP3_3K_CaM",
+        "product": "tot_autonomous_CaMKII_CaMK_phos1_complex",
+        "rate_f": "p_127_1",
+        "rate_b": "p_227_1"
+    },
+    "v227_1": {
+        "reactant": "CaMKII_thr286 + IP3_3K_CaM",
+        "product": "tot_autonomous_CaMKII_CaMK_phos1_complex",
+        "rate_f": "p_127_1",
+        "rate_b": "p_227_1"
+    },
+    "v228_0": {
+        "reactant": "CaMKII_CaM + CaMKII_CaM",
+        "product": "tot_CaM_CaMKII_CaM_act_286_complex",
+        "rate_f": "p_53_1",
+        "rate_b": "p_228_1"
+    },
+    "v228_1": {
+        "reactant": "CaMKII_CaM + CaMKII_thr286s_CaM",
+        "product": "tot_CaM_CaMKII_CaM_act_286_complex",
+        "rate_f": "p_53_1",
+        "rate_b": "p_228_1"
+    },
+    "v229_0": {
+        "reactant": "CaMKII_CaM + CaMKII_thr286",
+        "product": "tot_CaM_CaMKII_CaM_act_305_complex",
+        "rate_f": "p_56_1",
+        "rate_b": "p_229_1"
+    },
+    "v229_1": {
+        "reactant": "CaMKII_thr286 + CaMKII_thr286s_CaM",
+        "product": "tot_CaM_CaMKII_CaM_act_305_complex",
+        "rate_f": "p_56_1",
+        "rate_b": "p_229_1"
+    },
+    "v230_0": {
+        "reactant": "1345_3pase + IP4_1345_",
+        "product": "1345_3pase_ip4_3pase_complex",
+        "rate_f": "p_131_1",
+        "rate_b": "p_230_1"
+    },
+    "v231_0": {
+        "reactant": "IP3_3K + PKC_AAs",
+        "product": "PKC_active_PKC_phos_complex",
+        "rate_f": "p_122_1",
+        "rate_b": "p_231_1"
+    },
+    "v231_1": {
+        "reactant": "IP3_3K + PKC_basals",
+        "product": "PKC_active_PKC_phos_complex",
+        "rate_f": "p_122_1",
+        "rate_b": "p_231_1"
+    },
+    "v231_2": {
+        "reactant": "IP3_3K + PKC_Ca_AAs",
+        "product": "PKC_active_PKC_phos_complex",
+        "rate_f": "p_122_1",
+        "rate_b": "p_231_1"
+    },
+    "v231_3": {
+        "reactant": "IP3_3K + PKC_Ca_membs",
+        "product": "PKC_active_PKC_phos_complex",
+        "rate_f": "p_122_1",
+        "rate_b": "p_231_1"
+    },
+    "v231_4": {
+        "reactant": "IP3_3K + PKC_DAG_AAs",
+        "product": "PKC_active_PKC_phos_complex",
+        "rate_f": "p_122_1",
+        "rate_b": "p_231_1"
+    },
+    "v231_5": {
+        "reactant": "IP3_3K + PKC_DAG_membs",
+        "product": "PKC_active_PKC_phos_complex",
+        "rate_f": "p_122_1",
+        "rate_b": "p_231_1"
+    },
+    "r1": {
+        "reactant": "Kv + 4*PKC_active",
+        "product": "Kv1",
+        "rate_f": "phosPKC1_k_p"
+    },
+    "r2": {
+        "reactant": "Kv + 4*tot_CaM_CaMKII",
+        "product": "Kv2",
+        "rate_f": "phosMK1_k_p"
+    },
+    "r3": {
+        "reactant": "Kv1 + 4*tot_CaM_CaMKII",
+        "product": "Kv12",
+        "rate_f": "phosMK1_k_p"
+    },
+    "r4": {
+        "reactant": "Kv2 + 4*PKC_active",
+        "product": "Kv12",
+        "rate_f": "phosPKC1_k_p"
+    },
+    "r5": {
+        "reactant": "Kv1",
+        "product": "Kv",
+        "rate_f": "phosPKC1_k_dp"
+    },
+    "r6": {
+        "reactant": "Kv2",
+        "product": "Kv",
+        "rate_f": "phosMK1_k_dp"
+    },
+    "r7": {
+        "reactant": "Kv12",
+        "product": "Kv2",
+        "rate_f": "phosPKC1_k_dp"
+    },
+    "r8": {
+        "reactant": "Kv12",
+        "product": "Kv1",
+        "rate_f": "phosMK1_k_dp"
+    }
+}

@@ -5,30 +5,27 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 1_000
-cfg.dt = 0.01
-cfg.recordStep = 0.05
-cfg.simLabel = "26apr11newsyn2"
+cfg.duration = 10_000
+cfg.dt = 0.05
+cfg.recordStep = 0.25
+cfg.simLabel = "07jul22Gq"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
-cfg.saveJson = True
+cfg.savePickle = True 
 cfg.recordStim = True
 
 # recording
 cfg.recordCells = ["all"]
 cfg.recordTraces = {
     "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"},
-    "isyn": {"synMech": "exc", "var": "i"},
-    "gsyn": {"synMech": "exc", "var": "g"},
-    "ica1a": {"sec": "soma", "loc": 0.5, "var": "ica1a_ch_Cacna1a_cp5"},
-    "ica1b": {"sec": "soma", "loc": 0.5, "var": "ica1b_ch_Cacna1b_cp6"},
-    "ica1c": {"sec": "soma", "loc": 0.5, "var": "ica1c_ch_Cacna1c_cp3"},
-    "ica1d": {"sec": "soma", "loc": 0.5, "var": "ica1d_ch_Cacna1d_md150284"},
-    "ica1g": {"sec": "soma", "loc": 0.5, "var": "ica1g_ch_Cacna1g_cp41"},
-    "ica1i": {"sec": "soma", "loc": 0.5, "var": "ica1i_ch_Cacna1i_md279"},
-}
+    'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'},
+    'AngII':{'sec': 'soma','loc': 0.5,'var': 'AngIIi'},
+    'Kv': {'sec': 'soma','loc': 0.5,'var': 'Kvi'},
+    'Kv1': {'sec': 'soma','loc': 0.5,'var': 'Kv1i'},
+    'Kv2': {'sec': 'soma','loc': 0.5,'var': 'Kv2i'},
+    'Kv12': {'sec': 'soma','loc': 0.5,'var': 'Kv12i'}
+    }
 """
-    #'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
     "epas": {"sec": "soma", "loc": 0.5, "var": "e_pas"},
     "ih": {"sec": "soma", "loc": 0.5, "var": "iother"},
     "ina": {"sec": "soma", "loc": 0.5, "var": "ina"},
@@ -69,7 +66,8 @@ cfg.sze = 21
 # modulation
 cfg.npy = 0
 cfg.ach = 0
-cfg.ne = 1.0
+cfg.ne = 0
+cfg.angII = 10
 
 # stimulus
 

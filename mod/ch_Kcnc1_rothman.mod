@@ -1,6 +1,7 @@
 NEURON {
 	SUFFIX ch_Kcnc1_rothman
 	USEION k READ ek WRITE ik
+    USEION Kv READ Kvi CHARGE 0
 	RANGE gbar, ik, ikcnc, ninf, taun, pinf, taup
 	RANGE phi
 }
@@ -30,6 +31,7 @@ PARAMETER {
 ASSIGNED {
  	ik (mA/cm2) 
 	ek (mV)
+    Kvi
 	ninf
 	taun (ms)
 	pinf
@@ -47,7 +49,7 @@ INITIAL {
 
 BREAKPOINT {
 	SOLVE states METHOD cnexp
-	ikcnc = gbar * (v - ek) * ((phi*n*n)+((1-phi)*p))
+	ikcnc = gbar * Kvi * (v - ek) * ((phi*n*n)+((1-phi)*p))
 	ik = ikcnc
 }
 
