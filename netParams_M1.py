@@ -87,21 +87,26 @@ netParams.rxdParams['regions'] = regions
 
 ## Species
 species = json.load(open('GqSpecies.json','r'))
-species['AngII']['initial'] = cfg.angII
-netParams.rxdParams['species'] = species
+species['parameters']['AngII']['initial'] = cfg.angII
+netParams.rxdParams['species'] = species['species']
+netParams.rxdParams['parameters'] = species['parameters']
 
 ## Reactions
 GqParams = json.load(open('GqParams.json','r'))
 GqPath = json.load(open('GqPath.json','r'))
 rates = {}
 reactions = {}
+def subParam(rate):
+    for k,v in GqParams.items():
+        rate = rate.replace(k,str(v))
+    return rate
 for r,v in GqPath.items():
     if 'rate' in v:
-        v['rate'] = GqParams[v['rate']]
+        v['rate'] = subParam(v['rate'])
         rates[r] = v
     else:
-        v['rate_f'] = GqParams[v['rate_f']]
-        if 'rate_b' in v: v['rate_b'] = GqParams[v['rate_b']]
+        v['rate_f'] = subParam(v['rate_f'])
+        if 'rate_b' in v: v['rate_b'] = subParam(v['rate_b'])
         reactions[r] = v
 
 netParams.rxdParams['reactions'] = reactions

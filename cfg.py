@@ -5,7 +5,7 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 10_000
+cfg.duration = 180_000
 cfg.dt = 0.05
 cfg.recordStep = 0.25
 cfg.simLabel = "07jul22Gq"

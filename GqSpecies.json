@@ -1,779 +1,783 @@
 {
-    "1345_3pase": {
-        "regions": "cyt",
-        "initial": 1.17e-08
-    },
-    "3kCaMs_ip3_cmplx": {
-        "regions": "cyt",
-        "initial": 1.46e-07
-    },
-    "3kCaM_ip3_cmplx": {
-        "regions": "cyt",
-        "initial": -1.6600000000000001e-34
-    },
-    "BetaGamma": {
-        "regions": "cyt",
-        "initial": 4.9199999999999996e-20
-    },
-    "bisPP_IP4": {
-        "regions": "cyt",
-        "initial": 0.00197
-    },
-    "Blocked_rec_Gq": {
-        "regions": "cyt",
-        "initial": 0.0
-    },
-    "ca": {
-        "regions": "cyt",
-        "initial": 7.25e-05,
-        "charge": 2
-    },
-    "Ca_1pase_cmplx": {
-        "regions": "cyt",
-        "initial": 5.71e-05
-    },
-    "Ca_leak_from_extracell": {
-        "regions": "cyt",
-        "initial": 8.33e-07
-    },
-    "Ca_sequester": {
-        "regions": "cyt",
-        "initial": 0.00581
-    },
-    "Ca10_Cal": {
-        "regions": "cyt",
-        "initial": 5.510000000000001e-06
-    },
-    "Ca15_Cal": {
-        "regions": "cyt",
-        "initial": 1.78e-05
-    },
-    "Ca20_Cal": {
-        "regions": "cyt",
-        "initial": 5.76e-05
-    },
-    "Ca25_Cal": {
-        "regions": "cyt",
-        "initial": 0.000186
-    },
-    "Ca30_Cal": {
-        "regions": "cyt",
-        "initial": 0.000601
-    },
-    "Ca35_Cal": {
-        "regions": "cyt",
-        "initial": 0.0019399999999999999
-    },
-    "Ca40_Cal": {
-        "regions": "cyt",
-        "initial": 0.00628
-    },
-    "Ca5_Cal": {
-        "regions": "cyt",
-        "initial": 1.7e-06
-    },
-    "CaEPump": {
-        "regions": "cyt",
-        "initial": 3.67e-06
-    },
-    "Calseq": {
-        "regions": "cyt",
-        "initial": 5.27e-07
-    },
-    "CaM": {
-        "regions": "cyt",
-        "initial": 0.019600000000000003
-    },
-    "CaM_Ca3": {
-        "regions": "cyt",
-        "initial": 2.68e-06
-    },
-    "CaM_Ca4": {
-        "regions": "cyt",
-        "initial": 9.05e-09
-    },
-    "CaM_TR2_Ca2": {
-        "regions": "cyt",
-        "initial": 0.000103
-    },
-    "CaMK_thr306": {
-        "regions": "cyt",
-        "initial": 0.00878
-    },
-    "CaMKII": {
-        "regions": "cyt",
-        "initial": 0.0506
-    },
-    "CaMKIIsss": {
-        "regions": "cyt",
-        "initial": 0.00878
-    },
-    "CaMKII_CaM": {
-        "regions": "cyt",
-        "initial": 2.51e-11
-    },
-    "CaMKII_thr286": {
-        "regions": "cyt",
-        "initial": 2.66e-11
-    },
-    "CaMKII_thr286s_CaM": {
-        "regions": "cyt",
-        "initial": 0.000229
-    },
-    "capacitive_Ca_entrys": {
-        "regions": "cyt",
-        "initial": 2.11e-06
-    },
-    "CaTransp": {
-        "regions": "cyt",
-        "initial": 0.000216
-    },
-    "CaTransp_2Ca": {
-        "regions": "cyt",
-        "initial": 2.41e-05
-    },
-    "DAG": {
-        "regions": "cyt",
-        "initial": 0.00391
-    },
-    "DIPP1": {
-        "regions": "cyt",
-        "initial": 6.08e-07
-    },
-    "GsGDP": {
-        "regions": "cyt",
-        "initial": 4.93e-20
-    },
-    "GsGTP": {
-        "regions": "cyt",
-        "initial": 3.39e-23
-    },
-    "G_GDP": {
-        "regions": "cyt",
-        "initial": 0.0008950000000000001
-    },
-    "inact_cap_entry": {
-        "regions": "cyt",
-        "initial": 7.889999999999999e-06
-    },
-    "IP1_1_": {
-        "regions": "cyt",
-        "initial": 0.0437
-    },
-    "IP1_3_": {
-        "regions": "cyt",
-        "initial": 0.0048
-    },
-    "IP1_4_": {
-        "regions": "cyt",
-        "initial": 0.0040999999999999995
-    },
-    "ip1_1pase_cmplx": {
-        "regions": "cyt",
-        "initial": 0.00549
-    },
-    "ip1_4pase_cmplx": {
-        "regions": "cyt",
-        "initial": 0.000526
-    },
-    "IP1_pase": {
-        "regions": "cyt",
-        "initial": 0.019600000000000003
-    },
-    "IP2_13_": {
-        "regions": "cyt",
-        "initial": 9.32e-05
-    },
-    "IP2_14_": {
-        "regions": "cyt",
-        "initial": 0.00020899999999999998
-    },
-    "IP2_34_": {
-        "regions": "cyt",
-        "initial": 0.00014099999999999998
-    },
-    "IP2_3pase1": {
-        "regions": "cyt",
-        "initial": 3.4e-06
-    },
-    "IP2_3pase2": {
-        "regions": "cyt",
-        "initial": 9.17e-06
-    },
-    "IP3_134_": {
-        "regions": "cyt",
-        "initial": 0.00013900000000000002
-    },
-    "IP3_134__3pase_cmplx": {
-        "regions": "cyt",
-        "initial": 8.1e-10
-    },
-    "IP3_145_": {
-        "regions": "cyt",
-        "initial": 0.000303
-    },
-    "IP3_145__3pase_cmplx": {
-        "regions": "cyt",
-        "initial": 2.02e-09
-    },
-    "IP3_145__ER": {
-        "regions": "cyt",
-        "initial": 2.0100000000000002e-06
-    },
-    "IP3_56Kcmplx": {
-        "regions": "cyt",
-        "initial": 5.2900000000000005e-05
-    },
-    "IP3_56K_IP4_1K": {
-        "regions": "cyt",
-        "initial": 0.00012
-    },
-    "IP3R": {
-        "regions": "cyt",
-        "initial": 1.66e-05
-    },
-    "IP3Rs": {
-        "regions": "cyt",
-        "initial": 2.3200000000000003e-08
-    },
-    "IP3_3K": {
-        "regions": "cyt",
-        "initial": -1.03e-33
-    },
-    "IP3_3Ks": {
-        "regions": "cyt",
-        "initial": 0.000295
-    },
-    "IP3_3Ks1": {
-        "regions": "cyt",
-        "initial": 2.05e-05
-    },
-    "IP3_3K_CaM": {
-        "regions": "cyt",
-        "initial": -1.4999999999999999e-33
-    },
-    "IP3_3K_CaMs": {
-        "regions": "cyt",
-        "initial": 1.34e-06
-    },
-    "IP3_5pase2": {
-        "regions": "cyt",
-        "initial": 0.000455
-    },
-    "IP4_1345_": {
-        "regions": "cyt",
-        "initial": 0.0006550000000000001
-    },
-    "IP4_1345__ER": {
-        "regions": "cyt",
-        "initial": 3.969999999999999e-06
-    },
-    "IP4_1346_": {
-        "regions": "cyt",
-        "initial": 0.000989
-    },
-    "IP4_1456_": {
-        "regions": "cyt",
-        "initial": 0.0010400000000000001
-    },
-    "IP4_1456__ER": {
-        "regions": "cyt",
-        "initial": 7.870000000000001e-06
-    },
-    "IP4_3456_": {
-        "regions": "cyt",
-        "initial": 0.00114
-    },
-    "IP4_3K": {
-        "regions": "cyt",
-        "initial": 1.1600000000000001e-06
-    },
-    "IP4_3pase_cmplx": {
-        "regions": "cyt",
-        "initial": 2.66e-08
-    },
-    "ip4_1k_cmplx": {
-        "regions": "cyt",
-        "initial": 0.00146
-    },
-    "ip4_3k_cmplx": {
-        "regions": "cyt",
-        "initial": 3.67e-06
-    },
-    "IP5_12456__ER": {
-        "regions": "cyt",
-        "initial": 2.02e-05
-    },
-    "IP5_13456_": {
-        "regions": "cyt",
-        "initial": 0.045
-    },
-    "IP5_13456__ER": {
-        "regions": "cyt",
-        "initial": 0.000285
-    },
-    "IP5_3pase_cmplx": {
-        "regions": "cyt",
-        "initial": 8.750000000000001e-06
-    },
-    "IP5_5pase_cmplx": {
-        "regions": "cyt",
-        "initial": 0.00281
-    },
-    "IP5_DIPPcmplx": {
-        "regions": "cyt",
-        "initial": 1.7100000000000002e-05
-    },
-    "IP6": {
-        "regions": "cyt",
-        "initial": 0.0234
-    },
-    "IP6_5pase_inhib": {
-        "regions": "cyt",
-        "initial": 0.00412
-    },
-    "IP6_DIPPcmplx": {
-        "regions": "cyt",
-        "initial": 7.12e-05
-    },
-    "IP6_inhib_3pase_cmplx": {
-        "regions": "cyt",
-        "initial": 9.120000000000001e-05
-    },
-    "IP6_K": {
-        "regions": "cyt",
-        "initial": 1.0600000000000001e-07
-    },
-    "IP6_K_complex": {
-        "regions": "cyt",
-        "initial": 7.07e-06
-    },
-    "IP6_ER": {
-        "regions": "cyt",
-        "initial": 0.00014099999999999998
-    },
-    "IP6_K2": {
-        "regions": "cyt",
-        "initial": 3.41e-07
-    },
-    "IP_1pase": {
-        "regions": "cyt",
-        "initial": 0.004730000000000001
-    },
-    "IP_4pase": {
-        "regions": "cyt",
-        "initial": 0.00040100000000000004
-    },
-    "IP_4pase_inact": {
-        "regions": "cyt",
-        "initial": 0.000494
-    },
-    "IP_5pase1": {
-        "regions": "cyt",
-        "initial": 0.00282
-    },
-    "AT1R": {
-        "regions": "cyt",
-        "initial": 0.00019500000000000002
-    },
-    "MIPP": {
-        "regions": "cyt",
-        "initial": 8.310000000000001e-07
-    },
-    "PKC_AAs": {
-        "regions": "cyt",
-        "initial": 4.39e-05
-    },
-    "PKC_basals": {
-        "regions": "cyt",
-        "initial": 1.46e-05
-    },
-    "PKC_Ca": {
-        "regions": "cyt",
-        "initial": 6.36e-05
-    },
-    "PKC_Ca_AAs": {
-        "regions": "cyt",
-        "initial": 3.82e-05
-    },
-    "PKC_Ca_DAG": {
-        "regions": "cyt",
-        "initial": 2.3000000000000002e-07
-    },
-    "PKC_Ca_membs": {
-        "regions": "cyt",
-        "initial": 2.31e-05
-    },
-    "PKC_cytosolic": {
-        "regions": "cyt",
-        "initial": 0.000732
-    },
-    "PKC_DAG": {
-        "regions": "cyt",
-        "initial": 1.72e-05
-    },
-    "PKC_DAG_AA": {
-        "regions": "cyt",
-        "initial": 7.72e-06
-    },
-    "PKC_DAG_AAs": {
-        "regions": "cyt",
-        "initial": 7.72e-05
-    },
-    "PKC_DAG_membs": {
-        "regions": "cyt",
-        "initial": 2.3e-06
-    },
-    "PLC": {
-        "regions": "cyt",
-        "initial": 3.86e-06
-    },
-    "PLC_Ca": {
-        "regions": "cyt",
-        "initial": 8.39e-07
-    },
-    "PLC_Ca_Gq": {
-        "regions": "cyt",
-        "initial": 4.6e-25
-    },
-    "PLC_Gq": {
-        "regions": "cyt",
-        "initial": 3.11e-25
-    },
-    "PP_IP4": {
-        "regions": "cyt",
-        "initial": 0.0151
-    },
-    "PP_IP5": {
-        "regions": "cyt",
-        "initial": 0.0014399999999999999
-    },
-    "PP_IP5_K": {
-        "regions": "cyt",
-        "initial": 1.26e-05
-    },
-    "PP_IP5_K_complex": {
-        "regions": "cyt",
-        "initial": 4.44e-05
-    },
-    "PP1_active": {
-        "regions": "cyt",
-        "initial": 0.00029
-    },
-    "Rec_AngII": {
-        "regions": "cyt",
-        "initial": 1.2e-237
-    },
-    "Rec_AngII_Gq": {
-        "regions": "cyt",
-        "initial": 6.49e-238
-    },
-    "Rec_Gq": {
-        "regions": "cyt",
-        "initial": 0.000105
-    },
-    "tot_autonomous_CaMKII_auton_286_complex": {
-        "regions": "cyt",
-        "initial": 5.28e-05
-    },
-    "tot_autonomous_CaMKII_auton_305_complex": {
-        "regions": "cyt",
-        "initial": 5.6e-05
-    },
-    "CaEPump_Ca_pump_out_complex": {
-        "regions": "cyt",
-        "initial": 1.33e-06
-    },
-    "tot_CaM_CaMKII_CaM_CaMK_phos_complex": {
-        "regions": "cyt",
-        "initial": -1.52e-34
-    },
-    "tot_CaM_CaMKII_CaM_CaMK_phos1_complex": {
-        "regions": "cyt",
-        "initial": -2.79e-34
-    },
-    "tot_autonomous_CaMKII_CaMK_phos_complex": {
-        "regions": "cyt",
-        "initial": -3.73e-33
-    },
-    "tot_autonomous_CaMKII_CaMK_phos1_complex": {
-        "regions": "cyt",
-        "initial": -6.830000000000001e-33
-    },
-    "tot_CaM_CaMKII_CaM_act_286_complex": {
-        "regions": "cyt",
-        "initial": 2.12e-06
-    },
-    "tot_CaM_CaMKII_CaM_act_305_complex": {
-        "regions": "cyt",
-        "initial": 2.25e-06
-    },
-    "PP1_active_Deph_thr286_complex": {
-        "regions": "cyt",
-        "initial": 1.3e-05
-    },
-    "PP1_active_Deph_thr286c_complex": {
-        "regions": "cyt",
-        "initial": 0.000499
-    },
-    "PP1_active_Deph_thr305_complex": {
-        "regions": "cyt",
-        "initial": 0.000499
-    },
-    "PP1_active_Deph_thr306_complex": {
-        "regions": "cyt",
-        "initial": 0.000499
-    },
-    "PP1_active_Deph_thr286b_complex": {
-        "regions": "cyt",
-        "initial": 1.5e-12
-    },
-    "DIPP1_dipp_ip7_complex": {
-        "regions": "cyt",
-        "initial": 2.57e-06
-    },
-    "DIPP1_dipp_ip8_complex": {
-        "regions": "cyt",
-        "initial": 3.52e-05
-    },
-    "IP_1pase_ip2_1pase_complex": {
-        "regions": "cyt",
-        "initial": 0.00019800000000000002
-    },
-    "IP2_3pase1_ip2_3pase1_complex": {
-        "regions": "cyt",
-        "initial": 3.96e-07
-    },
-    "IP2_3pase2_ip2_3pase2_complex": {
-        "regions": "cyt",
-        "initial": 2.3100000000000002e-07
-    },
-    "IP_4pase_ip2_4pase_complex": {
-        "regions": "cyt",
-        "initial": 2.46e-06
-    },
-    "IP3_3K_ip3_3k_complex": {
-        "regions": "cyt",
-        "initial": -2.25e-34
-    },
-    "IP3_3Ks_ip3_3ks_complex": {
-        "regions": "cyt",
-        "initial": 6.39e-05
-    },
-    "IP3_3Ks1_ip3_3ks1_complex": {
-        "regions": "cyt",
-        "initial": 4.45e-06
-    },
-    "IP_1pase_ip3_1pase_complex": {
-        "regions": "cyt",
-        "initial": 3.2800000000000004e-05
-    },
-    "IP_4pase_ip3_4pase_complex": {
-        "regions": "cyt",
-        "initial": 2.78e-06
-    },
-    "IP_5pase1_ip3_5pase1_complex": {
-        "regions": "cyt",
-        "initial": 0.000285
-    },
-    "IP3_5pase2_ip3_5pase2_complex": {
-        "regions": "cyt",
-        "initial": 7.67e-06
-    },
-    "MIPP_ip4_3pase_complex": {
-        "regions": "cyt",
-        "initial": 2.5400000000000002e-08
-    },
-    "1345_3pase_ip4_3pase_complex": {
-        "regions": "cyt",
-        "initial": 1.91e-08
-    },
-    "IP_5pase1_ip4_5pase_complex": {
-        "regions": "cyt",
-        "initial": 0.00231
-    },
-    "MIPP_ip5_3pase_complex": {
-        "regions": "cyt",
-        "initial": 5.92e-06
-    },
-    "IP6_K_ip5_k1_complex": {
-        "regions": "cyt",
-        "initial": 7.140000000000001e-07
-    },
-    "IP6_K2_ip5_k2_complex": {
-        "regions": "cyt",
-        "initial": 1.83e-06
-    },
-    "IP6_K2_ip6_k2_complex": {
-        "regions": "cyt",
-        "initial": 2.66e-06
-    },
-    "MIPP_ip6_pase_complex": {
-        "regions": "cyt",
-        "initial": 0.000391
-    },
-    "PKC_active_PKC_phos_complex": {
-        "regions": "cyt",
-        "initial": -6.88e-36
-    },
-    "PLC_complex": {
-        "regions": "cyt",
-        "initial": 2.9000000000000004e-05
-    },
-    "PLC_Ca_complex": {
-        "regions": "cyt",
-        "initial": 6.34e-06
-    },
-    "PLC_Gq_complex": {
-        "regions": "cyt",
-        "initial": 9.32e-24
-    },
-    "PLC_Ca_Gq_PLCb_Ca_Gq_complex": {
-        "regions": "cyt",
-        "initial": 1.38e-23
-    },
-    "IP6_K_pp_ip4_k1_complex": {
-        "regions": "cyt",
-        "initial": 6.97e-08
-    },
-    "IP6_K2_pp_ip4_k2_complex": {
-        "regions": "cyt",
-        "initial": 1.71e-07
-    },
-    "AA": {
-        "regions": "cyt",
-        "initial": 0.05
-    },
-    "ADP": {
-        "regions": "cyt",
-        "initial": 0.7000000000000001
-    },
-    "ATP": {
-        "regions": "cyt",
-        "initial": 2.7
-    },
-    "bisPP_IP3": {
-        "regions": "cyt",
-        "initial": 0.0
-    },
-    "Ca_ext": {
-        "regions": "cyt",
-        "initial": 4.0
-    },
-    "Ca_leak_to_cytoplasm": {
-        "regions": "cyt",
-        "initial": 2.4e-05
-    },
-    "AngII": {
-        "regions": "cyt",
-        "initial": 0.0
-    },
-    "inositol": {
-        "regions": "cyt",
-        "initial": 0.5
-    },
-    "IP5_12456_": {
-        "regions": "cyt",
-        "initial": 0.0024
-    },
-    "mGluRAntag": {
-        "regions": "cyt",
-        "initial": 0.0
-    },
-    "PC": {
-        "regions": "cyt",
-        "initial": 0.0
-    },
-    "PIP2": {
-        "regions": "cyt",
-        "initial": 0.15
-    },
-    "total_CaMKII": {
-        "regions": "cyt",
-        "initial": 0.07
-    },
-    "IP3": {
-        "regions": "cyt",
-        "initial": 0.000303
-    },
-    "PKC_active": {
-        "regions": "cyt",
-        "initial": 0.000199
-    },
-    "tot_autonomous_CaMKII": {
-        "regions": "cyt",
-        "initial": 0.00878
-    },
-    "tot_CaM_CaMKII": {
-        "regions": "cyt",
-        "initial": 0.000229
-    },
-    "active Kv": {
-        "regions": "cyt",
-        "initial": 0.000978
-    },
-    "V_membrane": {
-        "regions": "cyt",
-        "initial": -52.9
-    },
-    "m_Na": {
-        "regions": "cyt",
-        "initial": 0.0694
-    },
-    "h_Na": {
-        "regions": "cyt",
-        "initial": 0.163
-    },
-    "m_Kdr": {
-        "regions": "cyt",
-        "initial": 0.17
-    },
-    "m_Ka1 nA": {
-        "regions": "cyt",
-        "initial": 0.697
-    },
-    "h_Ka1 nA": {
-        "regions": "cyt",
-        "initial": 0.0153
-    },
-    "m_Ka2": {
-        "regions": "cyt",
-        "initial": 0.3
-    },
-    "h_Ka2": {
-        "regions": "cyt",
-        "initial": 0.016
-    },
-    "m_Kahp": {
-        "regions": "cyt",
-        "initial": 0.126
-    },
-    "m_CaL": {
-        "regions": "cyt",
-        "initial": 0.022
-    },
-    "m_synapse": {
-        "regions": "cyt",
-        "initial": 0.0
-    },
-    "Ca_cluster": {
-        "regions": "cyt",
-        "initial": 5.04e-05
-    },
-    "Kv": {
-        "regions": "cyt",
-        "initial": 0.978
-    },
-    "Kv1": {
-        "regions": "cyt",
-        "initial": 0.0211
-    },
-    "Kv2": {
-        "regions": "cyt",
-        "initial": 0.000809
-    },
-    "Kv12": {
-        "regions": "cyt",
-        "initial": 1.69e-05
+    "species": {
+        "1345_3pase": {
+            "regions": "cyt",
+            "initial": 1.17e-08
+        },
+        "3kCaMs_ip3_cmplx": {
+            "regions": "cyt",
+            "initial": 1.46e-07
+        },
+        "3kCaM_ip3_cmplx": {
+            "regions": "cyt",
+            "initial": -1.6600000000000001e-34
+        },
+        "BetaGamma": {
+            "regions": "cyt",
+            "initial": 4.9199999999999996e-20
+        },
+        "bisPP_IP4": {
+            "regions": "cyt",
+            "initial": 0.00197
+        },
+        "Blocked_rec_Gq": {
+            "regions": "cyt",
+            "initial": 0.0
+        },
+        "ca": {
+            "regions": "cyt",
+            "initial": 7.25e-05,
+            "charge": 2
+        },
+        "Ca_1pase_cmplx": {
+            "regions": "cyt",
+            "initial": 5.71e-05
+        },
+        "Ca_leak_from_extracell": {
+            "regions": "cyt",
+            "initial": 8.33e-07
+        },
+        "Ca_sequester": {
+            "regions": "cyt",
+            "initial": 0.00581
+        },
+        "Ca10_Cal": {
+            "regions": "cyt",
+            "initial": 5.510000000000001e-06
+        },
+        "Ca15_Cal": {
+            "regions": "cyt",
+            "initial": 1.78e-05
+        },
+        "Ca20_Cal": {
+            "regions": "cyt",
+            "initial": 5.76e-05
+        },
+        "Ca25_Cal": {
+            "regions": "cyt",
+            "initial": 0.000186
+        },
+        "Ca30_Cal": {
+            "regions": "cyt",
+            "initial": 0.000601
+        },
+        "Ca35_Cal": {
+            "regions": "cyt",
+            "initial": 0.0019399999999999999
+        },
+        "Ca40_Cal": {
+            "regions": "cyt",
+            "initial": 0.00628
+        },
+        "Ca5_Cal": {
+            "regions": "cyt",
+            "initial": 1.7e-06
+        },
+        "CaEPump": {
+            "regions": "cyt",
+            "initial": 3.67e-06
+        },
+        "Calseq": {
+            "regions": "cyt",
+            "initial": 5.27e-07
+        },
+        "CaM": {
+            "regions": "cyt",
+            "initial": 0.019600000000000003
+        },
+        "CaM_Ca3": {
+            "regions": "cyt",
+            "initial": 2.68e-06
+        },
+        "CaM_Ca4": {
+            "regions": "cyt",
+            "initial": 9.05e-09
+        },
+        "CaM_TR2_Ca2": {
+            "regions": "cyt",
+            "initial": 0.000103
+        },
+        "CaMK_thr306": {
+            "regions": "cyt",
+            "initial": 0.00878
+        },
+        "CaMKII": {
+            "regions": "cyt",
+            "initial": 0.0506
+        },
+        "CaMKIIsss": {
+            "regions": "cyt",
+            "initial": 0.00878
+        },
+        "CaMKII_CaM": {
+            "regions": "cyt",
+            "initial": 2.51e-11
+        },
+        "CaMKII_thr286": {
+            "regions": "cyt",
+            "initial": 2.66e-11
+        },
+        "CaMKII_thr286s_CaM": {
+            "regions": "cyt",
+            "initial": 0.000229
+        },
+        "capacitive_Ca_entrys": {
+            "regions": "cyt",
+            "initial": 2.11e-06
+        },
+        "CaTransp": {
+            "regions": "cyt",
+            "initial": 0.000216
+        },
+        "CaTransp_2Ca": {
+            "regions": "cyt",
+            "initial": 2.41e-05
+        },
+        "DAG": {
+            "regions": "cyt",
+            "initial": 0.00391
+        },
+        "DIPP1": {
+            "regions": "cyt",
+            "initial": 6.08e-07
+        },
+        "GsGDP": {
+            "regions": "cyt",
+            "initial": 4.93e-20
+        },
+        "GsGTP": {
+            "regions": "cyt",
+            "initial": 3.39e-23
+        },
+        "G_GDP": {
+            "regions": "cyt",
+            "initial": 0.0008950000000000001
+        },
+        "inact_cap_entry": {
+            "regions": "cyt",
+            "initial": 7.889999999999999e-06
+        },
+        "IP1_1_": {
+            "regions": "cyt",
+            "initial": 0.0437
+        },
+        "IP1_3_": {
+            "regions": "cyt",
+            "initial": 0.0048
+        },
+        "IP1_4_": {
+            "regions": "cyt",
+            "initial": 0.0040999999999999995
+        },
+        "ip1_1pase_cmplx": {
+            "regions": "cyt",
+            "initial": 0.00549
+        },
+        "ip1_4pase_cmplx": {
+            "regions": "cyt",
+            "initial": 0.000526
+        },
+        "IP1_pase": {
+            "regions": "cyt",
+            "initial": 0.019600000000000003
+        },
+        "IP2_13_": {
+            "regions": "cyt",
+            "initial": 9.32e-05
+        },
+        "IP2_14_": {
+            "regions": "cyt",
+            "initial": 0.00020899999999999998
+        },
+        "IP2_34_": {
+            "regions": "cyt",
+            "initial": 0.00014099999999999998
+        },
+        "IP2_3pase1": {
+            "regions": "cyt",
+            "initial": 3.4e-06
+        },
+        "IP2_3pase2": {
+            "regions": "cyt",
+            "initial": 9.17e-06
+        },
+        "IP3_134_": {
+            "regions": "cyt",
+            "initial": 0.00013900000000000002
+        },
+        "IP3_134__3pase_cmplx": {
+            "regions": "cyt",
+            "initial": 8.1e-10
+        },
+        "IP3_145_": {
+            "regions": "cyt",
+            "initial": 0.000303
+        },
+        "IP3_145__3pase_cmplx": {
+            "regions": "cyt",
+            "initial": 2.02e-09
+        },
+        "IP3_145__ER": {
+            "regions": "cyt",
+            "initial": 2.0100000000000002e-06
+        },
+        "IP3_56Kcmplx": {
+            "regions": "cyt",
+            "initial": 5.2900000000000005e-05
+        },
+        "IP3_56K_IP4_1K": {
+            "regions": "cyt",
+            "initial": 0.00012
+        },
+        "IP3R": {
+            "regions": "cyt",
+            "initial": 1.66e-05
+        },
+        "IP3Rs": {
+            "regions": "cyt",
+            "initial": 2.3200000000000003e-08
+        },
+        "IP3_3K": {
+            "regions": "cyt",
+            "initial": -1.03e-33
+        },
+        "IP3_3Ks": {
+            "regions": "cyt",
+            "initial": 0.000295
+        },
+        "IP3_3Ks1": {
+            "regions": "cyt",
+            "initial": 2.05e-05
+        },
+        "IP3_3K_CaM": {
+            "regions": "cyt",
+            "initial": -1.4999999999999999e-33
+        },
+        "IP3_3K_CaMs": {
+            "regions": "cyt",
+            "initial": 1.34e-06
+        },
+        "IP3_5pase2": {
+            "regions": "cyt",
+            "initial": 0.000455
+        },
+        "IP4_1345_": {
+            "regions": "cyt",
+            "initial": 0.0006550000000000001
+        },
+        "IP4_1345__ER": {
+            "regions": "cyt",
+            "initial": 3.969999999999999e-06
+        },
+        "IP4_1346_": {
+            "regions": "cyt",
+            "initial": 0.000989
+        },
+        "IP4_1456_": {
+            "regions": "cyt",
+            "initial": 0.0010400000000000001
+        },
+        "IP4_1456__ER": {
+            "regions": "cyt",
+            "initial": 7.870000000000001e-06
+        },
+        "IP4_3456_": {
+            "regions": "cyt",
+            "initial": 0.00114
+        },
+        "IP4_3K": {
+            "regions": "cyt",
+            "initial": 1.1600000000000001e-06
+        },
+        "IP4_3pase_cmplx": {
+            "regions": "cyt",
+            "initial": 2.66e-08
+        },
+        "ip4_1k_cmplx": {
+            "regions": "cyt",
+            "initial": 0.00146
+        },
+        "ip4_3k_cmplx": {
+            "regions": "cyt",
+            "initial": 3.67e-06
+        },
+        "IP5_12456__ER": {
+            "regions": "cyt",
+            "initial": 2.02e-05
+        },
+        "IP5_13456_": {
+            "regions": "cyt",
+            "initial": 0.045
+        },
+        "IP5_13456__ER": {
+            "regions": "cyt",
+            "initial": 0.000285
+        },
+        "IP5_3pase_cmplx": {
+            "regions": "cyt",
+            "initial": 8.750000000000001e-06
+        },
+        "IP5_5pase_cmplx": {
+            "regions": "cyt",
+            "initial": 0.00281
+        },
+        "IP5_DIPPcmplx": {
+            "regions": "cyt",
+            "initial": 1.7100000000000002e-05
+        },
+        "IP6": {
+            "regions": "cyt",
+            "initial": 0.0234
+        },
+        "IP6_5pase_inhib": {
+            "regions": "cyt",
+            "initial": 0.00412
+        },
+        "IP6_DIPPcmplx": {
+            "regions": "cyt",
+            "initial": 7.12e-05
+        },
+        "IP6_inhib_3pase_cmplx": {
+            "regions": "cyt",
+            "initial": 9.120000000000001e-05
+        },
+        "IP6_K": {
+            "regions": "cyt",
+            "initial": 1.0600000000000001e-07
+        },
+        "IP6_K_complex": {
+            "regions": "cyt",
+            "initial": 7.07e-06
+        },
+        "IP6_ER": {
+            "regions": "cyt",
+            "initial": 0.00014099999999999998
+        },
+        "IP6_K2": {
+            "regions": "cyt",
+            "initial": 3.41e-07
+        },
+        "IP_1pase": {
+            "regions": "cyt",
+            "initial": 0.004730000000000001
+        },
+        "IP_4pase": {
+            "regions": "cyt",
+            "initial": 0.00040100000000000004
+        },
+        "IP_4pase_inact": {
+            "regions": "cyt",
+            "initial": 0.000494
+        },
+        "IP_5pase1": {
+            "regions": "cyt",
+            "initial": 0.00282
+        },
+        "AT1R": {
+            "regions": "cyt",
+            "initial": 0.00019500000000000002
+        },
+        "MIPP": {
+            "regions": "cyt",
+            "initial": 8.310000000000001e-07
+        },
+        "PKC_AAs": {
+            "regions": "cyt",
+            "initial": 4.39e-05
+        },
+        "PKC_basals": {
+            "regions": "cyt",
+            "initial": 1.46e-05
+        },
+        "PKC_Ca": {
+            "regions": "cyt",
+            "initial": 6.36e-05
+        },
+        "PKC_Ca_AAs": {
+            "regions": "cyt",
+            "initial": 3.82e-05
+        },
+        "PKC_Ca_DAG": {
+            "regions": "cyt",
+            "initial": 2.3000000000000002e-07
+        },
+        "PKC_Ca_membs": {
+            "regions": "cyt",
+            "initial": 2.31e-05
+        },
+        "PKC_cytosolic": {
+            "regions": "cyt",
+            "initial": 0.000732
+        },
+        "PKC_DAG": {
+            "regions": "cyt",
+            "initial": 1.72e-05
+        },
+        "PKC_DAG_AA": {
+            "regions": "cyt",
+            "initial": 7.72e-06
+        },
+        "PKC_DAG_AAs": {
+            "regions": "cyt",
+            "initial": 7.72e-05
+        },
+        "PKC_DAG_membs": {
+            "regions": "cyt",
+            "initial": 2.3e-06
+        },
+        "PLC": {
+            "regions": "cyt",
+            "initial": 3.86e-06
+        },
+        "PLC_Ca": {
+            "regions": "cyt",
+            "initial": 8.39e-07
+        },
+        "PLC_Ca_Gq": {
+            "regions": "cyt",
+            "initial": 4.6e-25
+        },
+        "PLC_Gq": {
+            "regions": "cyt",
+            "initial": 3.11e-25
+        },
+        "PP_IP4": {
+            "regions": "cyt",
+            "initial": 0.0151
+        },
+        "PP_IP5": {
+            "regions": "cyt",
+            "initial": 0.0014399999999999999
+        },
+        "PP_IP5_K": {
+            "regions": "cyt",
+            "initial": 1.26e-05
+        },
+        "PP_IP5_K_complex": {
+            "regions": "cyt",
+            "initial": 4.44e-05
+        },
+        "PP1_active": {
+            "regions": "cyt",
+            "initial": 0.00029
+        },
+        "Rec_AngII": {
+            "regions": "cyt",
+            "initial": 1.2e-237
+        },
+        "Rec_AngII_Gq": {
+            "regions": "cyt",
+            "initial": 6.49e-238
+        },
+        "Rec_Gq": {
+            "regions": "cyt",
+            "initial": 0.000105
+        },
+        "tot_autonomous_CaMKII_auton_286_complex": {
+            "regions": "cyt",
+            "initial": 5.28e-05
+        },
+        "tot_autonomous_CaMKII_auton_305_complex": {
+            "regions": "cyt",
+            "initial": 5.6e-05
+        },
+        "CaEPump_Ca_pump_out_complex": {
+            "regions": "cyt",
+            "initial": 1.33e-06
+        },
+        "tot_CaM_CaMKII_CaM_CaMK_phos_complex": {
+            "regions": "cyt",
+            "initial": -1.52e-34
+        },
+        "tot_CaM_CaMKII_CaM_CaMK_phos1_complex": {
+            "regions": "cyt",
+            "initial": -2.79e-34
+        },
+        "tot_autonomous_CaMKII_CaMK_phos_complex": {
+            "regions": "cyt",
+            "initial": -3.73e-33
+        },
+        "tot_autonomous_CaMKII_CaMK_phos1_complex": {
+            "regions": "cyt",
+            "initial": -6.830000000000001e-33
+        },
+        "tot_CaM_CaMKII_CaM_act_286_complex": {
+            "regions": "cyt",
+            "initial": 2.12e-06
+        },
+        "tot_CaM_CaMKII_CaM_act_305_complex": {
+            "regions": "cyt",
+            "initial": 2.25e-06
+        },
+        "PP1_active_Deph_thr286_complex": {
+            "regions": "cyt",
+            "initial": 1.3e-05
+        },
+        "PP1_active_Deph_thr286c_complex": {
+            "regions": "cyt",
+            "initial": 0.000499
+        },
+        "PP1_active_Deph_thr305_complex": {
+            "regions": "cyt",
+            "initial": 0.000499
+        },
+        "PP1_active_Deph_thr306_complex": {
+            "regions": "cyt",
+            "initial": 0.000499
+        },
+        "PP1_active_Deph_thr286b_complex": {
+            "regions": "cyt",
+            "initial": 1.5e-12
+        },
+        "DIPP1_dipp_ip7_complex": {
+            "regions": "cyt",
+            "initial": 2.57e-06
+        },
+        "DIPP1_dipp_ip8_complex": {
+            "regions": "cyt",
+            "initial": 3.52e-05
+        },
+        "IP_1pase_ip2_1pase_complex": {
+            "regions": "cyt",
+            "initial": 0.00019800000000000002
+        },
+        "IP2_3pase1_ip2_3pase1_complex": {
+            "regions": "cyt",
+            "initial": 3.96e-07
+        },
+        "IP2_3pase2_ip2_3pase2_complex": {
+            "regions": "cyt",
+            "initial": 2.3100000000000002e-07
+        },
+        "IP_4pase_ip2_4pase_complex": {
+            "regions": "cyt",
+            "initial": 2.46e-06
+        },
+        "IP3_3K_ip3_3k_complex": {
+            "regions": "cyt",
+            "initial": -2.25e-34
+        },
+        "IP3_3Ks_ip3_3ks_complex": {
+            "regions": "cyt",
+            "initial": 6.39e-05
+        },
+        "IP3_3Ks1_ip3_3ks1_complex": {
+            "regions": "cyt",
+            "initial": 4.45e-06
+        },
+        "IP_1pase_ip3_1pase_complex": {
+            "regions": "cyt",
+            "initial": 3.2800000000000004e-05
+        },
+        "IP_4pase_ip3_4pase_complex": {
+            "regions": "cyt",
+            "initial": 2.78e-06
+        },
+        "IP_5pase1_ip3_5pase1_complex": {
+            "regions": "cyt",
+            "initial": 0.000285
+        },
+        "IP3_5pase2_ip3_5pase2_complex": {
+            "regions": "cyt",
+            "initial": 7.67e-06
+        },
+        "MIPP_ip4_3pase_complex": {
+            "regions": "cyt",
+            "initial": 2.5400000000000002e-08
+        },
+        "1345_3pase_ip4_3pase_complex": {
+            "regions": "cyt",
+            "initial": 1.91e-08
+        },
+        "IP_5pase1_ip4_5pase_complex": {
+            "regions": "cyt",
+            "initial": 0.00231
+        },
+        "MIPP_ip5_3pase_complex": {
+            "regions": "cyt",
+            "initial": 5.92e-06
+        },
+        "IP6_K_ip5_k1_complex": {
+            "regions": "cyt",
+            "initial": 7.140000000000001e-07
+        },
+        "IP6_K2_ip5_k2_complex": {
+            "regions": "cyt",
+            "initial": 1.83e-06
+        },
+        "IP6_K2_ip6_k2_complex": {
+            "regions": "cyt",
+            "initial": 2.66e-06
+        },
+        "MIPP_ip6_pase_complex": {
+            "regions": "cyt",
+            "initial": 0.000391
+        },
+        "PKC_active_PKC_phos_complex": {
+            "regions": "cyt",
+            "initial": -6.88e-36
+        },
+        "PLC_complex": {
+            "regions": "cyt",
+            "initial": 2.9000000000000004e-05
+        },
+        "PLC_Ca_complex": {
+            "regions": "cyt",
+            "initial": 6.34e-06
+        },
+        "PLC_Gq_complex": {
+            "regions": "cyt",
+            "initial": 9.32e-24
+        },
+        "PLC_Ca_Gq_PLCb_Ca_Gq_complex": {
+            "regions": "cyt",
+            "initial": 1.38e-23
+        },
+        "IP6_K_pp_ip4_k1_complex": {
+            "regions": "cyt",
+            "initial": 6.97e-08
+        },
+        "IP6_K2_pp_ip4_k2_complex": {
+            "regions": "cyt",
+            "initial": 1.71e-07
+        },
+        "IP3": {
+            "regions": "cyt",
+            "initial": 0.000303
+        },
+        "PKC_active": {
+            "regions": "cyt",
+            "initial": 0.000199
+        },
+        "tot_autonomous_CaMKII": {
+            "regions": "cyt",
+            "initial": 0.00878
+        },
+        "tot_CaM_CaMKII": {
+            "regions": "cyt",
+            "initial": 0.000229
+        },
+        "active Kv": {
+            "regions": "cyt",
+            "initial": 0.000978
+        },
+        "V_membrane": {
+            "regions": "cyt",
+            "initial": -52.9
+        },
+        "m_Na": {
+            "regions": "cyt",
+            "initial": 0.0694
+        },
+        "h_Na": {
+            "regions": "cyt",
+            "initial": 0.163
+        },
+        "m_Kdr": {
+            "regions": "cyt",
+            "initial": 0.17
+        },
+        "m_Ka1 nA": {
+            "regions": "cyt",
+            "initial": 0.697
+        },
+        "h_Ka1 nA": {
+            "regions": "cyt",
+            "initial": 0.0153
+        },
+        "m_Ka2": {
+            "regions": "cyt",
+            "initial": 0.3
+        },
+        "h_Ka2": {
+            "regions": "cyt",
+            "initial": 0.016
+        },
+        "m_Kahp": {
+            "regions": "cyt",
+            "initial": 0.126
+        },
+        "m_CaL": {
+            "regions": "cyt",
+            "initial": 0.022
+        },
+        "m_synapse": {
+            "regions": "cyt",
+            "initial": 0.0
+        },
+        "Ca_cluster": {
+            "regions": "cyt",
+            "initial": 5.04e-05
+        },
+        "Kv": {
+            "regions": "cyt",
+            "initial": 0.978
+        },
+        "Kv1": {
+            "regions": "cyt",
+            "initial": 0.0211
+        },
+        "Kv2": {
+            "regions": "cyt",
+            "initial": 0.000809
+        },
+        "Kv12": {
+            "regions": "cyt",
+            "initial": 1.69e-05
+        }
+    },
+    "parameters": {
+        "AA": {
+            "regions": "cyt",
+            "value": 0.05
+        },
+        "ADP": {
+            "regions": "cyt",
+            "value": 0.7000000000000001
+        },
+        "ATP": {
+            "regions": "cyt",
+            "value": 2.7
+        },
+        "bisPP_IP3": {
+            "regions": "cyt",
+            "value": 0.0
+        },
+        "Ca_ext": {
+            "regions": "cyt",
+            "value": 4.0
+        },
+        "Ca_leak_to_cytoplasm": {
+            "regions": "cyt",
+            "value": 2.4e-05
+        },
+        "AngII": {
+            "regions": "cyt",
+            "value": 0.0
+        },
+        "inositol": {
+            "regions": "cyt",
+            "value": 0.5
+        },
+        "IP5_12456_": {
+            "regions": "cyt",
+            "value": 0.0024
+        },
+        "mGluRAntag": {
+            "regions": "cyt",
+            "value": 0.0
+        },
+        "PC": {
+            "regions": "cyt",
+            "value": 0.0
+        },
+        "PIP2": {
+            "regions": "cyt",
+            "value": 0.15
+        },
+        "total_CaMKII": {
+            "regions": "cyt",
+            "value": 0.07
+        }
     }
 }

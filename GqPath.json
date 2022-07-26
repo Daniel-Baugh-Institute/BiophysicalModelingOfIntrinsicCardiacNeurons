@@ -61,11 +61,15 @@
     },
     "v11_0": {
         "species": "BetaGamma + GsGDP",
-        "rate": "p_11_1"
+        "rate": "-p_11_1"
     },
     "v12_0": {
         "species": "Rec_AngII_Gq",
-        "rate": "p_12_1"
+        "rate": "-p_12_1"
+    },
+    "v13_0": {
+        "species": "G_GDP",
+        "rate": "-p_13_1"
     },
     "v14_0": {
         "reactant": "bisPP_IP4 + PP_IP5_K + ADP",
@@ -135,7 +139,7 @@
     },
     "v25_0": {
         "species": "CaEPump_Ca_pump_out_complex",
-        "rate": "p_25_1"
+        "rate": "-p_25_1"
     },
     "v26_0": {
         "reactant": "Ca_sequester + Ca_leak_to_cytoplasm",
@@ -204,8 +208,8 @@
         "rate_b": "p_36_2"
     },
     "v37_0": {
-        "species": "CaTransp_2Ca",
-        "rate": "p_37_1"
+        "species": "Ca_sequester",
+        "rate": "p_37_1 * CaTransp_2Ca"
     },
     "v38_0": {
         "reactant": "ca + CaEPump",
@@ -245,19 +249,19 @@
     },
     "v44_0": {
         "species": "PP1_active_Deph_thr286c_complex",
-        "rate": "p_44_1"
+        "rate": "-p_44_1"
     },
     "v45_0": {
         "species": "CaMKII",
-        "rate": "p_45_1"
+        "rate": "-p_45_1"
     },
     "v46_0": {
         "species": "PP1_active_Deph_thr306_complex",
-        "rate": "p_46_1"
+        "rate": "-p_46_1"
     },
     "v47_0": {
         "species": "PP1_active_Deph_thr286b_complex",
-        "rate": "p_47_1"
+        "rate": "-p_47_1"
     },
     "v48_0": {
         "reactant": "CaMKIIsss + PP1_active",
@@ -273,11 +277,11 @@
     },
     "v50_0": {
         "species": "tot_autonomous_CaMKII_auton_305_complex",
-        "rate": "p_50_1"
+        "rate": "-p_50_1"
     },
     "v51_0": {
         "species": "tot_CaM_CaMKII_CaM_act_305_complex",
-        "rate": "p_51_1"
+        "rate": "-p_51_1"
     },
     "v52_0": {
         "reactant": "CaMKIIsss + CaMKII_CaM",
@@ -305,7 +309,7 @@
     },
     "v54_0": {
         "species": "PP1_active_Deph_thr286_complex",
-        "rate": "p_54_1"
+        "rate": "-p_54_1"
     },
     "v55_0": {
         "reactant": "CaMKII_thr286 + CaMKII_thr286",
@@ -339,7 +343,7 @@
     },
     "v58_0": {
         "species": "PP1_active_Deph_thr305_complex",
-        "rate": "p_58_1"
+        "rate": "-p_58_1"
     },
     "v59_0": {
         "reactant": "CaMKII_thr286s_CaM + PP1_active",
@@ -349,23 +353,23 @@
     },
     "v60_0": {
         "species": "tot_autonomous_CaMKII_auton_286_complex",
-        "rate": "p_60_1"
+        "rate": "-p_60_1"
     },
     "v61_0": {
         "species": "tot_CaM_CaMKII_CaM_act_286_complex",
-        "rate": "p_61_1"
+        "rate": "-p_61_1"
     },
     "v62_0": {
-        "species": "CaTransp_2Ca",
-        "rate": "p_62_1"
+        "species": "CaTransp",
+        "rate": "p_62_1 * CaTransp_2Ca"
     },
     "v63_0": {
         "species": "CaTransp_2Ca",
-        "rate": "p_63_1"
+        "rate": "-p_63_1"
     },
     "v64_0": {
         "species": "DAG",
-        "rate": "p_64_1"
+        "rate": "-p_64_1"
     },
     "v65_0": {
         "reactant": "DAG + PKC_Ca",
@@ -380,24 +384,24 @@
         "rate_b": "p_66_2"
     },
     "v67_0": {
-        "species": "PIP2",
-        "rate": "p_67_1"
+        "species": "DAG",
+        "rate": "p_67_1 * PIP2"
     },
     "v68_0": {
-        "species": "PLC_complex",
-        "rate": "p_68_1"
+        "species": "DAG",
+        "rate": "p_68_1 * PLC_complex"
     },
     "v69_0": {
-        "species": "PLC_Ca_complex",
-        "rate": "p_69_1"
+        "species": "DAG",
+        "rate": "p_69_1 * PLC_Ca_complex"
     },
     "v70_0": {
-        "species": "PLC_Gq_complex",
-        "rate": "p_70_1"
+        "species": "DAG",
+        "rate": "p_70_1 * PLC_Gq_complex"
     },
     "v71_0": {
-        "species": "PLC_Ca_Gq_PLCb_Ca_Gq_complex",
-        "rate": "p_71_1"
+        "species": "DAG",
+        "rate": "p_71_1 * PLC_Ca_Gq_PLCb_Ca_Gq_complex"
     },
     "v72_0": {
         "reactant": "DIPP1 + IP5_13456_",
@@ -425,11 +429,11 @@
     },
     "v76_0": {
         "species": "GsGTP",
-        "rate": "p_76_1"
+        "rate": "-p_76_1"
     },
     "v77_0": {
         "species": "PLC_Ca_Gq",
-        "rate": "p_77_1"
+        "rate": "-p_77_1"
     },
     "v78_0": {
         "reactant": "GsGTP + PLC_Ca",
@@ -463,15 +467,15 @@
     },
     "v83_0": {
         "species": "inositol",
-        "rate": "p_83_1"
+        "rate": "-p_83_1"
     },
     "v84_0": {
         "species": "IP2_3pase1_ip2_3pase1_complex",
-        "rate": "p_84_1"
+        "rate": "-p_84_1"
     },
     "v85_0": {
         "species": "IP2_3pase2_ip2_3pase2_complex",
-        "rate": "p_85_1"
+        "rate": "-p_85_1"
     },
     "v86_0": {
         "reactant": "IP1_3_",
@@ -481,7 +485,7 @@
     },
     "v87_0": {
         "species": "IP_4pase_ip2_4pase_complex",
-        "rate": "p_87_1"
+        "rate": "-p_87_1"
     },
     "v88_0": {
         "reactant": "IP1_4_ + IP1_pase",
@@ -491,7 +495,7 @@
     },
     "v89_0": {
         "species": "IP_1pase_ip2_1pase_complex",
-        "rate": "p_89_1"
+        "rate": "-p_89_1"
     },
     "v90_0": {
         "reactant": "IP1_pase + inositol",
@@ -519,7 +523,7 @@
     },
     "v94_0": {
         "species": "IP_4pase_ip3_4pase_complex",
-        "rate": "p_94_1"
+        "rate": "-p_94_1"
     },
     "v95_0": {
         "reactant": "IP2_14_ + IP_1pase",
@@ -529,11 +533,11 @@
     },
     "v96_0": {
         "species": "IP_5pase1_ip3_5pase1_complex",
-        "rate": "p_96_1"
+        "rate": "-p_96_1"
     },
     "v97_0": {
         "species": "IP3_5pase2_ip3_5pase2_complex",
-        "rate": "p_97_1"
+        "rate": "-p_97_1"
     },
     "v98_0": {
         "reactant": "IP2_34_ + IP_4pase",
@@ -543,7 +547,7 @@
     },
     "v99_0": {
         "species": "IP_1pase_ip3_1pase_complex",
-        "rate": "p_99_1"
+        "rate": "-p_99_1"
     },
     "v100_0": {
         "reactant": "IP3_134_ + IP3_56K_IP4_1K",
@@ -565,11 +569,11 @@
     },
     "v103_0": {
         "species": "IP_5pase1_ip4_5pase_complex",
-        "rate": "p_103_1"
+        "rate": "-p_103_1"
     },
     "v104_0": {
         "species": "PIP2",
-        "rate": "p_104_1"
+        "rate": "-p_104_1"
     },
     "v105_0": {
         "reactant": "IP3_145__ER",
@@ -579,7 +583,7 @@
     },
     "v106_0": {
         "species": "IP4_1456_",
-        "rate": "p_106_1"
+        "rate": "-p_106_1"
     },
     "v107_0": {
         "reactant": "IP3_145_ + IP3_3K",
@@ -613,7 +617,7 @@
     },
     "v112_0": {
         "species": "1345_3pase_ip4_3pase_complex",
-        "rate": "p_112_1"
+        "rate": "-p_112_1"
     },
     "v113_0": {
         "reactant": "IP3_145__ER",
@@ -623,7 +627,7 @@
     },
     "v114_0": {
         "species": "MIPP_ip4_3pase_complex",
-        "rate": "p_114_1"
+        "rate": "-p_114_1"
     },
     "v115_0": {
         "reactant": "IP3_56K_IP4_1K + IP4_1345_",
@@ -633,7 +637,7 @@
     },
     "v116_0": {
         "species": "IP3_56Kcmplx",
-        "rate": "p_116_1"
+        "rate": "-p_116_1"
     },
     "v117_0": {
         "reactant": "IP3_56K_IP4_1K + IP4_3456_",
@@ -715,15 +719,15 @@
     },
     "v123_0": {
         "species": "tot_CaM_CaMKII_CaM_CaMK_phos_complex",
-        "rate": "p_123_1"
+        "rate": "-p_123_1"
     },
     "v124_0": {
         "species": "tot_autonomous_CaMKII_CaMK_phos_complex",
-        "rate": "p_124_1"
+        "rate": "-p_124_1"
     },
     "v125_0": {
         "species": "PKC_active_PKC_phos_complex",
-        "rate": "p_125_1"
+        "rate": "-p_125_1"
     },
     "v126_0": {
         "reactant": "CaMKII_CaM + IP3_3K_CaM",
@@ -751,11 +755,11 @@
     },
     "v128_0": {
         "species": "tot_CaM_CaMKII_CaM_CaMK_phos1_complex",
-        "rate": "p_128_1"
+        "rate": "-p_128_1"
     },
     "v129_0": {
         "species": "tot_autonomous_CaMKII_CaMK_phos1_complex",
-        "rate": "p_129_1"
+        "rate": "-p_129_1"
     },
     "v130_0": {
         "reactant": "IP4_1345__ER",
@@ -777,15 +781,15 @@
     },
     "v133_0": {
         "species": "IP3_3K_ip3_3k_complex",
-        "rate": "p_133_1"
+        "rate": "-p_133_1"
     },
     "v134_0": {
         "species": "IP3_3Ks_ip3_3ks_complex",
-        "rate": "p_134_1"
+        "rate": "-p_134_1"
     },
     "v135_0": {
         "species": "IP3_3Ks1_ip3_3ks1_complex",
-        "rate": "p_135_1"
+        "rate": "-p_135_1"
     },
     "v136_0": {
         "reactant": "IP4_1345_",
@@ -801,11 +805,11 @@
     },
     "v138_0": {
         "species": "IP4_1346_",
-        "rate": "p_138_1"
+        "rate": "-p_138_1"
     },
     "v139_0": {
         "species": "IP5_13456_",
-        "rate": "p_139_1"
+        "rate": "-p_139_1"
     },
     "v140_0": {
         "reactant": "IP4_1456_ + IP4_3K",
@@ -815,7 +819,7 @@
     },
     "v141_0": {
         "species": "IP4_1456_",
-        "rate": "p_141_1"
+        "rate": "-p_141_1"
     },
     "v142_0": {
         "reactant": "IP4_1456__ER",
@@ -825,7 +829,7 @@
     },
     "v143_0": {
         "species": "IP5_13456_",
-        "rate": "p_143_1"
+        "rate": "-p_143_1"
     },
     "v144_0": {
         "reactant": "IP4_1456_",
@@ -835,11 +839,11 @@
     },
     "v145_0": {
         "species": "MIPP_ip5_3pase_complex",
-        "rate": "p_145_1"
+        "rate": "-p_145_1"
     },
     "v146_0": {
         "species": "IP5_13456_",
-        "rate": "p_146_1"
+        "rate": "-p_146_1"
     },
     "v147_0": {
         "reactant": "IP4_3K + IP5_13456_",
@@ -855,7 +859,7 @@
     },
     "v149_0": {
         "species": "MIPP_ip6_pase_complex",
-        "rate": "p_149_1"
+        "rate": "-p_149_1"
     },
     "v150_0": {
         "reactant": "IP5_13456_ + IP_5pase1",
@@ -865,15 +869,15 @@
     },
     "v151_0": {
         "species": "IP5_13456_",
-        "rate": "p_151_1"
+        "rate": "-p_151_1"
     },
     "v152_0": {
         "species": "IP6",
-        "rate": "p_152_1"
+        "rate": "-p_152_1"
     },
     "v153_0": {
         "species": "PP_IP4",
-        "rate": "p_153_1"
+        "rate": "-p_153_1"
     },
     "v154_0": {
         "reactant": "IP5_13456__ER",
@@ -937,7 +941,7 @@
     },
     "v164_0": {
         "species": "DIPP1_dipp_ip7_complex",
-        "rate": "p_164_1"
+        "rate": "-p_164_1"
     },
     "v165_0": {
         "reactant": "IP6_K + PP_IP5 + ADP",
@@ -983,11 +987,11 @@
     },
     "v172_0": {
         "species": "PKC_cytosolic",
-        "rate": "p_172_1"
+        "rate": "-p_172_1"
     },
     "v173_0": {
         "species": "PKC_basals",
-        "rate": "p_173_1"
+        "rate": "-p_173_1"
     },
     "v174_0": {
         "reactant": "PKC_Ca + AA",
@@ -997,11 +1001,11 @@
     },
     "v175_0": {
         "species": "PKC_Ca",
-        "rate": "p_175_1"
+        "rate": "-p_175_1"
     },
     "v176_0": {
         "species": "PKC_Ca_membs",
-        "rate": "p_176_1"
+        "rate": "-p_176_1"
     },
     "v177_0": {
         "reactant": "ca + PKC_cytosolic",
@@ -1011,11 +1015,11 @@
     },
     "v178_0": {
         "species": "PKC_Ca_DAG",
-        "rate": "p_178_1"
+        "rate": "-p_178_1"
     },
     "v179_0": {
         "species": "PKC_DAG_membs",
-        "rate": "p_179_1"
+        "rate": "-p_179_1"
     },
     "v180_0": {
         "reactant": "PKC_DAG + AA",
@@ -1025,11 +1029,11 @@
     },
     "v181_0": {
         "species": "PKC_DAG_AA",
-        "rate": "p_181_1"
+        "rate": "-p_181_1"
     },
     "v182_0": {
         "species": "PKC_DAG_AAs",
-        "rate": "p_182_1"
+        "rate": "-p_182_1"
     },
     "v183_0": {
         "reactant": "PLC + PIP2",
@@ -1039,7 +1043,7 @@
     },
     "v184_0": {
         "species": "PLC_Ca_Gq",
-        "rate": "p_184_1"
+        "rate": "-p_184_1"
     },
     "v185_0": {
         "reactant": "PLC_Ca + PIP2",
@@ -1061,11 +1065,11 @@
     },
     "v188_0": {
         "species": "IP6_K_ip5_k1_complex",
-        "rate": "p_188_1"
+        "rate": "-p_188_1"
     },
     "v189_0": {
         "species": "IP6_K2_ip5_k2_complex",
-        "rate": "p_189_1"
+        "rate": "-p_189_1"
     },
     "v190_0": {
         "reactant": "PP_IP5 + PP_IP5_K + ATP",
@@ -1075,27 +1079,21 @@
     },
     "v191_0": {
         "species": "DIPP1_dipp_ip8_complex",
-        "rate": "p_191_1"
+        "rate": "-p_191_1"
     },
     "v192_0": {
         "species": "IP6_K2_ip6_k2_complex",
-        "rate": "p_192_1"
+        "rate": "-p_192_1"
     },
     "v193_0": {
         "species": "Rec_AngII",
-        "rate": "p_193_1"
+        "rate": "-p_193_1"
     },
     "v194_0": {
         "reactant": "Rec_Gq + AngII",
         "product": "Rec_AngII_Gq",
         "rate_f": "p_194_1",
         "rate_b": "p_194_2"
-    },
-    "v195_0": {
-        "reactant": "ca + ca + CaTransp",
-        "product": "CaTransp_2Ca",
-        "rate_f": "p_18_1",
-        "rate_b": "p_195_1"
     },
     "v196_0": {
         "reactant": "IP2_13_ + IP2_3pase1",
@@ -1253,30 +1251,6 @@
         "rate_f": "p_57_1",
         "rate_b": "p_221_1"
     },
-    "v222_0": {
-        "reactant": "CaMKIIsss + CaMKII_CaM",
-        "product": "tot_autonomous_CaMKII_auton_286_complex",
-        "rate_f": "p_52_1",
-        "rate_b": "p_222_1"
-    },
-    "v222_1": {
-        "reactant": "CaMKII_CaM + CaMKII_thr286",
-        "product": "tot_autonomous_CaMKII_auton_286_complex",
-        "rate_f": "p_52_1",
-        "rate_b": "p_222_1"
-    },
-    "v223_0": {
-        "reactant": "CaMKII_thr286 + CaMKII_thr286",
-        "product": "tot_autonomous_CaMKII_auton_305_complex",
-        "rate_f": "p_55_1",
-        "rate_b": "p_223_1"
-    },
-    "v223_1": {
-        "reactant": "CaMKIIsss + CaMKII_thr286",
-        "product": "tot_autonomous_CaMKII_auton_305_complex",
-        "rate_f": "p_55_1",
-        "rate_b": "p_223_1"
-    },
     "v224_0": {
         "reactant": "CaMKII_CaM + IP3_3K",
         "product": "tot_CaM_CaMKII_CaM_CaMK_phos_complex",
@@ -1324,18 +1298,6 @@
         "product": "tot_autonomous_CaMKII_CaMK_phos1_complex",
         "rate_f": "p_127_1",
         "rate_b": "p_227_1"
-    },
-    "v228_0": {
-        "reactant": "CaMKII_CaM + CaMKII_CaM",
-        "product": "tot_CaM_CaMKII_CaM_act_286_complex",
-        "rate_f": "p_53_1",
-        "rate_b": "p_228_1"
-    },
-    "v228_1": {
-        "reactant": "CaMKII_CaM + CaMKII_thr286s_CaM",
-        "product": "tot_CaM_CaMKII_CaM_act_286_complex",
-        "rate_f": "p_53_1",
-        "rate_b": "p_228_1"
     },
     "v229_0": {
         "reactant": "CaMKII_CaM + CaMKII_thr286",
@@ -1391,6 +1353,22 @@
         "rate_f": "p_122_1",
         "rate_b": "p_231_1"
     },
+    "v222_0": {
+        "species": "tot_autonomous_CaMKII_auton_286_complex",
+        "rate": "p_52_2 - p_222_1"
+    },
+    "v228_0": {
+        "species": "tot_CaM_CaMKII_CaM_act_286_complex",
+        "rate": "p_53_2 - p_228_1"
+    },
+    "v223_0": {
+        "species": "tot_autonomous_CaMKII_auton_305_complex",
+        "rate": "p_55_2 - p_223_1"
+    },
+    "v195_0": {
+        "species": "CaTransp_2Ca",
+        "rate": "p_18_2 - p_195_1"
+    },
     "r1": {
         "reactant": "Kv + 4*PKC_active",
         "product": "Kv1",
@@ -1430,5 +1408,1329 @@
         "reactant": "Kv12",
         "product": "Kv1",
         "rate_f": "phosMK1_k_dp"
+    },
+    "1345_3pase_v131": {
+        "species": "1345_3pase",
+        "rate": "p_131_1 * 1345_3pase * IP4_1345_"
+    },
+    "1345_3pase_v230": {
+        "species": "1345_3pase",
+        "rate": "p_131_1 * 1345_3pase * IP4_1345_"
+    },
+    "1345_3pase_-v1": {
+        "species": "1345_3pase",
+        "rate": "-1 * p_1_1 * 1345_3pase * IP3_134_"
+    },
+    "1345_3pase_-v2": {
+        "species": "1345_3pase",
+        "rate": "-1 * p_2_1 * 1345_3pase * IP3_145_"
+    },
+    "BetaGamma_v12": {
+        "species": "BetaGamma",
+        "rate": "-p_12_1 * Rec_AngII_Gq"
+    },
+    "bisPP_IP4_v13": {
+        "species": "bisPP_IP4",
+        "rate": "p_75_1 * bisPP_IP4 * DIPP1"
+    },
+    "CaMK_thr306_v220": {
+        "species": "CaMK_thr306",
+        "rate": "p_43_1 * CaMK_thr306 * PP1_active"
+    },
+    "CaMK_thr306_v44": {
+        "species": "CaMK_thr306",
+        "rate": "-p_44_1 * PP1_active_Deph_thr286c_complex"
+    },
+    "CaMKII_v46": {
+        "species": "CaMKII",
+        "rate": "-p_46_1 * PP1_active_Deph_thr306_complex"
+    },
+    "CaMKII_v47": {
+        "species": "CaMKII",
+        "rate": "-p_47_1 * PP1_active_Deph_thr286b_complex"
+    },
+    "CaMKIIsss_v121": {
+        "species": "CaMKIIsss",
+        "rate": "p_121_1 * CaMKIIsss * IP3_3K"
+    },
+    "CaMKIIsss_v127": {
+        "species": "CaMKIIsss",
+        "rate": "p_127_1 * CaMKIIsss * IP3_3K_CaM"
+    },
+    "CaMKIIsss_v218": {
+        "species": "CaMKIIsss",
+        "rate": "p_48_1 * CaMKIIsss * PP1_active"
+    },
+    "CaMKIIsss_v219": {
+        "species": "CaMKIIsss",
+        "rate": "p_49_1 * CaMKIIsss * PP1_active"
+    },
+    "CaMKIIsss_v226": {
+        "species": "CaMKIIsss",
+        "rate": "p_121_1 * CaMKIIsss * IP3_3K"
+    },
+    "CaMKIIsss_v227": {
+        "species": "CaMKIIsss",
+        "rate": "p_127_1 * CaMKIIsss * IP3_3K_CaM"
+    },
+    "CaMKIIsss_v50": {
+        "species": "CaMKIIsss",
+        "rate": "-p_50_1 * tot_autonomous_CaMKII_auton_305_complex"
+    },
+    "CaMKIIsss_v51": {
+        "species": "CaMKIIsss",
+        "rate": "-p_51_1 * tot_CaM_CaMKII_CaM_act_305_complex"
+    },
+    "CaMKIIsss_v52": {
+        "species": "CaMKIIsss",
+        "rate": "p_52_1 * CaMKIIsss * CaMKII_CaM"
+    },
+    "CaMKIIsss_v55": {
+        "species": "CaMKIIsss",
+        "rate": "p_55_1 * CaMKII_thr286 * CaMKII_thr286"
+    },
+    "CaMKII_CaM_v120": {
+        "species": "CaMKII_CaM",
+        "rate": "p_120_1 * CaMKII_CaM * IP3_3K"
+    },
+    "CaMKII_CaM_v126": {
+        "species": "CaMKII_CaM",
+        "rate": "p_126_1 * CaMKII_CaM * IP3_3K_CaM"
+    },
+    "CaMKII_CaM_v224": {
+        "species": "CaMKII_CaM",
+        "rate": "p_120_1 * CaMKII_CaM * IP3_3K"
+    },
+    "CaMKII_CaM_v225": {
+        "species": "CaMKII_CaM",
+        "rate": "p_126_1 * CaMKII_CaM * IP3_3K_CaM"
+    },
+    "CaMKII_CaM_v229": {
+        "species": "CaMKII_CaM",
+        "rate": "p_56_1 * CaMKII_CaM * CaMKII_thr286"
+    },
+    "CaMKII_CaM_v54": {
+        "species": "CaMKII_CaM",
+        "rate": "-p_54_1 * PP1_active_Deph_thr286_complex"
+    },
+    "CaMKII_CaM_v56": {
+        "species": "CaMKII_CaM",
+        "rate": "p_56_1 * CaMKII_CaM * CaMKII_thr286"
+    },
+    "CaMKII_thr286_v121": {
+        "species": "CaMKII_thr286",
+        "rate": "p_121_1 * CaMKIIsss * IP3_3K"
+    },
+    "CaMKII_thr286_v127": {
+        "species": "CaMKII_thr286",
+        "rate": "p_127_1 * CaMKIIsss * IP3_3K_CaM"
+    },
+    "CaMKII_thr286_v221": {
+        "species": "CaMKII_thr286",
+        "rate": "p_57_1 * CaMKII_thr286 * PP1_active"
+    },
+    "CaMKII_thr286_v226": {
+        "species": "CaMKII_thr286",
+        "rate": "p_121_1 * CaMKIIsss * IP3_3K"
+    },
+    "CaMKII_thr286_v227": {
+        "species": "CaMKII_thr286",
+        "rate": "p_127_1 * CaMKIIsss * IP3_3K_CaM"
+    },
+    "CaMKII_thr286_v229": {
+        "species": "CaMKII_thr286",
+        "rate": "p_56_1 * CaMKII_CaM * CaMKII_thr286"
+    },
+    "CaMKII_thr286_v45": {
+        "species": "CaMKII_thr286",
+        "rate": "-p_45_1 * CaMKII"
+    },
+    "CaMKII_thr286_v52": {
+        "species": "CaMKII_thr286",
+        "rate": "p_52_1 * CaMKIIsss * CaMKII_CaM"
+    },
+    "CaMKII_thr286_v58": {
+        "species": "CaMKII_thr286",
+        "rate": "-p_58_1 * PP1_active_Deph_thr305_complex"
+    },
+    "CaMKII_thr286s_CaM_v120": {
+        "species": "CaMKII_thr286s_CaM",
+        "rate": "p_120_1 * CaMKII_CaM * IP3_3K"
+    },
+    "CaMKII_thr286s_CaM_v126": {
+        "species": "CaMKII_thr286s_CaM",
+        "rate": "p_126_1 * CaMKII_CaM * IP3_3K_CaM"
+    },
+    "CaMKII_thr286s_CaM_v217": {
+        "species": "CaMKII_thr286s_CaM",
+        "rate": "p_59_1 * CaMKII_thr286s_CaM * PP1_active"
+    },
+    "CaMKII_thr286s_CaM_v224": {
+        "species": "CaMKII_thr286s_CaM",
+        "rate": "p_120_1 * CaMKII_CaM * IP3_3K"
+    },
+    "CaMKII_thr286s_CaM_v225": {
+        "species": "CaMKII_thr286s_CaM",
+        "rate": "p_126_1 * CaMKII_CaM * IP3_3K_CaM"
+    },
+    "CaMKII_thr286s_CaM_v229": {
+        "species": "CaMKII_thr286s_CaM",
+        "rate": "p_56_1 * CaMKII_CaM * CaMKII_thr286"
+    },
+    "CaMKII_thr286s_CaM_v53": {
+        "species": "CaMKII_thr286s_CaM",
+        "rate": "p_53_1 * CaMKII_CaM * CaMKII_CaM"
+    },
+    "CaMKII_thr286s_CaM_v56": {
+        "species": "CaMKII_thr286s_CaM",
+        "rate": "p_56_1 * CaMKII_CaM * CaMKII_thr286"
+    },
+    "CaMKII_thr286s_CaM_v60": {
+        "species": "CaMKII_thr286s_CaM",
+        "rate": "-p_60_1 * tot_autonomous_CaMKII_auton_286_complex"
+    },
+    "CaMKII_thr286s_CaM_v61": {
+        "species": "CaMKII_thr286s_CaM",
+        "rate": "-p_61_1 * tot_CaM_CaMKII_CaM_act_286_complex"
+    },
+    "CaTransp_2Ca_v61": {
+        "species": "CaTransp_2Ca",
+        "rate": "-1 * p_18_1 * ca * ca * CaTransp"
+    },
+    "DIPP1_v15": {
+        "species": "DIPP1",
+        "rate": "p_15_1 * bisPP_IP4 * DIPP1"
+    },
+    "DIPP1_v216": {
+        "species": "DIPP1",
+        "rate": "p_74_1 * DIPP1 * PP_IP5"
+    },
+    "GsGDP_v76": {
+        "species": "GsGDP",
+        "rate": "-p_76_1 * GsGTP"
+    },
+    "GsGDP_v77": {
+        "species": "GsGDP",
+        "rate": "-p_77_1 * PLC_Ca_Gq"
+    },
+    "GsGTP_v12": {
+        "species": "GsGTP",
+        "rate": "-p_12_1 * Rec_AngII_Gq"
+    },
+    "G_GDP_v13": {
+        "species": "G_GDP",
+        "rate": "-p_11_1 * BetaGamma * GsGDP"
+    },
+    "IP1_1__v83": {
+        "species": "IP1_1_",
+        "rate": "-p_83_1 * inositol"
+    },
+    "IP1_1__v84": {
+        "species": "IP1_1_",
+        "rate": "-p_84_1 * IP2_3pase1_ip2_3pase1_complex"
+    },
+    "IP1_1__v85": {
+        "species": "IP1_1_",
+        "rate": "-p_85_1 * IP2_3pase2_ip2_3pase2_complex"
+    },
+    "IP1_3__v85": {
+        "species": "IP1_3_",
+        "rate": "-p_87_1 * IP_4pase_ip2_4pase_complex"
+    },
+    "IP1_4__v85": {
+        "species": "IP1_4_",
+        "rate": "-p_89_1 * IP_1pase_ip2_1pase_complex"
+    },
+    "IP2_13__v196": {
+        "species": "IP2_13_",
+        "rate": "p_92_1 * IP2_13_ * IP2_3pase1"
+    },
+    "IP2_13__v197": {
+        "species": "IP2_13_",
+        "rate": "p_93_1 * IP2_13_ * IP2_3pase2"
+    },
+    "IP2_13__v94": {
+        "species": "IP2_13_",
+        "rate": "-p_94_1 * IP_4pase_ip3_4pase_complex"
+    },
+    "IP2_14__v205": {
+        "species": "IP2_14_",
+        "rate": "p_95_1 * IP2_14_ * IP_1pase"
+    },
+    "IP2_14__v96": {
+        "species": "IP2_14_",
+        "rate": "-p_96_1 * IP_5pase1_ip3_5pase1_complex"
+    },
+    "IP2_14__v97": {
+        "species": "IP2_14_",
+        "rate": "-p_97_1 * IP3_5pase2_ip3_5pase2_complex"
+    },
+    "IP2_34__v207": {
+        "species": "IP2_34_",
+        "rate": "p_98_1 * IP2_34_ * IP_4pase"
+    },
+    "IP2_34__v99": {
+        "species": "IP2_34_",
+        "rate": "-p_99_1 * IP_1pase_ip3_1pase_complex"
+    },
+    "IP2_3pase1_v99": {
+        "species": "IP2_3pase1",
+        "rate": "p_92_1 * IP2_13_ * IP2_3pase1"
+    },
+    "IP2_3pase2_v99": {
+        "species": "IP2_3pase2",
+        "rate": "p_93_1 * IP2_13_ * IP2_3pase2"
+    },
+    "IP3_134__v103": {
+        "species": "IP3_134_",
+        "rate": "-p_103_1 * IP_5pase1_ip4_5pase_complex"
+    },
+    "IP3_134__v206": {
+        "species": "IP3_134_",
+        "rate": "p_101_1 * IP3_134_ * IP_1pase"
+    },
+    "IP3_134__v208": {
+        "species": "IP3_134_",
+        "rate": "p_102_1 * IP3_134_ * IP_4pase"
+    },
+    "IP3_134__-v1": {
+        "species": "IP3_134_",
+        "rate": "-1 * p_1_1 * 1345_3pase * IP3_134_"
+    },
+    "IP3_145__v104": {
+        "species": "IP3_145_",
+        "rate": "-p_104_1 * PIP2"
+    },
+    "IP3_145__v106": {
+        "species": "IP3_145_",
+        "rate": "-p_106_1 * IP4_1456_"
+    },
+    "IP3_145__v112": {
+        "species": "IP3_145_",
+        "rate": "-p_112_1 * 1345_3pase_ip4_3pase_complex"
+    },
+    "IP3_145__v198": {
+        "species": "IP3_145_",
+        "rate": "p_107_1 * IP3_145_ * IP3_3K"
+    },
+    "IP3_145__v199": {
+        "species": "IP3_145_",
+        "rate": "p_108_1 * IP3_145_ * IP3_3Ks"
+    },
+    "IP3_145__v200": {
+        "species": "IP3_145_",
+        "rate": "p_109_1 * IP3_145_ * IP3_3Ks1"
+    },
+    "IP3_145__v201": {
+        "species": "IP3_145_",
+        "rate": "p_111_1 * IP3_145_ * IP3_5pase2"
+    },
+    "IP3_145__v209": {
+        "species": "IP3_145_",
+        "rate": "p_110_1 * IP3_145_ * IP_5pase1"
+    },
+    "IP3_145__v68": {
+        "species": "IP3_145_",
+        "rate": "p_68_1 * PLC_complex * DAG"
+    },
+    "IP3_145__v69": {
+        "species": "IP3_145_",
+        "rate": "p_69_1 * PLC_Ca_complex * DAG"
+    },
+    "IP3_145__v70": {
+        "species": "IP3_145_",
+        "rate": "p_70_1 * PLC_Gq_complex * DAG"
+    },
+    "IP3_145__v71": {
+        "species": "IP3_145_",
+        "rate": "p_71_1 * PLC_Ca_Gq_PLCb_Ca_Gq_complex * DAG"
+    },
+    "IP3_145__-v10": {
+        "species": "IP3_145_",
+        "rate": "-1 * p_10_1 * IP3_145_ * IP3_3K_CaM"
+    },
+    "IP3_145__-v113": {
+        "species": "IP3_145_",
+        "rate": "-1 * p_113_1 * IP3_145__ER"
+    },
+    "IP3_145__-v2": {
+        "species": "IP3_145_",
+        "rate": "-1 * p_2_1 * 1345_3pase * IP3_145_"
+    },
+    "IP3_145__3*v119": {
+        "species": "IP3_145_",
+        "rate": "3 * p_119_1 * IP3_145_ * IP3_145_ * IP3_145_ * IP3R"
+    },
+    "IP3_145__ER_v105": {
+        "species": "IP3_145__ER",
+        "rate": "p_105_1 * IP3_145__ER"
+    },
+    "IP3_145__ER_v114": {
+        "species": "IP3_145__ER",
+        "rate": "-p_114_1 * MIPP_ip4_3pase_complex"
+    },
+    "IP3_56K_IP4_1K_v114": {
+        "species": "IP3_56K_IP4_1K",
+        "rate": "-p_116_1 * IP3_56Kcmplx"
+    },
+    "IP3_3K_v107": {
+        "species": "IP3_3K",
+        "rate": "p_107_1 * IP3_145_ * IP3_3K"
+    },
+    "IP3_3K_v224": {
+        "species": "IP3_3K",
+        "rate": "p_120_1 * CaMKII_CaM * IP3_3K"
+    },
+    "IP3_3K_v226": {
+        "species": "IP3_3K",
+        "rate": "p_121_1 * CaMKIIsss * IP3_3K"
+    },
+    "IP3_3K_v231": {
+        "species": "IP3_3K",
+        "rate": "p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "IP3_3Ks_v108": {
+        "species": "IP3_3Ks",
+        "rate": "p_108_1 * IP3_145_ * IP3_3Ks"
+    },
+    "IP3_3Ks_v123": {
+        "species": "IP3_3Ks",
+        "rate": "-p_123_1 * tot_CaM_CaMKII_CaM_CaMK_phos_complex"
+    },
+    "IP3_3Ks_v124": {
+        "species": "IP3_3Ks",
+        "rate": "-p_124_1 * tot_autonomous_CaMKII_CaMK_phos_complex"
+    },
+    "IP3_3Ks1_v109": {
+        "species": "IP3_3Ks1",
+        "rate": "p_109_1 * IP3_145_ * IP3_3Ks1"
+    },
+    "IP3_3Ks1_v125": {
+        "species": "IP3_3Ks1",
+        "rate": "-p_125_1 * PKC_active_PKC_phos_complex"
+    },
+    "IP3_3K_CaM_v225": {
+        "species": "IP3_3K_CaM",
+        "rate": "p_126_1 * CaMKII_CaM * IP3_3K_CaM"
+    },
+    "IP3_3K_CaM_v227": {
+        "species": "IP3_3K_CaM",
+        "rate": "p_127_1 * CaMKIIsss * IP3_3K_CaM"
+    },
+    "IP3_3K_CaMs_v128": {
+        "species": "IP3_3K_CaMs",
+        "rate": "-p_128_1 * tot_CaM_CaMKII_CaM_CaMK_phos1_complex"
+    },
+    "IP3_3K_CaMs_v129": {
+        "species": "IP3_3K_CaMs",
+        "rate": "-p_129_1 * tot_autonomous_CaMKII_CaMK_phos1_complex"
+    },
+    "IP3_5pase2_v129": {
+        "species": "IP3_5pase2",
+        "rate": "p_111_1 * IP3_145_ * IP3_5pase2"
+    },
+    "IP4_1345__v133": {
+        "species": "IP4_1345_",
+        "rate": "-p_133_1 * IP3_3K_ip3_3k_complex"
+    },
+    "IP4_1345__v134": {
+        "species": "IP4_1345_",
+        "rate": "-p_134_1 * IP3_3Ks_ip3_3ks_complex"
+    },
+    "IP4_1345__v135": {
+        "species": "IP4_1345_",
+        "rate": "-p_135_1 * IP3_3Ks1_ip3_3ks1_complex"
+    },
+    "IP4_1345__v136": {
+        "species": "IP4_1345_",
+        "rate": "p_136_1 * IP4_1345_"
+    },
+    "IP4_1345__v210": {
+        "species": "IP4_1345_",
+        "rate": "p_132_1 * IP4_1345_ * IP_5pase1"
+    },
+    "IP4_1345__v230": {
+        "species": "IP4_1345_",
+        "rate": "p_131_1 * 1345_3pase * IP4_1345_"
+    },
+    "IP4_1345__v6": {
+        "species": "IP4_1345_",
+        "rate": "p_6_1 * 1345_3pase * IP4_1345_"
+    },
+    "IP4_1345__ER_v130": {
+        "species": "IP4_1345__ER",
+        "rate": "p_130_1 * IP4_1345__ER"
+    },
+    "IP4_1345__ER_v211": {
+        "species": "IP4_1345__ER",
+        "rate": "p_137_1 * IP4_1345__ER * MIPP"
+    },
+    "IP4_1346__v116": {
+        "species": "IP4_1346_",
+        "rate": "-p_116_1 * IP3_56Kcmplx"
+    },
+    "IP4_1346__v139": {
+        "species": "IP4_1346_",
+        "rate": "-p_139_1 * IP5_13456_"
+    },
+    "IP4_1456__v106": {
+        "species": "IP4_1456_",
+        "rate": "-p_106_1 * IP4_1456_"
+    },
+    "IP4_1456__v143": {
+        "species": "IP4_1456_",
+        "rate": "-p_143_1 * IP5_13456_"
+    },
+    "IP4_1456__v144": {
+        "species": "IP4_1456_",
+        "rate": "p_144_1 * IP4_1456_"
+    },
+    "IP4_1456__ER_v142": {
+        "species": "IP4_1456__ER",
+        "rate": "p_142_1 * IP4_1456__ER"
+    },
+    "IP4_1456__ER_v145": {
+        "species": "IP4_1456__ER",
+        "rate": "-p_145_1 * MIPP_ip5_3pase_complex"
+    },
+    "IP4_3456__v145": {
+        "species": "IP4_3456_",
+        "rate": "-p_146_1 * IP5_13456_"
+    },
+    "IP5_12456__ER_v145": {
+        "species": "IP5_12456__ER",
+        "rate": "-p_149_1 * MIPP_ip6_pase_complex"
+    },
+    "IP5_13456__v138": {
+        "species": "IP5_13456_",
+        "rate": "-p_138_1 * IP4_1346_"
+    },
+    "IP5_13456__v152": {
+        "species": "IP5_13456_",
+        "rate": "-p_152_1 * IP6"
+    },
+    "IP5_13456__v153": {
+        "species": "IP5_13456_",
+        "rate": "-p_153_1 * PP_IP4"
+    },
+    "IP5_13456__v157": {
+        "species": "IP5_13456_",
+        "rate": "p_157_1 * IP5_13456_"
+    },
+    "IP5_13456__v202": {
+        "species": "IP5_13456_",
+        "rate": "p_155_1 * IP5_13456_ * IP6_K"
+    },
+    "IP5_13456__v203": {
+        "species": "IP5_13456_",
+        "rate": "p_156_1 * IP5_13456_ * IP6_K2"
+    },
+    "IP5_13456__ER_v149": {
+        "species": "IP5_13456__ER",
+        "rate": "-p_149_1 * MIPP_ip6_pase_complex"
+    },
+    "IP5_13456__ER_v154": {
+        "species": "IP5_13456__ER",
+        "rate": "p_154_1 * IP5_13456__ER"
+    },
+    "IP5_13456__ER_v212": {
+        "species": "IP5_13456__ER",
+        "rate": "p_158_1 * IP5_13456__ER * MIPP"
+    },
+    "IP6_v151": {
+        "species": "IP6",
+        "rate": "-p_151_1 * IP5_13456_"
+    },
+    "IP6_v164": {
+        "species": "IP6",
+        "rate": "-p_164_1 * DIPP1_dipp_ip7_complex"
+    },
+    "IP6_v167": {
+        "species": "IP6",
+        "rate": "p_167_1 * IP6"
+    },
+    "IP6_v204": {
+        "species": "IP6",
+        "rate": "p_163_1 * IP6 * IP6_K2"
+    },
+    "IP6_K_v155": {
+        "species": "IP6_K",
+        "rate": "p_155_1 * IP5_13456_ * IP6_K"
+    },
+    "IP6_K_v214": {
+        "species": "IP6_K",
+        "rate": "p_166_1 * IP6_K * PP_IP4"
+    },
+    "IP6_ER_v161": {
+        "species": "IP6_ER",
+        "rate": "p_161_1 * IP6_ER"
+    },
+    "IP6_ER_v213": {
+        "species": "IP6_ER",
+        "rate": "p_168_1 * IP6_ER * MIPP"
+    },
+    "IP6_K2_v156": {
+        "species": "IP6_K2",
+        "rate": "p_156_1 * IP5_13456_ * IP6_K2"
+    },
+    "IP6_K2_v163": {
+        "species": "IP6_K2",
+        "rate": "p_163_1 * IP6 * IP6_K2"
+    },
+    "IP6_K2_v215": {
+        "species": "IP6_K2",
+        "rate": "p_169_1 * IP6_K2 * PP_IP4"
+    },
+    "IP_1pase_v101": {
+        "species": "IP_1pase",
+        "rate": "p_101_1 * IP3_134_ * IP_1pase"
+    },
+    "IP_1pase_v95": {
+        "species": "IP_1pase",
+        "rate": "p_95_1 * IP2_14_ * IP_1pase"
+    },
+    "IP_4pase_v102": {
+        "species": "IP_4pase",
+        "rate": "p_102_1 * IP3_134_ * IP_4pase"
+    },
+    "IP_4pase_v98": {
+        "species": "IP_4pase",
+        "rate": "p_98_1 * IP2_34_ * IP_4pase"
+    },
+    "IP_5pase1_v110": {
+        "species": "IP_5pase1",
+        "rate": "p_110_1 * IP3_145_ * IP_5pase1"
+    },
+    "IP_5pase1_v132": {
+        "species": "IP_5pase1",
+        "rate": "p_132_1 * IP4_1345_ * IP_5pase1"
+    },
+    "MIPP_v137": {
+        "species": "MIPP",
+        "rate": "p_137_1 * IP4_1345__ER * MIPP"
+    },
+    "MIPP_v158": {
+        "species": "MIPP",
+        "rate": "p_158_1 * IP5_13456__ER * MIPP"
+    },
+    "MIPP_v168": {
+        "species": "MIPP",
+        "rate": "p_168_1 * IP6_ER * MIPP"
+    },
+    "PKC_AAs_v122": {
+        "species": "PKC_AAs",
+        "rate": "p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "PKC_AAs_v231": {
+        "species": "PKC_AAs",
+        "rate": "p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "PKC_basals_v122": {
+        "species": "PKC_basals",
+        "rate": "p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "PKC_basals_v172": {
+        "species": "PKC_basals",
+        "rate": "-p_172_1 * PKC_cytosolic"
+    },
+    "PKC_basals_v231": {
+        "species": "PKC_basals",
+        "rate": "p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "PKC_Ca_v176": {
+        "species": "PKC_Ca",
+        "rate": "-p_176_1 * PKC_Ca_membs"
+    },
+    "PKC_Ca_-v23": {
+        "species": "PKC_Ca",
+        "rate": "-1 * p_23_1 * ca * PKC_cytosolic"
+    },
+    "PKC_Ca_AAs_v122": {
+        "species": "PKC_Ca_AAs",
+        "rate": "p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "PKC_Ca_AAs_v231": {
+        "species": "PKC_Ca_AAs",
+        "rate": "p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "PKC_Ca_DAG_v231": {
+        "species": "PKC_Ca_DAG",
+        "rate": "-p_179_1 * PKC_DAG_membs"
+    },
+    "PKC_Ca_membs_v122": {
+        "species": "PKC_Ca_membs",
+        "rate": "p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "PKC_Ca_membs_v175": {
+        "species": "PKC_Ca_membs",
+        "rate": "-p_175_1 * PKC_Ca"
+    },
+    "PKC_Ca_membs_v231": {
+        "species": "PKC_Ca_membs",
+        "rate": "p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "PKC_cytosolic_v173": {
+        "species": "PKC_cytosolic",
+        "rate": "-p_173_1 * PKC_basals"
+    },
+    "PKC_cytosolic_v23": {
+        "species": "PKC_cytosolic",
+        "rate": "p_23_1 * ca * PKC_cytosolic"
+    },
+    "PKC_DAG_AA_v23": {
+        "species": "PKC_DAG_AA",
+        "rate": "-p_182_1 * PKC_DAG_AAs"
+    },
+    "PKC_DAG_AAs_v122": {
+        "species": "PKC_DAG_AAs",
+        "rate": "p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "PKC_DAG_AAs_v181": {
+        "species": "PKC_DAG_AAs",
+        "rate": "-p_181_1 * PKC_DAG_AA"
+    },
+    "PKC_DAG_AAs_v231": {
+        "species": "PKC_DAG_AAs",
+        "rate": "p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "PKC_DAG_membs_v122": {
+        "species": "PKC_DAG_membs",
+        "rate": "p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "PKC_DAG_membs_v178": {
+        "species": "PKC_DAG_membs",
+        "rate": "-p_178_1 * PKC_Ca_DAG"
+    },
+    "PKC_DAG_membs_v231": {
+        "species": "PKC_DAG_membs",
+        "rate": "p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "PLC_Ca_v231": {
+        "species": "PLC_Ca",
+        "rate": "-p_184_1 * PLC_Ca_Gq"
+    },
+    "PLC_Ca_Gq_v231": {
+        "species": "PLC_Ca_Gq",
+        "rate": "-p_77_1 * PLC_Ca_Gq"
+    },
+    "PP_IP4_v166": {
+        "species": "PP_IP4",
+        "rate": "p_166_1 * IP6_K * PP_IP4"
+    },
+    "PP_IP4_v169": {
+        "species": "PP_IP4",
+        "rate": "p_169_1 * IP6_K2 * PP_IP4"
+    },
+    "PP_IP4_v188": {
+        "species": "PP_IP4",
+        "rate": "-p_188_1 * IP6_K_ip5_k1_complex"
+    },
+    "PP_IP4_v189": {
+        "species": "PP_IP4",
+        "rate": "-p_189_1 * IP6_K2_ip5_k2_complex"
+    },
+    "PP_IP5_v191": {
+        "species": "PP_IP5",
+        "rate": "-p_191_1 * DIPP1_dipp_ip8_complex"
+    },
+    "PP_IP5_v192": {
+        "species": "PP_IP5",
+        "rate": "-p_192_1 * IP6_K2_ip6_k2_complex"
+    },
+    "PP_IP5_v74": {
+        "species": "PP_IP5",
+        "rate": "p_74_1 * DIPP1 * PP_IP5"
+    },
+    "PP1_active_v43": {
+        "species": "PP1_active",
+        "rate": "p_43_1 * CaMK_thr306 * PP1_active"
+    },
+    "PP1_active_v48": {
+        "species": "PP1_active",
+        "rate": "p_48_1 * CaMKIIsss * PP1_active"
+    },
+    "PP1_active_v49": {
+        "species": "PP1_active",
+        "rate": "p_49_1 * CaMKIIsss * PP1_active"
+    },
+    "PP1_active_v57": {
+        "species": "PP1_active",
+        "rate": "p_57_1 * CaMKII_thr286 * PP1_active"
+    },
+    "PP1_active_v59": {
+        "species": "PP1_active",
+        "rate": "p_59_1 * CaMKII_thr286s_CaM * PP1_active"
+    },
+    "Rec_AngII_v59": {
+        "species": "Rec_AngII",
+        "rate": "-p_12_1 * Rec_AngII_Gq"
+    },
+    "tot_autonomous_CaMKII_auton_286_complex_v60": {
+        "species": "tot_autonomous_CaMKII_auton_286_complex",
+        "rate": "-p_60_1 * tot_autonomous_CaMKII_auton_286_complex"
+    },
+    "tot_autonomous_CaMKII_auton_286_complex_-v52": {
+        "species": "tot_autonomous_CaMKII_auton_286_complex",
+        "rate": "-1 * p_52_1 * CaMKIIsss * CaMKII_CaM"
+    },
+    "tot_autonomous_CaMKII_auton_305_complex_v50": {
+        "species": "tot_autonomous_CaMKII_auton_305_complex",
+        "rate": "-p_50_1 * tot_autonomous_CaMKII_auton_305_complex"
+    },
+    "tot_autonomous_CaMKII_auton_305_complex_-v55": {
+        "species": "tot_autonomous_CaMKII_auton_305_complex",
+        "rate": "-1 * p_55_1 * CaMKII_thr286 * CaMKII_thr286"
+    },
+    "CaEPump_Ca_pump_out_complex_-v55": {
+        "species": "CaEPump_Ca_pump_out_complex",
+        "rate": "-p_25_1 * CaEPump_Ca_pump_out_complex"
+    },
+    "tot_CaM_CaMKII_CaM_CaMK_phos_complex_v123": {
+        "species": "tot_CaM_CaMKII_CaM_CaMK_phos_complex",
+        "rate": "-p_123_1 * tot_CaM_CaMKII_CaM_CaMK_phos_complex"
+    },
+    "tot_CaM_CaMKII_CaM_CaMK_phos_complex_-v120": {
+        "species": "tot_CaM_CaMKII_CaM_CaMK_phos_complex",
+        "rate": "-1 * p_120_1 * CaMKII_CaM * IP3_3K"
+    },
+    "tot_CaM_CaMKII_CaM_CaMK_phos1_complex_v128": {
+        "species": "tot_CaM_CaMKII_CaM_CaMK_phos1_complex",
+        "rate": "-p_128_1 * tot_CaM_CaMKII_CaM_CaMK_phos1_complex"
+    },
+    "tot_CaM_CaMKII_CaM_CaMK_phos1_complex_-v126": {
+        "species": "tot_CaM_CaMKII_CaM_CaMK_phos1_complex",
+        "rate": "-1 * p_126_1 * CaMKII_CaM * IP3_3K_CaM"
+    },
+    "tot_autonomous_CaMKII_CaMK_phos_complex_v124": {
+        "species": "tot_autonomous_CaMKII_CaMK_phos_complex",
+        "rate": "-p_124_1 * tot_autonomous_CaMKII_CaMK_phos_complex"
+    },
+    "tot_autonomous_CaMKII_CaMK_phos_complex_-v121": {
+        "species": "tot_autonomous_CaMKII_CaMK_phos_complex",
+        "rate": "-1 * p_121_1 * CaMKIIsss * IP3_3K"
+    },
+    "tot_autonomous_CaMKII_CaMK_phos1_complex_v129": {
+        "species": "tot_autonomous_CaMKII_CaMK_phos1_complex",
+        "rate": "-p_129_1 * tot_autonomous_CaMKII_CaMK_phos1_complex"
+    },
+    "tot_autonomous_CaMKII_CaMK_phos1_complex_-v127": {
+        "species": "tot_autonomous_CaMKII_CaMK_phos1_complex",
+        "rate": "-1 * p_127_1 * CaMKIIsss * IP3_3K_CaM"
+    },
+    "tot_CaM_CaMKII_CaM_act_286_complex_v61": {
+        "species": "tot_CaM_CaMKII_CaM_act_286_complex",
+        "rate": "-p_61_1 * tot_CaM_CaMKII_CaM_act_286_complex"
+    },
+    "tot_CaM_CaMKII_CaM_act_286_complex_-v53": {
+        "species": "tot_CaM_CaMKII_CaM_act_286_complex",
+        "rate": "-1 * p_53_1 * CaMKII_CaM * CaMKII_CaM"
+    },
+    "tot_CaM_CaMKII_CaM_act_305_complex_v51": {
+        "species": "tot_CaM_CaMKII_CaM_act_305_complex",
+        "rate": "-p_51_1 * tot_CaM_CaMKII_CaM_act_305_complex"
+    },
+    "tot_CaM_CaMKII_CaM_act_305_complex_-v56": {
+        "species": "tot_CaM_CaMKII_CaM_act_305_complex",
+        "rate": "-1 * p_56_1 * CaMKII_CaM * CaMKII_thr286"
+    },
+    "PP1_active_Deph_thr286_complex_v54": {
+        "species": "PP1_active_Deph_thr286_complex",
+        "rate": "-p_54_1 * PP1_active_Deph_thr286_complex"
+    },
+    "PP1_active_Deph_thr286_complex_-v59": {
+        "species": "PP1_active_Deph_thr286_complex",
+        "rate": "-1 * p_59_1 * CaMKII_thr286s_CaM * PP1_active"
+    },
+    "PP1_active_Deph_thr286c_complex_v44": {
+        "species": "PP1_active_Deph_thr286c_complex",
+        "rate": "-p_44_1 * PP1_active_Deph_thr286c_complex"
+    },
+    "PP1_active_Deph_thr286c_complex_-v48": {
+        "species": "PP1_active_Deph_thr286c_complex",
+        "rate": "-1 * p_48_1 * CaMKIIsss * PP1_active"
+    },
+    "PP1_active_Deph_thr305_complex_v58": {
+        "species": "PP1_active_Deph_thr305_complex",
+        "rate": "-p_58_1 * PP1_active_Deph_thr305_complex"
+    },
+    "PP1_active_Deph_thr305_complex_-v49": {
+        "species": "PP1_active_Deph_thr305_complex",
+        "rate": "-1 * p_49_1 * CaMKIIsss * PP1_active"
+    },
+    "PP1_active_Deph_thr306_complex_v46": {
+        "species": "PP1_active_Deph_thr306_complex",
+        "rate": "-p_46_1 * PP1_active_Deph_thr306_complex"
+    },
+    "PP1_active_Deph_thr306_complex_-v43": {
+        "species": "PP1_active_Deph_thr306_complex",
+        "rate": "-1 * p_43_1 * CaMK_thr306 * PP1_active"
+    },
+    "PP1_active_Deph_thr286b_complex_v47": {
+        "species": "PP1_active_Deph_thr286b_complex",
+        "rate": "-p_47_1 * PP1_active_Deph_thr286b_complex"
+    },
+    "PP1_active_Deph_thr286b_complex_-v57": {
+        "species": "PP1_active_Deph_thr286b_complex",
+        "rate": "-1 * p_57_1 * CaMKII_thr286 * PP1_active"
+    },
+    "DIPP1_dipp_ip7_complex_v164": {
+        "species": "DIPP1_dipp_ip7_complex",
+        "rate": "-p_164_1 * DIPP1_dipp_ip7_complex"
+    },
+    "DIPP1_dipp_ip7_complex_-v216": {
+        "species": "DIPP1_dipp_ip7_complex",
+        "rate": "-1 * p_74_1 * DIPP1 * PP_IP5"
+    },
+    "DIPP1_dipp_ip8_complex_v191": {
+        "species": "DIPP1_dipp_ip8_complex",
+        "rate": "-p_191_1 * DIPP1_dipp_ip8_complex"
+    },
+    "DIPP1_dipp_ip8_complex_-v15": {
+        "species": "DIPP1_dipp_ip8_complex",
+        "rate": "-1 * p_15_1 * bisPP_IP4 * DIPP1"
+    },
+    "IP_1pase_ip2_1pase_complex_v89": {
+        "species": "IP_1pase_ip2_1pase_complex",
+        "rate": "-p_89_1 * IP_1pase_ip2_1pase_complex"
+    },
+    "IP_1pase_ip2_1pase_complex_-v95": {
+        "species": "IP_1pase_ip2_1pase_complex",
+        "rate": "-1 * p_95_1 * IP2_14_ * IP_1pase"
+    },
+    "IP2_3pase1_ip2_3pase1_complex_v84": {
+        "species": "IP2_3pase1_ip2_3pase1_complex",
+        "rate": "-p_84_1 * IP2_3pase1_ip2_3pase1_complex"
+    },
+    "IP2_3pase1_ip2_3pase1_complex_-v92": {
+        "species": "IP2_3pase1_ip2_3pase1_complex",
+        "rate": "-1 * p_92_1 * IP2_13_ * IP2_3pase1"
+    },
+    "IP2_3pase2_ip2_3pase2_complex_v85": {
+        "species": "IP2_3pase2_ip2_3pase2_complex",
+        "rate": "-p_85_1 * IP2_3pase2_ip2_3pase2_complex"
+    },
+    "IP2_3pase2_ip2_3pase2_complex_-v93": {
+        "species": "IP2_3pase2_ip2_3pase2_complex",
+        "rate": "-1 * p_93_1 * IP2_13_ * IP2_3pase2"
+    },
+    "IP_4pase_ip2_4pase_complex_v87": {
+        "species": "IP_4pase_ip2_4pase_complex",
+        "rate": "-p_87_1 * IP_4pase_ip2_4pase_complex"
+    },
+    "IP_4pase_ip2_4pase_complex_-v98": {
+        "species": "IP_4pase_ip2_4pase_complex",
+        "rate": "-1 * p_98_1 * IP2_34_ * IP_4pase"
+    },
+    "IP3_3K_ip3_3k_complex_v133": {
+        "species": "IP3_3K_ip3_3k_complex",
+        "rate": "-p_133_1 * IP3_3K_ip3_3k_complex"
+    },
+    "IP3_3K_ip3_3k_complex_-v107": {
+        "species": "IP3_3K_ip3_3k_complex",
+        "rate": "-1 * p_107_1 * IP3_145_ * IP3_3K"
+    },
+    "IP3_3Ks_ip3_3ks_complex_v134": {
+        "species": "IP3_3Ks_ip3_3ks_complex",
+        "rate": "-p_134_1 * IP3_3Ks_ip3_3ks_complex"
+    },
+    "IP3_3Ks_ip3_3ks_complex_-v108": {
+        "species": "IP3_3Ks_ip3_3ks_complex",
+        "rate": "-1 * p_108_1 * IP3_145_ * IP3_3Ks"
+    },
+    "IP3_3Ks1_ip3_3ks1_complex_v135": {
+        "species": "IP3_3Ks1_ip3_3ks1_complex",
+        "rate": "-p_135_1 * IP3_3Ks1_ip3_3ks1_complex"
+    },
+    "IP3_3Ks1_ip3_3ks1_complex_-v109": {
+        "species": "IP3_3Ks1_ip3_3ks1_complex",
+        "rate": "-1 * p_109_1 * IP3_145_ * IP3_3Ks1"
+    },
+    "IP_1pase_ip3_1pase_complex_v99": {
+        "species": "IP_1pase_ip3_1pase_complex",
+        "rate": "-p_99_1 * IP_1pase_ip3_1pase_complex"
+    },
+    "IP_1pase_ip3_1pase_complex_-v101": {
+        "species": "IP_1pase_ip3_1pase_complex",
+        "rate": "-1 * p_101_1 * IP3_134_ * IP_1pase"
+    },
+    "IP_4pase_ip3_4pase_complex_v94": {
+        "species": "IP_4pase_ip3_4pase_complex",
+        "rate": "-p_94_1 * IP_4pase_ip3_4pase_complex"
+    },
+    "IP_4pase_ip3_4pase_complex_-v102": {
+        "species": "IP_4pase_ip3_4pase_complex",
+        "rate": "-1 * p_102_1 * IP3_134_ * IP_4pase"
+    },
+    "IP_5pase1_ip3_5pase1_complex_v96": {
+        "species": "IP_5pase1_ip3_5pase1_complex",
+        "rate": "-p_96_1 * IP_5pase1_ip3_5pase1_complex"
+    },
+    "IP_5pase1_ip3_5pase1_complex_-v110": {
+        "species": "IP_5pase1_ip3_5pase1_complex",
+        "rate": "-1 * p_110_1 * IP3_145_ * IP_5pase1"
+    },
+    "IP3_5pase2_ip3_5pase2_complex_v97": {
+        "species": "IP3_5pase2_ip3_5pase2_complex",
+        "rate": "-p_97_1 * IP3_5pase2_ip3_5pase2_complex"
+    },
+    "IP3_5pase2_ip3_5pase2_complex_-v111": {
+        "species": "IP3_5pase2_ip3_5pase2_complex",
+        "rate": "-1 * p_111_1 * IP3_145_ * IP3_5pase2"
+    },
+    "MIPP_ip4_3pase_complex_v114": {
+        "species": "MIPP_ip4_3pase_complex",
+        "rate": "-p_114_1 * MIPP_ip4_3pase_complex"
+    },
+    "MIPP_ip4_3pase_complex_-v137": {
+        "species": "MIPP_ip4_3pase_complex",
+        "rate": "-1 * p_137_1 * IP4_1345__ER * MIPP"
+    },
+    "1345_3pase_ip4_3pase_complex_v112": {
+        "species": "1345_3pase_ip4_3pase_complex",
+        "rate": "-p_112_1 * 1345_3pase_ip4_3pase_complex"
+    },
+    "1345_3pase_ip4_3pase_complex_-v131": {
+        "species": "1345_3pase_ip4_3pase_complex",
+        "rate": "-1 * p_131_1 * 1345_3pase * IP4_1345_"
+    },
+    "1345_3pase_ip4_3pase_complex_-v6": {
+        "species": "1345_3pase_ip4_3pase_complex",
+        "rate": "-1 * p_6_1 * 1345_3pase * IP4_1345_"
+    },
+    "IP_5pase1_ip4_5pase_complex_v103": {
+        "species": "IP_5pase1_ip4_5pase_complex",
+        "rate": "-p_103_1 * IP_5pase1_ip4_5pase_complex"
+    },
+    "IP_5pase1_ip4_5pase_complex_-v132": {
+        "species": "IP_5pase1_ip4_5pase_complex",
+        "rate": "-1 * p_132_1 * IP4_1345_ * IP_5pase1"
+    },
+    "MIPP_ip5_3pase_complex_v145": {
+        "species": "MIPP_ip5_3pase_complex",
+        "rate": "-p_145_1 * MIPP_ip5_3pase_complex"
+    },
+    "MIPP_ip5_3pase_complex_-v158": {
+        "species": "MIPP_ip5_3pase_complex",
+        "rate": "-1 * p_158_1 * IP5_13456__ER * MIPP"
+    },
+    "IP6_K_ip5_k1_complex_v188": {
+        "species": "IP6_K_ip5_k1_complex",
+        "rate": "-p_188_1 * IP6_K_ip5_k1_complex"
+    },
+    "IP6_K_ip5_k1_complex_-v155": {
+        "species": "IP6_K_ip5_k1_complex",
+        "rate": "-1 * p_155_1 * IP5_13456_ * IP6_K"
+    },
+    "IP6_K2_ip5_k2_complex_v189": {
+        "species": "IP6_K2_ip5_k2_complex",
+        "rate": "-p_189_1 * IP6_K2_ip5_k2_complex"
+    },
+    "IP6_K2_ip5_k2_complex_-v156": {
+        "species": "IP6_K2_ip5_k2_complex",
+        "rate": "-1 * p_156_1 * IP5_13456_ * IP6_K2"
+    },
+    "IP6_K2_ip6_k2_complex_v192": {
+        "species": "IP6_K2_ip6_k2_complex",
+        "rate": "-p_192_1 * IP6_K2_ip6_k2_complex"
+    },
+    "IP6_K2_ip6_k2_complex_-v163": {
+        "species": "IP6_K2_ip6_k2_complex",
+        "rate": "-1 * p_163_1 * IP6 * IP6_K2"
+    },
+    "MIPP_ip6_pase_complex_v149": {
+        "species": "MIPP_ip6_pase_complex",
+        "rate": "-p_149_1 * MIPP_ip6_pase_complex"
+    },
+    "MIPP_ip6_pase_complex_-v168": {
+        "species": "MIPP_ip6_pase_complex",
+        "rate": "-1 * p_168_1 * IP6_ER * MIPP"
+    },
+    "PKC_active_PKC_phos_complex_v125": {
+        "species": "PKC_active_PKC_phos_complex",
+        "rate": "-p_125_1 * PKC_active_PKC_phos_complex"
+    },
+    "PKC_active_PKC_phos_complex_-v122": {
+        "species": "PKC_active_PKC_phos_complex",
+        "rate": "-1 * p_122_1 * IP3_3K * PKC_AAs"
+    },
+    "IP6_K_pp_ip4_k1_complex_-v122": {
+        "species": "IP6_K_pp_ip4_k1_complex",
+        "rate": "-1 * p_166_1 * IP6_K * PP_IP4"
+    },
+    "IP6_K2_pp_ip4_k2_complex_-v122": {
+        "species": "IP6_K2_pp_ip4_k2_complex",
+        "rate": "-1 * p_169_1 * IP6_K2 * PP_IP4"
+    },
+    "AA_v171": {
+        "species": "AA",
+        "rate": "p_171_1 * PKC_cytosolic * AA"
+    },
+    "AA_v174": {
+        "species": "AA",
+        "rate": "p_174_1 * PKC_Ca * AA"
+    },
+    "AA_v180": {
+        "species": "AA",
+        "rate": "p_180_1 * PKC_DAG * AA"
+    },
+    "ADP_v14": {
+        "species": "ADP",
+        "rate": "p_14_1 * bisPP_IP4 * PP_IP5_K * ADP"
+    },
+    "ADP_v165": {
+        "species": "ADP",
+        "rate": "p_165_1 * IP6_K * PP_IP5 * ADP"
+    },
+    "ATP_v160": {
+        "species": "ATP",
+        "rate": "p_160_1 * IP6 * IP6_K * ATP"
+    },
+    "ATP_v190": {
+        "species": "ATP",
+        "rate": "p_190_1 * PP_IP5 * PP_IP5_K * ATP"
+    },
+    "AngII_v170": {
+        "species": "AngII",
+        "rate": "p_170_1 * AT1R * AngII"
+    },
+    "AngII_v194": {
+        "species": "AngII",
+        "rate": "p_194_1 * Rec_Gq * AngII"
+    },
+    "inositol_v83": {
+        "species": "inositol",
+        "rate": "-p_83_1 * inositol"
+    },
+    "inositol_v90": {
+        "species": "inositol",
+        "rate": "p_90_1 * IP1_pase * inositol"
+    },
+    "inositol_v91": {
+        "species": "inositol",
+        "rate": "p_91_1 * IP1_pase * inositol"
+    },
+    "inositol_-v86": {
+        "species": "inositol",
+        "rate": "-1 * p_86_1 * IP1_3_"
+    },
+    "IP5_12456__-v86": {
+        "species": "IP5_12456_",
+        "rate": "p_148_1 * IP5_12456_"
+    },
+    "mGluRAntag_-v86": {
+        "species": "mGluRAntag",
+        "rate": "p_16_1 * Rec_Gq * mGluRAntag"
+    },
+    "PIP2_v104": {
+        "species": "PIP2",
+        "rate": "-p_104_1 * PIP2"
+    },
+    "PIP2_v183": {
+        "species": "PIP2",
+        "rate": "p_183_1 * PLC * PIP2"
+    },
+    "PIP2_v185": {
+        "species": "PIP2",
+        "rate": "p_185_1 * PLC_Ca * PIP2"
+    },
+    "PIP2_v186": {
+        "species": "PIP2",
+        "rate": "p_186_1 * PLC_Ca_Gq * PIP2"
+    },
+    "PIP2_v187": {
+        "species": "PIP2",
+        "rate": "p_187_1 * PLC_Gq * PIP2"
+    },
+    "IP3_v104": {
+        "species": "IP3",
+        "rate": "-p_104_1 * PIP2"
+    },
+    "IP3_v105": {
+        "species": "IP3",
+        "rate": "p_105_1 * IP3_145__ER"
+    },
+    "IP3_v106": {
+        "species": "IP3",
+        "rate": "-p_106_1 * IP4_1456_"
+    },
+    "IP3_v112": {
+        "species": "IP3",
+        "rate": "-p_112_1 * 1345_3pase_ip4_3pase_complex"
+    },
+    "IP3_v68": {
+        "species": "IP3",
+        "rate": "p_68_1 * PLC_complex * DAG"
+    },
+    "IP3_v69": {
+        "species": "IP3",
+        "rate": "p_69_1 * PLC_Ca_complex * DAG"
+    },
+    "IP3_v70": {
+        "species": "IP3",
+        "rate": "p_70_1 * PLC_Gq_complex * DAG"
+    },
+    "IP3_v71": {
+        "species": "IP3",
+        "rate": "p_71_1 * PLC_Ca_Gq_PLCb_Ca_Gq_complex * DAG"
+    },
+    "IP3_-v10": {
+        "species": "IP3",
+        "rate": "-1 * p_10_1 * IP3_145_ * IP3_3K_CaM"
+    },
+    "IP3_-v107": {
+        "species": "IP3",
+        "rate": "-1 * p_107_1 * IP3_145_ * IP3_3K"
+    },
+    "IP3_-v108": {
+        "species": "IP3",
+        "rate": "-1 * p_108_1 * IP3_145_ * IP3_3Ks"
+    },
+    "IP3_-v109": {
+        "species": "IP3",
+        "rate": "-1 * p_109_1 * IP3_145_ * IP3_3Ks1"
+    },
+    "IP3_-v110": {
+        "species": "IP3",
+        "rate": "-1 * p_110_1 * IP3_145_ * IP_5pase1"
+    },
+    "IP3_-v111": {
+        "species": "IP3",
+        "rate": "-1 * p_111_1 * IP3_145_ * IP3_5pase2"
+    },
+    "IP3_-v2": {
+        "species": "IP3",
+        "rate": "-1 * p_2_1 * 1345_3pase * IP3_145_"
+    },
+    "IP3_-v8": {
+        "species": "IP3",
+        "rate": "-1 * p_8_1 * IP3_145_ * IP3_3K_CaMs"
+    },
+    "PKC_active_r1": {
+        "species": "PKC_active",
+        "rate": "phosPKC1_k_p * Kv * 4*PKC_active"
+    },
+    "PKC_active_r4": {
+        "species": "PKC_active",
+        "rate": "phosPKC1_k_p * Kv2 * 4*PKC_active"
+    },
+    "PKC_active_v171": {
+        "species": "PKC_active",
+        "rate": "p_171_1 * PKC_cytosolic * AA"
+    },
+    "PKC_active_v172": {
+        "species": "PKC_active",
+        "rate": "-p_172_1 * PKC_cytosolic"
+    },
+    "PKC_active_v174": {
+        "species": "PKC_active",
+        "rate": "p_174_1 * PKC_Ca * AA"
+    },
+    "PKC_active_v175": {
+        "species": "PKC_active",
+        "rate": "-p_175_1 * PKC_Ca"
+    },
+    "PKC_active_v178": {
+        "species": "PKC_active",
+        "rate": "-p_178_1 * PKC_Ca_DAG"
+    },
+    "PKC_active_v181": {
+        "species": "PKC_active",
+        "rate": "-p_181_1 * PKC_DAG_AA"
+    },
+    "PKC_active_-v173": {
+        "species": "PKC_active",
+        "rate": "-1 * -p_173_1 * PKC_basals"
+    },
+    "PKC_active_-v176": {
+        "species": "PKC_active",
+        "rate": "-1 * -p_176_1 * PKC_Ca_membs"
+    },
+    "PKC_active_-v179": {
+        "species": "PKC_active",
+        "rate": "-1 * -p_179_1 * PKC_DAG_membs"
+    },
+    "PKC_active_-v182": {
+        "species": "PKC_active",
+        "rate": "-1 * -p_182_1 * PKC_DAG_AAs"
+    },
+    "tot_autonomous_CaMKII_v45": {
+        "species": "tot_autonomous_CaMKII",
+        "rate": "-p_45_1 * CaMKII"
+    },
+    "tot_autonomous_CaMKII_v50": {
+        "species": "tot_autonomous_CaMKII",
+        "rate": "-p_50_1 * tot_autonomous_CaMKII_auton_305_complex"
+    },
+    "tot_autonomous_CaMKII_v51": {
+        "species": "tot_autonomous_CaMKII",
+        "rate": "-p_51_1 * tot_CaM_CaMKII_CaM_act_305_complex"
+    },
+    "tot_autonomous_CaMKII_v58": {
+        "species": "tot_autonomous_CaMKII",
+        "rate": "-p_58_1 * PP1_active_Deph_thr305_complex"
+    },
+    "tot_autonomous_CaMKII_-v41": {
+        "species": "tot_autonomous_CaMKII",
+        "rate": "-1 * p_41_1 * CaM_Ca4 * CaMKII_thr286"
+    },
+    "tot_autonomous_CaMKII_-v48": {
+        "species": "tot_autonomous_CaMKII",
+        "rate": "-1 * p_48_1 * CaMKIIsss * PP1_active"
+    },
+    "tot_autonomous_CaMKII_-v49": {
+        "species": "tot_autonomous_CaMKII",
+        "rate": "-1 * p_49_1 * CaMKIIsss * PP1_active"
+    },
+    "tot_autonomous_CaMKII_-v55": {
+        "species": "tot_autonomous_CaMKII",
+        "rate": "-1 * p_55_1 * CaMKII_thr286 * CaMKII_thr286"
+    },
+    "tot_autonomous_CaMKII_-v56": {
+        "species": "tot_autonomous_CaMKII",
+        "rate": "-1 * p_56_1 * CaMKII_CaM * CaMKII_thr286"
+    },
+    "tot_autonomous_CaMKII_-v57": {
+        "species": "tot_autonomous_CaMKII",
+        "rate": "-1 * p_57_1 * CaMKII_thr286 * PP1_active"
+    },
+    "tot_CaM_CaMKII_r2": {
+        "species": "tot_CaM_CaMKII",
+        "rate": "phosMK1_k_p * Kv * 4*tot_CaM_CaMKII"
+    },
+    "tot_CaM_CaMKII_r3": {
+        "species": "tot_CaM_CaMKII",
+        "rate": "phosMK1_k_p * Kv1 * 4*tot_CaM_CaMKII"
+    },
+    "tot_CaM_CaMKII_v41": {
+        "species": "tot_CaM_CaMKII",
+        "rate": "p_41_1 * CaM_Ca4 * CaMKII_thr286"
+    },
+    "tot_CaM_CaMKII_v42": {
+        "species": "tot_CaM_CaMKII",
+        "rate": "p_42_1 * CaM_Ca4 * CaMKII"
+    },
+    "tot_CaM_CaMKII_v54": {
+        "species": "tot_CaM_CaMKII",
+        "rate": "-p_54_1 * PP1_active_Deph_thr286_complex"
+    },
+    "tot_CaM_CaMKII_v60": {
+        "species": "tot_CaM_CaMKII",
+        "rate": "-p_60_1 * tot_autonomous_CaMKII_auton_286_complex"
+    },
+    "tot_CaM_CaMKII_v61": {
+        "species": "tot_CaM_CaMKII",
+        "rate": "-p_61_1 * tot_CaM_CaMKII_CaM_act_286_complex"
+    },
+    "tot_CaM_CaMKII_-v52": {
+        "species": "tot_CaM_CaMKII",
+        "rate": "-1 * p_52_1 * CaMKIIsss * CaMKII_CaM"
+    },
+    "tot_CaM_CaMKII_-v53": {
+        "species": "tot_CaM_CaMKII",
+        "rate": "-1 * p_53_1 * CaMKII_CaM * CaMKII_CaM"
+    },
+    "tot_CaM_CaMKII_-v59": {
+        "species": "tot_CaM_CaMKII",
+        "rate": "-1 * p_59_1 * CaMKII_thr286s_CaM * PP1_active"
     }
 }
