@@ -62,7 +62,7 @@ cfg.recordStep = 0.1
 cfg.simLabel = '0'
 cfg.saveFolder = '22aug23'
 cfg.saveJson = True
-cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
+cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
 
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
