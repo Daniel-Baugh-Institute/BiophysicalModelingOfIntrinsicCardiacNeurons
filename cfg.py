@@ -33,12 +33,12 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'}}
                     # 'ikcnj3':{'sec': 'soma', 'loc': 0.5,'var': 'ikcnj3_ch_Kcnj3_md2488'}}
 
 cfg.stim = 'IClamp' #'IClamp'  
-cfg.cellnum = 103
+cfg.cellnum = 52
 cfg.sze = 21
-cfg.amp = 0.05 #-1e-5 #0.6
+cfg.amp = 0.5 #-1e-5 #0.6
 # cfg.vc = 0 
 
-cfg.na = 0.1 #1
+cfg.na = 0.075 #1
 
 cfg.ka = 0.018
 cfg.kc = 0.018
@@ -59,10 +59,10 @@ cfg.c1a = 0.00001
 
 cfg.recordStep = 0.1       
 # cfg.filename = '21sep14d/'
-cfg.simLabel = 'a'
-cfg.saveFolder = '22jun29'
+cfg.simLabel = '0'
+cfg.saveFolder = '22aug23'
 cfg.saveJson = True
-cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}
+cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
 
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
