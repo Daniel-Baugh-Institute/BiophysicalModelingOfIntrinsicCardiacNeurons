@@ -9,7 +9,7 @@ from netpyne.batch import Batch
 def batch():
         params = specs.ODict()
         params['amp'] = [0.1] # indexed 
-        params['cellnum'] = [0,1,2,11,52,101] #[x for x in range(104)] # indexed          all_15: 104
+        params['cellnum'] = [0,11,52,101] #[x for x in range(104)] # indexed          all_15: 104
         # params['phi']= [0.2] 
         params['na'] = [0.075]  
         params['ka'] = [0.018] 
@@ -20,8 +20,8 @@ def batch():
         params['h3'] = [0.01]           
         params['h4'] = [0.0035]           
         params['c1i'] = [0.0006]                
-        params['c1g'] = [0.00001, 0.0001, 0.001, 0.01, 0.1]        
-        # params['c1d'] = [0.7e-4, 9.7e-4]
+        params['c1g'] = [0.0003]        
+        params['c1d'] = [0.00007, 0.0007, 0.007, 0.07, 0.7]
         # params['c1c'] = [0.0001, 0.01]           
         # params['c1b'] = [0.0001, 0.01]          
         # params['c1a'] = [0.00001, 0.001]         
@@ -31,7 +31,7 @@ def batch():
 
         b = Batch(params=params, cfgFile='cfg.py', netParamsFile='netParams_M1.py')
         # Set output folder, grid method (all param combinations), and run configuration
-        b.batchLabel = '22aug23j'
+        b.batchLabel = '22aug23k'
         b.saveFolder = b.batchLabel #'/tera/' + os.getlogin() + '/' + b.batchLabel
         b.method = 'grid'  # params.csv will be read by default; else need name in cfg.paramListFile
         b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
