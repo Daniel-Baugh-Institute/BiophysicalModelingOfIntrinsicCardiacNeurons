@@ -8,7 +8,7 @@ from netpyne.batch import Batch
 
 def batch():
         params = specs.ODict()
-        params['amp'] = [0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.2, 0.3, 0.4, 0.5] # indexed 
+        params['amp'] = [0.06, 0.08, 0.1, 0.3, 0.5] # indexed 
         params['cellnum'] = [x for x in range(104)] # indexed          all_15: 104
         params['phi']= [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1] 
         # params['na'] = [0.075]  
