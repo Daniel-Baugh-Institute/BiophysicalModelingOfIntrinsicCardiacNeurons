@@ -22,7 +22,7 @@ def batch():
         params['c1i'] = [0.0006]                
         params['c1g'] = [0.0003]        
         params['c1d'] = [0.00045]
-        params['c1c'] = [0.05]           
+        params['c1c'] = [0.006]           
         params['c1b'] = [0.0001, 0.001, 0.01, 0.1]          
         # params['c1a'] = [0.00001, 0.0001, 0.001, 0.01, 0.1]         
         # params['g']=[5e-4,6e-4,7e-4,8e-4,9e-4]        # indexed
