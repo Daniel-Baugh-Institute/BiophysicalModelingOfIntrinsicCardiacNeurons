@@ -8,14 +8,14 @@ from netpyne.batch import Batch
 
 def batch():
         params = specs.ODict()
-        params['amp'] = [0.1, 0.5] # indexed 
-        params['cellnum'] = [x for x in range(104)] # indexed          all_15: 104
+        params['amp'] = [0.1] # indexed 
+        params['cellnum'] = [0,11,52,101] #[x for x in range(104)] # indexed          all_15: 104
         # params['phi']= [0.2] 
-        params['na'] = [0.075, 0.085, 0.095]  
-        params['ka'] = [0.018, 0.025] 
-        params['kc'] = [0.018, 0.025, 0.1]                               
-        params['kj'] = [0.0015, 0.0018, 0.0035, 0.0058]
-        # params['h1'] = [0.00001, 0.01]           
+        params['na'] = [0.075]  
+        params['ka'] = [0.018] 
+        params['kc'] = [0.018]                               
+        params['kj'] = [0.0035]
+        params['h1'] = [0.00001, 0.0001, 0.001, 0.01, 0.1]           
         # params['h2'] = [0.009, 0.09]           
         # params['h3'] = [0.0001, 0.01]           
         # params['h4'] = [0.0002, 0.02]           
@@ -31,8 +31,8 @@ def batch():
 
         b = Batch(params=params, cfgFile='cfg.py', netParamsFile='netParams_M1.py')
         # Set output folder, grid method (all param combinations), and run configuration
-        b.batchLabel = '22aug23d'
-        b.saveFolder = '/tera/' + os.getlogin() + '/' + b.batchLabel
+        b.batchLabel = '22aug23e'
+        b.saveFolder = b.batchLabel #'/tera/' + os.getlogin() + '/' + b.batchLabel
         b.method = 'grid'  # params.csv will be read by default; else need name in cfg.paramListFile
         b.runCfg = {'type': 'mpi_bulletin', 'script': 'init.py', 'skip': True}
         b.run()
