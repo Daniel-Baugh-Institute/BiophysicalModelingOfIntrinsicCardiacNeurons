@@ -19,5 +19,5 @@ def simSim (np0, sc0):
     sim.analyze()
     print('AFTER save')
 
-simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams_.py')
+simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams_P.py')
 simSim(netParams, simConfig)
