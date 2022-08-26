@@ -10,7 +10,7 @@ def batch():
         params = specs.ODict()
         params['amp'] = [0.08, 0.1, 0.2, 0.3] # indexed 
         params['cellnum'] = [x for x in range(104)] # indexed          all_15: 104
-        params['phi']= ['phi']= [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1] #[0,0.2,0.6,1] # indexed  
+        params['phi']= [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1] #[0,0.2,0.6,1] # indexed  
         # params['na'] = [0.076, 0.114]  
         # params['ka'] = [0.0144, 0.0216] 
         # params['kc'] = [0.08, 0.12]                               
