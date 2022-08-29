@@ -84,6 +84,7 @@ PARAMETER {
     ach = 0 (mM) 
     achic50 = 4.44e-3 (mM)
     achmodmax = 1.0     : closed by ACh
+    ne = 0 (mM)
     nemodmax = 0.71
     nemodic50 = 4.2e-3 (mM)
 } 
@@ -101,6 +102,7 @@ ASSIGNED {
 	ntau (ms)	
 	tadj
     achmod
+    nemod
     ikcnj3		(mA/cm2)
 }
  
@@ -117,7 +119,7 @@ INITIAL {
 BREAKPOINT {
     SOLVE states METHOD cnexp
     achmod = achmodmax*(1.0 - ach/(ach+achic50))
-    nemod = nemodmax*(ne/(ne + neic50))
+    nemod = nemodmax*(ne/(ne + nemodic50))
 	gk = tadj*gbar*n*achmod*nemod
 	ikcnj3 = gk * (v - ek)
     ik = ikcnj3

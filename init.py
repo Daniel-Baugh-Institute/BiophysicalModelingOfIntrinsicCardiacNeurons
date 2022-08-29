@@ -32,12 +32,24 @@ def simSim(np0, sc0):
     sim.analyze()
     sim.saveData()
 
+    clusters = list(netParams.popParams)
+    source = list(netParams.stimSourceParams)
+    
     with open(f"{sim.cfg.filename}_nte.csv",'w') as f:
-        for target in ['cluster0_phasic', 'cluster0_tonic']:
-            for source in ['drive A', 'drive B', 'cluster0_phasic', 'cluster0_tonic']:
+        # header 
+        for label in source + clusters:
+            f.write(f"{label}, ")
+        f.write("avgRate\n")
+
+        rates = sim.analysis.popAvgRates()
+        # nTE data
+        for target in clusters:
+            f.write(f"{target}")
+            for source in source + clusters:
                 nte = sim.analysis.nTE(cells1=[source],cells2=[target],numShuffle=200)
-                f.write(f"{nte}, ")
-            f.write("\n")
+                f.write(f", {nte}")
+            f.write(", {rates[target]}\n")
+        
     print("AFTER save")
     for k, v in sim.timingData.items():
         print(f"{k}: {v:.2f} sec")

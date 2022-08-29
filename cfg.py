@@ -90,6 +90,7 @@ cfg.sze = 21
 # modulation
 cfg.npy = 0
 cfg.ach = 0
+cfg.ne = 0
 
 # stimulus
 cfg.hyp = 0
