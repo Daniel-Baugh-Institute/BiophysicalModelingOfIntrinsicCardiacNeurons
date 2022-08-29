@@ -61,7 +61,6 @@ netParams.neuromod = {
         ]
     },
 }
-
 # add mechanism to the model -- blocked by default but can be changed by cfg
 addtional_mech = {}
 
@@ -219,30 +218,32 @@ elif cfg.stim == "dexp2syn":
             "synMech": "exc",
         }
         for j in range(cfg.num_cluster):
+            def getVal(p):
+                return p[idx==j] if hasattr(p,'__len__') else p
             netParams.connParams[f"phasic{idx}->phasic{j}"] = {
                 "preConds": {"pop": f"cluster{idx}_phasic"},
                 "postConds": {"pop": f"cluster{j}_phasic"},
-                "probability": cfg.phasic_phasic_prob[idx == j],
-                "weight": cfg.phasic_phasic_weight[idx == j],
-                "delay": cfg.phasic_phasic_delay[idx == j],
+                "probability": getVal(cfg.phasic_phasic_prob),
+                "weight": getVal(cfg.phasic_phasic_weight),
+                "delay": getVal(cfg.phasic_phasic_delay),
                 "synMech": "exc",
             }
 
             netParams.connParams[f"phasic{idx}->tonic{j}"] = {
                 "preConds": {"pop": f"cluster{idx}_phasic"},
                 "postConds": {"pop": f"cluster{j}_tonic"},
-                "probability": cfg.phasic_tonic_prob[idx == j],
-                "weight": cfg.phasic_tonic_weight[idx == j],
-                "delay": cfg.phasic_tonic_delay[idx == j],
+                "probability": getVal(cfg.phasic_tonic_prob),
+                "weight": getVal(cfg.phasic_tonic_weight),
+                "delay": getVal(cfg.phasic_tonic_delay),
                 "synMech": "exc",
             }
 
             netParams.connParams[f"tonic{idx}->tonic{j}"] = {
                 "preConds": {"pop": f"cluster{idx}_tonic"},
                 "postConds": {"pop": f"cluster{j}_tonic"},
-                "probability": cfg.tonic_tonic_prob[idx == j],
-                "weight": cfg.tonic_tonic_weight[idx == j],
-                "delay": cfg.tonic_tonic_delay[idx == j],
+                "probability": getVal(cfg.tonic_tonic_prob),
+                "weight": getVal(cfg.tonic_tonic_weight),
+                "delay": getVal(cfg.tonic_tonic_delay),
                 "synMech": "exc",
             }
 
