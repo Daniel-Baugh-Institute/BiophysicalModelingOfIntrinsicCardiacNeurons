@@ -55,7 +55,7 @@ NEURON {
 	RANGE ninf, ntau, ikcnj3
 	GLOBAL Ra, Rb
 	GLOBAL q10, temp, tadj, vmin, vmax
-    RANGE ach, achmod
+    RANGE ach, achmod, ne, nemod
 }
 
 UNITS {
@@ -84,6 +84,8 @@ PARAMETER {
     ach = 0 (mM) 
     achic50 = 4.44e-3 (mM)
     achmodmax = 1.0     : closed by ACh
+    nemodmax = 0.71
+    nemodic50 = 4.2e-3 (mM)
 } 
 
 
@@ -115,7 +117,8 @@ INITIAL {
 BREAKPOINT {
     SOLVE states METHOD cnexp
     achmod = achmodmax*(1.0 - ach/(ach+achic50))
-	gk = tadj*gbar*n*achmod
+    nemod = nemodmax*(ne/(ne + neic50))
+	gk = tadj*gbar*n*achmod*nemod
 	ikcnj3 = gk * (v - ek)
     ik = ikcnj3
 

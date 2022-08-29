@@ -60,6 +60,7 @@ netParams.neuromod = {
             "ch_Hcn4_cp12",
         ]
     },
+    "ne": {mech: {"ne": cfg.ne} for mech in ["ch_Cacna1b_cp6"]},
 }
 # add mechanism to the model -- blocked by default but can be changed by cfg
 addtional_mech = {}
