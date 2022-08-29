@@ -6,7 +6,7 @@ cfg = specs.SimConfig()
 
 # simulation configuration
 cfg.duration = 1_000
-cfg.dt = 0.01
+cfg.dt = 0.025
 cfg.recordStep = 0.05
 cfg.simLabel = "22apr11net"
 cfg.saveFolder = cfg.simLabel
@@ -14,18 +14,13 @@ cfg.verbose = False
 cfg.saveJson = True
 cfg.recordStim = True
 
+
 # recording
 cfg.recordCells = ["cluster0_tonic"]
 cfg.recordTraces = {
     "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"},
     "isyn": {"synMech": "exc", "var": "i"},
     "gsyn": {"synMech": "exc", "var": "g"},
-    "ica1a": {"sec": "soma", "loc": 0.5, "var": "ica1a_ch_Cacna1a_cp5"},
-    "ica1b": {"sec": "soma", "loc": 0.5, "var": "ica1b_ch_Cacna1b_cp6"},
-    "ica1c": {"sec": "soma", "loc": 0.5, "var": "ica1c_ch_Cacna1c_cp3"},
-    "ica1d": {"sec": "soma", "loc": 0.5, "var": "ica1d_ch_Cacna1d_md150284"},
-    "ica1g": {"sec": "soma", "loc": 0.5, "var": "ica1g_ch_Cacna1g_cp41"},
-    "ica1i": {"sec": "soma", "loc": 0.5, "var": "ica1i_ch_Cacna1i_md279"},
 }
 """
     #'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
@@ -53,7 +48,7 @@ cfg.recordTraces = {
 }
 """
 cfg.recordStim = True
-cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
+#cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
 cfg.analysis["plotRaster"] = {"saveFig": True}
 cfg.saveDataInclude = ["simData", "simConfig", "netParams", "net"]
 
@@ -95,21 +90,15 @@ cfg.sze = 21
 # modulation
 cfg.npy = 0
 cfg.ach = 0
-cfg.ne = 0
 
 # stimulus
-cfg.hyp = 0.0
+cfg.hyp = 0
 cfg.amp = 0
-cfg.rate = 5.0
-interval = 1000 / cfg.rate
-cfg.noise = 0  # 1 - 10 / interval  # 10ms min interval
-cfg.weight = 1e-2  # 0.0184014564752578
-interval = 1000.0 / cfg.rate
-cfg.delay = 5
-cfg.e = -7.0
+cfg.stim = "dexp2syn"
 cfg.tau1 = 5
 cfg.tau2 = 18
-
+cfg.rrate = 0.31177 / 0.43708360077316477  # for hyp=0
+cfg.d = 0.15
 cfg.e = -7.0
 
 # phasic connections
@@ -136,6 +125,7 @@ cfg.tonic_delay = 5
 cfg.tonic_tonic_prob = [0.25, 0.25]
 cfg.tonic_tonic_weight = [5e-3, 0]
 cfg.tonic_tonic_delay = [5, 5]
+
 
 # channel parameters
 cfg.phi = 0.2
