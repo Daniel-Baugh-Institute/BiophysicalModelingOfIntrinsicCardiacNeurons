@@ -13,8 +13,8 @@ genemod = {'ch_Hcn3_cp11':{'gHCN3bar': 0.01},  'ch_Hcn1_cp9':{'gHCN1bar': 0.003}
            'ch_Cacna1g_cp41':{'gCav3_1bar': 0.0003},        'ch_Cacna1a_cp5':{'gCav2_1bar': 0.00005},
            'ch_Cacna1d_md150284':{'pcaLbar': 0.00045},  'ch_Hcn4_cp12':{'gHCN4bar': 0.0035},
             'ch_Cacna1c_cp3':{'gLbar': 0.006},         'ch_Cacna1i_md279':{'gcabar': 0.0006},           
-            'ch_Kcna1ab1_md80769':{'gbar': 0.018},        'ch_Kcnj3_md2488':{'gbar': cfg.kj},           
-            'ch_Cacna1b_cp6':{'gCav2_2bar': 0.0001},  'ch_Hcn2_cp10':{'gHCN2bar': 0.009},  #0.0011          
+            'ch_Kcna1ab1_md80769':{'gbar': 0.018},        'ch_Kcnj3_md2488':{'gbar': 0.0035},           
+            'ch_Cacna1b_cp6':{'gCav2_2bar': 0.0001},  'ch_Hcn2_cp10':{'gHCN2bar': cfg.h2},  #0.0011          
             'ch_Kcnc1_rothman':{'gbar': 0.018, 'phi':cfg.phi}, 'ch_Scn1a_cp35':{'gNabar': 0.075}  }     #0.0015
 
 cell_identities = np.bool_(np.transpose(np.genfromtxt('red_tdata_all_15_m2l.csv', delimiter=',')))
