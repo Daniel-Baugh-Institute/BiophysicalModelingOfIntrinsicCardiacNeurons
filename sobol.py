@@ -75,7 +75,7 @@ def sobcall(pl, num, seed=33):
 def sob(dim=4, num=4096, seed=1234):
     sm = qmc.Sobol(d=dim, scramble=True, seed=seed)
     m = math.floor(math.log(num) / math.log(2) + 0.99)  # round up to nearest power of 2
-    if 2 ** m != num:
+    if 2**m != num:
         print(f"\t{2**m} samples (2^{m} ; {num} requested)")
     return sm.random_base2(m=m)  # 2^m points
 

@@ -25,18 +25,11 @@ def fi(seg):
 
 
 def simSim(np0, sc0):
-    sim.create(netParams=np0, simConfig=sc0)
-    fih = [h.FInitializeHandler(2, lambda: fi(sim.net.cells[0].secs.soma.hObj(0.5)))]
-    print("BEFORE simulate")
-    sim.simulate()
-    sim.analyze()
-    sim.saveData()
-
     clusters = list(netParams.popParams)
     sources = list(netParams.stimSourceParams)
-    
-    with open(f"{sim.cfg.filename}_nte.csv",'w') as f:
-        # header 
+
+    with open(f"{sim.cfg.filename}_nte.csv", "w") as f:
+        # header
         for label in sources + clusters:
             f.write(f"{label}, ")
         f.write("avgRate\n")
@@ -46,10 +39,10 @@ def simSim(np0, sc0):
         for target in clusters:
             f.write(f"{target}")
             for src in sources + clusters:
-                nte = sim.analysis.nTE(cells1=[src],cells2=[target],numShuffle=200)
+                nte = sim.analysis.nTE(cells1=[src], cells2=[target], numShuffle=200)
                 f.write(f", {nte}")
             f.write(f", {rates[target]}\n")
-        
+
     print("AFTER save")
     for k, v in sim.timingData.items():
         print(f"{k}: {v:.2f} sec")

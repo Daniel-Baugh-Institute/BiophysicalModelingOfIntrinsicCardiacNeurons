@@ -130,11 +130,11 @@ cfg.tonic_tonic_delay = [5, 5]
 
 # channel parameters
 cfg.phi = 0.2
-
-cfg.na = 1
+cfg.na = 0.075 #1
 
 cfg.ka = 0.018
 cfg.kc = 0.018
+cfg.phi = 0.2
 cfg.kj = 0.0018
 
 cfg.h1 = 0.00001
@@ -148,3 +148,16 @@ cfg.c1d = 1.7e-4
 cfg.c1c = 0.0001
 cfg.c1b = 0.0001
 cfg.c1a = 0.00001
+<<<<<<< HEAD
+=======
+
+cfg.recordStep = 0.1       
+# cfg.filename = '21sep14d/'
+cfg.simLabel = '0'
+cfg.saveFolder = '22aug23'
+cfg.saveJson = True
+cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}
+cfg.analysis['plotRaster'] = {'saveFig': False}         
+
+cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
+>>>>>>> FETCH_HEAD

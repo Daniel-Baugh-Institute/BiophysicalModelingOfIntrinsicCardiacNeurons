@@ -12,8 +12,10 @@ from collections import OrderedDict
 from itertools import product
 import plotly.graph_objects as go
 import plotly_express as px
+import plotly.io as pio
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
+
 df = dfss = filenamepkl = None
 
 
@@ -300,20 +302,20 @@ def allAnalysis(df=df):
     dclass["Vrmp"] = dclass.Vlist.apply(lambda x: x[0])
     dclass["spkend"] = df.spkt.apply(lambda x: x[len(x) - 1] if len(x) > 0 else -1)
 
-    dclass["Vsubth"] = dclass.Vlist.apply(lambda x: 2 ** 0 if max(x) < 0 else np.nan)
-    dclass["Vph"] = dfss.scnt.apply(lambda x: 2 ** 1 if 0 < x <= 3 else np.nan)
+    dclass["Vsubth"] = dclass.Vlist.apply(lambda x: 2**0 if max(x) < 0 else np.nan)
+    dclass["Vph"] = dfss.scnt.apply(lambda x: 2**1 if 0 < x <= 3 else np.nan)
     dclass["Vton"] = df.spkt.apply(
-        lambda x: 2 ** 2
+        lambda x: 2**2
         if len(x) > 3 and stim["delay"] <= x[-1] <= stimend + 5
         else np.nan
     )
     dclass["Vton_susps"] = dclass.spkend.apply(
-        lambda x: 2 ** 3
+        lambda x: 2**3
         if stimend + 5 <= x >= data[list(data)[0]]["simConfig"]["duration"] - 50
         else np.nan
     )
     dclass["Vton_brfps"] = dclass.spkend.apply(
-        lambda x: 2 ** 4
+        lambda x: 2**4
         if stimend + 5 <= x <= data[list(data)[0]]["simConfig"]["duration"] - 50
         else np.nan
     )
@@ -423,13 +425,13 @@ def processEPSPs(data, do_fit=True):
     process_data = {"times": times, "epsps": amps, "stims": stims}
     if do_fit:
         amps = np.array(amps[1:])
-        t = np.diff(times)*dt*1e-3  # fit for time in sec
-        ftA, _ = curve_fit(lambda x,a,b: a*x**b,t,amps,p0=[1,1])
-        famps = amps[amps<80]
-        tt = t[amps<80]
-        ftB, _ = curve_fit(lambda x,a,b: a*x**b,tt,famps,p0=[1,1])
-        process_data['full_fit'] = ftA
-        process_data['filter_fit'] =  ftB
+        t = np.diff(times) * dt * 1e-3  # fit for time in sec
+        ftA, _ = curve_fit(lambda x, a, b: a * x**b, t, amps, p0=[1, 1])
+        famps = amps[amps < 80]
+        tt = t[amps < 80]
+        ftB, _ = curve_fit(lambda x, a, b: a * x**b, tt, famps, p0=[1, 1])
+        process_data["full_fit"] = ftA
+        process_data["filter_fit"] = ftB
     return process_data
 
 
@@ -454,23 +456,56 @@ def plotEpas(df=df):
     cells = df["cellnum"].tolist()
     vm = {}
     pasv = {}
-    for c in cells:
-        vm[c] = df["V_soma"][c]["cell_0"][indx]
-        pasv[c] = df["epas"][c]["cell_0"][indx]
+    dfep = df[["cellnum", "V_soma", "epas"]].copy()
+    dfep["vm"] = dfep.V_soma.apply(lambda x: x["cell_0"][indx])
+    dfep["pasv"] = dfep.epas.apply(lambda x: x["cell_0"][indx])
 
-    fig, axs = plt.subplots(2, 1)
-    axs[0].scatter(list(pasv), list(pasv.values()), c="red")
-    axs[0].set_title("epas (mV)")
-    axs[1].scatter(list(vm), list(vm.values()))
-    axs[1].set_title("membrane voltage (mV)")
-    plt.xlabel("Cell Numbers")
-    plt.savefig(batchLabel + "_epas.png")
+    font = 20
+
+    f = go.Figure()
+    f.add_trace(
+        go.Scatter(
+            x=dfep["cellnum"],
+            y=dfep["pasv"],
+            mode="markers",
+            marker=dict(
+                color="LightPink", size=20, line=dict(color="MediumPurple", width=2)
+            ),
+            text=dfep.cellnum,
+            name="Reversal Potential (mV)",
+            showlegend=True,
+        )
+    )
+
+    f.add_trace(
+        go.Scatter(
+            x=dfep["cellnum"],
+            y=dfep["vm"],
+            mode="markers",
+            marker=dict(
+                color="black", size=5, line=dict(color="MediumPurple", width=2)
+            ),
+            text=dfep.cellnum,
+            name="Resting Membrane Potential",
+            showlegend=True,
+        )
+    )
+    f.update_layout(
+        width=1200,
+        height=800,
+        uniformtext_minsize=font,
+        uniformtext_mode="show",
+        font=dict(size=font),
+        template="simple_white",
+    )
+    f.update_xaxes(title="Neuronal-Type ID (T#)")
+    f.write_image("epas.png")
+    f.show()
     return
 
 
 def plotRin(df=df):
     ripk = {}
-
     stim = data[list(data)[0]]["net"]["params"]["stimSourceParams"]["iclamp"]
     cells = df["cellnum"].tolist()
     for i in df["t"][0]:  # dt is same so time array is same for all cells
@@ -482,14 +517,34 @@ def plotRin(df=df):
     d["ripk"] = d.V_soma.apply(
         lambda x: (min(x["cell_0"][init:end]) - x["cell_0"][init]) / stim["amp"]
     )
+    font = 18
     fr = px.scatter(
         d,
         x="cellnum",
         y="ripk",
         hover_data=["cellnum", "ripk", df.index],
-        labels={"cellnum": "Cell Number", "ripk": "Rin (MOhm)"},
-        title="Calculated from Negative Peak",
+        labels={
+            "cellnum": "Neuronal-Type ID (T#)",
+            "ripk": "Input Impedance (M\u03A9)",
+        },
         template="simple_white",
+    )
+    fr.update_traces(
+        marker=dict(
+            color="LightSteelBlue",
+            size=font / 2,
+            line=dict(color="MediumPurple", width=2),
+        )
+    )
+    fr.update_layout(
+        width=614.4,
+        height=460.8,
+        uniformtext_minsize=font,
+        uniformtext_mode="show",
+        font=dict(size=font),
+    )
+    pio.write_image(
+        fr, "Rin.png", format="png", scale=10, width=614.4, height=460.8, validate=True
     )
     fr.show()
     return
@@ -497,12 +552,18 @@ def plotRin(df=df):
 
 def plotVm(df, batchLabel):
     makedirs(f"{batchLabel}/vmPlots")
+    font = 15
     for indx in df.index:
         f = plt.figure()
         plt.plot(df["t"][indx], df["V_soma"][indx]["cell_0"], c="C0")
-        plt.xlabel("Time (ms)")
-        plt.ylabel("Membrane Voltage (mV)")
-        plt.title(f"Cell Number: {df['cellnum'][indx]}")
-        plt.savefig(f"{batchLabel}/vmPlots/{df['simLabel'][indx]}.png")
+        plt.xlabel("Time (ms)", fontsize=font)
+        plt.ylabel("Membrane Voltage (mV)", fontsize=font)
+        plt.title(f"Neuronal-Type ID: T{df['cellnum'][indx]}", fontsize=font)
+        plt.tick_params(axis="both", labelsize=font)
+        plt.savefig(
+            f"{batchLabel}/vmPlots/{df['simLabel'][indx]}.png",
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
     return
