@@ -56,7 +56,7 @@ cfg.saveDataInclude = ["simData", "simConfig", "netParams", "net"]
 cfg.hParams = {"celsius": 35, "v_init": -61}
 
 # ganglion parameters
-cfg.num_cluster = 1
+cfg.num_cluster = 2
 cfg.cluster_size = 100
 cfg.tonic_ratio = 13 / 32
 cfg.tonic_cells = [
