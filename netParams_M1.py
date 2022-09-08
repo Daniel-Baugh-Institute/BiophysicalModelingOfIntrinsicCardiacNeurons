@@ -13,27 +13,26 @@ except:
 
 netParams.defaultThreshold = -10
 # order in genemod MUST be preserved to match cell_identities channel order
+# From 'Model P'
 genemod = {
-    "ch_Hcn3_cp11": {"gHCN3bar": cfg.h3},
-    "ch_Hcn1_cp9": {"gHCN1bar": cfg.h1},
-    "ch_Cacna1g_cp41": {"gCav3_1bar": cfg.c1g},
-    "ch_Cacna1a_cp5": {"gCav2_1bar": cfg.c1a},
-    "ch_Cacna1d_md150284": {"pcaLbar": cfg.c1d},
-    "ch_Hcn4_cp12": {"gHCN4bar": cfg.h4},
-    "ch_Cacna1c_cp3": {"gLbar": cfg.c1c},
-    "ch_Cacna1i_md279": {"gcabar": cfg.c1i},
-    "ch_Kcna1ab1_md80769": {"gbar": cfg.ka},
-    "ch_Kcnj3_md2488": {"gbar": cfg.kj},
-    "ch_Cacna1b_cp6": {"gCav2_2bar": cfg.c1b},
-    "ch_Hcn2_cp10": {"gHCN2bar": cfg.h2},  # 0.0011
-    "ch_Kcnc1_rothman": {"gbar": cfg.kc, "phi": cfg.phi},
-    "ch_Scn1a_cp35": {"gNabar": cfg.na},
+    "ch_Hcn3_cp11": {"gHCN3bar": 0.01},
+    "ch_Hcn1_cp9": {"gHCN1bar": 0.003},
+    "ch_Cacna1g_cp41": {"gCav3_1bar": 0.0003},
+    "ch_Cacna1a_cp5": {"gCav2_1bar": 0.00005},
+    "ch_Cacna1d_md150284": {"pcaLbar": 0.00045},
+    "ch_Hcn4_cp12": {"gHCN4bar": 0.0035},
+    "ch_Cacna1c_cp3": {"gLbar": 0.006},
+    "ch_Cacna1i_md279": {"gcabar": 0.0006},
+    "ch_Kcna1ab1_md80769": {"gbar": 0.018},
+    "ch_Kcnj3_md2488": {"gbar": 0.0035},
+    "ch_Cacna1b_cp6": {"gCav2_2bar": 0.0001},
+    "ch_Hcn2_cp10": {"gHCN2bar": 0.009},  # 0.0011
+    "ch_Kcnc1_rothman": {"gbar": 0.018, "phi": cfg.phi},
+    "ch_Scn1a_cp35": {"gNabar": 0.075},
 }  # 0.0015
-
 cell_identities = np.bool_(
     np.transpose(np.genfromtxt("red_tdata_all_15_m2l.csv", delimiter=","))
 )
-cell = cell_identities[cfg.cellnum]
 
 ## Cell parameters/rules
 cell_base = {"secs": {}}
@@ -68,21 +67,21 @@ netParams.neuromod = {
 addtional_mech = {}
 
 np.random.seed(cfg.seed)
-phasic_cells = [i for i in range(cell_identities.shape[0]) if i not in cfg.tonic_cells]
+mixed_cells = [i for i in range(cell_identities.shape[0]) if i not in cfg.phasic_cells]
 for idx in range(cfg.num_cluster):
     cluster_size = (
         cfg.cluster_size[idx]
         if hasattr(cfg.cluster_size, "__len__")
         else cfg.cluster_size
     )
-    tonic_count = int(cluster_size * cfg.tonic_ratio)
-    phasic_count = cluster_size - tonic_count
+    phasic_count = int(cluster_size * cfg.phasic_ratio)
+    mixed_count = cluster_size - phasic_count
     # generate a random sample of cell types
     cell_count = defaultdict(lambda: 0)
-    for i in np.random.randint(len(cfg.tonic_cells), size=tonic_count):
-        cell_count[cfg.tonic_cells[i]] += 1
-    for i in np.random.randint(len(phasic_cells), size=phasic_count):
-        cell_count[phasic_cells[i]] += 1
+    for i in np.random.randint(len(cfg.phasic_cells), size=phasic_count):
+        cell_count[cfg.phasic_cells[i]] += 1
+    for i in np.random.randint(len(mixed_cells), size=mixed_count):
+        cell_count[mixed_cells[i]] += 1
 
     # add population of each cell type to the cluster
     cells = {}
@@ -94,21 +93,21 @@ for idx in range(cfg.num_cluster):
 
         for mech, param in addtional_mech.items():
             CEL["soma"]["mechs"][mech] = param
-        if k in cfg.tonic_cells:
-            CEL["conds"] = {"cellType": "tonic"}
-            CEL["diversityFraction"] = v / tonic_count
-        else:
+        if k in cfg.phasic_cells:
             CEL["conds"] = {"cellType": "phasic"}
             CEL["diversityFraction"] = v / phasic_count
+        else:
+            CEL["conds"] = {"cellType": "mixed"}
+            CEL["diversityFraction"] = v / mixed_count
         netParams.cellParams[f"CEL{k}"] = CEL
-    netParams.popParams[f"cluster{idx}_tonic"] = {
-        "cellType": "tonic",
-        "numCells": tonic_count,
+    netParams.popParams[f"cluster{idx}_P"] = {
+        "cellType": "phasic",
+        "numCells": phasic_count,
         "diversity": True,
     }
-    netParams.popParams[f"cluster{idx}_phasic"] = {
-        "cellType": "tonic",
-        "numCells": phasic_count,
+    netParams.popParams[f"cluster{idx}_M"] = {
+        "cellType": "mixed",
+        "numCells": mixed_count,
         "diversity": True,
     }
 
@@ -179,7 +178,7 @@ elif cfg.stim == "fdexp2syn":
     }
     netParams.stimTargetParams["bkg->exc"] = {
         "source": "bkg",
-        "conds": {"pop": "cluster0_tonic"},
+        "conds": {"pop": "cluster0_M"},
         "weight": cfg.weight,
         "delay": cfg.delay,
         "synMech": "exc",
@@ -195,8 +194,8 @@ elif cfg.stim == "dexp2syn":
     }
     netParams.stimSourceParams["drive A"] = {
         "type": "NetStim",
-        "rate": cfg.tonic_rate,
-        "noise": cfg.tonic_noise,
+        "rate": cfg.mixed_rate,
+        "noise": cfg.mixed_noise,
     }
 
     netParams.stimSourceParams["drive B"] = {
@@ -206,16 +205,16 @@ elif cfg.stim == "dexp2syn":
     }
 
     for idx in range(cfg.num_cluster):
-        netParams.stimTargetParams[f"drive A->tonic{idx}"] = {
+        netParams.stimTargetParams[f"drive A->M{idx}"] = {
             "source": "drive A",
-            "conds": {"pop": f"cluster{idx}_tonic"},
-            "weight": cfg.tonic_weight,
-            "delay": cfg.tonic_delay,
+            "conds": {"pop": f"cluster{idx}_M"},
+            "weight": cfg.mixed_weight,
+            "delay": cfg.mixed_delay,
             "synMech": "exc",
         }
-        netParams.stimTargetParams[f"drive B->phasic{idx}"] = {
+        netParams.stimTargetParams[f"drive B->P{idx}"] = {
             "source": "drive B",
-            "conds": {"pop": f"cluster{idx}_phasic"},
+            "conds": {"pop": f"cluster{idx}_P"},
             "weight": cfg.phasic_weight,
             "delay": cfg.phasic_delay,
             "synMech": "exc",
@@ -225,30 +224,30 @@ elif cfg.stim == "dexp2syn":
             def getVal(p):
                 return p[idx == j] if hasattr(p, "__len__") else p
 
-            netParams.connParams[f"phasic{idx}->phasic{j}"] = {
-                "preConds": {"pop": f"cluster{idx}_phasic"},
-                "postConds": {"pop": f"cluster{j}_phasic"},
+            netParams.connParams[f"{idx}->P{j}"] = {
+                "preConds": {"pop": f"cluster{idx}_P"},
+                "postConds": {"pop": f"cluster{j}_P"},
                 "probability": getVal(cfg.phasic_phasic_prob),
                 "weight": getVal(cfg.phasic_phasic_weight),
                 "delay": getVal(cfg.phasic_phasic_delay),
                 "synMech": "exc",
             }
 
-            netParams.connParams[f"phasic{idx}->tonic{j}"] = {
-                "preConds": {"pop": f"cluster{idx}_phasic"},
-                "postConds": {"pop": f"cluster{j}_tonic"},
-                "probability": getVal(cfg.phasic_tonic_prob),
-                "weight": getVal(cfg.phasic_tonic_weight),
-                "delay": getVal(cfg.phasic_tonic_delay),
+            netParams.connParams[f"P{idx}->M{j}"] = {
+                "preConds": {"pop": f"cluster{idx}_P"},
+                "postConds": {"pop": f"cluster{j}_M"},
+                "probability": getVal(cfg.phasic_mixed_prob),
+                "weight": getVal(cfg.phasic_mixed_weight),
+                "delay": getVal(cfg.phasic_mixed_delay),
                 "synMech": "exc",
             }
 
-            netParams.connParams[f"tonic{idx}->tonic{j}"] = {
-                "preConds": {"pop": f"cluster{idx}_tonic"},
-                "postConds": {"pop": f"cluster{j}_tonic"},
-                "probability": getVal(cfg.tonic_tonic_prob),
-                "weight": getVal(cfg.tonic_tonic_weight),
-                "delay": getVal(cfg.tonic_tonic_delay),
+            netParams.connParams[f"M{idx}->M{j}"] = {
+                "preConds": {"pop": f"cluster{idx}_M"},
+                "postConds": {"pop": f"cluster{j}_M"},
+                "probability": getVal(cfg.mixed_mixed_prob),
+                "weight": getVal(cfg.mixed_mixed_weight),
+                "delay": getVal(cfg.mixed_mixed_delay),
                 "synMech": "exc",
             }
 

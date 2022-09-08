@@ -16,7 +16,7 @@ cfg.recordStim = True
 
 
 # recording
-cfg.recordCells = ["cluster0_tonic"]
+cfg.recordCells = ["cluster0_M", "cluster0_P"]
 cfg.recordTraces = {
     "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"},
     "isyn": {"synMech": "exc", "var": "i"},
@@ -48,7 +48,7 @@ cfg.recordTraces = {
 }
 """
 cfg.recordStim = True
-#cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
+# cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
 cfg.analysis["plotRaster"] = {"saveFig": True}
 cfg.saveDataInclude = ["simData", "simConfig", "netParams", "net"]
 
@@ -58,29 +58,53 @@ cfg.hParams = {"celsius": 35, "v_init": -61}
 # ganglion parameters
 cfg.num_cluster = 2
 cfg.cluster_size = 100
-cfg.tonic_ratio = 13 / 32
-cfg.tonic_cells = [
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
+
+# phasic cell from 'Model P'
+cfg.phasic_ratio = 19 / 32
+cfg.phasic_cells = [
     8,
+    9,
     10,
     11,
     12,
     13,
     14,
-    16,
     17,
     18,
+    19,
     20,
     21,
-    55,
-    58,
+    22,
+    23,
+    24,
+    25,
+    27,
+    28,
+    29,
+    33,
+    34,
+    35,
+    39,
+    40,
+    41,
+    43,
+    44,
+    68,
+    69,
+    70,
+    72,
+    73,
+    75,
+    82,
+    84,
+    85,
+    86,
+    88,
+    89,
+    90,
+    91,
+    92,
+    102,
 ]
 cfg.seed = 0
 
@@ -112,39 +136,38 @@ cfg.phasic_phasic_prob = [0.25, 0.25]
 cfg.phasic_phasic_weight = [0.05, 0]
 cfg.phasic_phasic_delay = [5, 5]
 
-cfg.phasic_tonic_prob = [0.25, 0.25]
-cfg.phasic_tonic_weight = [5e-3, 0]
-cfg.phasic_tonic_delay = [5, 5]
+cfg.phasic_mixed_prob = [0.25, 0.25]
+cfg.phasic_mixed_weight = [5e-3, 0]
+cfg.phasic_mixed_delay = [5, 5]
 
 
-# tonic connections
-cfg.tonic_rate = 5.0
-interval = 1000 / cfg.tonic_rate
-cfg.tonic_noise = 1 - 10 / interval  # 10ms min interval
-cfg.tonic_weight = 0.07
-cfg.tonic_delay = 5
-cfg.tonic_tonic_prob = [0.25, 0.25]
-cfg.tonic_tonic_weight = [5e-3, 0]
-cfg.tonic_tonic_delay = [5, 5]
-
+# mixed connections
+cfg.mixed_rate = 5.0
+interval = 1000 / cfg.mixed_rate
+cfg.mixed_noise = 1 - 10 / interval  # 10ms min interval
+cfg.mixed_weight = 0.07
+cfg.mixed_delay = 5
+cfg.mixed_mixed_prob = [0.25, 0.25]
+cfg.mixed_mixed_weight = [5e-3, 0]
+cfg.mixed_mixed_delay = [5, 5]
 
 # channel parameters
 cfg.phi = 0.2
-cfg.na = 0.075 #1
 
+"""
+cfg.na = 0.075  # 1
 cfg.ka = 0.018
 cfg.kc = 0.018
 cfg.phi = 0.2
 cfg.kj = 0.0018
-
 cfg.h1 = 0.00001
 cfg.h2 = 0.009
 cfg.h3 = 0.0001
 cfg.h4 = 0.0002
-
 cfg.c1i = 0.00027
 cfg.c1g = 0.00001
 cfg.c1d = 1.7e-4
 cfg.c1c = 0.0001
 cfg.c1b = 0.0001
 cfg.c1a = 0.00001
+"""
