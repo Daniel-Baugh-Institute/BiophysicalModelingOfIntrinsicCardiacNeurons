@@ -25,9 +25,17 @@ def fi(seg):
 
 
 def simSim(np0, sc0):
+
+    sim.create(netParams=np0, simConfig=sc0)
+    fih = [h.FInitializeHandler(2, lambda: fi(sim.net.cells[0].secs.soma.hObj(0.5)))]
+    print("BEFORE simulate")
+    sim.simulate()
+    sim.analyze()
+    sim.saveData()
+
     clusters = list(netParams.popParams)
     sources = list(netParams.stimSourceParams)
-
+    h.load_file('mod/nte.hoc')
     with open(f"{sim.cfg.filename}_nte.csv", "w") as f:
         # header
         for label in sources + clusters:
