@@ -134,4 +134,4 @@ def getArgs():
 
 if __name__ == "__main__":
     ag = getArgs()
-    output(sobcall(parseBatchParams(ag.b), ag.cnt))
+    output(sobcall(parseBatchParams(ag.b), ag.cnt, ag.s))
