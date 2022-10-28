@@ -16,7 +16,8 @@ def fi(cells):
         seg.e_pas = cfg.hParams["v_init"] + isum / seg.g_pas
         if h.ismembrane("cadad"):
             seg.cainf_cadad = seg.cai - (
-                (-(10000) * seg.ica / (2 * h.FARADAY * seg.depth_cadad)) * seg.taur_cadad
+                (-(10000) * seg.ica / (2 * h.FARADAY * seg.depth_cadad))
+                * seg.taur_cadad
             )
         for modulation in netParams.neuromod.values():
             for mod, param in modulation.items():
@@ -36,7 +37,7 @@ def simSim(np0, sc0):
 
     clusters = list(netParams.popParams)
     sources = list(netParams.stimSourceParams)
-    h.load_file('mod/nte.hoc')
+    h.load_file("mod/nte.hoc")
     with open(f"{sim.cfg.filename}_nte.csv", "w") as f:
         # header
         for label in sources + clusters:

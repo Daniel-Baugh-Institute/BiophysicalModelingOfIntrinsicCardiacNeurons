@@ -43,6 +43,28 @@ def readAllData(filename, dfonly=True):
     return df if dfonly else params, data, df
 
 
+def readRates(dataFolder, batchLabel, paramFile="params.csv"):
+    batchFile = f"{dataFolder}/{batchLabel}_batch.json"
+    fileList = [x.name for x in os.scandir(dataFolder) if x.name.endswith("_nte.csv")]
+    fileList.sort(key=lambda x: int(re.split(f"{batchLabel}|[_.]", x)[1]))
+    dfParam = pd.read_csv(paramFile, delimiter=",")
+    assert len(dfParam) == len(fileList)
+    labelList = list(dfParam.columns)
+    params = []
+    for lab in labelList:
+        params.append({"label": lab.strip(), "values": list(dfParam[lab])})
+    data = {}
+    for (iloc, f), paralist in zip(enumerate(fileList), dfParam.values):
+        indexComb = int(re.split(f"{batchLabel}|[_.]", f)[1])
+        data[indexComb] = pd.read_csv(
+            f"{dataFolder}/{f}", skipinitialspace=True
+        ).to_dict()
+        for lab, val in zip(labelList, paralist):
+            data[indexComb][lab] = val
+    df = pd.DataFrame(data).T
+    return df
+
+
 # readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None)
 def readBatchData(
     dataFolder,
@@ -408,14 +430,14 @@ def processEPSPs(data, do_fit=True):
     ]
     amps = [
         -sd["V_soma"]["cell_0"][i]
-        + max(sd["V_soma"]["cell_0"][i + int(tau1 / dt) : i + int(3 * tau1 / dt)])
+        + max(sd["V_soma"]["cell_0"][i : i + int(3 * tau1 / dt)])
         for i in times
     ]
     if "isyn" in sd:
         stims = [
             max(
                 sd["isyn"]["cell_0"]["soma_0.5"][
-                    i + int(tau1 / dt) : i + int(3 * tau1 / dt)
+                    i - 1 + int(tau1 / dt) : i + int(3 * tau1 / dt)
                 ]
             )
             for i in times
@@ -426,10 +448,20 @@ def processEPSPs(data, do_fit=True):
     if do_fit:
         amps = np.array(amps[1:])
         t = np.diff(times) * dt * 1e-3  # fit for time in sec
-        ftA, _ = curve_fit(lambda x, a, b: a * x**b, t, amps, p0=[1, 1])
+        try:
+            ftA, _ = curve_fit(
+                lambda x, a, b: a * x**b, t, amps, p0=[1, 1], maxfev=10_000
+            )
+        except RuntimeError:
+            ftA = [None, None]
         famps = amps[amps < 80]
         tt = t[amps < 80]
-        ftB, _ = curve_fit(lambda x, a, b: a * x**b, tt, famps, p0=[1, 1])
+        try:
+            ftB, _ = curve_fit(
+                lambda x, a, b: a * x**b, tt, famps, p0=[1, 1], maxfev=10_000
+            )
+        except RuntimeError:
+            ftB = [None, None]
         process_data["full_fit"] = ftA
         process_data["filter_fit"] = ftB
     return process_data

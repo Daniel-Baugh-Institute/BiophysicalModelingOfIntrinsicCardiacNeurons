@@ -6,9 +6,9 @@ cfg = specs.SimConfig()
 
 # simulation configuration
 cfg.duration = 1_000
-cfg.dt = 0.025
-cfg.recordStep = 0.05
-cfg.simLabel = "22apr11net"
+cfg.dt = 0.01
+cfg.recordStep = 0.01
+cfg.simLabel = "26sep22net218a"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
@@ -17,11 +17,11 @@ cfg.recordStim = True
 
 # recording
 cfg.recordCells = ["cluster0_M", "cluster0_P"]
-cfg.recordTraces = {
-    "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"},
-    "isyn": {"synMech": "exc", "var": "i"},
-    "gsyn": {"synMech": "exc", "var": "g"},
-}
+# cfg.recordTraces = {
+#    "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"},
+#    "isyn": {"synMech": "exc", "var": "i"},
+#    "gsyn": {"synMech": "exc", "var": "g"},
+# }
 """
     #'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
     "epas": {"sec": "soma", "loc": 0.5, "var": "e_pas"},
@@ -47,16 +47,16 @@ cfg.recordTraces = {
     "ikcnj3": {"sec": "soma", "loc": 0.5, "var": "ikcnj3_ch_Kcnj3_md2488"},
 }
 """
-cfg.recordStim = True
+# cfg.recordStim = True
 # cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
-cfg.analysis["plotRaster"] = {"saveFig": True}
-cfg.saveDataInclude = ["simData", "simConfig", "netParams", "net"]
+cfg.analysis["plotRaster"] = {"saveFig": True, "orderInverse": True}
+cfg.saveDataInclude = ["simData"]  # , "simConfig", "netParams", "net"]
 
 # globals
 cfg.hParams = {"celsius": 35, "v_init": -61}
 
 # ganglion parameters
-cfg.num_cluster = 2
+cfg.num_cluster = 1
 cfg.cluster_size = 100
 
 # phasic cell from 'Model P'
@@ -119,25 +119,40 @@ cfg.ne = 0
 # stimulus
 cfg.hyp = 0
 cfg.amp = 0
-cfg.stim = "dexp2syn"
+cfg.stim = "network"
+cfg.tau1 = 5
+cfg.tau2 = 18
+cfg.tau_D1 = 2145.7055888921022
+cfg.tau_D2 = 100
+cfg.tau_F = 100
+cfg.d2 = 1.0
+cfg.f = 1.0
+cfg.e = -7.0
+cfg.d1 = 0.29403361433185227
+cfg.tau_D1 = 165.6813123078298
+cfg.weight = 0.04350521264848694
+
+
+"""
 cfg.tau1 = 5
 cfg.tau2 = 18
 cfg.rrate = 0.31177 / 0.43708360077316477  # for hyp=0
 cfg.d = 0.15
 cfg.e = -7.0
+"""
 
 # phasic connections
 cfg.phasic_rate = 5.0
 interval = 1000 / cfg.phasic_rate
 cfg.phasic_noise = 1 - 10 / interval  # 10ms min interval
-cfg.phasic_weight = 0.07
+cfg.phasic_weight = 0.04350521264848694
 cfg.phasic_delay = 5
 cfg.phasic_phasic_prob = [0.25, 0.25]
-cfg.phasic_phasic_weight = [0.05, 0]
+cfg.phasic_phasic_weight = [0.02, 0.02]
 cfg.phasic_phasic_delay = [5, 5]
 
 cfg.phasic_mixed_prob = [0.25, 0.25]
-cfg.phasic_mixed_weight = [5e-3, 0]
+cfg.phasic_mixed_weight = [0.02, 0.02]
 cfg.phasic_mixed_delay = [5, 5]
 
 
@@ -145,29 +160,28 @@ cfg.phasic_mixed_delay = [5, 5]
 cfg.mixed_rate = 5.0
 interval = 1000 / cfg.mixed_rate
 cfg.mixed_noise = 1 - 10 / interval  # 10ms min interval
-cfg.mixed_weight = 0.07
+cfg.mixed_weight = 0.04350521264848694
 cfg.mixed_delay = 5
 cfg.mixed_mixed_prob = [0.25, 0.25]
-cfg.mixed_mixed_weight = [5e-3, 0]
+cfg.mixed_mixed_weight = [0.02, 0.02]
 cfg.mixed_mixed_delay = [5, 5]
 
 # channel parameters
-cfg.phi = 0.2
-
-"""
 cfg.na = 0.075  # 1
+
 cfg.ka = 0.018
 cfg.kc = 0.018
 cfg.phi = 0.2
 cfg.kj = 0.0018
+
 cfg.h1 = 0.00001
 cfg.h2 = 0.009
 cfg.h3 = 0.0001
 cfg.h4 = 0.0002
+
 cfg.c1i = 0.00027
 cfg.c1g = 0.00001
 cfg.c1d = 1.7e-4
 cfg.c1c = 0.0001
 cfg.c1b = 0.0001
 cfg.c1a = 0.00001
-"""

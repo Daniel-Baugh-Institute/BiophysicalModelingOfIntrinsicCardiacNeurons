@@ -192,6 +192,19 @@ elif cfg.stim == "dexp2syn":
         "d": cfg.d,
         "rrate": cfg.rrate,
     }
+elif cfg.stim == "network":
+    netParams.synMechParams["exc"] = {
+        "mod": "FDSExp2Syn",
+        "tau1": cfg.tau1,
+        "tau2": cfg.tau2,
+        "e": cfg.e,
+        "f": cfg.f,
+        "d1": cfg.d1,
+        "d2": cfg.d2,
+        "tau_F": cfg.tau_F,
+        "tau_D1": cfg.tau_D1,
+        "tau_D2": cfg.tau_D2,
+    }
     netParams.stimSourceParams["drive A"] = {
         "type": "NetStim",
         "rate": cfg.mixed_rate,
@@ -221,7 +234,8 @@ elif cfg.stim == "dexp2syn":
         }
         for j in range(cfg.num_cluster):
 
-            def getVal(p):
+            def getVal(param):
+                p = eval(param) if isinstance(param, str) else param
                 return p[idx == j] if hasattr(p, "__len__") else p
 
             netParams.connParams[f"{idx}->P{j}"] = {

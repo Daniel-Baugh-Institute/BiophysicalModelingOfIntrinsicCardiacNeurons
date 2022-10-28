@@ -4,6 +4,48 @@ import math, re, csv, os
 from scipy.stats import qmc
 from itertools import product
 import numpy as np
+import inspect
+import pandas as pd
+
+
+class ParameterException(Exception):
+    def __init__(self, params=None, cfgFile=None, netParamsFile=None):
+        self.params = params
+        raise (self)
+
+
+def checkComment(com):
+    if "indexed" in com:
+        return "indexed"
+    if "log" in com:
+        return "log"
+    return "linear"
+
+
+def readBatchParams(batchFile="./batch.py", batchFunction="batch"):
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("batch", os.path.abspath(batchFile))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    batch = getattr(mod, batchFunction)
+
+    # replace the netpyne class
+    batch.__globals__["Batch"] = ParameterException
+    try:
+        batch()
+    except ParameterException as e:
+        params = e.params
+
+    pl = {k: {"vals": v} for k, v in params.items()}
+    for p in params:
+        for line in inspect.getsourcelines(batch)[0]:
+            if p in line:
+                pl[p]["type"] = checkComment(line)
+                break
+        else:
+            assert False
+    return pl
 
 
 def parseBatchParams(b):
@@ -55,15 +97,34 @@ def sobcall(pl, num, seed=33):
     logcols = [
         i for i, v in enumerate(sobpl.values()) if v["type"] == "log"
     ]  # col numbers for log
-    sobolVals = sob(len(sobpl), num, seed=seed)
+
+    sizes = [
+        len(v["min"]) if hasattr(v["min"], "__len__") else 1 for v in sobpl.values()
+    ]
+    smin = [
+        m
+        for v in sobpl.values()
+        for m in (v["min"] if hasattr(v["min"], "__len__") else [v["min"]])
+    ]
+    smax = [
+        m
+        for v in sobpl.values()
+        for m in (v["max"] if hasattr(v["min"], "__len__") else [v["max"]])
+    ]
+
+    n = len(smin)  # total values required
+    sobolVals = sob(n, num, seed=seed)
     scaledVals = qmc.scale(
-        sobolVals,
-        [v["min"] for v in sobpl.values()],
-        [v["max"] for v in sobpl.values()],
+        sobolVals, smin, smax
     )  # dict order guaranteed in py>=3.7; transpose
-    scaledVals[:, logcols] = 10 ** scaledVals[:, logcols]
+    scaledVals = [
+        10 ** scaledVals[:, (b - a) : b] if i in logcols else scaledVals[:, (b - a) : b]
+        for i, (a, b) in enumerate(zip(sizes, np.cumsum(sizes)))
+    ]
+
+    scaledCombo = [[a[i] for a in scaledVals] for i in range(len(sobolVals))]
     icombo = product(*[v["vals"] for v in pl.values() if v["type"] == "indexed"])
-    combos = [[*p[0], *p[1]] for p in product(scaledVals, icombo)]
+    combos = [[*a, *b] for a, b in product(scaledCombo, icombo)]
     combos.insert(
         0,
         [k for k, v in pl.items() if v["type"] != "indexed"]
@@ -84,7 +145,18 @@ def output(out):
     try:
         with open(ag.f, "w") as f:
             wr = csv.writer(f)
-            wr.writerows(out)
+            for i, p in enumerate(out):
+                if i == 0:
+                    wr.writerow(p)
+                else:
+                    wr.writerow(
+                        [
+                            (list(a) if len(a) > 1 else a[0])
+                            if hasattr(a, "__len__")
+                            else a
+                            for a in p
+                        ]
+                    )
         if verbose:
             print(
                 f'Output of {len(out)-1} param combinations to {os.getcwd()+"/"+ag.f}'
@@ -134,4 +206,4 @@ def getArgs():
 
 if __name__ == "__main__":
     ag = getArgs()
-    output(sobcall(parseBatchParams(ag.b), ag.cnt))
+    output(sobcall(readBatchParams(ag.b), ag.cnt, ag.s))
