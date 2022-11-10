@@ -67,6 +67,10 @@ netParams.neuromod = {
 addtional_mech = {}
 
 np.random.seed(cfg.seed)
+cfg.seeds.conn = cfg.seed
+cfg.seeds.stim = cfg.seed
+cfg.seeds.loc = cfg.seed
+
 mixed_cells = [i for i in range(cell_identities.shape[0]) if i not in cfg.phasic_cells]
 for idx in range(cfg.num_cluster):
     cluster_size = (
