@@ -1,5 +1,6 @@
 from netpyne import specs, sim
 import numpy as np
+from warnings import warn
 import csv
 from collections import defaultdict
 
@@ -72,6 +73,12 @@ cfg.seeds.stim = cfg.seed
 cfg.seeds.loc = cfg.seed
 
 mixed_cells = [i for i in range(cell_identities.shape[0]) if i not in cfg.phasic_cells]
+if hasattr(cfg,'cluster_distribution'):
+    if hasattr(cfg, 'cluster_size'):
+        warn('cfg has a cluster_distribution and a cluster_size, cluster_distribution is ignored')
+    else:
+        rndgen = getattr(np.random,cfg.cluster_distribution['method'])
+        cfg.cluster_size = rndgen(**{k:v for k,v in cfg.cluster_distribution.items() if k != 'method'}, size=int(cfg.num_cluster))
 for idx in range(cfg.num_cluster):
     cluster_size = (
         cfg.cluster_size[idx]
