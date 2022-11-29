@@ -8,7 +8,7 @@ cfg = specs.SimConfig()
 cfg.duration = 1_000
 cfg.dt = 0.01
 cfg.recordStep = 0.01
-cfg.simLabel = "26sep22net218a"
+cfg.simLabel = "21nov22largenet"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
@@ -56,8 +56,9 @@ cfg.saveDataInclude = ["simData"]  # , "simConfig", "netParams", "net"]
 cfg.hParams = {"celsius": 35, "v_init": -61}
 
 # ganglion parameters
-cfg.num_cluster = 1
-cfg.cluster_size = 100
+cfg.num_cluster = 100
+cfg.cluster_distribution = {'method': 'random_integers', 'low':1, 'high':200}
+#cfg.cluster_size = 100
 
 # phasic cell from 'Model P'
 cfg.phasic_ratio = 19 / 32
