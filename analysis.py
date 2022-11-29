@@ -11,8 +11,8 @@ import re
 from collections import OrderedDict
 from itertools import product
 import plotly.graph_objects as go
-import plotly_express as px
-import plotly.io as pio
+#import plotly_express as px
+#import plotly.io as pio
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
@@ -59,6 +59,10 @@ def readRates(dataFolder, batchLabel, paramFile="params.csv"):
         data[indexComb] = pd.read_csv(
             f"{dataFolder}/{f}", skipinitialspace=True
         ).to_dict()
+        sd = json.load(open(f"{dataFolder}/{f[:-8]}_data.json",'r'))["simData"]
+        for k,v in sd.items():
+            if k in data[indexComb]: continue
+            data[indexComb][k] = v
         for lab, val in zip(labelList, paralist):
             data[indexComb][lab] = val
     df = pd.DataFrame(data).T
