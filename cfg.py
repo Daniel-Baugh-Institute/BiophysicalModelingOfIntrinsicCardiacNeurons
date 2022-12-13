@@ -5,10 +5,10 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 1_000
+cfg.duration = 2_000 
 cfg.dt = 0.01
 cfg.recordStep = 0.01
-cfg.simLabel = "21nov22largenet"
+cfg.simLabel = "04nov22net2a"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
@@ -16,12 +16,9 @@ cfg.recordStim = True
 
 
 # recording
-cfg.recordCells = ["cluster0_M", "cluster0_P"]
-# cfg.recordTraces = {
-#    "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"},
-#    "isyn": {"synMech": "exc", "var": "i"},
-#    "gsyn": {"synMech": "exc", "var": "g"},
-# }
+#cfg.recordCells = ["all"]
+#cfg.recordTraces = {
+#    "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"}}
 """
     #'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
     "epas": {"sec": "soma", "loc": 0.5, "var": "e_pas"},
@@ -47,18 +44,17 @@ cfg.recordCells = ["cluster0_M", "cluster0_P"]
     "ikcnj3": {"sec": "soma", "loc": 0.5, "var": "ikcnj3_ch_Kcnj3_md2488"},
 }
 """
-# cfg.recordStim = True
-# cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
-cfg.analysis["plotRaster"] = {"saveFig": True, "orderInverse": True}
+cfg.recordStim = True
+#cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
+#cfg.analysis["plotRaster"] = {"saveFig": True, "orderInverse": True}
 cfg.saveDataInclude = ["simData"]  # , "simConfig", "netParams", "net"]
 
 # globals
 cfg.hParams = {"celsius": 35, "v_init": -61}
 
 # ganglion parameters
-cfg.num_cluster = 100
-cfg.cluster_distribution = {'method': 'random_integers', 'low':1, 'high':200}
-#cfg.cluster_size = 100
+cfg.num_cluster = 1
+cfg.cluster_size = 100
 
 # phasic cell from 'Model P'
 cfg.phasic_ratio = 19 / 32
@@ -107,7 +103,7 @@ cfg.phasic_cells = [
     92,
     102,
 ]
-cfg.seed = 0
+cfg.seed = 2
 
 # cell size
 cfg.sze = 21
@@ -121,50 +117,42 @@ cfg.ne = 0
 cfg.hyp = 0
 cfg.amp = 0
 cfg.stim = "network"
+# synapse model
 cfg.tau1 = 5
 cfg.tau2 = 18
-cfg.tau_D1 = 2145.7055888921022
-cfg.tau_D2 = 100
-cfg.tau_F = 100
-cfg.d2 = 1.0
-cfg.f = 1.0
-cfg.e = -7.0
-cfg.d1 = 0.29403361433185227
-cfg.tau_D1 = 165.6813123078298
-cfg.weight = 0.04350521264848694
+cfg.e = -7
+cfg.d1 = 0.6474533535872186
+cfg.d2 = 0.9284955400450818
+cfg.f = 0.850515710969614
+cfg.tau_D1 = 159.33232548522594 
+cfg.tau_D2 = 616.104732221748
+cfg.tau_F = 19.001749499516244
 
 
-"""
-cfg.tau1 = 5
-cfg.tau2 = 18
-cfg.rrate = 0.31177 / 0.43708360077316477  # for hyp=0
-cfg.d = 0.15
-cfg.e = -7.0
-"""
 
 # phasic connections
 cfg.phasic_rate = 5.0
 interval = 1000 / cfg.phasic_rate
-cfg.phasic_noise = 1 - 10 / interval  # 10ms min interval
-cfg.phasic_weight = 0.04350521264848694
+cfg.phasic_noise = 1 - 70 / interval  # 72ms min interval
+cfg.phasic_weight = 0.00065 #0.00058  
 cfg.phasic_delay = 5
 cfg.phasic_phasic_prob = [0.25, 0.25]
-cfg.phasic_phasic_weight = [0.02, 0.02]
+cfg.phasic_phasic_weight = [0.00, 0.00]
 cfg.phasic_phasic_delay = [5, 5]
 
 cfg.phasic_mixed_prob = [0.25, 0.25]
-cfg.phasic_mixed_weight = [0.02, 0.02]
+cfg.phasic_mixed_weight = [0.002, 0.002]
 cfg.phasic_mixed_delay = [5, 5]
 
 
 # mixed connections
 cfg.mixed_rate = 5.0
 interval = 1000 / cfg.mixed_rate
-cfg.mixed_noise = 1 - 10 / interval  # 10ms min interval
-cfg.mixed_weight = 0.04350521264848694
+cfg.mixed_noise = 1 - 70 / interval  # 72ms min interval
+cfg.mixed_weight = 0.00065 #0.00058 
 cfg.mixed_delay = 5
 cfg.mixed_mixed_prob = [0.25, 0.25]
-cfg.mixed_mixed_weight = [0.02, 0.02]
+cfg.mixed_mixed_weight = [0.002, 0.002]
 cfg.mixed_mixed_delay = [5, 5]
 
 # channel parameters
