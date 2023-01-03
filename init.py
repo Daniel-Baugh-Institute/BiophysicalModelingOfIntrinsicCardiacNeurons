@@ -5,6 +5,10 @@ from neuron import h
 def fi(cells):
     """set steady state RMP for 1 cell"""
     for c in cells:
+
+        # skip artificial cells
+        if not hasattr(c.secs,'soma'):
+            continue
         seg = c.secs.soma.hObj(0.5)
         isum = 0
         isum = (

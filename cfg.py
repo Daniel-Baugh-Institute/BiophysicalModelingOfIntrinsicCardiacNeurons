@@ -8,7 +8,7 @@ cfg = specs.SimConfig()
 cfg.duration = 2_000 
 cfg.dt = 0.01
 cfg.recordStep = 0.01
-cfg.simLabel = "04nov22net2a"
+cfg.simLabel = "22dec22net"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
@@ -47,7 +47,7 @@ cfg.recordStim = True
 cfg.recordStim = True
 #cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
 #cfg.analysis["plotRaster"] = {"saveFig": True, "orderInverse": True}
-cfg.saveDataInclude = ["simData"]  # , "simConfig", "netParams", "net"]
+cfg.saveDataInclude = ["simData", "simConfig"]  # , "simConfig", "netParams", "net"]
 
 # globals
 cfg.hParams = {"celsius": 35, "v_init": -61}
@@ -129,30 +129,36 @@ cfg.tau_D2 = 616.104732221748
 cfg.tau_F = 19.001749499516244
 
 
+# DMV source statistics -- gamma distributed ISIs
+shape, loc, theta = 7.757972182086119, 37.49386102382368, 31.14382919023644
+interval = shape*theta
+cfg.DMVShape = shape
+cfg.DMVScale = theta
+cfg.DMVNoise = 1.0 - loc/interval
+
+# NA source statistics -- exp distributed ISIs
+scale, loc = 754.4866995207383, 105.7860115451731
+interval = scale + loc
+cfg.NARate = 1000/interval
+cfg.NANoise = 1.0 - loc/interval
 
 # phasic connections
-cfg.phasic_rate = 5.0
-interval = 1000 / cfg.phasic_rate
-cfg.phasic_noise = 1 - 70 / interval  # 72ms min interval
-cfg.phasic_weight = 0.00065 #0.00058  
+cfg.phasic_weight = 0.0005 #0.00058  
 cfg.phasic_delay = 5
 cfg.phasic_phasic_prob = [0.25, 0.25]
 cfg.phasic_phasic_weight = [0.00, 0.00]
 cfg.phasic_phasic_delay = [5, 5]
 
 cfg.phasic_mixed_prob = [0.25, 0.25]
-cfg.phasic_mixed_weight = [0.002, 0.002]
+cfg.phasic_mixed_weight = [0.00, 0.00]
 cfg.phasic_mixed_delay = [5, 5]
 
 
 # mixed connections
-cfg.mixed_rate = 5.0
-interval = 1000 / cfg.mixed_rate
-cfg.mixed_noise = 1 - 70 / interval  # 72ms min interval
-cfg.mixed_weight = 0.00065 #0.00058 
+cfg.mixed_weight = 0.0005 #0.00058 
 cfg.mixed_delay = 5
 cfg.mixed_mixed_prob = [0.25, 0.25]
-cfg.mixed_mixed_weight = [0.002, 0.002]
+cfg.mixed_mixed_weight = [0.00, 0.00]
 cfg.mixed_mixed_delay = [5, 5]
 
 # channel parameters

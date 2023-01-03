@@ -216,28 +216,46 @@ elif cfg.stim == "network":
         "tau_D1": cfg.tau_D1,
         "tau_D2": cfg.tau_D2,
     }
-    netParams.stimSourceParams["drive A"] = {
+    
+    netParams.stimSourceParams["NA"] = {
         "type": "NetStim",
-        "rate": cfg.mixed_rate,
-        "noise": cfg.mixed_noise,
-    }
-
-    netParams.stimSourceParams["drive B"] = {
-        "type": "NetStim",
-        "rate": cfg.phasic_rate,
-        "noise": cfg.phasic_noise,
+        "rate": cfg.NARate,
+        "noise": cfg.NANoise,
     }
 
     for idx in range(cfg.num_cluster):
-        netParams.stimTargetParams[f"drive A->M{idx}"] = {
-            "source": "drive A",
-            "conds": {"pop": f"cluster{idx}_M"},
+
+        netParams.popParams[f'DMV{idx}'] = {
+            "cellModel": "GammaStim",
+            "type": "NetStim",
+            "k": cfg.DMVShape,
+            "theta": cfg.DMVScale,
+            "noise": cfg.DMVNoise,
+            "number": 10_000,
+            "numCells": netParams.popParams[f"cluster{idx}_M"]['numCells'] 
+        }
+        netParams.connParams[f"DMV{idx}->M{idx}"] = {
+            "preConds": {"pop": f"DMV{idx}"},
+            "postConds": {"pop": f"cluster{idx}_M"},
+            "convergence": 1,
+            "divergence": 1,
             "weight": cfg.mixed_weight,
             "delay": cfg.mixed_delay,
             "synMech": "exc",
         }
-        netParams.stimTargetParams[f"drive B->P{idx}"] = {
-            "source": "drive B",
+        """
+        netParams.stimTargetParams[f"DMV{idx}->M{idx}"] = {
+            "source": f"DMV{idx}",
+            "conds": {"pop": f"cluster{idx}_M"},
+            "weight": cfg.mixed_weight,
+            "delay": cfg.mixed_delay,
+            "convergence": 1,
+            "divergence": 1,
+            "synMech": "exc",
+        }
+        """
+        netParams.stimTargetParams[f"NA->P{idx}"] = {
+            "source": "NA",
             "conds": {"pop": f"cluster{idx}_P"},
             "weight": cfg.phasic_weight,
             "delay": cfg.phasic_delay,
