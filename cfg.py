@@ -5,10 +5,10 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 2_000 
+cfg.duration = 5_000 
 cfg.dt = 0.01
 cfg.recordStep = 0.01
-cfg.simLabel = "22dec22net"
+cfg.simLabel = "02jan23net"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
@@ -129,21 +129,21 @@ cfg.tau_D2 = 616.104732221748
 cfg.tau_F = 19.001749499516244
 
 
-# DMV source statistics -- gamma distributed ISIs
+# NA (drive M) source statistics -- gamma distributed ISIs
 shape, loc, theta = 7.757972182086119, 37.49386102382368, 31.14382919023644
 interval = shape*theta
-cfg.DMVShape = shape
-cfg.DMVScale = theta
-cfg.DMVNoise = 1.0 - loc/interval
-
-# NA source statistics -- exp distributed ISIs
-scale, loc = 754.4866995207383, 105.7860115451731
-interval = scale + loc
-cfg.NARate = 1000/interval
+cfg.NAShape = shape
+cfg.NAScale = theta
 cfg.NANoise = 1.0 - loc/interval
 
+# DMV (drive P) source statistics -- exp distributed ISIs
+scale, loc = 754.4866995207383, 105.7860115451731
+interval = scale + loc
+cfg.DMVRate = 1000/interval
+cfg.DMVNoise = 1.0 - loc/interval
+
 # phasic connections
-cfg.phasic_weight = 0.0005 #0.00058  
+cfg.phasic_weight = 0.001 #0.00058  
 cfg.phasic_delay = 5
 cfg.phasic_phasic_prob = [0.25, 0.25]
 cfg.phasic_phasic_weight = [0.00, 0.00]
@@ -155,7 +155,7 @@ cfg.phasic_mixed_delay = [5, 5]
 
 
 # mixed connections
-cfg.mixed_weight = 0.0005 #0.00058 
+cfg.mixed_weight = 0.001 #0.00058 
 cfg.mixed_delay = 5
 cfg.mixed_mixed_prob = [0.25, 0.25]
 cfg.mixed_mixed_weight = [0.00, 0.00]
