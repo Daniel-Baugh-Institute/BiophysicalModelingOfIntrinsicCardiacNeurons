@@ -73,12 +73,17 @@ cfg.seeds.stim = cfg.seed
 cfg.seeds.loc = cfg.seed
 
 mixed_cells = [i for i in range(cell_identities.shape[0]) if i not in cfg.phasic_cells]
-if hasattr(cfg,'cluster_distribution'):
-    if hasattr(cfg, 'cluster_size'):
-        warn('cfg has a cluster_distribution and a cluster_size, cluster_distribution is ignored')
+if hasattr(cfg, "cluster_distribution"):
+    if hasattr(cfg, "cluster_size"):
+        warn(
+            "cfg has a cluster_distribution and a cluster_size, cluster_distribution is ignored"
+        )
     else:
-        rndgen = getattr(np.random,cfg.cluster_distribution['method'])
-        cfg.cluster_size = rndgen(**{k:v for k,v in cfg.cluster_distribution.items() if k != 'method'}, size=int(cfg.num_cluster))
+        rndgen = getattr(np.random, cfg.cluster_distribution["method"])
+        cfg.cluster_size = rndgen(
+            **{k: v for k, v in cfg.cluster_distribution.items() if k != "method"},
+            size=int(cfg.num_cluster),
+        )
 for idx in range(cfg.num_cluster):
     cluster_size = (
         cfg.cluster_size[idx]
@@ -216,49 +221,53 @@ elif cfg.stim == "network":
         "tau_D1": cfg.tau_D1,
         "tau_D2": cfg.tau_D2,
     }
-    
+    """
     netParams.stimSourceParams["DMV"] = {
         "type": "NetStim",
         "rate": cfg.DMVRate,
         "noise": cfg.DMVNoise,
     }
-
+    """
     for idx in range(cfg.num_cluster):
-
-        netParams.popParams[f'NA{idx}'] = {
+        netParams.popParams[f"DMV{idx}"] = {
             "cellModel": "GammaStim",
             "type": "NetStim",
-            "k": cfg.NAShape,
-            "theta": cfg.NAScale,
+            "k": cfg.DMVShape,
+            "theta": cfg.DMVScale,
+            "noise": cfg.DMVNoise,
+            "number": max(10_000, 5 * cfg.duration),
+            "numCells": 1
+            + int(
+                netParams.popParams[f"cluster{idx}_M"]["numCells"] / cfg.DMVDivergence
+            ),
+        }
+        netParams.popParams[f"NA{idx}"] = {
+            "cellModel": "NetStim",
+            "type": "NetStim",
+            "rate": cfg.NARate,
             "noise": cfg.NANoise,
-            "number": max(10_000, 5*cfg.duration),
-            "numCells": netParams.popParams[f"cluster{idx}_M"]['numCells'] 
+            "number": max(10_000, 5 * cfg.duration),
+            "numCells": 1
+            + int(
+                netParams.popParams[f"cluster{idx}_P"]["numCells"] / cfg.NADivergence
+            ),
         }
         netParams.connParams[f"NA{idx}->M{idx}"] = {
             "preConds": {"pop": f"NA{idx}"},
             "postConds": {"pop": f"cluster{idx}_M"},
             "convergence": 1,
-            "divergence": 1,
+            "divergence": cfg.NADivergence,
             "weight": cfg.mixed_weight,
             "delay": cfg.mixed_delay,
             "synMech": "exc",
         }
-        """
-        netParams.stimTargetParams[f"NA{idx}->M{idx}"] = {
-            "source": f"NA{idx}",
-            "conds": {"pop": f"cluster{idx}_M"},
-            "weight": cfg.mixed_weight,
-            "delay": cfg.mixed_delay,
-            "convergence": 1,
-            "divergence": 1,
-            "synMech": "exc",
-        }
-        """
-        netParams.stimTargetParams[f"DMV->P{idx}"] = {
-            "source": "DMV",
-            "conds": {"pop": f"cluster{idx}_P"},
+        netParams.connParams[f"DMV{idx}->P{idx}"] = {
+            "preConds": {"pop" : f"DMV{idx}"},
+            "postConds": {"pop": f"cluster{idx}_P"},
             "weight": cfg.phasic_weight,
             "delay": cfg.phasic_delay,
+            "convergence": 1,
+            "divergence": cfg.DMVDivergence,
             "synMech": "exc",
         }
         for j in range(cfg.num_cluster):
@@ -267,7 +276,7 @@ elif cfg.stim == "network":
                 p = eval(param) if isinstance(param, str) else param
                 return p[idx == j] if hasattr(p, "__len__") else p
 
-            netParams.connParams[f"{idx}->P{j}"] = {
+            netParams.connParams[f"P{idx}->P{j}"] = {
                 "preConds": {"pop": f"cluster{idx}_P"},
                 "postConds": {"pop": f"cluster{j}_P"},
                 "probability": getVal(cfg.phasic_phasic_prob),

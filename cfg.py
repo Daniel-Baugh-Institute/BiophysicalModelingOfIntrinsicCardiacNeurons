@@ -8,7 +8,7 @@ cfg = specs.SimConfig()
 cfg.duration = 5_000 
 cfg.dt = 0.01
 cfg.recordStep = 0.01
-cfg.simLabel = "02jan23net"
+cfg.simLabel = "02Feb23test"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
@@ -129,18 +129,21 @@ cfg.tau_D2 = 616.104732221748
 cfg.tau_F = 19.001749499516244
 
 
-# NA (drive M) source statistics -- gamma distributed ISIs
+# DMV (drive P) source statistics -- gamma distributed ISIs
 shape, loc, theta = 7.757972182086119, 37.49386102382368, 31.14382919023644
 interval = shape*theta
-cfg.NAShape = shape
-cfg.NAScale = theta
-cfg.NANoise = 1.0 - loc/interval
+cfg.DMVShape = shape
+cfg.DMVScale = theta
+cfg.DMVNoise = 1.0 - loc/interval
+cfg.DMVDivergence = 7
 
-# DMV (drive P) source statistics -- exp distributed ISIs
+# NA (drive M) source statistics -- exp distributed ISIs
 scale, loc = 754.4866995207383, 105.7860115451731
 interval = scale + loc
-cfg.DMVRate = 1000/interval
-cfg.DMVNoise = 1.0 - loc/interval
+cfg.NARate = 1000/interval
+cfg.NANoise = 1.0 - loc/interval
+cfg.NADivergence = 30
+
 
 # phasic connections
 cfg.phasic_weight = 0.001 #0.00058  
