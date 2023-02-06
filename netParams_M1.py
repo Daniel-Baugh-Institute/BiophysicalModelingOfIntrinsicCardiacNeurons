@@ -221,13 +221,6 @@ elif cfg.stim == "network":
         "tau_D1": cfg.tau_D1,
         "tau_D2": cfg.tau_D2,
     }
-    """
-    netParams.stimSourceParams["DMV"] = {
-        "type": "NetStim",
-        "rate": cfg.DMVRate,
-        "noise": cfg.DMVNoise,
-    }
-    """
     for idx in range(cfg.num_cluster):
         netParams.popParams[f"DMV{idx}"] = {
             "cellModel": "GammaStim",
@@ -238,7 +231,7 @@ elif cfg.stim == "network":
             "number": max(10_000, 5 * cfg.duration),
             "numCells": 1
             + int(
-                netParams.popParams[f"cluster{idx}_M"]["numCells"] / cfg.DMVDivergence
+                netParams.popParams[f"cluster{idx}_P"]["numCells"] / cfg.DMVDivergence
             ),
         }
         netParams.popParams[f"NA{idx}"] = {
@@ -249,7 +242,7 @@ elif cfg.stim == "network":
             "number": max(10_000, 5 * cfg.duration),
             "numCells": 1
             + int(
-                netParams.popParams[f"cluster{idx}_P"]["numCells"] / cfg.NADivergence
+                netParams.popParams[f"cluster{idx}_M"]["numCells"] / cfg.NADivergence
             ),
         }
         netParams.connParams[f"NA{idx}->M{idx}"] = {
