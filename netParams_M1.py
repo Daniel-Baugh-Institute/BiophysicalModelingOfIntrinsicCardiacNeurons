@@ -229,10 +229,10 @@ elif cfg.stim == "network":
             "theta": cfg.DMVScale,
             "noise": cfg.DMVNoise,
             "number": max(10_000, 5 * cfg.duration),
-            "numCells": 1
-            + int(
-                netParams.popParams[f"cluster{idx}_P"]["numCells"] / cfg.DMVDivergence
-            ),
+            "numCells": 
+            int(np.ceil(
+                cfg.DMVConvergence * netParams.popParams[f"cluster{idx}_P"]["numCells"] / cfg.DMVDivergence
+            )),
         }
         netParams.popParams[f"NA{idx}"] = {
             "cellModel": "NetStim",
@@ -240,15 +240,15 @@ elif cfg.stim == "network":
             "rate": cfg.NARate,
             "noise": cfg.NANoise,
             "number": max(10_000, 5 * cfg.duration),
-            "numCells": 1
-            + int(
-                netParams.popParams[f"cluster{idx}_M"]["numCells"] / cfg.NADivergence
-            ),
+            "numCells": 
+            int(np.ceil(
+                cfg.NAConvergence * netParams.popParams[f"cluster{idx}_M"]["numCells"] / cfg.NADivergence
+            )),
         }
         netParams.connParams[f"NA{idx}->M{idx}"] = {
             "preConds": {"pop": f"NA{idx}"},
             "postConds": {"pop": f"cluster{idx}_M"},
-            "convergence": 1,
+            "convergence": cfg.NAConvergence,
             "divergence": cfg.NADivergence,
             "weight": cfg.mixed_weight,
             "delay": cfg.mixed_delay,
@@ -259,7 +259,7 @@ elif cfg.stim == "network":
             "postConds": {"pop": f"cluster{idx}_P"},
             "weight": cfg.phasic_weight,
             "delay": cfg.phasic_delay,
-            "convergence": 1,
+            "convergence": cfg.DMVConvergence,
             "divergence": cfg.DMVDivergence,
             "synMech": "exc",
         }
