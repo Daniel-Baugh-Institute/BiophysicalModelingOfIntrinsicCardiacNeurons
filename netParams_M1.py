@@ -234,17 +234,32 @@ elif cfg.stim == "network":
                 cfg.DMVConvergence * netParams.popParams[f"cluster{idx}_P"]["numCells"] / cfg.DMVDivergence
             )),
         }
-        netParams.popParams[f"NA{idx}"] = {
-            "cellModel": "NetStim",
-            "type": "NetStim",
-            "rate": cfg.NARate,
-            "noise": cfg.NANoise,
-            "number": max(10_000, 5 * cfg.duration),
-            "numCells": 
-            int(np.ceil(
-                cfg.NAConvergence * netParams.popParams[f"cluster{idx}_M"]["numCells"] / cfg.NADivergence
-            )),
-        }
+        if hasattr(cfg, 'NAShape'):
+            netParams.popParams[f"NA{idx}"] = {
+                "cellModel": "GammaStim",
+                "type": "NetStim",
+                "k": cfg.NAShape,
+                "theta": cfg.NAScale,
+                "noise": cfg.NANoise,
+                "number": max(10_000, 5 * cfg.duration),
+                "numCells": 
+                int(np.ceil(
+                    cfg.NAConvergence * netParams.popParams[f"cluster{idx}_P"]["numCells"] / cfg.NADivergence
+                )),
+            }
+
+        else:
+            netParams.popParams[f"NA{idx}"] = {
+                "cellModel": "NetStim",
+                "type": "NetStim",
+                "rate": cfg.NARate,
+                "noise": cfg.NANoise,
+                "number": max(10_000, 5 * cfg.duration),
+                "numCells": 
+                int(np.ceil(
+                    cfg.NAConvergence * netParams.popParams[f"cluster{idx}_M"]["numCells"] / cfg.NADivergence
+                )),
+            }
         netParams.connParams[f"NA{idx}->M{idx}"] = {
             "preConds": {"pop": f"NA{idx}"},
             "postConds": {"pop": f"cluster{idx}_M"},

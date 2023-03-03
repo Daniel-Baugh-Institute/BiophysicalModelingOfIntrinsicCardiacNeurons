@@ -7,12 +7,16 @@ cfg = specs.SimConfig()
 # simulation configuration
 cfg.duration = 10_000 
 cfg.dt = 0.01
-cfg.recordStep = 0.01
-cfg.simLabel = "06feb23nodiv"
+cfg.recordStep = 0.025
+cfg.simLabel = "27feb23test"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
 cfg.recordStim = True
+cfg.nTEBins = {'DMV0': {'cluster0_P':int(cfg.duration/13), 
+                        'cluster0_M':int(cfg.duration/30)},
+               'NA0': {'cluster0_M': int(cfg.duration/13)},
+               'culster0_P': {'cluster0_M':int(cfg.duration/20)}}
 
 
 # recording
@@ -143,9 +147,24 @@ scale, loc = 754.4866995207383, 105.7860115451731
 interval = scale + loc
 cfg.NARate = 1000/interval
 cfg.NANoise = 1.0 - loc/interval
+
+# NA Chemoreflex drive -- gamma distributed ISIs
+"""
+scale, loc = 14.24094070278148, 48.35404375879234
+interval = scale + loc                                                          
+cfg.NARate = 1000/interval                                                      
+cfg.NANoise = 1.0 - loc/interval
+"""
+# NA Barroreflex drive -- gamma distributed ISIs
+"""
+shape, loc, theta = 1.518579064688518, 15.159890913518314, 14.220177825723088
+interval = shape*theta
+cfg.NAShape = shape
+cfg.NAScale = theta
+cfg.NANoise = 1.0 - loc/interval
+"""
 cfg.NADivergence = 30
 cfg.NAConvergence = 1.32 
-
 
 # phasic connections
 cfg.phasic_weight = 0.001 #0.00058  

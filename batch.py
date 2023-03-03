@@ -8,13 +8,13 @@ import itertools
 
 def batch():
     params = specs.ODict()
-    params["phasic_phasic_weight"] = [i / 25000 for i in range(11)]  # indexed
-    params["mixed_mixed_weight"] = [i / 25000 for i in range(11)]  # indexed
-    params["phasic_mixed_weight"] = [i/500 for i in range(4)]  # indexed
+    params["phasic_phasic_weight"] = [i / 25000 for i in range(21)]  # indexed
+    params["mixed_mixed_weight"] = [i / 25000 for i in range(21)]  # indexed
+    params["phasic_mixed_weight"] = [i/1000 for i in range(4)]  # indexed
     params["seed"] = list(range(5))  # indexed
     b = Batch(params=params, cfgFile="cfg.py", netParamsFile="netParams_M1.py")
     # Set output folder, grid method (all param combinations), and run configuration
-    b.batchLabel = "06feb23div"
+    b.batchLabel = "28feb23div"
     b.saveFolder = "/tera/" + os.getlogin() + "/" + b.batchLabel
     b.method = "list"  # params.csv will be read by default; else need name in cfg.paramListFile
     b.runCfg = {"type": "mpi_bulletin", "script": "init.py", "skip": True}

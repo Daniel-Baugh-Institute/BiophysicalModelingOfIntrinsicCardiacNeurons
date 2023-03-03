@@ -38,15 +38,13 @@ def simSim(np0, sc0):
     sim.simulate()
     sim.analyze()
     sim.saveData()
-
     clusters = list(netParams.popParams)
     sources = list(netParams.stimSourceParams)
     h.load_file("mod/nte.hoc")
-    bins = int(sim.cfg.duration/100) # 100ms bins
     with open(f"{sim.cfg.filename}_nte.csv", "w") as f:
         # header
         for label in sources + clusters:
-            f.write(f"{label}, ")
+            f.write(f"{label},")
         f.write("avgRate\n")
 
         rates = sim.analysis.popAvgRates()
@@ -54,10 +52,13 @@ def simSim(np0, sc0):
         for target in clusters:
             f.write(f"{target}")
             for src in sources + clusters:
-                nte = sim.analysis.nTE(cells1=[src], cells2=[target], numShuffle=200, binSize=bins)
-                f.write(f", {nte}")
-            f.write(f", {rates[target]}\n")
-
+                if src in sim.cfg.nTEBins and target in sim.cfg.nTEBins[src]:
+                    nte = sim.analysis.nTE(cells1=[src], cells2=[target], numShuffle=200, binSize=sim.cfg.nTEBins[src][target])
+                else:
+                    nte = None
+                
+                f.write(f",{nte}")
+            f.write(f",{rates[target]}\n")
     print("AFTER save")
     for k, v in sim.timingData.items():
         print(f"{k}: {v:.2f} sec")
