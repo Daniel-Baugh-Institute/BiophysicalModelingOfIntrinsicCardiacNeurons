@@ -38,6 +38,7 @@ def simSim(np0, sc0):
     sim.simulate()
     sim.analyze()
     sim.saveData()
+    """
     clusters = list(netParams.popParams)
     sources = list(netParams.stimSourceParams)
     h.load_file("mod/nte.hoc")
@@ -59,6 +60,7 @@ def simSim(np0, sc0):
                 
                 f.write(f",{nte}")
             f.write(f",{rates[target]}\n")
+    """
     print("AFTER save")
     for k, v in sim.timingData.items():
         print(f"{k}: {v:.2f} sec")
