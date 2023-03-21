@@ -30,7 +30,7 @@ def plotHeatmap(dfr,gene,phy,l,w,x1,xe,y,t1,t2,cs):
 	plt.text(x1,y,t1, fontdict={'size':font})
 	plt.text(xe,y,t2, fontdict={'size':font})
 	# plt.savefig(f"{name}_{l}_heatmap.png",dpi=300,bbox_inches='tight')
-	plt.show()
+	# plt.show()
 	return
 
 # org yaxis: most # to least # of genes
@@ -156,4 +156,4 @@ axs[1].set_xlabel('Neuronal-Type ID (T#)',fontsize=fnt)
 axs[1].set_ylabel('Number of Occurences',fontsize=fnt)
 plt.tight_layout()
 plt.savefig("tdata_red_freq.png",dpi=300,bbox_inches='tight')
-plt.show()
+# plt.show()
