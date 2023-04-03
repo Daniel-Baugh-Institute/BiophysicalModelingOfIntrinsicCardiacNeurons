@@ -37,12 +37,12 @@ def batch():
     params["phasic_phasic_weight"] = [0, 1e-2]
     params["mixed_mixed_weight"] = [0, 1e-2]
     params["phasic_mixed_weight"] = [0, 1e-2]
-    params["phasic_weight"] = [0, 1e-2]
-    params["mixed_weight"] = [0, 1e-2]
+    params["phasic_weight"] = [1e-5, 1e-3]
+    params["mixed_weight"] = [1e-5, 1e-3]
 
     # fitness function
     fitnessFuncArgs = {}
-    fitnessFuncArgs["maxFitness"] = 100_000
+    fitnessFuncArgs["maxFitness"] = 1_000_000
     fitnessFuncArgs["simConfig"] = {
         "cluster_size": cfg.cluster_size,
         "duration": cfg.duration,
@@ -52,6 +52,7 @@ def batch():
         "DMVConvergence": cfg.DMVConvergence,
         "NAConvergence": cfg.NAConvergence,
     }
+    fitnessFuncArgs["tinit"] = 1_000
     fitnessFuncArgs["binSize"] = list(range(10, 50, 5))
     fitnessFuncArgs["target"] = {"mean": 0.11, "var": 0.29**2}
 
@@ -61,6 +62,7 @@ def batch():
         Mcells = sc["cluster_size"] - Pcells
         DMVcells = int(np.ceil(sc["DMVConvergence"] * Pcells / sc["DMVDivergence"]))
         NAcells = int(np.ceil(sc["NAConvergence"] * Mcells / sc["NADivergence"]))
+        tinit = kwargs["tinit"]
 
         ids = np.array(sd["spkid"])
         st = np.array(sd["spkt"])
@@ -74,12 +76,20 @@ def batch():
         spkDmv = st[typeDmv]
         spkNa = st[typeNa]
 
+        # skip first second -- all synapses initially at max strength
+        spkP = np.array(spkP[spkP > tinit]) - tinit
+        spkM = np.array(spkM[spkM > tinit]) - tinit
+        spkDmv = np.array(spkDmv[spkDmv > tinit]) - tinit
+        spkNa = np.array(spkNa[spkNa > tinit]) - tinit
+
         # caclulate nTE for each populations
-        nTEmax = [0, 0, 0, 0] # ignore negative values
+        nTEmax = [0, 0, 0, 0]  # ignore negative values
         nTEbin = [None, None, None, None]
         print(kwargs["binSize"], sc["duration"])
         for sz in kwargs["binSize"]:
-            bins = np.linspace(0, sc["duration"], 1 + int(sc["duration"] / sz))
+            bins = np.linspace(
+                0, sc["duration"] - tinit, 1 + int((sc["duration"] - tinit) / sz)
+            )
             ntes = calcNTE(spkNa, spkDmv, spkM, spkP, bins)
             for i, nte in enumerate(ntes):
                 if nte > nTEmax[i]:
@@ -89,19 +99,27 @@ def batch():
         nTENaM, nTEDmvP, nTEDmvM, nTEPM = nTEmax
         print(f"NA->M {nTENaM}, DMV->P {nTEDmvP}, DMV->M {nTEDmvM}, P->M {nTEPM}")
         # prioritize tranfer through the network
-        weights = [1,1,3,1]
-        fitness = [(np.exp(w*(1.0-nte)) -1.0) for nte,w in zip(nTEmax,weights)]
-        print(nTEmax,fitness)
+        weights = [100, 100, 700, 100]
+        fitness = [
+            w * (np.exp((1.0 - nte)) - 1.0) / (np.exp(1) - 1)
+            for nte, w in zip(nTEmax, weights)
+        ]
+        print(nTEmax, fitness)
         fitnessN = sum(fitness)
         # calculate rates
-        rateP = 1e3 * sum(spkP) / sc["duration"]
-        rateM = 1e3 * sum(spkM) / sc["duration"]
-
+        rateP = 1e3 * len(spkP) / (sc["duration"] - tinit)
+        rateM = 1e3 * len(spkM) / (sc["duration"] - tinit)
+        if rateP == 0 or rateM == 0:
+            return kwargs["maxFitness"]
+        print(f"P {rateP}\tM {rateM}")
         target = kwargs["target"]
-        fitnessR = np.exp(abs(rateP - target["mean"]) / target["var"]) -1.0
-        fitnessR += np.exp(abs(rateM - target["mean"]) / target["var"]) -1.0
-        print(f"fitness, {fitnessN}, {fitnessR}")
-        return min(fitnessN + min(100,fitnessR)/5.0, kwargs['maxFitness'])
+        fitnessR = np.exp(abs(rateP - target["mean"]) / target["var"]) - 1.0
+        fitnessR += np.exp(abs(rateM - target["mean"]) / target["var"]) - 1.0
+        fitnessR2 = 200 * abs(rateP - target["mean"]) + 200 * abs(
+            rateM - target["mean"]
+        )
+        print(f"fitness, {fitnessN}, {fitnessR}, {fitnessR2}")
+        return min(fitnessN + min(1000, fitnessR) + fitnessR2, kwargs["maxFitness"])
 
     # create Batch object with paramaters to modify, and specifying files to use
     b = Batch(params=params, cfgFile="cfg.py", netParamsFile="netParams_M1.py")
@@ -109,28 +127,38 @@ def batch():
     # Set output folder, grid method (all param combinations), and run configuration
     b.method = "optuna"
     b.runCfg = {
-        "type": "mpi_direct",  #'hpc_slurm',
+        "type": "hpc_slurm",
         "script": "init.py",
         # options required only for mpi_direct or hpc
         "mpiCommand": "",
         "nodes": 1,
         "coresPerNode": 1,
-        # 'allocation': 'default',
-        # 'email': 'salvadordura@gmail.com',
-        # 'reservation': None,
-        "folder": "/u/adam/models/ragp.network/"
+        "walltime": "0-00:20:00",
+        "partition": "scavenge",
+        "allocation": "mcdougal",
+        "email": "adam.newton@yale.edu",
+        #'reservation': None,
+        "folder": "/home/ajn48/project/ragp",
+        "custom": """#SBATCH --partition=scavenge
+#SBATCH --requeue
+#module load miniconda
+#module load OpenMPI/4.0.5-GCC-10.2.0 
+#source /vast/palmer/apps/avx2/software/miniconda/23.1.0/etc/profile.d/conda.sh
+#conda activate py310
+"""
         #'custom': 'export LD_LIBRARY_PATH="$HOME/.openmpi/lib"' # only for conda users
     }
-    b.batchLabel = "16mar23fit"
-    b.saveFolder = "/tera/" + os.getlogin() + "/" + b.batchLabel
+    b.batchLabel = "30mar23init"
+    print(f"/home/ajn48/palmer_scratch/{b.batchLabel}")
+    b.saveFolder = "/home/ajn48/palmer_scratch/" + b.batchLabel
 
     b.optimCfg = {
         "fitnessFunc": fitnessFunc,  # fitness expression (should read simData)
         "fitnessFuncArgs": fitnessFuncArgs,
         "maxFitness": fitnessFuncArgs["maxFitness"],
-        "maxiters": 50_000, #    Maximum number of iterations (1 iteration = 1 function evaluation)
-        "maxtime": 8*60*60,  #    Maximum time allowed, in seconds
-        "maxiter_wait": 60*60,
+        "maxiters": 3_000,  #    Maximum number of iterations (1 iteration = 1 function evaluation)
+        "maxtime": 8 * 60 * 60,  #    Maximum time allowed, in seconds
+        "maxiter_wait": 60 * 60,
         "time_sleep": 30,
     }
 

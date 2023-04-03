@@ -5,7 +5,8 @@ echo $numproc
 for (( i=1; i<=$numproc; i++ ))
     do
         echo "Running batch process $i ..."
-        tmux new -d 'nice python3 batchNTE.py' \; pipe-pane 'cat > optLog${i}.txt'
-        #screen -L -Logfile optLog$i.txt -d -m nice python3 batchNTE.py @# Run the models
-        sleep 10
+        #tmux new -d 'nice python3 batchNTE.py' \; pipe-pane 'cat > optLog${i}.txt'
+        screen -L -Logfile optLog$i.txt -d -m python batchNTE.py @# Run the models
+        sleep 30
     done
+sleep 1d
