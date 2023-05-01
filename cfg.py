@@ -5,24 +5,25 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 11_000 
+cfg.duration = 60_000 
 cfg.dt = 0.025
 cfg.recordStep = 0.1
-cfg.simLabel = "27feb23test"
+cfg.simLabel = "21apr23bar"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
 cfg.recordStim = True
-cfg.nTEBins = {'DMV0': {'cluster0_P':int(cfg.duration/13), 
-                        'cluster0_M':int(cfg.duration/30)},
-               'NA0': {'cluster0_M': int(cfg.duration/13)},
-               'culster0_P': {'cluster0_M':int(cfg.duration/20)}}
+cfg.nTEBins = {'DMV0': {'cluster0_P':int(cfg.duration/42.6), 
+                        'cluster0_M':int(cfg.duration/27.4)},
+               'NA0': {'cluster0_M': int(cfg.duration/27.4)},
+               'cluster0_P': {'cluster0_M':int(cfg.duration/7.6)}}
 
 
 # recording
 #cfg.recordCells = ["all"]
 #cfg.recordTraces = {
-#    "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"}}
+#    "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"}
+#}
 """
     #'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
     "epas": {"sec": "soma", "loc": 0.5, "var": "e_pas"},
@@ -107,7 +108,7 @@ cfg.phasic_cells = [
     92,
     102,
 ]
-cfg.seed = 2
+cfg.seed = 1
 
 # cell size
 cfg.sze = 21
@@ -143,18 +144,17 @@ cfg.DMVDivergence = 7
 cfg.DMVConvergence = 1.34
 
 # NA (drive M) source statistics -- exp distributed ISIs
-scale, loc = 754.4866995207383, 105.7860115451731
+"""scale, loc = 754.4866995207383, 105.7860115451731
 interval = scale + loc
 cfg.NARate = 1000/interval
 cfg.NANoise = 1.0 - loc/interval
+"""
 
 # NA Chemoreflex drive -- gamma distributed ISIs
-"""
 scale, loc = 14.24094070278148, 48.35404375879234
 interval = scale + loc                                                          
 cfg.NARate = 1000/interval                                                      
 cfg.NANoise = 1.0 - loc/interval
-"""
 # NA Barroreflex drive -- gamma distributed ISIs
 """
 shape, loc, theta = 1.518579064688518, 15.159890913518314, 14.220177825723088
@@ -165,24 +165,23 @@ cfg.NANoise = 1.0 - loc/interval
 """
 cfg.NADivergence = 30
 cfg.NAConvergence = 1.32 
-
 # phasic connections
-cfg.phasic_weight = 0.001 #0.00058  
+cfg.phasic_weight = 0.00040247923847343216 #0.00058  
 cfg.phasic_delay = 5
 cfg.phasic_phasic_prob = [0.25, 0.25]
-cfg.phasic_phasic_weight = [0.0002, 0.0002]
+cfg.phasic_phasic_weight = [0.006448191469875395,0.006448191469875395]
 cfg.phasic_phasic_delay = [5, 5]
 
 cfg.phasic_mixed_prob = [0.25, 0.25]
-cfg.phasic_mixed_weight = [0.0002, 0.0002]
+cfg.phasic_mixed_weight = [0.001700463242073189,0.001700463242073189]
 cfg.phasic_mixed_delay = [5, 5]
 
 
 # mixed connections
-cfg.mixed_weight = 0.001 #0.00058 
+cfg.mixed_weight = 0.00027972942965111996 
 cfg.mixed_delay = 5
 cfg.mixed_mixed_prob = [0.25, 0.25]
-cfg.mixed_mixed_weight = [0.0002, 0.0002]
+cfg.mixed_mixed_weight = [2.8287895769578788e-05, 2.8287895769578788e-05]
 cfg.mixed_mixed_delay = [5, 5]
 
 # channel parameters
