@@ -34,11 +34,17 @@ def batch():
     # parameters space to explore
 
     params = specs.ODict()
-    params["phasic_phasic_weight"] = [0, 1e-2]
-    params["mixed_mixed_weight"] = [0, 1e-2]
-    params["phasic_mixed_weight"] = [0, 1e-2]
-    params["phasic_weight"] = [1e-5, 1e-3]
-    params["mixed_weight"] = [1e-5, 1e-3]
+    params["phasic_phasic_weight"] = [1e-9, 1e-2]
+    params["phasic_phasic_weight_var"] = [1e-4, 1e-2]
+    params["mixed_mixed_weight"] = [1e-9, 1e-2]
+    params["mixed_mixed_weight_var"] = [1e-4, 1e-2]
+    params["phasic_mixed_weight"] = [1e-9, 1e-2]
+    params["phasic_mixed_weight_var"] = [1e-4, 1e-2]
+    params["phasic_weight"] = [1e-9, 1e-3]
+    params["phasic_weight_var"] = [1e-4, 1e-2]
+    params["mixed_weight"] = [1e-9, 1e-3]
+    params["mixed_weight_var"] = [1e-4, 1e-2]
+
 
     # fitness function
     fitnessFuncArgs = {}
@@ -53,6 +59,7 @@ def batch():
         "NAConvergence": cfg.NAConvergence,
     }
     fitnessFuncArgs["tinit"] = 1_000
+    fitnessFuncArgs["scale"] = 0.08097826086956524
     fitnessFuncArgs["binSize"] = list(range(10, 50, 5))
     fitnessFuncArgs["target"] = {"mean": 0.11, "var": 0.29**2}
 
@@ -75,6 +82,19 @@ def batch():
         spkM = st[typeM]
         spkDmv = st[typeDmv]
         spkNa = st[typeNa]
+        Pisi = [interval for idx in range(Pcells) for interval in np.diff(st[ids==idx])*1e-3]
+        Misi = [interval for idx in range(Pcells,sc["cluster_size"]) for interval in np.diff(st[ids==idx])*1e-3]
+
+        cdf = stats.expon.cdf(np.linspace(0,10,10_000), scale=kwargs['scale'])
+        if Pisi == []:
+            Pks, Ppval = 1,0
+        else:
+            Pks, Ppval = stats.kstest(Pisi, cdf)
+
+        if Misi == []:
+            Pks, Ppval = 1,0
+        else:
+            Pks, Ppval = stats.kstest(Misi, cdf)
 
         # skip first second -- all synapses initially at max strength
         spkP = np.array(spkP[spkP > tinit]) - tinit
@@ -115,11 +135,8 @@ def batch():
         target = kwargs["target"]
         fitnessR = np.exp(abs(rateP - target["mean"]) / target["var"]) - 1.0
         fitnessR += np.exp(abs(rateM - target["mean"]) / target["var"]) - 1.0
-        fitnessR2 = 200 * abs(rateP - target["mean"]) + 200 * abs(
-            rateM - target["mean"]
-        )
-        print(f"fitness, {fitnessN}, {fitnessR}, {fitnessR2}")
-        return min(fitnessN + min(1000, fitnessR) + fitnessR2, kwargs["maxFitness"])
+        print(f"fitness, {fitnessN}, {fitnessR}, {1000*Pks}, {1000*Mks}")
+        return min(fitnessN + min(1000, fitnessR) + 1000*(Pks+Mks), kwargs["maxFitness"])
 
     # create Batch object with paramaters to modify, and specifying files to use
     b = Batch(params=params, cfgFile="cfg.py", netParamsFile="netParams_M1.py")

@@ -221,6 +221,13 @@ elif cfg.stim == "network":
         "tau_D1": cfg.tau_D1,
         "tau_D2": cfg.tau_D2,
     }
+
+    def setWeight(param):
+        paramVar = f"{param}_var"
+        if hasattr(cfg, paramVar):
+            return f"lognormal({getattr(cfg,param)}, {getattr(cfg,paramVar)})"
+        return getattr(cfg,param)
+
     for idx in range(cfg.num_cluster):
         netParams.popParams[f"DMV{idx}"] = {
             "cellModel": "GammaStim",
@@ -265,14 +272,14 @@ elif cfg.stim == "network":
             "postConds": {"pop": f"cluster{idx}_M"},
             "convergence": cfg.NAConvergence,
             "divergence": cfg.NADivergence,
-            "weight": cfg.mixed_weight,
+            "weight": setWeight('mixed_weight'),
             "delay": cfg.mixed_delay,
             "synMech": "exc",
         }
         netParams.connParams[f"DMV{idx}->P{idx}"] = {
             "preConds": {"pop" : f"DMV{idx}"},
             "postConds": {"pop": f"cluster{idx}_P"},
-            "weight": cfg.phasic_weight,
+            "weight": setWeight('phasic_weight'),
             "delay": cfg.phasic_delay,
             "convergence": cfg.DMVConvergence,
             "divergence": cfg.DMVDivergence,
@@ -280,34 +287,44 @@ elif cfg.stim == "network":
         }
         for j in range(cfg.num_cluster):
 
-            def getVal(param):
+            def getVal(paramName):
+                paramVar = f"{paramName}_var"
+                param = getattr(cfg,paramName)
+                if hasattr(cfg,paramVar):
+                    var = getattr(cfg,paramVar)
+                    p = eval(param) if isinstance(param, str) else param
+                    v = eval(Pvar) if isinstance(var, str) else var
+                    mean = p[idx==j] if hasattr(p, "__len__") else p
+                    variance = v[idx==j] if hasattr(v,"__len__") else v
+                    return f"lognormal({mean}, {variance})"
+                param = getattr(cfg,paramName)
                 p = eval(param) if isinstance(param, str) else param
                 return p[idx == j] if hasattr(p, "__len__") else p
 
             netParams.connParams[f"P{idx}->P{j}"] = {
                 "preConds": {"pop": f"cluster{idx}_P"},
                 "postConds": {"pop": f"cluster{j}_P"},
-                "probability": getVal(cfg.phasic_phasic_prob),
-                "weight": getVal(cfg.phasic_phasic_weight),
-                "delay": getVal(cfg.phasic_phasic_delay),
+                "probability": getVal("phasic_phasic_prob"),
+                "weight": getVal("phasic_phasic_weight"), 
+                "delay": getVal("phasic_phasic_delay"),
                 "synMech": "exc",
             }
 
             netParams.connParams[f"P{idx}->M{j}"] = {
                 "preConds": {"pop": f"cluster{idx}_P"},
                 "postConds": {"pop": f"cluster{j}_M"},
-                "probability": getVal(cfg.phasic_mixed_prob),
-                "weight": getVal(cfg.phasic_mixed_weight),
-                "delay": getVal(cfg.phasic_mixed_delay),
+                "probability": getVal("phasic_mixed_prob"),
+                "weight": getVal("phasic_mixed_weight"),
+                "delay": getVal("phasic_mixed_delay"),
                 "synMech": "exc",
             }
 
             netParams.connParams[f"M{idx}->M{j}"] = {
                 "preConds": {"pop": f"cluster{idx}_M"},
                 "postConds": {"pop": f"cluster{j}_M"},
-                "probability": getVal(cfg.mixed_mixed_prob),
-                "weight": getVal(cfg.mixed_mixed_weight),
-                "delay": getVal(cfg.mixed_mixed_delay),
+                "probability": getVal("mixed_mixed_prob"),
+                "weight": getVal("mixed_mixed_weight"),
+                "delay": getVal("mixed_mixed_delay"),
                 "synMech": "exc",
             }
 
