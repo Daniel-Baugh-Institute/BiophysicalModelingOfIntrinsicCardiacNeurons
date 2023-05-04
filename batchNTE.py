@@ -1,5 +1,6 @@
 from netpyne import specs
 from netpyne.batch import Batch
+from scipy import stats
 from cfg import cfg
 from neuron import h
 import numpy as np
@@ -45,7 +46,6 @@ def batch():
     params["mixed_weight"] = [1e-9, 1e-3]
     params["mixed_weight_var"] = [1e-4, 1e-2]
 
-
     # fitness function
     fitnessFuncArgs = {}
     fitnessFuncArgs["maxFitness"] = 1_000_000
@@ -82,20 +82,29 @@ def batch():
         spkM = st[typeM]
         spkDmv = st[typeDmv]
         spkNa = st[typeNa]
-        Pisi = [interval for idx in range(Pcells) for interval in np.diff(st[ids==idx])*1e-3]
-        Misi = [interval for idx in range(Pcells,sc["cluster_size"]) for interval in np.diff(st[ids==idx])*1e-3]
+        Pisi = [
+            interval
+            for idx in range(Pcells)
+            for interval in np.diff(st[ids == idx]) * 1e-3
+        ]
+        Misi = [
+            interval
+            for idx in range(Pcells, sc["cluster_size"])
+            for interval in np.diff(st[ids == idx]) * 1e-3
+        ]
 
-        cdf = stats.expon.cdf(np.linspace(0,10,10_000), scale=kwargs['scale'])
+        cdf = stats.expon.cdf(np.linspace(0, 10, 10_000), scale=kwargs["scale"])
         if Pisi == []:
-            Pks, Ppval = 1,0
+            Pks, Ppval = 1, 0
         else:
             Pks, Ppval = stats.kstest(Pisi, cdf)
 
         if Misi == []:
-            Pks, Ppval = 1,0
+            Mks, Mpval = 1, 0
         else:
-            Pks, Ppval = stats.kstest(Misi, cdf)
-
+            Mks, Mpval = stats.kstest(Misi, cdf)
+        print(f"Type P {Pks} {Ppval}")
+        print(f"Type M {Mks} {Mpval}")
         # skip first second -- all synapses initially at max strength
         spkP = np.array(spkP[spkP > tinit]) - tinit
         spkM = np.array(spkM[spkM > tinit]) - tinit
@@ -116,10 +125,10 @@ def batch():
                     nTEmax[i] = nte
                     nTEbin[i] = sz
 
-        nTENaM, nTEDmvP, nTEDmvM, nTEPM = nTEmax
+        nTENaM, nTEDmvP, nTEPM, nTEDmvM = nTEmax
         print(f"NA->M {nTENaM}, DMV->P {nTEDmvP}, DMV->M {nTEDmvM}, P->M {nTEPM}")
         # prioritize tranfer through the network
-        weights = [100, 100, 700, 100]
+        weights = [100, 100, 100, 700]
         fitness = [
             w * (np.exp((1.0 - nte)) - 1.0) / (np.exp(1) - 1)
             for nte, w in zip(nTEmax, weights)
@@ -136,7 +145,9 @@ def batch():
         fitnessR = np.exp(abs(rateP - target["mean"]) / target["var"]) - 1.0
         fitnessR += np.exp(abs(rateM - target["mean"]) / target["var"]) - 1.0
         print(f"fitness, {fitnessN}, {fitnessR}, {1000*Pks}, {1000*Mks}")
-        return min(fitnessN + min(1000, fitnessR) + 1000*(Pks+Mks), kwargs["maxFitness"])
+        return min(
+            fitnessN + min(1000, fitnessR) + 1000 * (Pks + Mks), kwargs["maxFitness"]
+        )
 
     # create Batch object with paramaters to modify, and specifying files to use
     b = Batch(params=params, cfgFile="cfg.py", netParamsFile="netParams_M1.py")
@@ -165,7 +176,7 @@ def batch():
 """
         #'custom': 'export LD_LIBRARY_PATH="$HOME/.openmpi/lib"' # only for conda users
     }
-    b.batchLabel = "30mar23init"
+    b.batchLabel = "02may23log"
     print(f"/home/ajn48/palmer_scratch/{b.batchLabel}")
     b.saveFolder = "/home/ajn48/palmer_scratch/" + b.batchLabel
 
