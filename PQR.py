@@ -97,11 +97,15 @@ del dr['Vlist']
 
 c = []
 r = []
-for k in params[1]['values']:
-    d = dr.loc[dr['cellnum']==k]
-    c.append(k+1)
-    r.append(d['amp'].values[d['Subth'].values.tolist().index(0)])
-    del d
+    for k in params[1]['values']:
+        print(k)
+        d = dr.loc[dr['cellnum']==k]
+        c.append(k)
+        if (0 in d['Subth'].values.tolist()):
+            r.append(d['amp'].values[d['Subth'].values.tolist().index(0)])
+        else:
+            r.append(-0.1)
+        del d
 print(len(c))
 print(len(r))
 drh = pd.DataFrame()
