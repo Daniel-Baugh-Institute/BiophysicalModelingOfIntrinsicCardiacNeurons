@@ -75,6 +75,7 @@ def batch():
         NAcells = int(np.ceil(sc["NAConvergence"] * Mcells / sc["NADivergence"]))
         tinit = kwargs["tinit"]
         target = kwargs["target"]
+        duration = sc["duration"]
 
         ids = np.array(sd["spkid"])
         st = np.array(sd["spkt"])
@@ -89,19 +90,23 @@ def batch():
         spkNa = st[typeNa]
 
         # estimated spike count for 1min
-        Pcount = np.round([60e3 * sum(st[ids == idx]) / duration]).astype(int)
-        Mcount = np.round([60e3 * sum(st[ids == idx]) / duration]).astype(int)
+        Pcount, Mcount = np.zeros(500), np.zeros(500)
+        for idx in range(Pcells):
+            count = np.round([60e3 * sum(ids == idx) / duration]).astype(int)
+            if count < 500:
+                Pcount[count] += 1
+            else:
+                Pcount[-1] += 1
+        for idx in range(Pcells, sc["cluster_size"]):
+            count = np.round([60e3 * sum(ids == idx) / duration]).astype(int)
+            if count < 500:
+                Mcount[count] += 1
+            else:
+                Mcount[-1] += 1
 
-        cdf = stats.nbinom.cdf(range(180), target["n"], target["p"])
-        if Pisi == []:
-            Pks, Ppval = 1, 0
-        else:
-            Pks, Ppval = stats.kstest(Pcount, cdf)
-
-        if Misi == []:
-            Mks, Mpval = 1, 0
-        else:
-            Mks, Mpval = stats.kstest(Mcount, cdf)
+        cdf = stats.nbinom.cdf(range(500), target["n"], target["p"])
+        Pks, Ppval = stats.kstest(Pcount, cdf)
+        Mks, Mpval = stats.kstest(Mcount, cdf)
         print(f"Type P {Pks} {Ppval}")
         print(f"Type M {Mks} {Mpval}")
         # skip first second -- all synapses initially at max strength
@@ -113,11 +118,9 @@ def batch():
         # caclulate nTE for each populations
         nTEmax = [0, 0, 0, 0]  # ignore negative values
         nTEbin = [None, None, None, None]
-        print(kwargs["binSize"], sc["duration"])
+        print(kwargs["binSize"], duration)
         for sz in kwargs["binSize"]:
-            bins = np.linspace(
-                0, sc["duration"] - tinit, 1 + int((sc["duration"] - tinit) / sz)
-            )
+            bins = np.linspace(0, duration - tinit, 1 + int((duration - tinit) / sz))
             ntes = calcNTE(spkNa, spkDmv, spkM, spkP, bins)
             for i, nte in enumerate(ntes):
                 if nte > nTEmax[i]:
@@ -135,8 +138,8 @@ def batch():
         print(nTEmax, fitness)
         fitnessN = sum(fitness)
         # calculate rates
-        rateP = 1e3 * len(spkP) / (sc["duration"] - tinit)
-        rateM = 1e3 * len(spkM) / (sc["duration"] - tinit)
+        rateP = 1e3 * len(spkP) / (duration - tinit)
+        rateM = 1e3 * len(spkM) / (duration - tinit)
         if rateP == 0 or rateM == 0:
             return kwargs["maxFitness"]
         print(f"P {rateP}\tM {rateM}")
@@ -163,7 +166,7 @@ def batch():
         "walltime": "0-00:20:00",
         "partition": "scavenge",
         "allocation": "mcdougal",
-        "email": "adam.newton@yale.edu",
+        # "email": "adam.newton@yale.edu",
         #'reservation': None,
         "folder": "/home/ajn48/project/ragp",
         "custom": """#SBATCH --partition=scavenge
@@ -175,7 +178,7 @@ def batch():
 """
         #'custom': 'export LD_LIBRARY_PATH="$HOME/.openmpi/lib"' # only for conda users
     }
-    b.batchLabel = "02may23log"
+    b.batchLabel = "05may23log"
     print(f"/home/ajn48/palmer_scratch/{b.batchLabel}")
     b.saveFolder = "/home/ajn48/palmer_scratch/" + b.batchLabel
 
