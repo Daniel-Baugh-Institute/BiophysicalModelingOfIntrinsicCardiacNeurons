@@ -59,9 +59,13 @@ def batch():
         "NAConvergence": cfg.NAConvergence,
     }
     fitnessFuncArgs["tinit"] = 1_000
-    fitnessFuncArgs["scale"] = 0.08097826086956524
     fitnessFuncArgs["binSize"] = list(range(10, 50, 5))
-    fitnessFuncArgs["target"] = {"mean": 0.11, "var": 0.29**2}
+    fitnessFuncArgs["target"] = {
+        "mean": 0.11,
+        "var": 0.29**2,
+        "n": 1.12009527,
+        "p": 0.18394278,
+    }
 
     def fitnessFunc(sd, **kwargs):
         sc = kwargs["simConfig"]
@@ -70,6 +74,7 @@ def batch():
         DMVcells = int(np.ceil(sc["DMVConvergence"] * Pcells / sc["DMVDivergence"]))
         NAcells = int(np.ceil(sc["NAConvergence"] * Mcells / sc["NADivergence"]))
         tinit = kwargs["tinit"]
+        target = kwargs["target"]
 
         ids = np.array(sd["spkid"])
         st = np.array(sd["spkt"])
@@ -82,27 +87,21 @@ def batch():
         spkM = st[typeM]
         spkDmv = st[typeDmv]
         spkNa = st[typeNa]
-        Pisi = [
-            interval
-            for idx in range(Pcells)
-            for interval in np.diff(st[ids == idx]) * 1e-3
-        ]
-        Misi = [
-            interval
-            for idx in range(Pcells, sc["cluster_size"])
-            for interval in np.diff(st[ids == idx]) * 1e-3
-        ]
 
-        cdf = stats.expon.cdf(np.linspace(0, 10, 10_000), scale=kwargs["scale"])
+        # estimated spike count for 1min
+        Pcount = np.round([60e3 * sum(st[ids == idx]) / duration]).astype(int)
+        Mcount = np.round([60e3 * sum(st[ids == idx]) / duration]).astype(int)
+
+        cdf = stats.nbinom.cdf(range(180), target["n"], target["p"])
         if Pisi == []:
             Pks, Ppval = 1, 0
         else:
-            Pks, Ppval = stats.kstest(Pisi, cdf)
+            Pks, Ppval = stats.kstest(Pcount, cdf)
 
         if Misi == []:
             Mks, Mpval = 1, 0
         else:
-            Mks, Mpval = stats.kstest(Misi, cdf)
+            Mks, Mpval = stats.kstest(Mcount, cdf)
         print(f"Type P {Pks} {Ppval}")
         print(f"Type M {Mks} {Mpval}")
         # skip first second -- all synapses initially at max strength
