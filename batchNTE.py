@@ -35,16 +35,16 @@ def batch():
     # parameters space to explore
 
     params = specs.ODict()
-    params["phasic_phasic_weight"] = [1e-9, 1e-2]
-    params["phasic_phasic_weight_var"] = [1e-4, 1e-2]
-    params["mixed_mixed_weight"] = [1e-9, 1e-2]
-    params["mixed_mixed_weight_var"] = [1e-4, 1e-2]
-    params["phasic_mixed_weight"] = [1e-9, 1e-2]
-    params["phasic_mixed_weight_var"] = [1e-4, 1e-2]
-    params["phasic_weight"] = [1e-9, 1e-3]
-    params["phasic_weight_var"] = [1e-4, 1e-2]
-    params["mixed_weight"] = [1e-9, 1e-3]
-    params["mixed_weight_var"] = [1e-4, 1e-2]
+    params["phasic_phasic_weight"] = [-9, -2]
+    params["phasic_phasic_weight_var"] = [-4, -2]
+    params["mixed_mixed_weight"] = [-9, -2]
+    params["mixed_mixed_weight_var"] = [-4, -2]
+    params["phasic_mixed_weight"] = [-9, -2]
+    params["phasic_mixed_weight_var"] = [-4, -2]
+    params["phasic_weight"] = [-9, -3]
+    params["phasic_weight_var"] = [-4, -2]
+    params["mixed_weight"] = [-9, -3]
+    params["mixed_weight_var"] = [-4, -2]
 
     # fitness function
     fitnessFuncArgs = {}
@@ -148,7 +148,7 @@ def batch():
         fitnessR += np.exp(abs(rateM - target["mean"]) / target["var"]) - 1.0
         print(f"fitness, {fitnessN}, {fitnessR}, {1000*Pks}, {1000*Mks}")
         return min(
-            fitnessN + min(1000, fitnessR) + 1000 * (Pks + Mks), kwargs["maxFitness"]
+            fitnessN + min(10_000, fitnessR) + 1000 * (Pks + Mks), kwargs["maxFitness"]
         )
 
     # create Batch object with paramaters to modify, and specifying files to use
@@ -178,7 +178,7 @@ def batch():
 """
         #'custom': 'export LD_LIBRARY_PATH="$HOME/.openmpi/lib"' # only for conda users
     }
-    b.batchLabel = "05may23log"
+    b.batchLabel = "07may23log"
     print(f"/home/ajn48/palmer_scratch/{b.batchLabel}")
     b.saveFolder = "/home/ajn48/palmer_scratch/" + b.batchLabel
 

@@ -13,6 +13,7 @@ cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
 cfg.recordStim = True
+cfg.log_weights = True  # all weights are log scaled -- to improve search
 cfg.nTEBins = {'DMV0': {'cluster0_P':int(cfg.duration/42.6), 
                         'cluster0_M':int(cfg.duration/27.4)},
                'NA0': {'cluster0_M': int(cfg.duration/27.4)},
