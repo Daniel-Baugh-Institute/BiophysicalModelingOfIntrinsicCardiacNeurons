@@ -93,15 +93,8 @@ def batch():
         Mcount = np.round([60e3 * sum(st[ids == idx]) / duration]).astype(int)
 
         cdf = stats.nbinom.cdf(range(180), target["n"], target["p"])
-        if Pisi == []:
-            Pks, Ppval = 1, 0
-        else:
-            Pks, Ppval = stats.kstest(Pcount, cdf)
-
-        if Misi == []:
-            Mks, Mpval = 1, 0
-        else:
-            Mks, Mpval = stats.kstest(Mcount, cdf)
+        Pks, Ppval = stats.kstest(Pcount, cdf)
+        Mks, Mpval = stats.kstest(Mcount, cdf)
         print(f"Type P {Pks} {Ppval}")
         print(f"Type M {Mks} {Mpval}")
         # skip first second -- all synapses initially at max strength
