@@ -251,8 +251,10 @@ elif cfg.stim == "network" and cfg.phasic_split > 0:
     def setWeight(param):
         paramVar = f"{param}_var"
         if hasattr(cfg, paramVar):
+            if cfg.log_weights:
+                return f"lognormal({10**getattr(cfg,param)}, {10**getattr(cfg,paramVar)})"
             return f"lognormal({getattr(cfg,param)}, {getattr(cfg,paramVar)})"
-        return getattr(cfg,param)
+        return 10**getattr(cfg, param) if cfg.log_weights else getattr(cfg, param)
 
     for idx in range(cfg.num_cluster):
         netParams.popParams[f"DMV{idx}"] = {
@@ -262,12 +264,15 @@ elif cfg.stim == "network" and cfg.phasic_split > 0:
             "theta": cfg.DMVScale,
             "noise": cfg.DMVNoise,
             "number": max(10_000, 5 * cfg.duration),
-            "numCells": 
-            int(np.ceil(
-                cfg.DMVConvergence * netParams.popParams[f"cluster{idx}_P"]["numCells"] / cfg.DMVDivergence
-            )),
+            "numCells": int(
+                np.ceil(
+                    cfg.DMVConvergence
+                    * netParams.popParams[f"cluster{idx}_P"]["numCells"]
+                    / cfg.DMVDivergence
+                )
+            ),
         }
-        if hasattr(cfg, 'NAShape'):
+        if hasattr(cfg, "NAShape"):
             netParams.popParams[f"NA{idx}"] = {
                 "cellModel": "GammaStim",
                 "type": "NetStim",
@@ -288,10 +293,13 @@ elif cfg.stim == "network" and cfg.phasic_split > 0:
                 "rate": cfg.NARate,
                 "noise": cfg.NANoise,
                 "number": max(10_000, 5 * cfg.duration),
-                "numCells": 
-                int(np.ceil(
-                    cfg.NAConvergence * netParams.popParams[f"cluster{idx}_M"]["numCells"] / cfg.NADivergence
-                )),
+                "numCells": int(
+                    np.ceil(
+                        cfg.NAConvergence
+                        * netParams.popParams[f"cluster{idx}_M"]["numCells"]
+                        / cfg.NADivergence
+                    )
+                ),
             }
         netParams.connParams[f"NA{idx}->M{idx}"] = {
             "preConds": {"pop": f"NA{idx}"},
@@ -303,7 +311,7 @@ elif cfg.stim == "network" and cfg.phasic_split > 0:
             "synMech": "exc",
         }
         netParams.connParams[f"DMV{idx}->P{idx}"] = {
-            "preConds": {"pop" : f"DMV{idx}"},
+            "preConds": {"pop": f"DMV{idx}"},
             "postConds": {"pop": f"cluster{idx}_P"},
             "weight": setWeight('DMV_P_weight'),
             "delay": cfg.DMV_P_delay,
@@ -313,19 +321,32 @@ elif cfg.stim == "network" and cfg.phasic_split > 0:
         }
         for j in range(cfg.num_cluster):
 
-            def getVal(paramName):
+            def getRawVal(paramName):
                 paramVar = f"{paramName}_var"
-                param = getattr(cfg,paramName)
-                if hasattr(cfg,paramVar):
-                    var = getattr(cfg,paramVar)
+                param = getattr(cfg, paramName)
+                if hasattr(cfg, paramVar):
+                    var = getattr(cfg, paramVar)
                     p = eval(param) if isinstance(param, str) else param
                     v = eval(Pvar) if isinstance(var, str) else var
-                    mean = p[idx==j] if hasattr(p, "__len__") else p
-                    variance = v[idx==j] if hasattr(v,"__len__") else v
-                    return f"lognormal({mean}, {variance})"
-                param = getattr(cfg,paramName)
+                    mean = p[idx == j] if hasattr(p, "__len__") else p
+                    variance = v[idx == j] if hasattr(v, "__len__") else v
+                    return mean, variance
+                param = getattr(cfg, paramName)
                 p = eval(param) if isinstance(param, str) else param
                 return p[idx == j] if hasattr(p, "__len__") else p
+
+            def getVal(paramName):
+                param = getRawVal(paramName)
+                if cfg.log_weights:
+                    param = getRawVal(paramName)
+                    if hasattr(param, "__len__"):
+                        return f"lognormal({10**param[0]}, {10**param[1]})"
+                    return 10**param
+                return (
+                    f"lognormal({param[0]}, {param[1]})"
+                    if hasattr(param, "__len__")
+                    else param
+                )
 
             for pop in ["P", "M"]:
                 netParams.connParams[f"{pop}{idx}->{pop}{j}"] = {

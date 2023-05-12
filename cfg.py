@@ -5,7 +5,7 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 1_000 
+cfg.duration = 11_000 
 cfg.dt = 0.025
 cfg.recordStep = 0.1
 cfg.simLabel = "11may23test"
@@ -13,6 +13,7 @@ cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
 cfg.recordStim = True
+cfg.log_weights = True  # all weights are log scaled -- to improve search
 cfg.nTEBins = {'DMV0': {'cluster0_P':int(cfg.duration/42.6), 
                         'cluster0_M':int(cfg.duration/27.4)},
                'NA0': {'cluster0_M': int(cfg.duration/27.4)},
@@ -191,7 +192,6 @@ cfg.P_P_delay = [5, 5]
 cfg.P_M_prob = [0.25, 0.25]
 cfg.P_M_weight = [2e-5, 2e-5]
 cfg.P_M_weight_var = [5e-4, 5e-4]
-
 cfg.P_M_delay = [5, 5]
 
 

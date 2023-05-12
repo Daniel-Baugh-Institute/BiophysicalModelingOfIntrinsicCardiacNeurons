@@ -35,20 +35,20 @@ def batch():
     # parameters space to explore
 
     params = specs.ODict()
-    params["phasic_phasic_weight"] = [1e-9, 1e-2]
-    params["phasic_phasic_weight_var"] = [1e-4, 1e-2]
-    params["mixed_mixed_weight"] = [1e-9, 1e-2]
-    params["mixed_mixed_weight_var"] = [1e-4, 1e-2]
-    params["phasic_mixed_weight"] = [1e-9, 1e-2]
-    params["phasic_mixed_weight_var"] = [1e-4, 1e-2]
-    params["phasic_weight"] = [1e-9, 1e-3]
-    params["phasic_weight_var"] = [1e-4, 1e-2]
-    params["mixed_weight"] = [1e-9, 1e-3]
-    params["mixed_weight_var"] = [1e-4, 1e-2]
+    params["phasic_phasic_weight"] = [-9, -3]
+    params["phasic_phasic_weight_var"] = [-6, -3]
+    params["mixed_mixed_weight"] = [-9, -3]
+    params["mixed_mixed_weight_var"] = [-6, -3]
+    params["phasic_mixed_weight"] = [-9, -3]
+    params["phasic_mixed_weight_var"] = [-6, -3]
+    params["phasic_weight"] = [-9, -3]
+    params["phasic_weight_var"] = [-6, -3]
+    params["mixed_weight"] = [-9, -3]
+    params["mixed_weight_var"] = [-6, -3]
 
     # fitness function
     fitnessFuncArgs = {}
-    fitnessFuncArgs["maxFitness"] = 1_000_000
+    fitnessFuncArgs["maxFitness"] = 1_000_000_000_000
     fitnessFuncArgs["simConfig"] = {
         "cluster_size": cfg.cluster_size,
         "duration": cfg.duration,
@@ -75,6 +75,7 @@ def batch():
         NAcells = int(np.ceil(sc["NAConvergence"] * Mcells / sc["NADivergence"]))
         tinit = kwargs["tinit"]
         target = kwargs["target"]
+        duration = sc["duration"]
 
         ids = np.array(sd["spkid"])
         st = np.array(sd["spkt"])
@@ -89,10 +90,22 @@ def batch():
         spkNa = st[typeNa]
 
         # estimated spike count for 1min
-        Pcount = np.round([60e3 * sum(st[ids == idx]) / duration]).astype(int)
-        Mcount = np.round([60e3 * sum(st[ids == idx]) / duration]).astype(int)
-
         cdf = stats.nbinom.cdf(range(180), target["n"], target["p"])
+        Pcount, Mcount = np.zeros(500), np.zeros(500)
+        for idx in range(Pcells):
+            count = np.round([60e3 * sum(ids == idx) / duration]).astype(int)
+            if count < 500:
+                Pcount[count] += 1
+            else:
+                Pcount[-1] += 1
+        for idx in range(Pcells, sc["cluster_size"]):
+            count = np.round([60e3 * sum(ids == idx) / duration]).astype(int)
+            if count < 500:
+                Mcount[count] += 1
+            else:
+                Mcount[-1] += 1
+
+        cdf = stats.nbinom.cdf(range(500), target["n"], target["p"])
         Pks, Ppval = stats.kstest(Pcount, cdf)
         Mks, Mpval = stats.kstest(Mcount, cdf)
         print(f"Type P {Pks} {Ppval}")
@@ -106,11 +119,9 @@ def batch():
         # caclulate nTE for each populations
         nTEmax = [0, 0, 0, 0]  # ignore negative values
         nTEbin = [None, None, None, None]
-        print(kwargs["binSize"], sc["duration"])
+        print(kwargs["binSize"], duration)
         for sz in kwargs["binSize"]:
-            bins = np.linspace(
-                0, sc["duration"] - tinit, 1 + int((sc["duration"] - tinit) / sz)
-            )
+            bins = np.linspace(0, duration - tinit, 1 + int((duration - tinit) / sz))
             ntes = calcNTE(spkNa, spkDmv, spkM, spkP, bins)
             for i, nte in enumerate(ntes):
                 if nte > nTEmax[i]:
@@ -128,17 +139,17 @@ def batch():
         print(nTEmax, fitness)
         fitnessN = sum(fitness)
         # calculate rates
-        rateP = 1e3 * len(spkP) / (sc["duration"] - tinit)
-        rateM = 1e3 * len(spkM) / (sc["duration"] - tinit)
+        rateP = 1e3 * len(spkP) / (duration - tinit)
+        rateM = 1e3 * len(spkM) / (duration - tinit)
         if rateP == 0 or rateM == 0:
             return kwargs["maxFitness"]
         print(f"P {rateP}\tM {rateM}")
         target = kwargs["target"]
-        fitnessR = np.exp(abs(rateP - target["mean"]) / target["var"]) - 1.0
-        fitnessR += np.exp(abs(rateM - target["mean"]) / target["var"]) - 1.0
+        fitnessR = abs(rateP - target["mean"]) / target["var"]
+        fitnessR += abs(rateM - target["mean"]) / target["var"]
         print(f"fitness, {fitnessN}, {fitnessR}, {1000*Pks}, {1000*Mks}")
         return min(
-            fitnessN + min(1000, fitnessR) + 1000 * (Pks + Mks), kwargs["maxFitness"]
+            fitnessN + 1000*fitnessR + 1000 * (Pks + Mks), kwargs["maxFitness"]
         )
 
     # create Batch object with paramaters to modify, and specifying files to use
@@ -156,7 +167,7 @@ def batch():
         "walltime": "0-00:20:00",
         "partition": "scavenge",
         "allocation": "mcdougal",
-        "email": "adam.newton@yale.edu",
+        # "email": "adam.newton@yale.edu",
         #'reservation': None,
         "folder": "/home/ajn48/project/ragp",
         "custom": """#SBATCH --partition=scavenge
@@ -168,7 +179,7 @@ def batch():
 """
         #'custom': 'export LD_LIBRARY_PATH="$HOME/.openmpi/lib"' # only for conda users
     }
-    b.batchLabel = "02may23log"
+    b.batchLabel = "11may23log"
     print(f"/home/ajn48/palmer_scratch/{b.batchLabel}")
     b.saveFolder = "/home/ajn48/palmer_scratch/" + b.batchLabel
 
@@ -179,7 +190,7 @@ def batch():
         "maxiters": 3_000,  #    Maximum number of iterations (1 iteration = 1 function evaluation)
         "maxtime": 8 * 60 * 60,  #    Maximum time allowed, in seconds
         "maxiter_wait": 60 * 60,
-        "time_sleep": 30,
+        "time_sleep": 10,
     }
 
     # Run batch simulations
