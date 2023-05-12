@@ -35,16 +35,16 @@ def batch():
     # parameters space to explore
 
     params = specs.ODict()
-    params["phasic_phasic_weight"] = [-9, -3]
-    params["phasic_phasic_weight_var"] = [-6, -3]
-    params["mixed_mixed_weight"] = [-9, -3]
-    params["mixed_mixed_weight_var"] = [-6, -3]
-    params["phasic_mixed_weight"] = [-9, -3]
-    params["phasic_mixed_weight_var"] = [-6, -3]
-    params["phasic_weight"] = [-9, -3]
-    params["phasic_weight_var"] = [-6, -3]
-    params["mixed_weight"] = [-9, -3]
-    params["mixed_weight_var"] = [-6, -3]
+    params["P_P_weight"] = [-7, -3]
+    params["P_P_weight_var"] = [-6, -3]
+    params["M_M_weight"] = [-7, -3]
+    params["M_M_weight_var"] = [-6, -3]
+    params["P_M_weight"] = [-7, -3]
+    params["P_M_weight_var"] = [-6, -3]
+    params["P_weight"] = [-7, -3]
+    params["P_weight_var"] = [-6, -3]
+    params["M_weight"] = [-7, -3]
+    params["M_weight_var"] = [-6, -3]
 
     # fitness function
     fitnessFuncArgs = {}
