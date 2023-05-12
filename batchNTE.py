@@ -35,20 +35,20 @@ def batch():
     # parameters space to explore
 
     params = specs.ODict()
-    params["phasic_phasic_weight"] = [-9, -2]
-    params["phasic_phasic_weight_var"] = [-4, -2]
-    params["mixed_mixed_weight"] = [-9, -2]
-    params["mixed_mixed_weight_var"] = [-4, -2]
-    params["phasic_mixed_weight"] = [-9, -2]
-    params["phasic_mixed_weight_var"] = [-4, -2]
+    params["phasic_phasic_weight"] = [-9, -3]
+    params["phasic_phasic_weight_var"] = [-6, -3]
+    params["mixed_mixed_weight"] = [-9, -3]
+    params["mixed_mixed_weight_var"] = [-6, -3]
+    params["phasic_mixed_weight"] = [-9, -3]
+    params["phasic_mixed_weight_var"] = [-6, -3]
     params["phasic_weight"] = [-9, -3]
-    params["phasic_weight_var"] = [-4, -2]
+    params["phasic_weight_var"] = [-6, -3]
     params["mixed_weight"] = [-9, -3]
-    params["mixed_weight_var"] = [-4, -2]
+    params["mixed_weight_var"] = [-6, -3]
 
     # fitness function
     fitnessFuncArgs = {}
-    fitnessFuncArgs["maxFitness"] = 1_000_000
+    fitnessFuncArgs["maxFitness"] = 1_000_000_000_000
     fitnessFuncArgs["simConfig"] = {
         "cluster_size": cfg.cluster_size,
         "duration": cfg.duration,
@@ -144,11 +144,11 @@ def batch():
             return kwargs["maxFitness"]
         print(f"P {rateP}\tM {rateM}")
         target = kwargs["target"]
-        fitnessR = np.exp(abs(rateP - target["mean"]) / target["var"]) - 1.0
-        fitnessR += np.exp(abs(rateM - target["mean"]) / target["var"]) - 1.0
+        fitnessR = abs(rateP - target["mean"]) / target["var"]
+        fitnessR += abs(rateM - target["mean"]) / target["var"]
         print(f"fitness, {fitnessN}, {fitnessR}, {1000*Pks}, {1000*Mks}")
         return min(
-            fitnessN + min(10_000, fitnessR) + 1000 * (Pks + Mks), kwargs["maxFitness"]
+            fitnessN + 1000*fitnessR + 1000 * (Pks + Mks), kwargs["maxFitness"]
         )
 
     # create Batch object with paramaters to modify, and specifying files to use
@@ -178,7 +178,7 @@ def batch():
 """
         #'custom': 'export LD_LIBRARY_PATH="$HOME/.openmpi/lib"' # only for conda users
     }
-    b.batchLabel = "07may23log"
+    b.batchLabel = "11may23log"
     print(f"/home/ajn48/palmer_scratch/{b.batchLabel}")
     b.saveFolder = "/home/ajn48/palmer_scratch/" + b.batchLabel
 
@@ -189,7 +189,7 @@ def batch():
         "maxiters": 3_000,  #    Maximum number of iterations (1 iteration = 1 function evaluation)
         "maxtime": 8 * 60 * 60,  #    Maximum time allowed, in seconds
         "maxiter_wait": 60 * 60,
-        "time_sleep": 30,
+        "time_sleep": 10,
     }
 
     # Run batch simulations

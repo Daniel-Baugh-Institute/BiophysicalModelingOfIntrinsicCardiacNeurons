@@ -226,9 +226,9 @@ elif cfg.stim == "network":
         paramVar = f"{param}_var"
         if hasattr(cfg, paramVar):
             if cfg.log_weights:
-                return f"lognormal({np.exp(getattr(cfg,param))}, {np.exp(getattr(cfg,paramVar))})"
+                return f"lognormal({10**getattr(cfg,param)}, {10**getattr(cfg,paramVar)})"
             return f"lognormal({getattr(cfg,param)}, {getattr(cfg,paramVar)})"
-        return np.exp(getattr(cfg, param)) if cfg.log_weights else getattr(cfg, param)
+        return 10**getattr(cfg, param) if cfg.log_weights else getattr(cfg, param)
 
     for idx in range(cfg.num_cluster):
         netParams.popParams[f"DMV{idx}"] = {
@@ -317,8 +317,8 @@ elif cfg.stim == "network":
                 if cfg.log_weights:
                     param = getRawVal(paramName)
                     if hasattr(param, "__len__"):
-                        return f"lognormal({np.exp(param[0])}, {np.exp(param[1])})"
-                    return np.exp(param)
+                        return f"lognormal({10**param[0]}, {10**param[1]})"
+                    return 10**param
                 return (
                     f"lognormal({param[0]}, {param[1]})"
                     if hasattr(param, "__len__")

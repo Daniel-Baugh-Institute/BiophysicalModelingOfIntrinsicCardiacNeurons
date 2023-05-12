@@ -5,7 +5,7 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 21_000 
+cfg.duration = 11_000 
 cfg.dt = 0.025
 cfg.recordStep = 0.1
 cfg.simLabel = "02may23test"
@@ -168,27 +168,27 @@ cfg.NANoise = 1.0 - loc/interval
 cfg.NADivergence = 30
 cfg.NAConvergence = 1.32 
 # phasic connections
-cfg.phasic_weight = 4e-6 #0.00040247923847343216 #0.00058  
+cfg.phasic_weight = -8 #0.00040247923847343216 #0.00058  
 cfg.phasic_weight_var = 1e-3
 cfg.phasic_delay = 5
 cfg.phasic_phasic_prob = [0.25, 0.25]
-cfg.phasic_phasic_weight = [5e-6, 5e-6]
+cfg.phasic_phasic_weight = [-8, -8]
 cfg.phasic_phasic_weight_var = [1e-4, 1e-4]
 cfg.phasic_phasic_delay = [5, 5]
 
 cfg.phasic_mixed_prob = [0.25, 0.25]
-cfg.phasic_mixed_weight = [2e-5, 2e-5]
+cfg.phasic_mixed_weight = [-8, -8]
 cfg.phasic_mixed_weight_var = [5e-4, 5e-4]
 
 cfg.phasic_mixed_delay = [5, 5]
 
 
 # mixed connections
-cfg.mixed_weight = 4e-6 #0.00027972942965111996 
+cfg.mixed_weight = -8 #0.00027972942965111996 
 cfg.mixed_weight_var = 1e-3 #1.0
 cfg.mixed_delay = 5
 cfg.mixed_mixed_prob = [0.25, 0.25]
-cfg.mixed_mixed_weight = [5e-6, 5e-6]
+cfg.mixed_mixed_weight = [-8, -8]
 cfg.mixed_mixed_weight_var = [5e-4, 5e-4]
 
 cfg.mixed_mixed_delay = [5, 5]
