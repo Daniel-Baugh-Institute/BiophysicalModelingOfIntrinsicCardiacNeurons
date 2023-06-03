@@ -227,13 +227,13 @@ elif cfg.stim == "dexp2syn":
         "d": cfg.d,
         "rrate": cfg.rrate,
     }
-elif cfg.stim == "network" and cfg.phasic_split > 0:
+elif cfg.stim == "network" and cfg.phasic_split == 0:
     """ network model where the inputs connect; DMV->P and NA->M
         With feedback within populations P->P and M->M
         And connection between populations P->M
     """
     if hasattr(cfg, "DMV_PSAN_weight"):
-        print("network model does not use PSAN\t set stim='network_alt'")
+        print("network model does not use PSAN\t set phasic_split>0")
 
     netParams.synMechParams["exc"] = {
         "mod": "FDSExp2Syn",
@@ -367,7 +367,7 @@ elif cfg.stim == "network" and cfg.phasic_split > 0:
                 "synMech": "exc",
             }
 
-elif cfg.stim == "alt_network":
+elif cfg.stim == "network" and cfg.phasic_split > 0:
     """ network model where the type P population is divided in SAN and LV projecting PSAN and PLV
         inputs connect; DMV->PLV, NA->PSAN, NA->M
         With feedback within populations PLV->PLV, PSAN->PSAN, M->M
@@ -405,7 +405,7 @@ elif cfg.stim == "alt_network":
                 cfg.DMVConvergence * netParams.popParams[f"cluster{idx}_PLV"]["numCells"] / cfg.DMVDivergence
             )),
         }
-        target_count = netParams.popParams[f"cluster{idx}_PSA"]["numCells"] + netParams.popParams[f"cluster{idx}_M"]["numCells"]
+        target_count = netParams.popParams[f"cluster{idx}_PSAN"]["numCells"] + netParams.popParams[f"cluster{idx}_M"]["numCells"]
 
         if hasattr(cfg, 'NAShape'):
             # Model NA ISIs as a Gamma Distribution
@@ -442,7 +442,7 @@ elif cfg.stim == "alt_network":
                 "convergence": cfg.NAConvergence,
                 "divergence": cfg.NADivergence,
                 "weight": setWeight(f'NA_{pop}_weight'),
-                "delay": cfg.NA_delay,
+                "delay": getattr(cfg,f"NA_{pop}_delay"),
                 "synMech": "exc",
             }
 
@@ -450,7 +450,7 @@ elif cfg.stim == "alt_network":
             "preConds": {"pop" : f"DMV{idx}"},
             "postConds": {"pop": f"cluster{idx}_P"},
             "weight": setWeight('DMV_PLV_weight'),
-            "delay": cfg.DMV_delay,
+            "delay": cfg.DMV_PLV_delay,
             "convergence": cfg.DMVConvergence,
             "divergence": cfg.DMVDivergence,
             "synMech": "exc",

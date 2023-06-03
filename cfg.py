@@ -180,30 +180,72 @@ else:
     raise Exception("invalid drive: use 'phys', 'chemoreflex', 'baroreflex'")
 
 
-# phasic connections
-cfg.DMV_P_weight = 4e-6 #0.00040247923847343216 #0.00058  
-cfg.DMV_P_weight_var = 1e-3
-cfg.DMV_P_delay = 5
-cfg.P_P_prob = [0.25, 0.25]
-cfg.P_P_weight = [5e-6, 5e-6]
-cfg.P_P_var = [1e-4, 1e-4]
-cfg.P_P_delay = [5, 5]
+if cfg.phasic_split > 0:
 
-cfg.P_M_prob = [0.25, 0.25]
-cfg.P_M_weight = [2e-5, 2e-5]
-cfg.P_M_weight_var = [5e-4, 5e-4]
-cfg.P_M_delay = [5, 5]
+    # phasic connections
+    cfg.DMV_PLV_weight = 4e-6 #0.00040247923847343216 #0.00058  
+    cfg.DMV_PLV_weight_var = 1e-3
+    cfg.DMV_PLV_delay = 5
+
+    cfg.NA_PSAN_weight = 4e-6 #0.00040247923847343216 #0.00058  
+    cfg.NA_PSAN_weight_var = 1e-3
+    cfg.NA_PSAN_delay = 5
+
+    cfg.PLV_PLV_prob = [0.25, 0.25]
+    cfg.PLV_PLV_weight = [5e-6, 5e-6]
+    cfg.PLV_PLV_weight_var = [1e-4, 1e-4]
+    cfg.PLV_PLV_delay = [5, 5]
+
+    cfg.PSAN_PSAN_prob = [0.25, 0.25]
+    cfg.PSAN_PSAN_weight = [5e-6, 5e-6]
+    cfg.PSAN_PSAN_weight_var = [1e-4, 1e-4]
+    cfg.PSAN_PSAN_delay = [5, 5]
+
+    cfg.PSAN_M_prob = [0.25, 0.25]
+    cfg.PSAN_M_weight = [2e-5, 2e-5]
+    cfg.PSAN_M_weight_var = [5e-4, 5e-4]
+    cfg.PSAN_M_delay = [5, 5]
+
+    cfg.PLV_M_prob = [0.25, 0.25]
+    cfg.PLV_M_weight = [2e-5, 2e-5]
+    cfg.PLV_M_weight_var = [5e-4, 5e-4]
+    cfg.PLV_M_delay = [5, 5]
+
+    # mixed connections
+    cfg.NA_M_weight = 4e-6 #0.00027972942965111996 
+    cfg.NA_M_weight_var = 1e-3 #1.0
+    cfg.NA_M_delay = 5
+    cfg.M_M_prob = [0.25, 0.25]
+    cfg.M_M_weight = [5e-6, 5e-6]
+    cfg.M_M_weight_var = [5e-4, 5e-4]
+    cfg.M_M_delay = [5, 5]
+
+else:
+    # phasic connections
+    cfg.DMV_P_weight = 4e-6 #0.00040247923847343216 #0.00058  
+    cfg.DMV_P_weight_var = 1e-3
+    cfg.DMV_P_delay = 5
+    cfg.P_P_prob = [0.25, 0.25]
+    cfg.P_P_weight = [5e-6, 5e-6]
+    cfg.P_P_var = [1e-4, 1e-4]
+    cfg.P_P_delay = [5, 5]
+
+    cfg.P_M_prob = [0.25, 0.25]
+    cfg.P_M_weight = [2e-5, 2e-5]
+    cfg.P_M_weight_var = [5e-4, 5e-4]
+    cfg.P_M_delay = [5, 5]
 
 
-# mixed connections
-cfg.NA_M_weight = 4e-6 #0.00027972942965111996 
-cfg.NA_M_weight_var = 1e-3 #1.0
-cfg.NA_M_delay = 5
-cfg.M_M_prob = [0.25, 0.25]
-cfg.M_M_weight = [5e-6, 5e-6]
-cfg.M_M_weight_var = [5e-4, 5e-4]
+    # mixed connections
+    cfg.NA_M_weight = 4e-6 #0.00027972942965111996 
+    cfg.NA_M_weight_var = 1e-3 #1.0
+    cfg.NA_M_delay = 5
+    cfg.M_M_prob = [0.25, 0.25]
+    cfg.M_M_weight = [5e-6, 5e-6]
+    cfg.M_M_weight_var = [5e-4, 5e-4]
 
-cfg.M_M_delay = [5, 5]
+    cfg.M_M_delay = [5, 5]
+
 
 # channel parameters
 cfg.na = 0.075  # 1
