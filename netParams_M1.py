@@ -124,7 +124,7 @@ for idx in range(cfg.num_cluster):
         }
         netParams.popParams[f"cluster{idx}_PLV"] = {
             "cellType": "phasic",
-            "numCells": np.round(phasic_count * (1.0-cfg.phasic_split)).astype(int),
+            "numCells": np.round(phasic_count * (1.0 - cfg.phasic_split)).astype(int),
             "diversity": True,
         }
     else:
@@ -133,7 +133,6 @@ for idx in range(cfg.num_cluster):
             "numCells": phasic_count,
             "diversity": True,
         }
-        
 
     netParams.popParams[f"cluster{idx}_P"] = {
         "cellType": "phasic",
@@ -227,13 +226,13 @@ elif cfg.stim == "dexp2syn":
         "d": cfg.d,
         "rrate": cfg.rrate,
     }
-elif cfg.stim == "network" and cfg.phasic_split > 0:
-    """ network model where the inputs connect; DMV->P and NA->M
-        With feedback within populations P->P and M->M
-        And connection between populations P->M
+elif cfg.stim == "network" and cfg.phasic_split == 0:
+    """network model where the inputs connect; DMV->P and NA->M
+    With feedback within populations P->P and M->M
+    And connection between populations P->M
     """
     if hasattr(cfg, "DMV_PSAN_weight"):
-        print("network model does not use PSAN\t set stim='network_alt'")
+        print("network model does not use PSAN\t set phasic_split>0")
 
     netParams.synMechParams["exc"] = {
         "mod": "FDSExp2Syn",
@@ -252,9 +251,11 @@ elif cfg.stim == "network" and cfg.phasic_split > 0:
         paramVar = f"{param}_var"
         if hasattr(cfg, paramVar):
             if cfg.log_weights:
-                return f"lognormal({10**getattr(cfg,param)}, {10**getattr(cfg,paramVar)})"
+                return (
+                    f"lognormal({10**getattr(cfg,param)}, {10**getattr(cfg,paramVar)})"
+                )
             return f"lognormal({getattr(cfg,param)}, {getattr(cfg,paramVar)})"
-        return 10**getattr(cfg, param) if cfg.log_weights else getattr(cfg, param)
+        return 10 ** getattr(cfg, param) if cfg.log_weights else getattr(cfg, param)
 
     for idx in range(cfg.num_cluster):
         netParams.popParams[f"DMV{idx}"] = {
@@ -280,10 +281,13 @@ elif cfg.stim == "network" and cfg.phasic_split > 0:
                 "theta": cfg.NAScale,
                 "noise": cfg.NANoise,
                 "number": max(10_000, 5 * cfg.duration),
-                "numCells": 
-                int(np.ceil(
-                    cfg.NAConvergence * netParams.popParams[f"cluster{idx}_M"]["numCells"] / cfg.NADivergence
-                )),
+                "numCells": int(
+                    np.ceil(
+                        cfg.NAConvergence
+                        * netParams.popParams[f"cluster{idx}_M"]["numCells"]
+                        / cfg.NADivergence
+                    )
+                ),
             }
 
         else:
@@ -306,14 +310,14 @@ elif cfg.stim == "network" and cfg.phasic_split > 0:
             "postConds": {"pop": f"cluster{idx}_M"},
             "convergence": cfg.NAConvergence,
             "divergence": cfg.NADivergence,
-            "weight": setWeight('NA_M_weight'),
+            "weight": setWeight("NA_M_weight"),
             "delay": cfg.NA_M_delay,
             "synMech": "exc",
         }
         netParams.connParams[f"DMV{idx}->P{idx}"] = {
             "preConds": {"pop": f"DMV{idx}"},
             "postConds": {"pop": f"cluster{idx}_P"},
-            "weight": setWeight('DMV_P_weight'),
+            "weight": setWeight("DMV_P_weight"),
             "delay": cfg.DMV_P_delay,
             "convergence": cfg.DMVConvergence,
             "divergence": cfg.DMVDivergence,
@@ -353,7 +357,7 @@ elif cfg.stim == "network" and cfg.phasic_split > 0:
                     "preConds": {"pop": f"cluster{idx}_{pop}"},
                     "postConds": {"pop": f"cluster{j}_{pop}"},
                     "probability": getVal(f"{pop}_{pop}_prob"),
-                    "weight": getVal(f"{pop}_{pop}_weight"), 
+                    "weight": getVal(f"{pop}_{pop}_weight"),
                     "delay": getVal(f"{pop}_{pop}_delay"),
                     "synMech": "exc",
                 }
@@ -367,11 +371,11 @@ elif cfg.stim == "network" and cfg.phasic_split > 0:
                 "synMech": "exc",
             }
 
-elif cfg.stim == "alt_network":
-    """ network model where the type P population is divided in SAN and LV projecting PSAN and PLV
-        inputs connect; DMV->PLV, NA->PSAN, NA->M
-        With feedback within populations PLV->PLV, PSAN->PSAN, M->M
-        And connection between populations PSAN->M, PLV->M
+elif cfg.stim == "network" and cfg.phasic_split > 0:
+    """network model where the type P population is divided in SAN and LV projecting PSAN and PLV
+    inputs connect; DMV->PLV, NA->PSAN, NA->M
+    With feedback within populations PLV->PLV, PSAN->PSAN, M->M
+    And connection between populations PSAN->M, PLV->M
     """
     netParams.synMechParams["exc"] = {
         "mod": "FDSExp2Syn",
@@ -390,7 +394,7 @@ elif cfg.stim == "alt_network":
         paramVar = f"{param}_var"
         if hasattr(cfg, paramVar):
             return f"lognormal({getattr(cfg,param)}, {getattr(cfg,paramVar)})"
-        return getattr(cfg,param)
+        return getattr(cfg, param)
 
     for idx in range(cfg.num_cluster):
         netParams.popParams[f"DMV{idx}"] = {
@@ -400,14 +404,20 @@ elif cfg.stim == "alt_network":
             "theta": cfg.DMVScale,
             "noise": cfg.DMVNoise,
             "number": max(10_000, 5 * cfg.duration),
-            "numCells": 
-            int(np.ceil(
-                cfg.DMVConvergence * netParams.popParams[f"cluster{idx}_PLV"]["numCells"] / cfg.DMVDivergence
-            )),
+            "numCells": int(
+                np.ceil(
+                    cfg.DMVConvergence
+                    * netParams.popParams[f"cluster{idx}_PLV"]["numCells"]
+                    / cfg.DMVDivergence
+                )
+            ),
         }
-        target_count = netParams.popParams[f"cluster{idx}_PSA"]["numCells"] + netParams.popParams[f"cluster{idx}_M"]["numCells"]
+        target_count = (
+            netParams.popParams[f"cluster{idx}_PSAN"]["numCells"]
+            + netParams.popParams[f"cluster{idx}_M"]["numCells"]
+        )
 
-        if hasattr(cfg, 'NAShape'):
+        if hasattr(cfg, "NAShape"):
             # Model NA ISIs as a Gamma Distribution
             netParams.popParams[f"NA{idx}"] = {
                 "cellModel": "GammaStim",
@@ -416,10 +426,9 @@ elif cfg.stim == "alt_network":
                 "theta": cfg.NAScale,
                 "noise": cfg.NANoise,
                 "number": max(10_000, 5 * cfg.duration),
-                "numCells": 
-                int(np.ceil(
-                    cfg.NAConvergence * target_count/ cfg.NADivergence
-                )),
+                "numCells": int(
+                    np.ceil(cfg.NAConvergence * target_count / cfg.NADivergence)
+                ),
             }
 
         else:
@@ -430,67 +439,68 @@ elif cfg.stim == "alt_network":
                 "rate": cfg.NARate,
                 "noise": cfg.NANoise,
                 "number": max(10_000, 5 * cfg.duration),
-                "numCells": 
-                int(np.ceil(
-                    cfg.NAConvergence * target_count / cfg.NADivergence
-                )),
+                "numCells": int(
+                    np.ceil(cfg.NAConvergence * target_count / cfg.NADivergence)
+                ),
             }
-        for pop in ['M', 'PSAN']:
+        for pop in ["M", "PSAN"]:
             netParams.connParams[f"NA{idx}->M{idx}"] = {
                 "preConds": {"pop": f"NA{idx}"},
                 "postConds": {"pop": f"cluster{idx}_{pop}"},
                 "convergence": cfg.NAConvergence,
                 "divergence": cfg.NADivergence,
-                "weight": setWeight(f'NA_{pop}_weight'),
-                "delay": cfg.NA_delay,
+                "weight": setWeight(f"NA_{pop}_weight"),
+                "delay": getattr(cfg, f"NA_{pop}_delay"),
                 "synMech": "exc",
             }
 
         netParams.connParams[f"DMV{idx}->PLV{idx}"] = {
-            "preConds": {"pop" : f"DMV{idx}"},
+            "preConds": {"pop": f"DMV{idx}"},
             "postConds": {"pop": f"cluster{idx}_P"},
-            "weight": setWeight('DMV_PLV_weight'),
-            "delay": cfg.DMV_delay,
+            "weight": setWeight("DMV_PLV_weight"),
+            "delay": cfg.DMV_PLV_delay,
             "convergence": cfg.DMVConvergence,
             "divergence": cfg.DMVDivergence,
             "synMech": "exc",
         }
 
         for j in range(cfg.num_cluster):
+
             def getVal(paramName):
                 paramVar = f"{paramName}_var"
-                param = getattr(cfg,paramName)
-                if hasattr(cfg,paramVar):
-                    var = getattr(cfg,paramVar)
+                param = getattr(cfg, paramName)
+                if hasattr(cfg, paramVar):
+                    var = getattr(cfg, paramVar)
                     p = eval(param) if isinstance(param, str) else param
                     v = eval(Pvar) if isinstance(var, str) else var
-                    mean = p[idx==j] if hasattr(p, "__len__") else p
-                    variance = v[idx==j] if hasattr(v,"__len__") else v
+                    mean = p[idx == j] if hasattr(p, "__len__") else p
+                    variance = v[idx == j] if hasattr(v, "__len__") else v
                     return f"lognormal({mean}, {variance})"
-                param = getattr(cfg,paramName)
+                param = getattr(cfg, paramName)
                 p = eval(param) if isinstance(param, str) else param
                 return p[idx == j] if hasattr(p, "__len__") else p
-            
+
             # Feedback & connection between the same population in different clusters
-            for pop in ['PLV', 'PSAN', 'M']:
+            for pop in ["PLV", "PSAN", "M"]:
                 netParams.connParams[f"{pop}{idx}->{pop}{j}"] = {
                     "preConds": {"pop": f"cluster{idx}_{pop}"},
                     "postConds": {"pop": f"cluster{j}_{pop}"},
                     "probability": getVal(f"{pop}_{pop}_prob"),
-                    "weight": getVal(f"{pop}_{pop}_weight"), 
+                    "weight": getVal(f"{pop}_{pop}_weight"),
                     "delay": getVal(f"{pop}_{pop}_delay"),
                     "synMech": "exc",
                 }
 
             # PSAN -> M within & between clusters
-            netParams.connParams[f"PSAN{idx}->M{j}"] = {
-                "preConds": {"pop": f"cluster{idx}_PSAN"},
-                "postConds": {"pop": f"cluster{j}_M"},
-                "probability": getVal("PSAN_M_prob"),
-                "weight": getVal("PSAN_M_weight"),
-                "delay": getVal("PSAN_M_delay"),
-                "synMech": "exc",
-            }
+            for pop in ["PSAN", "PLV"]:
+                netParams.connParams[f"{pop}{idx}->M{j}"] = {
+                    "preConds": {"pop": f"cluster{idx}_{pop}"},
+                    "postConds": {"pop": f"cluster{j}_M"},
+                    "probability": getVal(f"{pop}_M_prob"),
+                    "weight": getVal(f"{pop}_M_weight"),
+                    "delay": getVal(f"{pop}_M_delay"),
+                    "synMech": "exc",
+                }
 
 
 if cfg.hyp != 0:

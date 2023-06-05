@@ -5,7 +5,7 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 6_000 
+cfg.duration = 6_000
 cfg.dt = 0.025
 cfg.recordStep = 0.1
 cfg.simLabel = "13may23test"
@@ -14,25 +14,31 @@ cfg.verbose = False
 cfg.saveJson = True
 cfg.recordStim = True
 cfg.log_weights = False  # all weights are log scaled -- to improve search
-cfg.nTEBins = {'DMV0': {'cluster0_P':int(cfg.duration/42.6), 
-                        'cluster0_M':int(cfg.duration/27.4)},
-               'NA0': {'cluster0_M': int(cfg.duration/27.4)},
-               'cluster0_P': {'cluster0_M':int(cfg.duration/7.6)}}
+cfg.nTEBins = {
+    "DMV0": {
+        "cluster0_P": int(cfg.duration / 42.6),
+        "cluster0_M": int(cfg.duration / 27.4),
+    },
+    "NA0": {"cluster0_M": int(cfg.duration / 27.4)},
+    "cluster0_P": {"cluster0_M": int(cfg.duration / 7.6)},
+}
 
-cfg.stim = 'network'
+cfg.stim = "network"
 cfg.phasic_ratio = 19 / 32  # from McAllen et al 2011
-#Divide phasic cells between SAN and LV projecting
-total_SAN_projecting = 169/(152+169) # Based on sample of Moss et al 2021.
-                                     # TODO: Check if this is representative 
-phasic_SAN_projecting = 169/(152+169)-(1-cfg.phasic_ratio)  # remove mixed cell (all are SAN projecting)
-cfg.phasic_split = False #phasic_SAN_projecting/cfg.phasic_ratio
-cfg.drive = 'phys' # 'baroreflex' 'chemoreflex'
+# Divide phasic cells between SAN and LV projecting
+total_SAN_projecting = 169 / (152 + 169)  # Based on sample of Moss et al 2021.
+# TODO: Check if this is representative
+phasic_SAN_projecting = 169 / (152 + 169) - (
+    1 - cfg.phasic_ratio
+)  # remove mixed cell (all are SAN projecting)
+cfg.phasic_split = False  # phasic_SAN_projecting/cfg.phasic_ratio
+cfg.drive = "phys"  # 'baroreflex' 'chemoreflex'
 
 # recording
-#cfg.recordCells = ["all"]
-#cfg.recordTraces = {
+# cfg.recordCells = ["all"]
+# cfg.recordTraces = {
 #    "V_soma": {"sec": "soma", "loc": 0.5, "var": "v"}
-#}
+# }
 """
     #'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
     "epas": {"sec": "soma", "loc": 0.5, "var": "e_pas"},
@@ -59,8 +65,8 @@ cfg.drive = 'phys' # 'baroreflex' 'chemoreflex'
 }
 """
 cfg.recordStim = True
-#cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
-#cfg.analysis["plotRaster"] = {"saveFig": True, "orderInverse": True}
+# cfg.analysis["plotTraces"] = {"include": [0], "saveFig": False}
+# cfg.analysis["plotRaster"] = {"saveFig": True, "orderInverse": True}
 cfg.saveDataInclude = ["simData", "simConfig"]  # , "simConfig", "netParams", "net"]
 
 # globals
@@ -137,73 +143,110 @@ cfg.e = -7
 cfg.d1 = 0.6474533535872186
 cfg.d2 = 0.9284955400450818
 cfg.f = 0.850515710969614
-cfg.tau_D1 = 159.33232548522594 
+cfg.tau_D1 = 159.33232548522594
 cfg.tau_D2 = 616.104732221748
 cfg.tau_F = 19.001749499516244
 
 
 # connection structure
 cfg.NADivergence = 30
-cfg.NAConvergence = 1.32 
+cfg.NAConvergence = 1.32
 cfg.DMVDivergence = 7
 cfg.DMVConvergence = 1.34
 
 # DMV (drive P) source statistics -- gamma distributed ISIs
 shape, loc, theta = 7.757972182086119, 37.49386102382368, 31.14382919023644
-interval = shape*theta
+interval = shape * theta
 cfg.DMVShape = shape
 cfg.DMVScale = theta
-cfg.DMVNoise = 1.0 - loc/interval
+cfg.DMVNoise = 1.0 - loc / interval
 
-if cfg.drive == 'phys':
+if cfg.drive == "phys":
     # NA (drive M) source statistics -- exp distributed ISIs
     scale, loc = 754.4866995207383, 105.7860115451731
     interval = scale + loc
-    cfg.NARate = 1000/interval
-    cfg.NANoise = 1.0 - loc/interval
+    cfg.NARate = 1000 / interval
+    cfg.NANoise = 1.0 - loc / interval
 
-elif cfg.drive == 'chemoreflex':
+elif cfg.drive == "chemoreflex":
     # NA Chemoreflex drive -- gamma distributed ISIs
     scale, loc = 14.24094070278148, 48.35404375879234
-    interval = scale + loc                                                          
-    cfg.NARate = 1000/interval                                                      
-    cfg.NANoise = 1.0 - loc/interval
+    interval = scale + loc
+    cfg.NARate = 1000 / interval
+    cfg.NANoise = 1.0 - loc / interval
 
-elif cfg.drive == 'baroreflex':
+elif cfg.drive == "baroreflex":
     # NA chemoreflex drive -- gamma distributed ISIs
     shape, loc, theta = 1.518579064688518, 15.159890913518314, 14.220177825723088
-    interval = shape*theta
+    interval = shape * theta
     cfg.NAShape = shape
     cfg.NAScale = theta
-    cfg.NANoise = 1.0 - loc/interval
+    cfg.NANoise = 1.0 - loc / interval
 else:
     raise Exception("invalid drive: use 'phys', 'chemoreflex', 'baroreflex'")
 
 
-# phasic connections
-cfg.DMV_P_weight = 6.2213638640284405e-06
-cfg.DMV_P_weight_var = 0.1040760178145076
-cfg.DMV_P_delay = 5
-cfg.P_P_prob = 0.25
-cfg.P_P_weight = 0.61103753822864
-cfg.P_P_var = 0.9012283635080267
-cfg.P_P_delay = 5
+if cfg.phasic_split > 0:
+    # phasic connections
+    cfg.DMV_PLV_weight = 6.2213638640284405e-06
+    cfg.DMV_PLV_weight_var = 0.1040760178145076
+    cfg.DMV_PLV_delay = 5
+    cfg.PLV_PLV_prob = 0.25
+    cfg.PLV_PLV_weight = 0.61103753822864
+    cfg.PLV_PLV_var = 0.9012283635080267
+    cfg.PLV_PLV_delay = 5
 
-cfg.P_M_prob = [0.25, 0.25]
-cfg.P_M_weight = [-5, -5]
-cfg.P_M_weight_var = [-4, -4]
-cfg.P_M_delay = [5, 5]
+    cfg.NA_PSAN_weight = 4e-6  # 0.00040247923847343216 #0.00058
+    cfg.NA_PSAN_weight_var = 1e-3
+    cfg.NA_PSAN_delay = 5
+    cfg.PSAN_PSAN_prob = 0.25
+    cfg.PSAN_PSAN_weight = 0.61103753822864
+    cfg.PSAN_PSAN_weight_var = 0.9012283635080267
+    cfg.PSAN_PSAN_delay = 5
 
+    cfg.PLV_M_prob = [0.25, 0.25]
+    cfg.PLV_M_weight = [2e-5, 2e-5]
+    cfg.PLV_M_weight_var = [5e-4, 5e-4]
+    cfg.PLV_M_delay = [5, 5]
+    cfg.SAN_M_prob = [0.25, 0.25]
+    cfg.SAN_M_weight = [2e-5, 2e-5]
+    cfg.SAN_M_weight_var = [5e-4, 5e-4]
+    cfg.SAM_M_delay = [5, 5]
 
-# mixed connections
-cfg.NA_M_weight = 1e-5 #0.00027972942965111996 
-cfg.NA_M_weight_var = 1e-3 #1.0
-cfg.NA_M_delay = 5
-cfg.M_M_prob = [0.25, 0.25]
-cfg.M_M_weight = [1e-6, 1e-6]
-cfg.M_M_weight_var = [1e-4, 1e-4]
+    # mixed connections
+    cfg.NA_M_weight = 4e-6  # 0.00027972942965111996
+    cfg.NA_M_weight_var = 1e-3  # 1.0
+    cfg.NA_M_delay = 5
+    cfg.M_M_prob = [0.25, 0.25]
+    cfg.M_M_weight = [5e-6, 5e-6]
+    cfg.M_M_weight_var = [5e-4, 5e-4]
+    cfg.M_M_delay = [5, 5]
 
-cfg.M_M_delay = [5, 5]
+else:
+    # phasic connections
+    cfg.DMV_P_weight = 6.2213638640284405e-06
+    cfg.DMV_P_weight_var = 0.1040760178145076
+    cfg.DMV_P_delay = 5
+    cfg.P_P_prob = 0.25
+    cfg.P_P_weight = 0.61103753822864
+    cfg.P_P_var = 0.9012283635080267
+    cfg.P_P_delay = 5
+
+    cfg.P_M_prob = [0.25, 0.25]
+    cfg.P_M_weight = [2e-5, 2e-5]
+    cfg.P_M_weight_var = [5e-4, 5e-4]
+    cfg.P_M_delay = [5, 5]
+
+    # mixed connections
+    cfg.NA_M_weight = 4e-6  # 0.00027972942965111996
+    cfg.NA_M_weight_var = 1e-3  # 1.0
+    cfg.NA_M_delay = 5
+    cfg.M_M_prob = [0.25, 0.25]
+    cfg.M_M_weight = [5e-6, 5e-6]
+    cfg.M_M_weight_var = [5e-4, 5e-4]
+
+    cfg.M_M_delay = [5, 5]
+
 
 # channel parameters
 cfg.na = 0.075  # 1
@@ -224,4 +267,3 @@ cfg.c1d = 1.7e-4
 cfg.c1c = 0.0001
 cfg.c1b = 0.0001
 cfg.c1a = 0.00001
-
