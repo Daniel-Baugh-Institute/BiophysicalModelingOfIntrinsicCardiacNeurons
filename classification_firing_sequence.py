@@ -75,11 +75,13 @@ def classify_sequence(dc):
     shape = [num_rows, 1]  # shape of the array
     seq_cat = np.empty(shape)
     df_temp = pd.DataFrame(columns=['rseq'])
+    # print out indice for example firing sequence
     index_t = 0
     index_p = 0
     index_pt = 0
     index_tp = 0
     index_tb = 0
+    # keep track of indices for each firing sequence
     tb_idx = []
     ptb_idx = []
     pbtb_idx = []
@@ -139,6 +141,7 @@ def classify_sequence(dc):
                     index_tp = index_tp + 1
             elif rseq.size == 2: # tb
                 seq_cat[index] = 13
+                print('TB')
                 tb_idx.append(index*5)
                 index_tb = index_tb + 1
             elif rseq.size == 3: # tbp
@@ -155,6 +158,7 @@ def classify_sequence(dc):
                 elif rseq[0][1] == 2: # pt
                     seq_cat[index] = 6
                     if index_pt == 0:
+                        print('PT')
                         print(index*5)
                         index_pt = index_pt + 1
                 else:
@@ -191,12 +195,7 @@ def classify_sequence(dc):
                 else: 
                     print('No category at')
                     print(index) 
-    
-    # attempted to programmatically determine sequence of firing patterns, but the code doesn't seem to work
-    unique_series = df_temp.duplicated(subset='rseq', keep='first')
-    filtered_df = df_temp[~unique_series]
-    unique_series = filtered_df.duplicated(subset='rseq', keep='first')
-    filtered_df = filtered_df[~unique_series]
+   
 
     # make new dataframe with the count of each firing pattern
     df_seq = pd.DataFrame(columns = ['Firing pattern','Count'])
@@ -233,7 +232,7 @@ dc = pd.read_json("C:\\Users\\mmgee\\Downloads\\classification_test.json")
 # Run sequence classification
 classify_sequence(dc)
 
-# Plot and example voltage vs time for each common type
+# Plot and example voltage vs time for each common type. Uncomment different sections to generate plots.
 # Phasic only
 # start = 0
 # idx = np.linspace(start,start+4,3)
@@ -272,13 +271,4 @@ plotVm(df,batchLabel)
 #     batchLabel = f"Jun0123PTBT_{ptbt_idx[0]}"
 #     plotVm(df,batchLabel)
 
-"""
-Notes on what is categorized as burst but is actually depolarisation block
-# PTB is really phasic to tonic to depol block
-# PBTB is really PBT depolarisation block for all
-# PBP is PB depol block
-# PB is P to depol block
-# TBP is T to depol block
-# BP is all depol block
-# PTBT is P to depol block
-"""
+
