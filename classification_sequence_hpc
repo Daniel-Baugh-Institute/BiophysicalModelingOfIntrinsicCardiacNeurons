@@ -20,26 +20,32 @@ def classification(df):
     dc['rmpCross'] = cnt
     del c,cnt
 
+        #computing no. of times Vm crosses a set subthreshold value
+    ct = []
+    for indx in dc.index:
+        y = dc['Vlist'][indx]
+        z = 0
+        for i in range(0,len(y)-1):
+            if ((y[i] >= -40 and y[i + 1] < -40) or (y[i] <= -40 and y[i + 1] > -40)):
+                z = z+1
+        ct.append(z)
+        del y
+
+    dc['subthrCross'] = ct
+    del ct,z
     
     
-    print(dc.head())
-    print(dc.tail())
     col_names = dc.columns.values.tolist()
     print(col_names)
     df_shape = dc.shape
     print("Number of rows: ", df_shape[0])
     print("Number of columns: ", df_shape[1])
-    #print(dc.loc[15:20])
-    unique_values = dc['amp'].unique()
-    print(unique_values)
-
-    
 
     # reorder df then have it print to matrix instead of summing
     dc = dc.rename(columns={'Doublet/Triplet/Quadruplet': 'Burst'})
     dc['Subthreshold'] = dc.scnt.apply(lambda x: 1 if x<1 else np.nan)
     dc['Phasic'] = dc.scnt.apply(lambda x: 1 if 0<x<=1 else np.nan)
-    dc['Burst'] = dc[['spkend','scnt']].apply(lambda x: 1 if ((x.spkend<=(stim['delay']+((stimend+5)/4))) and (1<x.scnt<=4)) else np.nan, axis=1)
+    dc['Burst'] = dc[['spkend','scnt','subthrCross']].apply(lambda x: 1 if ((x.spkend<=(stim['delay']+((stimend+5)/4))) and (1<x.scnt<=4) and (x.scnt == x.subthrCross/2)) else np.nan, axis=1)
     dc['Tonic'] = dc.spkt.apply(lambda x: 1 if len(x)>=3 and stim['delay']<=x[-1]<=stimend+5 else np.nan) 
     dc['na'] = df['na'] 
     #dc['Post-stimulus Firing'] = dc.spkend.apply(lambda x: 1 if stimend+5<=x<=data[list(data)[0]]['simConfig']['duration'] else np.nan)
