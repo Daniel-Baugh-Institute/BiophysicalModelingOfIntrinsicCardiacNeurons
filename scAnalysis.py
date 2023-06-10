@@ -449,7 +449,7 @@ def classify_sequence(dc):
             print('Uh oh, rseq is empty!')
         elif 4 in rseq:
             seq_cat[index] = 16
-            print('Post-stimulus firing, tonic block, depolarisation block, or incomplete repolarisation occured')
+            print('Post-stimulus firing, Block, or Incomplete Repolarisation occured')
         elif rseq.size == 1:
             if rseq[0][0] == 0: #p
                 seq_cat[index] = 0
@@ -567,7 +567,7 @@ def classify_sequence(dc):
 
 #Classification of responses
 # @author: sgupta
-def classAnalysis(df):
+def classification(df):
     stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
     stimend = stim['dur'] + stim['delay']
     dc=df[['amp','cellnum','spkt']].copy()
