@@ -2,7 +2,7 @@
 """
 Created on Tue Mar 21 17:17:01 2023
 
-@author: mmgee
+@author: sgupta & mmgee 
 """
 
 import numpy as np
@@ -11,7 +11,6 @@ import csv
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import plotly.graph_objects as go
-# import plotly_express as px
 import math as m
 import plotly.io as pio
 import seaborn as sns
