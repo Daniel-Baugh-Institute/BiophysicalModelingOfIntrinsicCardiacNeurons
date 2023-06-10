@@ -210,8 +210,9 @@ def classify_sequence(dc):
 
     print(count_col)
     df_seq['Count'] = count_col
-    df_seq = df_seq[df_seq['Count'] > 0] # Change this threshold to plot only commonly occuring firing sequences
+    df_seq = df_seq[df_seq['Count'] > 40] # Change this threshold to plot only commonly occuring firing sequences
     df_seq = df_seq.sort_values(by = 'Count',ascending=False)
+    df_seq = df_seq.drop([16]) # drop block firing types (there are 63 of them)
     print("Dataframe size:", df_seq.shape)
     df_seq.to_json('df_seq.json')
 
@@ -232,43 +233,6 @@ dc = pd.read_json("C:\\Users\\mmgee\\Downloads\\classification_test.json")
 # Run sequence classification
 classify_sequence(dc)
 
-# Plot and example voltage vs time for each common type. Uncomment different sections to generate plots.
-# Phasic only
-# start = 0
-# idx = np.linspace(start,start+4,3)
-# df = dc.loc[idx,['Vlist','t','cellnum']]
-# batchLabel = "Phasic" #
-# plotVm(df,batchLabel)
 
-# PT
-# start = 10
-# idx = np.linspace(start,start+4,3)
-# df = dc.loc[idx,['Vlist','t','cellnum']]
-# batchLabel = "Phasic-Tonic" #
-# plotVm(df,batchLabel)
-
-# # TP
-# start = 1990
-# idx = np.linspace(start,start+4,3)
-# df = dc.loc[idx,['Vlist','t','cellnum']]
-# batchLabel = "Tonic-Phasic" #
-# plotVm(df,batchLabel)
-
-# T
-start = 2000
-idx = np.linspace(start,start+4,3)
-df = dc.loc[idx,['Vlist','t','cellnum']]
-batchLabel = "Tonic"
-plotVm(df,batchLabel)
-
-# Use this to generate multiple plots at once
-# start = 3780
-# idx = np.linspace(start,start+4,3)
-# df = dc.loc[idx,['Vlist','t','cellnum']]
-# makedirs('Jun0123PTBT/vmPlots')
-# for i in range(len(ptbt_idx)-1):
-#     df = dc.loc[ptbt_idx[i]:ptbt_idx[i]+4,['Vlist','t','cellnum']]
-#     batchLabel = f"Jun0123PTBT_{ptbt_idx[0]}"
-#     plotVm(df,batchLabel)
 
 
