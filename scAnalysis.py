@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Mar 21 17:17:01 2023
+
+@author: sgupta & mmgee 
+"""
+
 """
 analysis.py: Functions to read and interpret figures from the batch simulation results.
 """
@@ -19,6 +26,7 @@ from plotly.subplots import make_subplots
 
 df = dfss = filenamepkl = None
 
+# Reading the _allData.json
 def readAllData(filename, dfonly=True):
     '''read _allData.json routine to get params and data'''
     global params, data, df
@@ -26,7 +34,7 @@ def readAllData(filename, dfonly=True):
     params, data, df = dataLoad['params'], dataLoad['data'], toPandas(dataLoad['params'], dataLoad['data'])
     return df if dfonly else params, data, df
 
-# readBatchData(dataFolder, batchLabel, target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None)
+# Generating the _allData.json after running batch simulations
 def readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None):
     '''gather data from dataFolder with batchLabel and save back to dataFolder or to target'''
     params, data=None,None
@@ -153,116 +161,12 @@ def toPandas(params, data):
 
     return df
 
-def plotEpas(df = df):
-    stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
-    if (stim['amp'] and stim['dur'] and stim['delay']==0):
-        raise Exception("Epas cannot be computed in the presence of an ongoing stimulus")
-    elif (stim['amp'] and stim['dur'] and stim['delay']<=data[list(data)[0]]['simConfig']['duration']):
-        for i in df['t'][0]:
-            if i<stim['delay']:
-                indx=df['t'][0].index(i)
-    else:
-        indx = -1
-    # import IPython; IPython.embed()
-    print(indx)
-    cells = df['cellnum'].tolist()
-    vm = {}
-    pasv = {}
-
-    dfep = df[['cellnum','V_soma','epas']].copy()
-    dfep['vm']=dfep.V_soma.apply(lambda x:x['cell_0'][indx])
-    dfep['pasv']=dfep.epas.apply(lambda x:x['cell_0'][indx])
-
-    font = 20
-
-    f=go.Figure()
-    f.add_trace(go.Scatter(x=dfep['cellnum'], y=dfep['pasv'], mode = 'markers', marker = dict(color = 'LightPink', size =20, line = dict(color='MediumPurple',width=2)), text = dfep.cellnum, name = 'Reversal Potential (mV)', showlegend=True))
-
-    f.add_trace(go.Scatter(x=dfep['cellnum'], y=dfep['vm'], mode = 'markers', marker = dict(color = 'black', size =5, line = dict(color='MediumPurple',width=2)), text = dfep.cellnum, name = 'Resting Membrane Potential', showlegend=True))
-    f.update_layout(width=1200,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font),template='simple_white')
-    f.update_xaxes(title='Neuronal-Type ID (T#)')
-    f.write_image('P_epas.png')
-    f.show()
-    return
-
-def plotRin (df=df):
-    ripk = {}
-
-    stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
-    cells = df['cellnum'].tolist()
-    for i in df['t'][0]:        #dt is same so time array is same for all cells
-        if i<(stim['delay']):
-            init = df['t'][0].index(i)
-        if i<(stim['delay']+stim['dur']):
-            end = df['t'][0].index(i)
-    d = df[['cellnum','V_soma']].copy()
-    d['ripk']=d.V_soma.apply(lambda x:(min(x['cell_0'][init:end])-x['cell_0'][init])/stim['amp'])
-    # d['ripk'].to_csv('rinQ.csv')
-    font = 18
-    fr = px.scatter(d, x='cellnum', y='ripk', hover_data=['cellnum','ripk',df.index], labels={'cellnum':'Neuronal-Type ID (T#)','ripk':"Input Impedance (M\u03A9)"},template="simple_white")
-    fr.update_traces(marker=dict(color = 'LightSteelBlue',size=font/2,line = dict(color='MediumPurple',width=2)))
-    fr.update_layout(width=614.4,height=460.8,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font))
-    pio.write_image(fr,"P_Rin.png",format='png',scale=10,width=614.4,height=460.8, validate=True)
-    fr.show()
-    return
-
-def plotRheobase(df):
-    stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
-    stimend = stim['dur'] + stim['delay']
-    dr=df[['amp','cellnum']].copy()
-    dr['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
-    dr['Subth'] = dr.Vlist.apply(lambda x: 1 if max(x)<-20 else 0) #0=> AP, 1=> subthreshold response
-    del dr['Vlist']
-
-    c = []
-    r = []
-    for k in params[1]['values']:
-        print(k)
-        d = dr.loc[dr['cellnum']==k]
-        c.append(k)
-        if (0 in d['Subth'].values.tolist()):
-            r.append(d['amp'].values[d['Subth'].values.tolist().index(0)])
-        else:
-            r.append(-0.1)
-        del d
-    print(len(c))
-    print(len(r))
-    drh = pd.DataFrame()
-    drh['cellnum']=c
-    drh['rheo']=r
-    del c,r
-
-    print(drh.groupby('rheo').count())
-
-    font = 18
-    fr = px.scatter(drh, y='cellnum', x='rheo', hover_data=['cellnum','rheo'], labels={'cellnum':'Neuronal-Type ID (T#)','rheo':"Rheobase (nA)"},template="simple_white")
-    fr.update_traces(marker=dict(color = 'Turquoise',size=font/2,line = dict(color='MediumPurple',width=2)))
-    fr.update_layout(width=614.4,height=460.8,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font))
-    pio.write_image(fr,"R_Rheobase.png",format='png',scale=10,width=614.4,height=460.8, validate=True)
-    fr.show()
-    return
-
-#ap metrics
-
-def plotVm(df,batchLabel):
-    makedirs(f'{batchLabel}/vmPlots')
-    font = 15
-    for indx in df.index:
-        f = plt.figure()
-        plt.plot(df['t'][indx],df['V_soma'][indx]['cell_0'],c='C0')
-        plt.xlabel('Time (ms)', fontsize=font)
-        plt.ylabel('Membrane Voltage (mV)', fontsize=font)
-        plt.title(f"Neuronal-Type ID: T{df['cellnum'][indx]+1}", fontsize=font)
-        plt.tick_params(axis='both',labelsize=font)
-        plt.savefig(f"{batchLabel}/vmPlots/{df['simLabel'][indx]}.png",dpi=300,bbox_inches='tight')
-        plt.close()
-    return
-
+# @author: sgupta
 def currentScapes(df,batchLabel):
     font = 17
     dp = df[['cellnum','simLabel']].copy()
 
-    do = df[['cellnum','simLabel']].copy()
+    do = df[['cellnum','simLabel']].copy() #outward currents
     do['io'] = df.ik.apply(lambda x: x['cell_0'] if x!={} else [0])
     do['ikcna'] = df.ikcna.apply(lambda x: x['cell_0'] if x!={} else [0])
     do['ikcnc'] = df.ikcnc.apply(lambda x: x['cell_0'] if x!={} else [0])
@@ -271,7 +175,7 @@ def currentScapes(df,batchLabel):
     dp['skc'] = do.ikcnc.apply(lambda x: np.sum(x))
     dp['skj'] = do.ikcnj.apply(lambda x: np.sum(x))
 
-    di = df[['cellnum','simLabel']].copy()
+    di = df[['cellnum','simLabel']].copy() #inward currents
 
     di['ina'] = df.ina.apply(lambda x: x['cell_0'] if x!={} else [0])
     di['ica'] = df.ica.apply(lambda x: x['cell_0'] if x!={} else [0])
@@ -307,6 +211,7 @@ def currentScapes(df,batchLabel):
     li = ['Scn1a','Cacna1a','Cacna1b','Cacna1c','Cacna1d','Cacna1g','Cacna1i','HCN1','HCN2','HCN3','HCN4']
     lo = ['Kcna1+ab1','Kcnc1','Kcnj3']
 
+    #computing percent contribution
     makedirs(f'{batchLabel}/percI')
     for indx in [0,1]: #dp.index:
         fr = make_subplots(cols=2, rows=1,specs=[[{"type": "domain"}, {"type": "domain"}]],subplot_titles=["%Inward Currents","%Outward Currents"]) 
@@ -318,7 +223,7 @@ def currentScapes(df,batchLabel):
         pio.write_image(fr,f"{batchLabel}/percI/{dp['simLabel'][indx]}.png",format='png',scale=10,width=1100,height=800, validate=True)
     del fr
 
-    # Currentscapes
+    # Currentscapes: dynamic changes in currents
     dm = df[['cellnum','simLabel','t']].copy()
     dm = dm.assign(ka = [np.array(x)/(np.array(t)) for x,t in zip(do['ikcna'],do['io'])])
     dm = dm.assign(kc = [np.array(x)/(np.array(t)) for x,t in zip(do['ikcnc'],do['io'])])
@@ -337,8 +242,6 @@ def currentScapes(df,batchLabel):
     dm = dm.assign(h4 = [np.array(x)/(np.array(t)) for x,t in zip(di['ihcn4'],di['ii'])])
 
     dm['V'] = df.V_soma.apply(lambda x: x['cell_0'])
-
-    #### raw Currents vs t
 
     makedirs(f'{batchLabel}/currentScapes')
     for indx in [0,1]: #dp.index:
@@ -383,6 +286,8 @@ def currentScapes(df,batchLabel):
         pio.write_image(fr,f"{batchLabel}/currentScapes/{dm['simLabel'][indx]}.png",format='png',scale=10,width=1100,height=800, validate=True)
     return
 
+# @author: sgupta
+# Plotting Current-Voltage curves
 def IV(df):
     div=df[['cellnum','vc']].copy() #,'ina','ik','ica','ih','ipas'
     # div.replace({},)
@@ -403,6 +308,8 @@ def IV(df):
     # f.show()
     return
 
+# @author: sgupta
+# Plotting firing frequency-current curves
 def fI(df):
     dur = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']['dur']
 
@@ -418,6 +325,7 @@ def fI(df):
     dfss.drop(dfss.index[dfss['hzz'] == 0], inplace = True)
     dfss.drop(dfss.index[dfss['sdur'] == 0], inplace = True)
 
+# least-error fit
     def func(x, m, c):
         return (m*x) + c
     xdata = np.array(dfss['amp'])
@@ -440,49 +348,9 @@ def fI(df):
     fr.show()
     return
 
-def phiI(df):
-    dur = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']['dur']
-
-    dfss=df[['amp','phi', 'cellnum', 'avgRate']].copy()  # note double brackets
-    dfss.scnt    = df.spkt.apply(len) # number of spikes (spikecount) * IGNORE WARNING, creates dfss.scnt anyway
-    dfss['scnt'] = df.spkt.apply(len)
-    dfss['spk1'] = df.spkt.apply(lambda x: x[0] if len(x)>0 else -1) # spk1; time of first spike
-    dfss['f1']   = df.spkt.apply(lambda x: 1e3/(x[1] - x[0]) if len(x)>1 else 0) # f1: freq for 1st ISI
-    dfss['f2']   = df.spkt.apply(lambda x: 1e3/(x[2] - x[1]) if len(x)>2 else 0) # f2: freq for 2nd ISI
-    dfss['sdur'] = df.spkt.apply(lambda x: x[-1] - x[0] if len(x)>1 else 0) # sdur: duration of spiking
-    dfss['ffdur'] = dfss.sdur.apply(lambda x: dur if x<=dur else x)
-    dfss['hzz']   = dfss.scnt.div(dfss.ffdur).mul(1e3).fillna(0).replace(np.inf,0) # >>> NaN
-    dfss.drop(dfss.index[dfss['hzz'] == 0], inplace = True)
-    dfss.drop(dfss.index[dfss['sdur'] == 0], inplace = True)
-
-    def func(x, m, c):
-        return (m*x) + c
-    xdata = np.array(dfss['phi'])
-    ydata = np.array(dfss['hzz']) 
-    optimizedParameters, pcov = opt.curve_fit(func, xdata, ydata)
-
-    print(optimizedParameters)
-
-    font = 18
-    b = px.line(x=xdata, y=func(xdata, *optimizedParameters))
-    b.update_traces(line=dict(color="Black", width=2.5))
-    fr = px.strip(dfss, x='phi', y='hzz', color = dfss['amp'].astype(str),color_discrete_sequence= px.colors.qualitative.Pastel1,labels={'phi':'Fractional Amplitude of <i>Kcnc1</i> currents','hzz':'Firing Frequency (Hz)','color':'Current Amplitude (nA)'},template="simple_white")
-    fr.update_traces(marker=dict(size=font/1.4,line = dict(color='black',width=1)),jitter = 0)
-    fr.add_trace(b.data[0])
-    fr.update_layout(legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.01),width=1300,height=700,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font))
-    pio.write_image(fr,"phii.png",format='png',scale=3,width=1300,height=700, validate=True)
-    # fr.show()
-
-    #3D plot
-    font = 16
-    f = px.scatter_3d(dfss, x='phi', y='amp', z='hzz',color='hzz',color_continuous_scale='plasma', labels={'phi':'Fractional Amplitude of I<sub>Kcnc1</sub>','hzz':'Firing Frequency (Hz)', 'amp':'Current Clamp (nA)'},template="simple_white")
-    f.update_traces(marker=dict(size=font/1.5,line = dict(color='black',width=2)))
-    f.update_layout(width=1200,height=1000,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font))
-    pio.write_image(f,"3Dffphii.png",format='png',scale=3,width=1300,height=700, validate=True)
-    # f.show()
-    return
-
-def classification(df):
+#Classification of responses & analysis of firing patterns
+# @author: sgupta & mmgee
+def classAnalysis(df):
     stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
     stimend = stim['dur'] + stim['delay']
     dc=df[['amp','cellnum','spkt']].copy()
@@ -491,6 +359,7 @@ def classification(df):
     dc['spkend'] = df.spkt.apply(lambda x: x[len(x)-1] if len(x)>0 else -1)
     dc['scnt'] = df.spkt.apply(len)
 
+    #computing no. of times Vm crosses RMP
     cnt = []
     for indx in dc.index:
         y = dc['Vlist'][indx]
@@ -504,9 +373,24 @@ def classification(df):
     dc['rmpCross'] = cnt
     del c,cnt
 
+    #computing no. of times Vm crosses a set subthreshold value
+    ct = []
+    for indx in dc.index:
+        y = dc['Vlist'][indx]
+        z = 0
+        for i in range(0,len(y)-1):
+            if ((y[i] >= -40 and y[i + 1] < -40) or (y[i] <= -40 and y[i + 1] > -40)):
+                z = z+1
+        ct.append(z)
+        del y
+
+    dc['subthrCross'] = ct
+    del ct,z
+
     temp = dc
     isi = []
 
+    # computing inter-spike interval
     for ind in dc.index:
         e = dc.iloc[ind]['spkt']
         intval = [0]
@@ -520,291 +404,34 @@ def classification(df):
     dc['mxisi'] = dc.isi.apply(lambda x: max(x))
     del isi,intval,e, ind
 
-    font = 18
-
     init = max([x if x<=2*stimend/3 else 0 for x in df['t'][0]])
     end = max([x if x<=stimend else 0 for x in df['t'][0]])
+
+    #Classification
 
     q = 0
     dc['Subthreshold'] = dc.scnt.apply(lambda x: 2**q if x<1 else np.nan)
     q+=1
     dc['Phasic'] = dc.scnt.apply(lambda x: 2**q if 0<x<=1 else np.nan)
     q+=1
-    dc['Doublet/Triplet/Quadruplet'] = dc[['spkend','scnt']].apply(lambda x: 2**q if ((x.spkend<=(stim['delay']+((stimend+5)/4))) and (1<x.scnt<=4)) else np.nan, axis=1)
+    dc['Burst'] = dc[['spkend','scnt','subthrCross']].apply(lambda x: 2**q if ((x.spkend<=(stim['delay']+((stimend+5)/4))) and (1<x.scnt<=4) and (x.scnt == x.subthrCross/2)) else np.nan, axis=1)
     q+=1
-    dc['Tonic'] = dc.spkt.apply(lambda x: 2**q if len(x)>=3 and stim['delay']<=x[-1]<=stimend+5 else np.nan)
+    dc['Tonic'] = dc.spkt.apply(lambda x: 2**q if len(x)>4 and stim['delay']<=x[-1]<=stimend+5 else np.nan)
     q+=1
     dc['Post-stimulus Firing'] = dc.spkend.apply(lambda x: 2**q if stimend+5<=x<=data[list(data)[0]]['simConfig']['duration'] else np.nan)
     q+=1
-    dc['Depolarisation Block'] = dc[['Vlist','scnt','rmpCross']].apply(lambda x: 2**q if ((-40<= max(x.Vlist[df['t'][0].index(init):df['t'][0].index(end)])<-10) and (x.scnt==1) and (x.rmpCross==2)) else np.nan, axis =1)
-    q+=1
-    dc['Tonic Block'] = dc[['Vlist','scnt','rmpCross','mxisi']].apply(lambda x: 2**q if (((-40<= max(x.Vlist[df['t'][0].index(init):df['t'][0].index(end)])<-10) and (x.scnt>=1) and (x.rmpCross>2)) or (x.mxisi>=120))else np.nan, axis =1)
+    dc['Block'] = dc[['Vlist','scnt','rmpCross','mxisi','subthrCross']].apply(lambda x: 2**q if (((-40<= max(x.Vlist[df['t'][0].index(init):df['t'][0].index(end)])<-10) and (x.scnt>=1) and (x.rmpCross>=2)) or (((2*x.scnt)/x.subthrCross < 1)) or (x.mxisi>=120)) else np.nan, axis =1)
     q+=1
     dc['Incomplete Repolarisation'] = dc[['scnt','rmpCross']].apply(lambda x: 2**q if ((x.rmpCross==1) and (x.scnt==1)) else np.nan, axis =1)
 
-    dclass = dc[['amp','cellnum','Subthreshold','Phasic','Doublet/Triplet/Quadruplet','Tonic','Post-stimulus Firing','Depolarisation Block','Tonic Block','Incomplete Repolarisation']].copy()
-    subtypes = ['Subthreshold','Phasic','Doublet/Triplet/Quadruplet','Tonic','Post-stimulus Firing','Depolarisation Block','Tonic Block','Incomplete Repolarisation']
-    col = ['lightgray','pink','lightgreen','skyblue','plum','darkgoldenrod','darkblue','firebrick']
-
-    #list unclassified entries
-    # d = dclass[['Subthreshold','Phasic','Doublet/Triplet/Quadraplet','Tonic','Post-stim Firing','Depolarization Block','Tonic Block','Incomplete Repolarization']].copy()
+    dclass = dc[['amp','cellnum','Subthreshold','Phasic','Burst','Tonic','Post-stimulus Firing','Block','Incomplete Repolarisation']].copy()
+    
+    #sanity check: any unclassified entries?
     d = dclass[subtypes]
     d['sum'] = d.sum(axis = 1,numeric_only=True)
     d.loc[d['sum']==0]
 
-    barvar = dclass.groupby('cellnum')[subtypes].sum().div([1,2,4,8,16,32,64,128])
-    fr = px.bar(barvar, color_discrete_sequence = col, labels={'value':"Firing Patterns Elicited",'cellnum':"Neuronal-Type ID (T#)",'variable':"Classification Subtypes"},template="simple_white") #Count of each Subtype
-    fr.update_layout(width=1100,height=650,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font),showlegend=False,legend_traceorder='normal')
-    fr.update_yaxes(showticklabels=False)
-    pio.write_image(fr,"R_classVar.png",format='png',scale=10,width=1100,height=650, validate=True)
-    fr.show()
-
-    baramp = dclass.groupby('amp')[subtypes].sum().div([1,2,4,8,16,32,64,128])
-    percamp = baramp.transpose().transform(lambda x: x*100/x.sum()).transpose().round(0)
-    print(f'BARAMP PLOT STATISTICS: \n\n\n {baramp.transpose().transform(lambda x: x*100/x.sum()).transpose().round(0)}')
-    f = go.Figure()
-    for i,cat in enumerate(subtypes):
-        f.add_trace(go.Bar(name = cat, x = baramp.index, y= baramp[cat].tolist(),text=percamp[cat].tolist(),showlegend = True,marker = dict(color = col[i])))
-
-    f.update_yaxes(title='No. of Ephys. Responses <br> across all Neuronal-Types')
-    f.update_xaxes(title_text='Current Stimulus (nA)')
-    f.update_layout(width=1100,height=650,uniformtext_minsize=font-8,uniformtext_mode='hide',font=dict(size=font, color='black'),barmode = 'stack',legend_traceorder='reversed',template = 'simple_white')
-    pio.write_image(f,"R_classAmp.png",format='png',scale=10,width=800,height=650, validate=True)
-    f.show()
-
-    bartype = dclass.sum(numeric_only = True,axis=0).drop(['amp','cellnum']).div([1,2,4,8,16,32,64,128])
-    print(f'BARTYPE PLOT STATISTICS: \n\n\n {bartype.transpose().transform(lambda x: x*100/x.sum()).transpose().round(2)}')
-    print(bartype)
+    #Analysis
+    
     return
-
-### AP Metrics #### 
-
-def apPeak(df):
-    dap=df[['amp', 'cellnum', 'na','ina','V_soma']].copy()  
-    dap['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
-    dap['APpk']  = dap.Vlist.apply(lambda x: max(x))
-    dap['scnt'] = df.spkt.apply(len)
-    dap['Vph'] = dap.scnt.apply(lambda x: 1 if 0<x<=1 else 0)
-    dap.drop(dap.index[dap['Vph'] == 0], inplace = True)
-    dap.drop(dap.index[dap['ina'] == {}], inplace = True)
-
-    def func(x, m, c):
-        return (m*x) + c
-    xdata = np.array(dap['na'])
-    ydata = np.array(dap['APpk']) 
-    optimizedParameters, pcov = opt.curve_fit(func, xdata, ydata)
-
-    print(optimizedParameters)
-
-    font = 18
-    b = px.line(x=xdata, y=func(xdata, *optimizedParameters))
-    b.update_traces(line=dict(color="Black", width=2.5))
-    fr = px.strip(dap, x='na', y='APpk',color = dap['cellnum'].astype(str), color_discrete_sequence = px.colors.qualitative.Set3,labels={'na':'<i>Scn1a</i> Channel Conductance (S/cm<sup>2</sup>)','APpk':'Action Potential Peak (mV)'},template="simple_white")
-    fr.update_traces(marker=dict(size=font/1.5,line = dict(color='indigo',width=0.5)),jitter=0)
-    fr.add_trace(b.data[0])
-    fr.update_layout(width=1000,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font),coloraxis_showscale=False,showlegend=False)
-    pio.write_image(fr,"napk.png",format='png',scale=10,width=650,height=500, validate=True)
-    # fr.show()
-    return
-
-def apFF(df):
-    dur = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']['dur']
-
-    dap=df[['amp', 'cellnum', 'h1', 'ihcn1','avgRate']].copy()  # note double brackets
-    dap.scnt    = df.spkt.apply(len) # number of spikes (spikecount) * IGNORE WARNING, creates dfss.scnt anyway
-    dap['scnt'] = df.spkt.apply(len)
-    dap['spk1'] = df.spkt.apply(lambda x: x[0] if len(x)>0 else -1) # spk1; time of first spike
-    dap['f1']   = df.spkt.apply(lambda x: 1e3/(x[1] - x[0]) if len(x)>1 else 0) # f1: freq for 1st ISI
-    dap['f2']   = df.spkt.apply(lambda x: 1e3/(x[2] - x[1]) if len(x)>2 else 0) # f2: freq for 2nd ISI
-    dap['sdur'] = df.spkt.apply(lambda x: x[-1] - x[0] if len(x)>1 else 0) # sdur: duration of spiking
-    dap['ffdur'] = dap.sdur.apply(lambda x: dur if x<=dur else x)
-    # dfss['hz']   = dfss.scnt.div(dfss.sdur).mul(1e3).fillna(0).replace(np.inf,0) # >>> NaN
-    # dfss['hzz']   = dfss[['scnt','sdur']].apply(lambda x: (x.scnt*1e3)/dur if (x.sdur>0) else 0, axis=1) # >>> NaN
-    dap['hzz']   = dap.scnt.div(dap.ffdur).mul(1e3).fillna(0).replace(np.inf,0) # >>> NaN
-    dap.drop(dap.index[dap['hzz'] == 0], inplace = True)
-    dap.drop(dap.index[dap['sdur'] == 0], inplace = True)
-    dap.drop(dap.index[dap['ihcn1'] == {}], inplace = True)
-
-    def func(x, m, c):
-        return (m*x) + c
-    xdata = np.array(dap['h1'])
-    ydata = np.array(dap['hzz']) 
-    optimizedParameters, pcov = opt.curve_fit(func, xdata, ydata)
-
-    print(optimizedParameters)
-
-
-    font = 18
-    b = px.line(x=xdata, y=func(xdata, *optimizedParameters))
-    b.update_traces(line=dict(color="Black", width=2.5))
-    fr = px.strip(dap, x='h1', y='hzz', color = dap['cellnum'].astype(str), color_discrete_sequence = px.colors.qualitative.Set3,labels={'h1':'<i>HCN1</i> Channel Conductance (S/cm<sup>2</sup>)','hzz':'Firing Frequency (Hz)'},template="simple_white")
-    fr.update_traces(marker=dict(size=font/1.5,line = dict(color='indigo',width=0.5)),jitter = 0)
-    fr.add_trace(b.data[0])
-    fr.update_layout(width=1000,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font),coloraxis_showscale=False,showlegend=False) 
-    pio.write_image(fr,"h1ff.png",format='png',scale=10,width=650,height=500, validate=True)
-    # fr.show()
-    return
-
-def apHyp(df):
-    stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
-    stimend = stim['dur'] + stim['delay']
-
-    dkc=df[['amp','cellnum','kc','ikcnc','spkt']].copy()
-    dkc['scnt'] = dkc.spkt.apply(len)
-    dkc['Vph'] = dkc.scnt.apply(lambda x: 1 if 0<x<=1 else 0)
-    dkc['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
-    dkc['Vrmp'] = dkc.Vlist.apply(lambda x: x[0])
-
-    cnt = []
-    for indx in dkc.index:
-        y = dkc['Vlist'][indx]
-        c = 0
-        for i in range(0,len(y)-1):
-            if (y[i] >= dkc['Vrmp'][indx] and y[i + 1] < dkc['Vrmp'][indx]) or (y[i] <= dkc['Vrmp'][indx] and y[i + 1] > dkc['Vrmp'][indx]):
-                c = c+1
-        cnt.append(c)
-        del y
-
-    dkc['rmpCross'] = cnt
-    del c,cnt
-
-    isi = []
-    for ind in dkc.index:
-        e = dkc.iloc[ind]['spkt']
-        intval = [0]
-        if len(e)>1:
-            intval = [e[j+1]-e[j] for j in range(0,len(e)-1)]
-        else:
-            None
-        isi.append(intval)
-
-    dkc['isi'] = isi
-    dkc['mxisi'] = dkc.isi.apply(lambda x: max(x))
-    del isi,intval,e, ind
-
-    init = max([x if x<=2*stimend/3 else 0 for x in df['t'][0]])
-    end = max([x if x<stimend-5 else 0 for x in df['t'][0]])
-
-    dkc['dblk'] = dkc[['Vlist','scnt','rmpCross']].apply(lambda x: 1 if ((-40<= max(x.Vlist[df['t'][0].index(init):df['t'][0].index(end)])<-10) and (x.scnt==1) and (x.rmpCross==2)) else 0, axis =1)
-    dkc['tblk'] = dkc[['Vlist','scnt','rmpCross','mxisi']].apply(lambda x: 1 if (((-40<= max(x.Vlist[df['t'][0].index(init):df['t'][0].index(end)])<-10) and (x.scnt>=1) and (x.rmpCross>2)) or (x.mxisi>=120)) else 0, axis =1)
-    dkc['incomp'] = dkc[['scnt','rmpCross']].apply(lambda x: 1 if ((x.rmpCross==1) and (x.scnt==1)) else 0, axis =1)
-
-
-    dkc.drop(dkc.index[dkc['Vph'] == 0], inplace = True)
-    dkc.drop(dkc.index[dkc['ikcnc'] == {}], inplace = True)
-    dkc.drop(dkc.index[dkc['dblk'] == 1], inplace = True)
-    dkc.drop(dkc.index[dkc['tblk'] == 1], inplace = True)
-    dkc.drop(dkc.index[dkc['incomp'] == 1], inplace = True)
-
-    dkc['Vmin'] = dkc.Vlist.apply(lambda x: min(x[x.index(max(x)) : df['t'][0].index(end)]))
-
-
-    font = 18
-    fr = px.scatter(dkc, x='kc', y='Vmin', log_x=False, color = dkc['cellnum'].astype(str), color_discrete_sequence = px.colors.qualitative.Set3, labels={'kc':'<i>Kcnc1</i> Channel Conductance (S/cm<sup>2</sup>)','Vmin':"Hyperpolarization Potential (mV)"},template="simple_white",trendline="ols", trendline_scope="overall", trendline_color_override="Black") #,trendline_options=dict(log_x=True))
-    fr.update_traces(marker=dict(size=font/1.5,line = dict(color='indigo',width=0.5)))
-    fr.update_layout(width=1000,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font),coloraxis_showscale=False,showlegend=False)
-    pio.write_image(fr,"kchyp.png",format='png',scale=5,width=650,height=500, validate=True)
-    # fr.show()
-
-    results = px.get_trendline_results(fr)
-
-    print(results.px_fit_results.iloc[0].summary())
-    return
-
-def apFWHM(df): 
-    stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
-    stimend = stim['dur'] + stim['delay']
-
-    init = max([x if x<=2*stimend/3 else 0 for x in df['t'][0]])
-    end = max([x if x<=stimend else 0 for x in df['t'][0]])
-
-    dw=df[['amp', 'cellnum', 'c1b','ica1b','V_soma','spkt']].copy()  # h2:ihcn2     
-    dw['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
-    dw['Vrmp'] = dw.Vlist.apply(lambda x: x[0])
-    dw['scnt'] = df.spkt.apply(len)
-    dw['Vph'] = dw.scnt.apply(lambda x: 1 if 0<x<=1 else 0)
-
-    cnt = []
-    for indx in dw.index:
-        y = dw['Vlist'][indx]
-        c = 0
-        for i in range(0,len(y)-1):
-            if (y[i] >= dw['Vrmp'][indx] and y[i + 1] < dw['Vrmp'][indx]) or (y[i] <= dw['Vrmp'][indx] and y[i + 1] > dw['Vrmp'][indx]):
-                c = c+1
-        cnt.append(c)
-        del y
-
-    dw['rmpCross'] = cnt
-    del c,cnt
-
-    isi = []
-
-    for ind in dw.index:
-        e = dw.iloc[ind]['spkt']
-        intval = [0]
-        if len(e)>1:
-            intval = [e[j+1]-e[j] for j in range(0,len(e)-1)]
-        else:
-            None
-        isi.append(intval)
-
-
-    dw['isi'] = isi
-    dw['mxisi'] = dw.isi.apply(lambda x: max(x))
-    del isi,intval,e, ind
-
-    dw['dblk'] = dw[['Vlist','scnt','rmpCross']].apply(lambda x: 1 if ((-40<= max(x.Vlist[df['t'][0].index(init):df['t'][0].index(end)])<-10) and (x.scnt==1) and (x.rmpCross==2)) else 0, axis =1)
-    dw['tblk'] = dw[['Vlist','scnt','rmpCross','mxisi']].apply(lambda x: 1 if (((-40<= max(x.Vlist[df['t'][0].index(init):df['t'][0].index(end)])<-10) and (x.scnt>=1) and (x.rmpCross>2)) or (x.mxisi>=120)) else 0, axis =1)
-    dw['incomp'] = dw[['scnt','rmpCross']].apply(lambda x: 1 if ((x.rmpCross==1) and (x.scnt==1)) else 0, axis =1)
-
-
-    dw.drop(dw.index[dw['Vph'] == 0], inplace = True)
-    dw.drop(dw.index[dw['ica1b'] == {}], inplace = True)
-    dw.drop(dw.index[dw['dblk'] == 1], inplace = True)
-    dw.drop(dw.index[dw['tblk'] == 1], inplace = True)
-    dw.drop(dw.index[dw['incomp'] == 1], inplace = True)
-
-    dw['APpk']  = dw.Vlist.apply(lambda x: max(x))
-    dw['Hfmag'] = dw.APpk.sub(dw.Vrmp).mul(0.5).add(dw.Vrmp)
-
-    wid = []
-
-    for indx in dw.index:
-        v = dw['Vlist'][indx]
-        t1 = 0
-        t2 = 0
-        for i in range(0,len(v)-1):
-            if (v[i] <= dw['Hfmag'][indx] and v[i + 1] >= dw['Hfmag'][indx]):
-                t1 = df['t'][0][i]
-            if (v[i] >= dw['Hfmag'][indx] and v[i + 1] <= dw['Hfmag'][indx]):
-                t2 = df['t'][0][i]
-        wid.append((t2-t1))
-        del v
-
-    dw['fwhm'] = wid 
-    del t1, t2, wid
-
-
-    def func(x, m, c):
-        return (m*x) + c
-    xdata = np.array(dw['c1b'])
-    ydata = np.array(dw['fwhm']) 
-    optimizedParameters, pcov = opt.curve_fit(func, xdata, ydata)
-
-    print(optimizedParameters)
-
-    font = 18
-    b = px.line(x=xdata, y=func(xdata, *optimizedParameters))
-    b.update_traces(line=dict(color="Black", width=2.5))
-    fr = px.strip(dw, x='c1b', y='fwhm', color = dw['cellnum'].astype(str), color_discrete_sequence = px.colors.qualitative.Set3,labels={'c1b':'<i>Cacna1b</i> Channel Conductance (S/cm<sup>2</sup>)','fwhm':'Full Width at Half-Maximum (ms)'},template="simple_white")
-    fr.update_traces(marker=dict(size=font/1.5,line = dict(color='indigo',width=0.5)),jitter = 0)
-    fr.add_trace(b.data[0])
-    fr.update_layout(width=1000,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font),coloraxis_showscale=False,showlegend=False) 
-    pio.write_image(fr,"c1bwid.png",format='png',scale=10,width=650,height=500, validate=True)
-    # fr.show()
-    return
-
-
-
-
 
