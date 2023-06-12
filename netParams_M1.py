@@ -134,11 +134,6 @@ for idx in range(cfg.num_cluster):
             "diversity": True,
         }
 
-    netParams.popParams[f"cluster{idx}_P"] = {
-        "cellType": "phasic",
-        "numCells": phasic_count,
-        "diversity": True,
-    }
     netParams.popParams[f"cluster{idx}_M"] = {
         "cellType": "mixed",
         "numCells": mixed_count,
@@ -456,7 +451,7 @@ elif cfg.stim == "network" and cfg.phasic_split > 0:
 
         netParams.connParams[f"DMV{idx}->PLV{idx}"] = {
             "preConds": {"pop": f"DMV{idx}"},
-            "postConds": {"pop": f"cluster{idx}_P"},
+            "postConds": {"pop": f"cluster{idx}_PLV"},
             "weight": setWeight("DMV_PLV_weight"),
             "delay": cfg.DMV_PLV_delay,
             "convergence": cfg.DMVConvergence,
