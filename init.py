@@ -1,8 +1,15 @@
+# -*- coding: utf-8 -*-
+"""
+Created in April 2021
+
+@author: sgupta
+"""
+
 from netpyne import sim
 from neuron import h
 
 def fi(seg):
-    '''set steady state RMP for 1 cell'''
+    '''setting steady state RMP for each neuron'''
     isum = 0
     isum = (seg.ina if h.ismembrane('na_ion') else 0) + (seg.ik if h.ismembrane('k_ion') else 0) + (seg.ica if h.ismembrane('ca_ion') else 0) + (seg.iother if h.ismembrane('other_ion') else 0)
     seg.e_pas = cfg.hParams['v_init']+isum/seg.g_pas 
@@ -19,5 +26,5 @@ def simSim (np0, sc0):
     sim.analyze()
     print('AFTER save')
 
-simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams_P.py')
+simConfig, netParams = sim.readCmdLineArgs(simConfigDefault='cfg.py', netParamsDefault='netParams_M1.py')
 simSim(netParams, simConfig)

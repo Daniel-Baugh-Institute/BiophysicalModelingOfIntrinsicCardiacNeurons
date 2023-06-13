@@ -1,18 +1,21 @@
+# -*- coding: utf-8 -*-
+"""
+Created in April 2021
+
+@author: sgupta
+"""
+
 import sys, os
 from netpyne import specs
 from netpyne.specs import simConfig
 cfg = specs.SimConfig() 
 
 cfg.hParams = {'celsius':35, 'v_init':-61}
-cfg.duration = 1000  #1500 #1*1e3 #(ms)
+cfg.duration = 1000  #(ms)
 cfg.dt = 0.025          
 cfg.verbose = False     
 cfg.recordCells = ['all']
 cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
-                    # 'm_Na':{'sec': 'soma','loc': 0.5,'var': 'm_ch_Scn1a_cp35'},
-                    # 'h_Na':{'sec': 'soma','loc': 0.5,'var': 'h_ch_Scn1a_cp35'}}
-                         #'cai':{'sec': 'soma','loc': 0.5,'var': 'cai'}}
-                       # 'epas' : {'sec': 'soma', 'loc': 0.5,'var': 'e_pas'},
                     'ih':{'sec': 'soma', 'loc': 0.5,'var': 'iother'}, 
                     'ina': {'sec': 'soma', 'loc': 0.5,'var': 'ina'},
                     'ica': {'sec': 'soma', 'loc': 0.5,'var': 'ica'},
@@ -32,33 +35,32 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
                     'ikcnc':{'sec': 'soma', 'loc': 0.5,'var': 'ikcnc_ch_Kcnc1_rothman'},
                     'ikcnj3':{'sec': 'soma', 'loc': 0.5,'var': 'ikcnj3_ch_Kcnj3_md2488'}}
 
-cfg.stim = 'IClamp' #'IClamp'  
+cfg.stim = 'IClamp' #'IClamp' 'VClamp' 
 cfg.cellnum = 52
 cfg.sze = 21
-cfg.amp = 0.5 #-1e-5 #0.6
-# cfg.vc = 0 
+cfg.amp = 0.1 
+cfg.vc = 0 
 
-cfg.na = 0.075 #1
+cfg.na = 0.075 
 
 cfg.ka = 0.018
 cfg.kc = 0.018
 cfg.phi = 0.2
-cfg.kj = 0.0018
+cfg.kj = 0.0035
 
-cfg.h1 = 0.00001
+cfg.h1 = 0.003
 cfg.h2 = 0.009
-cfg.h3 = 0.0001
-cfg.h4 = 0.0002
+cfg.h3 = 0.01
+cfg.h4 = 0.0035
 
-cfg.c1i = 0.00027
-cfg.c1g = 0.00001
-cfg.c1d = 1.7e-4
-cfg.c1c = 0.0001
+cfg.c1i = 0.0006
+cfg.c1g = 0.0003
+cfg.c1d = 0.00045
+cfg.c1c = 0.006
 cfg.c1b = 0.0001
-cfg.c1a = 0.00001
+cfg.c1a = 0.00005
 
 cfg.recordStep = 0.1       
-# cfg.filename = '21sep14d/'
 cfg.simLabel = '0'
 cfg.saveFolder = '22aug23'
 cfg.saveJson = True
