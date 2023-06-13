@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Mar 21 17:17:01 2023
+
+@author: mmgee 
+"""
+
+
 import pandas as pd
 import numpy as np
 import plotly_express as px
@@ -228,7 +236,7 @@ def classify_sequence(dc):
     return
 
 # load data
-dc = pd.read_json("C:\\Users\\mmgee\\Downloads\\classification_test.json")
+dc = pd.read_json("classification_test.json")
 
 # Run sequence classification
 classify_sequence(dc)
