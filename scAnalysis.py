@@ -2,7 +2,7 @@
 """
 Created on Tue Mar 21 17:17:01 2023
 
-@author: sgupta & mmgee 
+@author: sgupta
 """
 
 """
