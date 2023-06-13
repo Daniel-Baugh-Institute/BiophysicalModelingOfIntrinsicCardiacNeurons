@@ -1,3 +1,12 @@
+COMMENT 
+
+Source: ModelDB
+		Model caL13.mod (Accession:150284)
+
+Edits by sgupta (SG): Temperature-dependence variable has been replaced by a constant
+ENDCOMMENT
+
+
 TITLE LVA L-type (1.3) calcium channel for nucleus accumbens neuron w/ inact
 : see comments at end of file
 
@@ -13,7 +22,6 @@ UNITS {
 
 NEURON {
 	SUFFIX ch_Cacna1d_md150284
-	:USEION cal READ cali, calo WRITE ical VALENCE 2
 	USEION ca READ cai,cao WRITE ica 
 	RANGE pcaLbar, ical, mshift, hshift, qfact, hqfact
 	RANGE ggk, gCa1_3,ica1d, minf,hinf,mtau,htau
@@ -42,13 +50,11 @@ PARAMETER {
 	qfact = 3					: both m & h recorded at 22 C
 	hqfact = 3
 
-	USEGHK=1
+	USEGHK=1 					:Added by SG
 }
 
 ASSIGNED { 
     v 		(mV)
-    :ical 	(mA/cm2)
-    :ecal 	(mV)
     eca 	(mV)
     ica	(mA/cm2)
     ica1d (mA/cm2)
@@ -71,8 +77,8 @@ STATE {
 
 BREAKPOINT {
     SOLVE states METHOD cnexp
-    :ical  = ghk(v,cali,calo) * pcaLbar * m * m * h	  : Kasai 92, Brown 93
     gCa1_3 = pcaLbar * m * m * h
+
 	:Added by SG
 	if(USEGHK ==1)	{
 		ggk = ghk(v,cai,cao,celsius)
@@ -90,8 +96,8 @@ INITIAL {
 }
 DERIVATIVE states {  
 	settables(v)
-	m' = (minf - m) / mtau :(mtau/qfact)
-	h' = (hinf - h) / htau :(htau/hqfact)
+	m' = (minf - m) / mtau :SG removed (mtau/qfact)
+	h' = (hinf - h) / htau :SG removed (htau/hqfact)
 }
 
 UNITSOFF
@@ -129,28 +135,6 @@ FUNCTION efun(z) {
 	}
 }
 UNITSON
-
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-COMMENT
-: ghk() borrowed from cachan.mod share file in Neuron
-FUNCTION ghk(v(mV), ci(mM), co(mM)) (.001 coul/cm3) {
-	LOCAL z, eci, eco
-	z = (1e-3)*2*FARADAY*v/(R*(celsius+273.15))
-	eco = co*efun(z)
-	eci = ci*efun(-z)
-	:high cao charge moves inward
-	:negative potential charge moves inward
-	ghk = (.001)*2*FARADAY*(eci - eco)
-}
-
-FUNCTION efun(z) {
-	if (fabs(z) < 1e-4) {
-		efun = 1 - z/2
-	}else{
-		efun = z/(exp(z) - 1)
-	}
-}
-ENDCOMMENT
 
 COMMENT
 Brown AM, Schwindt PC, Crill WE (1993) Voltage dependence and activation

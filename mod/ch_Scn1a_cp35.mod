@@ -1,3 +1,10 @@
+COMMENT 
+
+Source: Channelpedia
+		Model Na (ID 35)
+ENDCOMMENT
+
+
 :[$URL: https://bbpteam.epfl.ch/svn/analysis/trunk/IonChannel/xmlTomod/CreateMOD.c $]
 :[$Revision: 1499 $]
 :[$Date: 2012-01-28 10:45:44 +0100 (Sat, 28 Jan 2012) $]

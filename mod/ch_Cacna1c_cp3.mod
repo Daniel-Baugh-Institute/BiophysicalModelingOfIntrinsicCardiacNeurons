@@ -1,3 +1,13 @@
+COMMENT 
+
+Source: Channelpedia
+		Model Ca_LVA (ID=3)     
+
+Edits by sgupta (SG): eca computed by adding ghk()
+April 2021
+
+ENDCOMMENT
+
 :[$URL: https://bbpteam.epfl.ch/svn/analysis/trunk/IonChannel/xmlTomod/CreateMOD.c $]
 :[$Revision: 1499 $]
 :[$Date: 2012-01-28 10:45:44 +0100 (Sat, 28 Jan 2012) $]
@@ -6,37 +16,19 @@
 :Reference :Multiple channel types contribute to the low-voltage-activated calcium current in hippocampal CA3 pyramidal neurons. J. Neurosci., 1996, 16, 5567-82
 
 
-COMMENT
-11 Apr 2021
-Edits by Suranjana Gupta (SG): eca computed by adding ghk()
-
-ghk() has been added from:
-https://senselab.med.yale.edu/modeldb/showmodel.cshtml?model=136095&file=%2fncdemo%2fil.mod#tabs-2
-
-USEGHK (and associated codes) have been added (mm) along the format in:
-https://senselab.med.yale.edu/modeldb/ShowModel?model=168874&file=/ca1dDemo/cal_mig.mod#tabs-2
-
-10 June 2021 - Added local ica1c current
-
-22 June 2021
-mInf, mTau, hInf, hTau are made GLOBAL
-rates(v(mV)) instead of rates()
-ENDCOMMENT
-
-
 NEURON	{
 	SUFFIX ch_Cacna1c_cp3
-	:USEION ca READ eca WRITE ica 				:SG
-	USEION ca READ cai, cao WRITE ica 			:SG mm
+	USEION ca READ cai, cao WRITE ica 			:Added by SG
 	RANGE gLbar, gL, ica, BBiD 
-	RANGE ggk, ica1c, mInf, mTau, hInf, hTau	:SG mm
-	GLOBAL USEGHK								:SG mm
+	RANGE ggk, ica1c, mInf, mTau, hInf, hTau	:Added by SG
+	GLOBAL USEGHK								:Added by SG
 }
 
 UNITS	{
 	(S) = (siemens)
 	(mV) = (millivolt)
 	(mA) = (milliamp)
+
 	:SG
 	(molar) = (1/liter)
 	(mM) = (millimolar)
@@ -47,8 +39,7 @@ UNITS	{
 PARAMETER	{
 	gLbar = 0.00001 (S/cm2) 
 	BBiD = 212 
-	:SG
-  	USEGHK=1
+  	USEGHK=1 : Added by SG
 }
 
 ASSIGNED	{
@@ -60,7 +51,8 @@ ASSIGNED	{
 	mTau
 	hInf
 	hTau
-	:SG
+
+	:Added by SG
 	ggk		
 	celsius 	(degC)
 	cai (mM)
@@ -76,7 +68,9 @@ STATE	{
 BREAKPOINT	{
 	SOLVE states METHOD cnexp
 	gL = gLbar*m*m*h
+
 	:Added by SG
+
 	if(USEGHK ==1)	{
 		ggk = ghk(v,cai,cao,celsius)
 	} else {
@@ -84,7 +78,6 @@ BREAKPOINT	{
 	}
 	ica1c = gL*ggk
 	ica = ica1c
-	:ica = gL*(v-eca)
 }
 
 DERIVATIVE states	{
@@ -108,6 +101,7 @@ PROCEDURE rates(v (mV)){
 }
 
 :Two Functions added by SG
+
 FUNCTION ghk(v(mV), ci(mM), co(mM),celsius(degC)) (.001 coul/cm3) {
 	LOCAL z, eci, eco
 	z = (1e-3)*2*FARADAY*v/(R*(celsius+273.15))

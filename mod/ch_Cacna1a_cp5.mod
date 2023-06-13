@@ -1,3 +1,14 @@
+COMMENT 
+
+Source: Channelpedia
+		Model Ca_P/Q (ID=5)
+
+Edits by sgupta (SG): eca computed by adding ghk()
+April 2021
+
+ENDCOMMENT
+
+
 :[$URL: https://bbpteam.epfl.ch/svn/analysis/trunk/IonChannel/xmlTomod/CreateMOD.c $]
 :[$Revision: 1499 $]
 :[$Date: 2012-01-28 10:45:44 +0100 (Sat, 28 Jan 2012) $]
@@ -5,37 +16,20 @@
 :Comment :
 :Reference :Low-threshold potassium channels and a low-threshold calcium channel regulate Ca2+ spike firing in the dendrites of cerebellar Purkinje neurons: a modeling study. Brain Res., 2001, 891, 106-15
 
-COMMENT
-11 Apr 2021
-Edits by Suranjana Gupta (SG): eca computed by adding ghk()
-
-ghk() has been added from:
-https://senselab.med.yale.edu/modeldb/showmodel.cshtml?model=136095&file=%2fncdemo%2fil.mod#tabs-2
-
-USEGHK (and associated codes) have been added (mm) along the format in:
-https://senselab.med.yale.edu/modeldb/ShowModel?model=168874&file=/ca1dDemo/cal_mig.mod#tabs-2
-
-10 June 2021 - Added local ica1a current
-
-22 June 2021
-mInf, mTau are made GLOBAL
-rates(v(mV)) instead of rates()
-ENDCOMMENT
-
 NEURON	{
 	SUFFIX ch_Cacna1a_cp5
-	:USEION ca READ eca WRITE ica 				:SG mm
-	USEION ca READ cai, cao WRITE ica 			:SG mm
+	USEION ca READ cai, cao WRITE ica 			:Added by SG
 	RANGE gCav2_1bar, gCav2_1, ica, BBiD
-	RANGE ggk, ica1a, mInf, mTau				:SG mm
-	GLOBAL USEGHK			 					:SG mm
+	RANGE ggk, ica1a, mInf, mTau				:Added by SG
+	GLOBAL USEGHK			 					:Added by SG
 }
 
 UNITS	{
 	(S) = (siemens)
 	(mV) = (millivolt)
 	(mA) = (milliamp)
-	:SG
+
+	:Added by SG
 	(molar) = (1/liter)
 	(mM) = (millimolar)
 	FARADAY = (faraday) (coulomb)	
@@ -45,8 +39,7 @@ UNITS	{
 PARAMETER	{
 	gCav2_1bar = 0.00001 (S/cm2) 
 	BBiD = 5 
-	:SG
-  	USEGHK=1
+  	USEGHK=1 	:Added by SG
 }
 
 ASSIGNED	{
@@ -58,12 +51,13 @@ ASSIGNED	{
 	mTau
 	mAlpha
 	mBeta
-	:SG
+
+	:Added by SG
 	ggk		
 	celsius 	(degC)
 	cai (mM)
 	cao (mM)
-	ica1a (mA/cm2)
+	ica1a (mA/cm2)	:Added by SG
 }
 
 STATE	{ 
@@ -73,15 +67,16 @@ STATE	{
 BREAKPOINT	{
 	SOLVE states METHOD cnexp
 	gCav2_1 = gCav2_1bar*m
+
 	:Added by SG
+
 	if(USEGHK ==1)	{
 		ggk = ghk(v,cai,cao,celsius)
 	} else {
 		ggk = (v-eca)
 	}
 	ica1a = gCav2_1*ggk
-	ica = ica1a
-	:ica = gCav2_1*(v-eca)
+	ica = ica1a	
 }
 
 DERIVATIVE states	{
@@ -103,6 +98,7 @@ PROCEDURE rates(v (mV)){
 }
 
 :Two Functions added by SG
+
 FUNCTION ghk(v(mV), ci(mM), co(mM),celsius(degC)) (.001 coul/cm3) {
 	LOCAL z, eci, eco
 	z = (1e-3)*2*FARADAY*v/(R*(celsius+273.15))

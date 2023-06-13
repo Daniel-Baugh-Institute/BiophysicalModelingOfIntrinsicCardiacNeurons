@@ -1,3 +1,12 @@
+COMMENT 
+
+Source: ModelDB
+		Model itGHK.mod (Accession:279)
+
+Edits by sgupta (SG): Temperature-dependence variable has been replaced by a constant
+ENDCOMMENT
+
+
 TITLE Low threshold calcium current
 :
 :   Ca++ current responsible for low threshold spikes (LTS)
@@ -30,7 +39,6 @@ NEURON {
 	SUFFIX ch_Cacna1i_md279
 	USEION ca READ cai,cao WRITE ica
 	RANGE gcabar, m_inf, tau_m, h_inf, tau_h, shift, actshift, ica1i
-	:GLOBAL qm, qh
 }
 
 UNITS {
@@ -51,8 +59,6 @@ PARAMETER {
 	actshift = 0 	(mV)	: shift of activation curve (towards hyperpol)
 	cai	= 2.4e-4 (mM)	: adjusted for eca=120 mV
 	cao	= 2	(mM)
-	:qm	= 5		: q10's for activation and inactivation
-	:qh	= 3		: from Coulter et al., J Physiol 414: 587, 1989
 }
 
 STATE {
@@ -65,8 +71,6 @@ ASSIGNED {
 	tau_m	(ms)
 	h_inf
 	tau_h	(ms)
-	:phi_m
-	:phi_h
 	ica1i (mA/cm2)
 }
 
@@ -86,8 +90,6 @@ DERIVATIVE castate {
 
 UNITSOFF
 INITIAL {
-	:phi_m = qm ^ ((celsius-24)/10)
-	:phi_h = qh ^ ((celsius-24)/10)
 
 	evaluate_fct(v)
 

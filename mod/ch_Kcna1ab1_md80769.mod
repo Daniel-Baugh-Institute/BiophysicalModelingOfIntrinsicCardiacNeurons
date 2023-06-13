@@ -1,3 +1,15 @@
+COMMENT 
+
+Source: ModelDB
+		Model Kv1.mod (Accession:80769)
+
+Edits by sgupta (SG): 
+	*Temperature-dependence variable has been replaced by a constant
+	*Inactivation variable (x) has been introduced to account for the effect of ß1 subunit (refer to manuscript for details)
+March 2021
+ENDCOMMENT
+
+
 TITLE Voltage-gated low threshold potassium current from Kv1 subunits
 
 COMMENT
@@ -24,18 +36,6 @@ Reference: Akemann and Knoepfel, J.Neurosci. 26 (2006) 4602
 Date of Implementation: April 2005
 Contact: akemann@brain.riken.jp
 
-ENDCOMMENT
-
-
-COMMENT
-Edited by Suranjana Gupta (SG) on 23 March 2021
-The RAGP model does not have any temp. altering mechanisms in place.
-These mod files have been tested in NEURON (default 6.3 degC), and the
-integrated working model is being ported to NetPyNE (default 35 degC).
-To avoid any temp-based discrepancies, 'celsius' has been replaced with 6.3 (degC)
-(squid temp.)
-
-10 June 2021 - Added local ikcna current
 ENDCOMMENT
 
 
@@ -96,7 +96,6 @@ ASSIGNED {
 STATE { n x}
 
 INITIAL {
-	:q10^((celsius-22 (degC))/10 (degC))		:removed by SG
 	qt = q10^((celsius-22 (degC))/10 (degC))	
 	rates(v)
 	n = ninf

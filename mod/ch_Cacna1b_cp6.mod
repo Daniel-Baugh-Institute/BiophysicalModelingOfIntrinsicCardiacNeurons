@@ -1,3 +1,14 @@
+COMMENT 
+
+Source: Channelpedia
+		Model CaN (ID=6)      
+
+Edits by sgupta (SG): eca computed by adding ghk()
+April 2021
+
+ENDCOMMENT
+
+
 :[$URL: https://bbpteam.epfl.ch/svn/analysis/trunk/IonChannel/xmlTomod/CreateMOD.c $]
 :[$Revision: 1499 $]
 :[$Date: 2012-01-28 10:45:44 +0100 (Sat, 28 Jan 2012) $]
@@ -5,39 +16,21 @@
 :Comment :
 :Reference :Activation and inactivation properties of voltage-gated calcium currents in developing cat retinal ganglion cells. Neuroscience, 1998, 85, 239-47
 
-COMMENT
-11 Apr 2021
-Edits by Suranjana Gupta (SG): eca computed by adding ghk()
-
-ghk() has been added from:
-https://senselab.med.yale.edu/modeldb/showmodel.cshtml?model=136095&file=%2fncdemo%2fil.mod#tabs-2
-
-USEGHK (and associated codes) have been added (mm) along the format in:
-https://senselab.med.yale.edu/modeldb/ShowModel?model=168874&file=/ca1dDemo/cal_mig.mod#tabs-2
-
-10 June 2021 - Added local ica1b current
-
-22 June 2021
-mInf, mTau, hInf, hTau are made GLOBAL
-rates(v(mV)) instead of rates()
-ENDCOMMENT
-
-
 
 NEURON	{
 	SUFFIX ch_Cacna1b_cp6
-	:USEION ca READ eca WRITE ica 				:SG
-	USEION ca READ cai, cao WRITE ica 			:SG mm
+	USEION ca READ cai, cao WRITE ica 			:Added by SG
 	RANGE gCav2_2bar, gCav2_2, ica, BBiD 
-	RANGE ggk, ica1b, mInf, mTau, hInf, hTau	:SG mm
-	GLOBAL USEGHK								:SG mm
+	RANGE ggk, ica1b, mInf, mTau, hInf, hTau	:Added by SG
+	GLOBAL USEGHK								:Added by SG
 }
 
 UNITS	{
 	(S) = (siemens)
 	(mV) = (millivolt)
 	(mA) = (milliamp)
-	:SG
+
+	:Added by SG
 	(molar) = (1/liter)
 	(mM) = (millimolar)
 	FARADAY = (faraday) (coulomb)	
@@ -48,8 +41,7 @@ UNITS	{
 PARAMETER	{
 	gCav2_2bar = 0.00001 (S/cm2) 
 	BBiD = 79
-	:SG
-  	USEGHK=1
+  	USEGHK=1 		:Added by SG
 }
 
 ASSIGNED	{
@@ -65,7 +57,8 @@ ASSIGNED	{
 	hTau
 	hAlpha
 	hBeta
-	:SG
+
+	:Added by SG
 	ggk		
 	celsius 	(degC)
 	cai (mM)
@@ -81,6 +74,7 @@ STATE	{
 BREAKPOINT	{
 	SOLVE states METHOD cnexp
 	gCav2_2 = gCav2_2bar*m*m*h
+
 	:Added by SG
 	if(USEGHK ==1)	{
 		ggk = ghk(v,cai,cao,celsius)
@@ -89,7 +83,6 @@ BREAKPOINT	{
 	}
 	ica1b = gCav2_2*ggk
 	ica = ica1b
-	:ica = gCav2_2*(v-eca)
 }
 
 DERIVATIVE states	{
@@ -118,7 +111,9 @@ PROCEDURE rates(v (mV)){
 		hInf = hAlpha/(hAlpha + hBeta)
 		hTau = 1/(hAlpha + hBeta)	
 }
+
 :Two Functions added by SG
+
 FUNCTION ghk(v(mV), ci(mM), co(mM),celsius(degC)) (.001 coul/cm3) {
 	LOCAL z, eci, eco
 	z = (1e-3)*2*FARADAY*v/(R*(celsius+273.15))

@@ -1,3 +1,18 @@
+COMMENT 
+Source: 
+* Rothman JS, Manis PB. Differential expression of three distinct potassium currents in the ventral cochlear
+nucleus. J Neurophysiol. 2003 Jun;89(6):3070–3082.
+*Rothman JS, Manis PB. Kinetic analyses of three distinct potassium conductances in ventral cochlear
+nucleus neurons. J Neurophysiol. 2003 Jun;89(6):3083–3096.
+*Rothman JS, Manis PB. The roles potassium currents play in regulating the electrical activity of ventral
+cochlear nucleus neurons. J Neurophysiol. 2003 Jun;89(6):3097–3113
+
+@author: Implemented in NMODL by Suranjana Gupta
+March 2022
+
+ENDCOMMENT
+
+
 NEURON {
 	SUFFIX ch_Kcnc1_rothman
 	USEION k READ ek WRITE ik

@@ -1,9 +1,16 @@
+COMMENT 
+
+Source: ModelDB
+	Model km.mod (Accession:2488)
+
+Edits by sgupta (SG): Temperature-dependence variable has been replaced by a constant
+February 2022
+ENDCOMMENT
+
 
 COMMENT
 26 Ago 2002 Modification of original channel to allow variable time step and to correct an initialization error.
     Done by Michael Hines(michael.hines@yale.e) and Ruggero Scorcioni(rscorcio@gmu.edu) at EU Advance Course in Computational Neuroscience. Obidos, Portugal
-
-km.mod
 
 Potassium channel, Hodgkin-Huxley style kinetics
 Based on I-M (muscarinic K channel)
@@ -21,7 +28,6 @@ NEURON {
 	RANGE n, gk, gbar
 	RANGE ninf, ntau, ikcnj3
 	GLOBAL Ra, Rb, tadj, vmin, vmax
-	:GLOBAL q10, temp
 }
 
 UNITS {
@@ -32,7 +38,6 @@ UNITS {
 } 
 
 PARAMETER {
-	:gbar = 10   	(pS/um2)	: 0.03 mho/cm2
 	gbar = 0.001   	(S/cm2)
 	v 		(mV)
 								
@@ -43,9 +48,6 @@ PARAMETER {
 	Rb   = 0.001	(/ms)		: max deact rate  (slow)
 
 	dt		(ms)
-	:celsius		(degC)
-	:temp = 23	(degC)		: original temp 	
-	:q10  = 2.3			: temperature sensitivity
 
 	vmin = -120	(mV)
 	vmax = 100	(mV)
@@ -75,7 +77,6 @@ INITIAL {
 BREAKPOINT {
         SOLVE states METHOD cnexp
 	gk = tadj*gbar*n
-	:ikcnj3 = (1e-4) * gk * (v - ek)
 	ikcnj3 = gk * (v - ek)
 	ik = ikcnj3
 } 
@@ -90,11 +91,6 @@ DERIVATIVE states {   :Computes state variable n
 
 PROCEDURE trates(v) {  :Computes rate and other constants at current v.
                       :Call once from HOC to initialize inf at resting v.
-        
-        ::TABLE ninf, ntau	SG
-	::DEPEND  celsius, temp, Ra, Rb, tha, qa	SG
-	
-	::FROM vmin TO vmax WITH 199 	SG
 
 	rates(v): not consistently executed from here if usetable_hh == 1
 

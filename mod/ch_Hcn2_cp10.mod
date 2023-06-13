@@ -1,17 +1,20 @@
+COMMENT 
+
+Source: Channelpedia
+		Model HCN2 (ID 10)
+
+Edited by sgupta (SG): Removed 'NONSPECIFIC_CURRENT ihcn' and added ion 'other', to achieve RMP stabilisation (init.py)
+June 2021
+
+ENDCOMMENT
+
+
 :[$URL: https://bbpteam.epfl.ch/svn/analysis/trunk/IonChannel/xmlTomod/CreateMOD.c $]
 :[$Revision: 1499 $]
 :[$Date: 2012-01-28 10:45:44 +0100 (Sat, 28 Jan 2012) $]
 :[$Author: rajnish $]
 :Comment :
 :Reference :Cellular expression and functional characterization of four hyperpolarization-activated pacemaker channels in cardiac and neuronal tissues. Eur. J. Biochem., 2001, 268, 1646-52
-
-: Edited by Suranjana Gupta (10 June 2021): Removed 'NONSPECIFIC_CURRENT ihcn' and added ion 'other', to incorporate the rmp() code 
-
-COMMENT
-22 June 2021
-mInf, mTau are made GLOBAL
-rates(v(mV)) instead of rates()
-ENDCOMMENT
 
 
 NEURON	{

@@ -1,3 +1,13 @@
+COMMENT 
+
+Source: Channelpedia
+		Model Cav3.1 (ID=41)       
+
+Edits by sgupta (SG): eca computed by adding ghk()
+April 2021
+
+ENDCOMMENT
+
 :[$URL: https://bbpteam.epfl.ch/svn/analysis/trunk/IonChannel/xmlTomod/CreateMOD.c $]
 :[$Revision: 1499 $]
 :[$Date: 2012-01-28 10:45:44 +0100 (Sat, 28 Jan 2012) $]
@@ -5,38 +15,21 @@
 :Comment :
 :Reference :Subunit-specific modulation of T-type calcium channels by zinc. J. Physiol. (Lond.), 2007, 578, 159-71
 
-COMMENT
-11 Apr 2021
-Edits by Suranjana Gupta (SG): eca computed by adding ghk()
-
-ghk() has been added from:
-https://senselab.med.yale.edu/modeldb/showmodel.cshtml?model=136095&file=%2fncdemo%2fil.mod#tabs-2
-
-USEGHK (and associated codes) have been added (mm) along the format in:
-https://senselab.med.yale.edu/modeldb/ShowModel?model=168874&file=/ca1dDemo/cal_mig.mod#tabs-2
-
-10 June 2021 - Added local ica1g current
-
-22 June 2021
-mInf, mTau, hInf, hTau are made GLOBAL
-rates(v(mV)) instead of rates()
-ENDCOMMENT
-
 
 NEURON	{
 	SUFFIX ch_Cacna1g_cp41
-	:USEION ca READ eca WRITE ica 				:SG
-	USEION ca READ cai, cao WRITE ica 			:SG mm
+	USEION ca READ cai, cao WRITE ica 			:Added by SG
 	RANGE gCav3_1bar, gCav3_1, ica, BBiD, ica1g
-	RANGE ggk, mInf, mTau, hInf, hTau			:SG mm
-	GLOBAL USEGHK								:SG mm
+	RANGE ggk, mInf, mTau, hInf, hTau			:Added by SG
+	GLOBAL USEGHK								:Added by SG
 }
 
 UNITS	{
 	(S) = (siemens)
 	(mV) = (millivolt)
 	(mA) = (milliamp)
-	:SG
+
+	:Added by SG
 	(molar) = (1/liter)
 	(mM) = (millimolar)
 	FARADAY = (faraday) (coulomb)	
@@ -46,8 +39,7 @@ UNITS	{
 PARAMETER	{
 	gCav3_1bar = 0.00001 (S/cm2) 
 	BBiD = 41 
-	:SG
-  	USEGHK=1
+  	USEGHK=1 	:Added by SG
 }
 
 ASSIGNED	{
@@ -59,7 +51,8 @@ ASSIGNED	{
 	mTau
 	hInf
 	hTau
-	:SG
+
+	:Added by SG
 	ggk		
 	celsius 	(degC)
 	cai (mM)
@@ -75,7 +68,9 @@ STATE	{
 BREAKPOINT	{
 	SOLVE states METHOD cnexp
 	gCav3_1 = gCav3_1bar*m*h
+
 	:Added by SG
+
 	if(USEGHK ==1)	{
 		ggk = ghk(v,cai,cao,celsius)
 	} else {
@@ -83,7 +78,6 @@ BREAKPOINT	{
 	}
 	ica1g = gCav3_1*ggk
 	ica = ica1g
-	:ica = gCav3_1*(v-eca)
 }
 
 DERIVATIVE states	{
@@ -112,6 +106,7 @@ PROCEDURE rates(v (mV)){
 }
 
 :Two Functions added by SG
+
 FUNCTION ghk(v(mV), ci(mM), co(mM),celsius(degC)) (.001 coul/cm3) {
 	LOCAL z, eci, eco
 	z = (1e-3)*2*FARADAY*v/(R*(celsius+273.15))
