@@ -16,7 +16,7 @@ def batch():
         params['amp'] = [0.1, 0.2, 0.3, 0.4, 0.5]                       # indexed 
         # params['vc']= [v for v in np.arange(-100,101,10)]             # indexed
         params['cellnum'] = [x for x in range(104)]                     # indexed          
-        params['phi']= [0.2] # indexed  
+        # params['phi']= [0.2]                                          # indexed  
 
         # To be used with sobol.py
 

@@ -214,7 +214,7 @@ def currentScapes(df,batchLabel):
 
     #computing percent contribution
     makedirs(f'{batchLabel}/percI')
-    for indx in [0,1]: #dp.index:
+    for indx in [0,56]: #dp.index:
         fr = make_subplots(cols=2, rows=1,specs=[[{"type": "domain"}, {"type": "domain"}]],subplot_titles=["%Inward Currents","%Outward Currents"]) 
         fr.add_trace(go.Pie(labels = li,values= dp[['sna','sc1a','sc1b','sc1c','sc1d','sc1g','sc1i','sh1','sh2','sh3','sh4']].copy().transpose().abs()[indx].tolist(),text=li,showlegend = True,marker = dict(colors = ci, line = dict(color='black',width=0.5)),insidetextorientation='horizontal', rotation = 180), row = 1, col = 1)
         fr.add_trace(go.Pie(labels = lo, values= dp[['ska','skc','skj']].copy().transpose()[indx].tolist(),text=lo,showlegend = True,marker = dict(colors = co, line = dict(color='black',width=0.5)),insidetextorientation='horizontal', rotation = 0), row = 1, col = 2)
@@ -245,7 +245,7 @@ def currentScapes(df,batchLabel):
     dm['V'] = df.V_soma.apply(lambda x: x['cell_0'])
 
     makedirs(f'{batchLabel}/currentScapes')
-    for indx in [0,1]: #dp.index:
+    for indx in [0,56]: #dp.index:
         vm = [(v-min(dm['V'][indx]))/(max(dm['V'][indx])-min(dm['V'][indx])) for v in dm['V'][indx]]
 
         q=0

@@ -22,12 +22,12 @@ from matplotlib_scalebar.scalebar import ScaleBar
 
 # Function to plot time vs voltage curves
 def plotVm(df,batchLabel):
-    #makedirs('Jun0123PB/vmPlots')
+    makedirs('vmPlots')
     font = 15
     f, ax = plt.subplots()
     plt.axis("off")
     offset = 0
-    for indx in df.index:
+    for indx in [0,49,50]: #df.index:
         y = df['Vlist'][indx]
         y = np.array(y)
         y = 3*(offset)+y # add offset for ease of viewing
@@ -43,7 +43,7 @@ def plotVm(df,batchLabel):
     plt.title(f"Tonic, Neuronal-Type ID: T{df['cellnum'][indx]+1}", fontsize=font)
     plt.tick_params(axis='both',labelsize=font)
     plt.legend(['0.1','0.3','0.5'])
-    plt.savefig(f"Jun0123P/vmPlots/{batchLabel}.png",dpi=300,bbox_inches='tight')
+    plt.savefig(f"vmPlots/{batchLabel}.png",dpi=300,bbox_inches='tight')
     plt.close()
     return
 
@@ -118,7 +118,7 @@ def classify_sequence(dc):
             print('Uh oh, rseq is empty!')
         elif 4 in rseq:
             seq_cat[index] = 16
-            print('Post-stimulus firing, tonic block, depolarisation block, or incomplete repolarisation occured')
+            print('Post-stimulus firing, Block, or incomplete repolarisation occured')
         elif rseq.size == 1:
             if rseq[0][0] == 0: #p
                 seq_cat[index] = 0
