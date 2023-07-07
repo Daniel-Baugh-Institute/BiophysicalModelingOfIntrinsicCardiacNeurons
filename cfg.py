@@ -5,15 +5,17 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 6_000
+cfg.duration = 10_000
 cfg.dt = 0.025
 cfg.recordStep = 0.1
-cfg.simLabel = "13may23test"
+cfg.simLabel = "06jun23test"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
 cfg.recordStim = True
 cfg.log_weights = False  # all weights are log scaled -- to improve search
+cfg.matched_feedback = True
+cfg.feedback_scale = 1.0
 cfg.nTEBins = {
     "DMV0": {
         "cluster0_P": int(cfg.duration / 42.6),
@@ -188,38 +190,38 @@ else:
 
 if cfg.phasic_split > 0:
     # phasic connections
-    cfg.DMV_PLV_weight = 6.2213638640284405e-06
-    cfg.DMV_PLV_weight_var = 0.1040760178145076
+    cfg.DMV_PLV_weight = 0.00040247923847343216  # 6.2213638640284405e-06
+    # cfg.DMV_PLV_weight_var = 0.1040760178145076
     cfg.DMV_PLV_delay = 5
-    cfg.PLV_PLV_prob = 0.25
-    cfg.PLV_PLV_weight = 0.61103753822864
-    cfg.PLV_PLV_var = 0.9012283635080267
+    cfg.PLV_PLV_prob = 0.3
+    cfg.PLV_PLV_weight = 4e-5  # 0.61103753822864
+    # cfg.PLV_PLV_var = 0.9012283635080267
     cfg.PLV_PLV_delay = 5
 
-    cfg.NA_PSAN_weight = 4e-6  # 0.00040247923847343216 #0.00058
-    cfg.NA_PSAN_weight_var = 1e-3
+    cfg.NA_PSAN_weight = 0.00040247923847343216  # 0.00058
+    # cfg.NA_PSAN_weight_var = 1e-3
     cfg.NA_PSAN_delay = 5
-    cfg.PSAN_PSAN_prob = 0.25
-    cfg.PSAN_PSAN_weight = 0.61103753822864
-    cfg.PSAN_PSAN_weight_var = 0.9012283635080267
+    cfg.PSAN_PSAN_prob = 0.3
+    cfg.PSAN_PSAN_weight = 4e-5  # 0.61103753822864
+    # cfg.PSAN_PSAN_weight_var = 0.9012283635080267
     cfg.PSAN_PSAN_delay = 5
 
-    cfg.PLV_M_prob = [0.25, 0.25]
-    cfg.PLV_M_weight = [2e-5, 2e-5]
-    cfg.PLV_M_weight_var = [5e-4, 5e-4]
+    cfg.PLV_M_prob = [0.3, 0.3]
+    cfg.PLV_M_weight = 0
+    # cfg.PLV_M_weight_var = [5e-4, 5e-4]
     cfg.PLV_M_delay = [5, 5]
-    cfg.SAN_M_prob = [0.25, 0.25]
-    cfg.SAN_M_weight = [2e-5, 2e-5]
-    cfg.SAN_M_weight_var = [5e-4, 5e-4]
-    cfg.SAM_M_delay = [5, 5]
+    cfg.PSAN_M_prob = [0.3, 0.3]
+    cfg.PSAN_M_weight = 0
+    # cfg.SAN_M_weight_var = [5e-4, 5e-4]
+    cfg.PSAN_M_delay = [5, 5]
 
     # mixed connections
-    cfg.NA_M_weight = 4e-6  # 0.00027972942965111996
-    cfg.NA_M_weight_var = 1e-3  # 1.0
+    cfg.NA_M_weight = 0.00027972942965111996
+    # cfg.NA_M_weight_var = 1e-3  # 1.0
     cfg.NA_M_delay = 5
-    cfg.M_M_prob = [0.25, 0.25]
-    cfg.M_M_weight = [5e-6, 5e-6]
-    cfg.M_M_weight_var = [5e-4, 5e-4]
+    cfg.M_M_prob = [0.3, 0.3]
+    cfg.M_M_weight = 4e-5
+    # cfg.M_M_weight_var = [5e-4, 5e-4]
     cfg.M_M_delay = [5, 5]
 
 else:
@@ -227,12 +229,12 @@ else:
     cfg.DMV_P_weight = 6.2213638640284405e-06
     cfg.DMV_P_weight_var = 0.1040760178145076
     cfg.DMV_P_delay = 5
-    cfg.P_P_prob = 0.25
+    cfg.P_P_prob = 0.3
     cfg.P_P_weight = 0.61103753822864
     cfg.P_P_var = 0.9012283635080267
     cfg.P_P_delay = 5
 
-    cfg.P_M_prob = [0.25, 0.25]
+    cfg.P_M_prob = [0.3, 0.3]
     cfg.P_M_weight = [2e-5, 2e-5]
     cfg.P_M_weight_var = [5e-4, 5e-4]
     cfg.P_M_delay = [5, 5]
@@ -241,7 +243,7 @@ else:
     cfg.NA_M_weight = 4e-6  # 0.00027972942965111996
     cfg.NA_M_weight_var = 1e-3  # 1.0
     cfg.NA_M_delay = 5
-    cfg.M_M_prob = [0.25, 0.25]
+    cfg.M_M_prob = [0.3, 0.3]
     cfg.M_M_weight = [5e-6, 5e-6]
     cfg.M_M_weight_var = [5e-4, 5e-4]
 
