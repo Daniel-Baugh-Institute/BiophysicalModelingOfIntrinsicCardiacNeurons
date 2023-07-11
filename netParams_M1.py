@@ -244,13 +244,16 @@ elif cfg.stim == "network" and cfg.phasic_split == 0:
 
     def setWeight(param):
         paramVar = f"{param}_var"
+        scale = getattr(cfg, f"{param}_scale") if hasattr(cfg, f"{param}_scale") else 1
         if hasattr(cfg, paramVar):
             if cfg.log_weights:
-                return (
-                    f"lognormal({10**getattr(cfg,param)}, {10**getattr(cfg,paramVar)})"
-                )
-            return f"lognormal({getattr(cfg,param)}, {getattr(cfg,paramVar)})"
-        return 10 ** getattr(cfg, param) if cfg.log_weights else getattr(cfg, param)
+                return f"{scale}*lognormal({10**getattr(cfg,param)}, {10**getattr(cfg,paramVar)})"
+            return f"{scale}*lognormal({getattr(cfg,param)}, {getattr(cfg,paramVar)})"
+        return (
+            scale * 10 ** getattr(cfg, param)
+            if cfg.log_weights
+            else scale * getattr(cfg, param)
+        )
 
     for idx in range(cfg.num_cluster):
         netParams.popParams[f"DMV{idx}"] = {
@@ -336,15 +339,20 @@ elif cfg.stim == "network" and cfg.phasic_split == 0:
 
             def getVal(paramName):
                 param = getRawVal(paramName)
+                scale = (
+                    getattr(cfg, f"{paramName}_scale")
+                    if hasattr(cfg, f"{paramName}_scale")
+                    else 1
+                )
                 if cfg.log_weights:
                     param = getRawVal(paramName)
                     if hasattr(param, "__len__"):
-                        return f"lognormal({10**param[0]}, {10**param[1]})"
-                    return 10**param
+                        return f"{scale}*lognormal({10**param[0]}, {10**param[1]})"
+                    return scale * 10**param
                 return (
-                    f"lognormal({param[0]}, {param[1]})"
+                    f"{scale}*lognormal({param[0]}, {param[1]})"
                     if hasattr(param, "__len__")
-                    else param
+                    else scale * param
                 )
 
             for pop in ["P", "M"]:
@@ -464,16 +472,21 @@ elif cfg.stim == "network" and cfg.phasic_split > 0:
             def getVal(paramName):
                 paramVar = f"{paramName}_var"
                 param = getattr(cfg, paramName)
+                scale = (
+                    getattr(cfg, f"{paramName}_scale")
+                    if hasattr(cfg, f"{paramName}_scale")
+                    else 1
+                )
                 if hasattr(cfg, paramVar):
                     var = getattr(cfg, paramVar)
                     p = eval(param) if isinstance(param, str) else param
                     v = eval(Pvar) if isinstance(var, str) else var
                     mean = p[idx == j] if hasattr(p, "__len__") else p
                     variance = v[idx == j] if hasattr(v, "__len__") else v
-                    return f"lognormal({mean}, {variance})"
+                    return f"{scale}*lognormal({mean}, {variance})"
                 param = getattr(cfg, paramName)
                 p = eval(param) if isinstance(param, str) else param
-                return p[idx == j] if hasattr(p, "__len__") else p
+                return scale * p[idx == j] if hasattr(p, "__len__") else scale * p
 
             # Feedback & connection between the same population in different clusters
             for pop in ["PLV", "PSAN", "M"]:

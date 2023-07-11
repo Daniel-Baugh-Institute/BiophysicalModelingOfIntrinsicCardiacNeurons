@@ -5,10 +5,10 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 10_000
-cfg.dt = 0.025
+cfg.duration = 5_000
+cfg.dt = 0.01
 cfg.recordStep = 0.1
-cfg.simLabel = "06jun23test"
+cfg.simLabel = "10jul23test"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
@@ -226,26 +226,31 @@ if cfg.phasic_split > 0:
 
 else:
     # phasic connections
-    cfg.DMV_P_weight = 6.2213638640284405e-06
-    cfg.DMV_P_weight_var = 0.1040760178145076
+    cfg.DMV_P_weight = 0.006262447766727022
+    cfg.DMV_P_weight_scale = 1.0
+    cfg.DMV_P_weight_var = 9.106163425174792
     cfg.DMV_P_delay = 5
-    cfg.P_P_prob = 0.3
-    cfg.P_P_weight = 0.61103753822864
-    cfg.P_P_var = 0.9012283635080267
+    cfg.P_P_prob = 0.09636272716083877
+    cfg.P_P_weight = 0.0036849217793258485
+    cfg.P_P_weight_scale = 1.0 
+    cfg.P_P_weight_var = 5.10194566836602
     cfg.P_P_delay = 5
 
-    cfg.P_M_prob = [0.3, 0.3]
-    cfg.P_M_weight = [2e-5, 2e-5]
-    cfg.P_M_weight_var = [5e-4, 5e-4]
-    cfg.P_M_delay = [5, 5]
+    cfg.P_M_prob = 0.3
+    cfg.P_M_weight = 0.9139191207900156
+    cfg.P_M_weight_scale = 1.0
+    cfg.P_M_weight_var = 0.05682089969970895
+    cfg.P_M_delay = 5
 
     # mixed connections
-    cfg.NA_M_weight = 4e-6  # 0.00027972942965111996
-    cfg.NA_M_weight_var = 1e-3  # 1.0
+    cfg.NA_M_weight = 0.00477066435901985 
+    cfg.NA_M_weight_var = 0.001
+    cfg.NA_M_weight_scale = 1.0
     cfg.NA_M_delay = 5
     cfg.M_M_prob = [0.3, 0.3]
-    cfg.M_M_weight = [5e-6, 5e-6]
-    cfg.M_M_weight_var = [5e-4, 5e-4]
+    cfg.M_M_weight = 0.14770056359818068
+    cfg.M_M_weight_scale = 1.0
+    cfg.M_M_weight_var = 0.019784040899752355
 
     cfg.M_M_delay = [5, 5]
 
