@@ -440,5 +440,24 @@ def classification(df):
 
     return
 
+# Plotting Figure 5A and B (currentscapes)
+# Currentscapes in the manuscript are plotted for 0.2 nA current clamp
+# Change indices in lines 217 and 248 to switch which cell/current clamp amperage is plotted. Current indices are for those in the manuscript
 
+#filename = '22aug25b_allData.json' #classification, Fig 5
+#readAllData(filename,dfonly = True)
+
+#batchLabel = 'currentscapes'
+#currentScapes(df,batchLabel)
+# outputs: {batchLabel}/currentScapes/{dm['simLabel'][indx]}.png
+
+# Plotting Figure 5D (firing frequency-current curve)
+#fI(df)
+# outputs R_fi.png
+
+# Plotting Figure 5C (current-voltage curve)
+#filename = '22aug25d_allData.json' #classification, Fig 5
+#readAllData(filename,dfonly = True)
+#IV(df)
+# outputs: iv.png
 
