@@ -241,6 +241,33 @@ dc = pd.read_json("classification_test.json")
 # Run sequence classification
 classify_sequence(dc)
 
+makedirs('vmPlots')
+# Phasic only plots
+# print(dc.head(5)) # Row numbers for example voltage traces are printed out in the script. To determine the indices of those row numbers, uncomment this line to print them out
+idx = [1, 833,1665]
+df = dc.loc[idx,['Vlist','t','cellnum']]
+batchLabel = "Phasic" #
+plotVm(df,batchLabel,idx)
 
+# Tonic only plots
+#print(dc.iloc[2000:2006])
+idx = [201,1033,1865]
+df = dc.loc[idx,['Vlist','t','cellnum']]
+batchLabel = "Tonic" #
+plotVm(df,batchLabel,idx)
+
+# Phasic-tonic plots
+#print(dc.head(15))
+idx = [6241,7073,7905]
+df = dc.loc[idx,['Vlist','t','cellnum']]
+batchLabel = "Phasic-Tonic" #
+plotVm(df,batchLabel,idx)
+
+# Tonic-phasic
+#print(dc.iloc[1990:1996])
+idx = [10597,11429,12261]
+df = dc.loc[idx,['Vlist','t','cellnum']]
+batchLabel = "Tonic-Phasic" #
+plotVm(df,batchLabel,idx)
 
 
