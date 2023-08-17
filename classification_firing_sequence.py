@@ -21,13 +21,13 @@ import matplotlib.cbook as cbook
 from matplotlib_scalebar.scalebar import ScaleBar
 
 # Function to plot time vs voltage curves
-def plotVm(df,batchLabel):
+def plotVm(df,batchLabel,idx):
     makedirs('vmPlots')
     font = 15
     f, ax = plt.subplots()
     plt.axis("off")
     offset = 0
-    for indx in [0,49,50]: #df.index:
+    for indx in idx: #df.index:
         y = df['Vlist'][indx]
         y = np.array(y)
         y = 3*(offset)+y # add offset for ease of viewing
@@ -257,8 +257,8 @@ batchLabel = "Tonic" #
 plotVm(df,batchLabel,idx)
 
 # Phasic-tonic plots
-#print(dc.head(15))
-idx = [6241,7073,7905]
+#print(dc.iloc[145:150])
+idx = [2093,2925,3757]
 df = dc.loc[idx,['Vlist','t','cellnum']]
 batchLabel = "Phasic-Tonic" #
 plotVm(df,batchLabel,idx)
