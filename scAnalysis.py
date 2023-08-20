@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Mar 21 17:17:01 2023
+Created on 18 Aug. 2022
 
 @author: sgupta
 """
@@ -161,154 +161,6 @@ def toPandas(params, data):
 
     return df
 
-# Function to plot dynamic changes in ionic currents underlying action potential
-# @author: sgupta
-def currentScapes(df,batchLabel):
-    font = 17
-    dp = df[['cellnum','simLabel']].copy()
-
-    do = df[['cellnum','simLabel']].copy() #outward currents
-    do['io'] = df.ik.apply(lambda x: x['cell_0'] if x!={} else [0])
-    do['ikcna'] = df.ikcna.apply(lambda x: x['cell_0'] if x!={} else [0])
-    do['ikcnc'] = df.ikcnc.apply(lambda x: x['cell_0'] if x!={} else [0])
-    do['ikcnj'] = df.ikcnj3.apply(lambda x: x['cell_0'] if x!={} else [0])
-    dp['ska'] = do.ikcna.apply(lambda x: np.sum(x))
-    dp['skc'] = do.ikcnc.apply(lambda x: np.sum(x))
-    dp['skj'] = do.ikcnj.apply(lambda x: np.sum(x))
-
-    di = df[['cellnum','simLabel']].copy() #inward currents
-
-    di['ina'] = df.ina.apply(lambda x: x['cell_0'] if x!={} else [0])
-    di['ica'] = df.ica.apply(lambda x: x['cell_0'] if x!={} else [0])
-    di['ih'] = df.ih.apply(lambda x: x['cell_0'] if x!={} else [0])
-    di = di.assign(ii=[np.array(n)+np.array(c)+np.array(h) for n,c,h in zip(di['ina'], di['ica'], di['ih'])])
-
-    di['ica1a'] = df.ica1a.apply(lambda x: x['cell_0'] if x!={} else [0])
-    di['ica1b'] = df.ica1b.apply(lambda x: x['cell_0'] if x!={} else [0])
-    di['ica1c'] = df.ica1c.apply(lambda x: x['cell_0'] if x!={} else [0])
-    di['ica1d'] = df.ica1d.apply(lambda x: x['cell_0'] if x!={} else [0])
-    di['ica1g'] = df.ica1g.apply(lambda x: x['cell_0'] if x!={} else [0])
-    di['ica1i'] = df.ica1i.apply(lambda x: x['cell_0'] if x!={} else [0])
-
-    di['ihcn1'] = df.ihcn1.apply(lambda x: x['cell_0'] if x!={} else [0])
-    di['ihcn2'] = df.ihcn2.apply(lambda x: x['cell_0'] if x!={} else [0])
-    di['ihcn3'] = df.ihcn3.apply(lambda x: x['cell_0'] if x!={} else [0])
-    di['ihcn4'] = df.ihcn4.apply(lambda x: x['cell_0'] if x!={} else [0])
-
-    dp['sna'] = di.ina.apply(lambda x: np.sum(x))
-    dp['sc1a'] = di.ica1a.apply(lambda x: np.sum(x))
-    dp['sc1b'] = di.ica1b.apply(lambda x: np.sum(x))
-    dp['sc1c'] = di.ica1c.apply(lambda x: np.sum(x))
-    dp['sc1d'] = di.ica1d.apply(lambda x: np.sum(x))
-    dp['sc1g'] = di.ica1g.apply(lambda x: np.sum(x))
-    dp['sc1i'] = di.ica1i.apply(lambda x: np.sum(x))
-    dp['sh1'] = di.ihcn1.apply(lambda x: np.sum(x))
-    dp['sh2'] = di.ihcn2.apply(lambda x: np.sum(x))
-    dp['sh3'] = di.ihcn3.apply(lambda x: np.sum(x))
-    dp['sh4'] = di.ihcn4.apply(lambda x: np.sum(x))
-
-    ci = ['lavender','yellow','moccasin','olivedrab','yellowgreen','salmon','lightpink','lightgrey','peru','palegreen','plum']
-    co =['paleturquoise','lightsteelblue','mistyrose']
-    li = ['Scn1a','Cacna1a','Cacna1b','Cacna1c','Cacna1d','Cacna1g','Cacna1i','HCN1','HCN2','HCN3','HCN4']
-    lo = ['Kcna1+ab1','Kcnc1','Kcnj3']
-
-    #computing percent contribution
-    makedirs(f'{batchLabel}/percI')
-    for indx in [0,56]: #dp.index:
-        fr = make_subplots(cols=2, rows=1,specs=[[{"type": "domain"}, {"type": "domain"}]],subplot_titles=["%Inward Currents","%Outward Currents"]) 
-        fr.add_trace(go.Pie(labels = li,values= dp[['sna','sc1a','sc1b','sc1c','sc1d','sc1g','sc1i','sh1','sh2','sh3','sh4']].copy().transpose().abs()[indx].tolist(),text=li,showlegend = True,marker = dict(colors = ci, line = dict(color='black',width=0.5)),insidetextorientation='horizontal', rotation = 180), row = 1, col = 1)
-        fr.add_trace(go.Pie(labels = lo, values= dp[['ska','skc','skj']].copy().transpose()[indx].tolist(),text=lo,showlegend = True,marker = dict(colors = co, line = dict(color='black',width=0.5)),insidetextorientation='horizontal', rotation = 0), row = 1, col = 2)
-        fr.update_layout(width=1100,height=600,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font),title = f"Neuronal-Type ID: T{dp['cellnum'][indx]+1}")
-        fr.update_annotations(font_size=font) # for sublot titles
-        # fr.show()
-        pio.write_image(fr,f"{batchLabel}/percI/{dp['simLabel'][indx]}.png",format='png',scale=10,width=1100,height=800, validate=True)
-    del fr
-
-    # Currentscapes: dynamic changes in currents
-    dm = df[['cellnum','simLabel','t']].copy()
-    dm = dm.assign(ka = [np.array(x)/(np.array(t)) for x,t in zip(do['ikcna'],do['io'])])
-    dm = dm.assign(kc = [np.array(x)/(np.array(t)) for x,t in zip(do['ikcnc'],do['io'])])
-    dm = dm.assign(kj = [np.array(x)/(np.array(t)) for x,t in zip(do['ikcnj'],do['io'])])
-
-    dm = dm.assign(na = [np.array(x)/(np.array(t)) for x,t in zip(di['ina'],di['ii'])])
-    dm = dm.assign(c1a = [np.array(x)/(np.array(t)) for x,t in zip(di['ica1a'],di['ii'])])
-    dm = dm.assign(c1b = [np.array(x)/(np.array(t)) for x,t in zip(di['ica1b'],di['ii'])])
-    dm = dm.assign(c1c = [np.array(x)/(np.array(t)) for x,t in zip(di['ica1c'],di['ii'])])
-    dm = dm.assign(c1d = [np.array(x)/(np.array(t)) for x,t in zip(di['ica1d'],di['ii'])])
-    dm = dm.assign(c1g = [np.array(x)/(np.array(t)) for x,t in zip(di['ica1g'],di['ii'])])
-    dm = dm.assign(c1i = [np.array(x)/(np.array(t)) for x,t in zip(di['ica1i'],di['ii'])])
-    dm = dm.assign(h1 = [np.array(x)/(np.array(t)) for x,t in zip(di['ihcn1'],di['ii'])])
-    dm = dm.assign(h2 = [np.array(x)/(np.array(t)) for x,t in zip(di['ihcn2'],di['ii'])])
-    dm = dm.assign(h3 = [np.array(x)/(np.array(t)) for x,t in zip(di['ihcn3'],di['ii'])])
-    dm = dm.assign(h4 = [np.array(x)/(np.array(t)) for x,t in zip(di['ihcn4'],di['ii'])])
-
-    dm['V'] = df.V_soma.apply(lambda x: x['cell_0'])
-
-    makedirs(f'{batchLabel}/currentScapes')
-    for indx in [0,56]: #dp.index:
-        vm = [(v-min(dm['V'][indx]))/(max(dm['V'][indx])-min(dm['V'][indx])) for v in dm['V'][indx]]
-
-        q=0
-        fr = make_subplots(cols=1, rows=3)
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = dm['V'][indx],name='',mode='lines',line=dict(width=1,color='black'),fill = 'none',fillcolor='slategray',stackgroup='one'),row=1,col=1)
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = np.abs(di['ina'][indx]),name=li[q],mode='lines',line=dict(width=1,color='indigo'),fill = 'tonexty',fillcolor=ci[q],stackgroup='one'),row=2,col=1)
-        q+=1
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = np.abs(di['ica1a'][indx]),name=li[q],mode='lines',line=dict(width=1,color='indigo'),fill = 'tonexty',fillcolor=ci[q],stackgroup='one'),row=2,col=1)
-        q+=1
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = np.abs(di['ica1b'][indx]),name=li[q],mode='lines',line=dict(width=1,color='indigo'),fill = 'tonexty',fillcolor=ci[q],stackgroup='one'),row=2,col=1)
-        q+=1
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = np.abs(di['ica1c'][indx]),name=li[q],mode='lines',line=dict(width=1,color='indigo'),fill = 'tonexty',fillcolor=ci[q],stackgroup='one'),row=2,col=1)
-        q+=1
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = np.abs(di['ica1d'][indx]),name=li[q],mode='lines',line=dict(width=1,color='indigo'),fill = 'tonexty',fillcolor=ci[q],stackgroup='one'),row=2,col=1)
-        q+=1
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = np.abs(di['ica1g'][indx]),name=li[q],mode='lines',line=dict(width=1,color='indigo'),fill = 'tonexty',fillcolor=ci[q],stackgroup='one'),row=2,col=1)
-        q+=1
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = np.abs(di['ica1i'][indx]),name=li[q],mode='lines',line=dict(width=1,color='indigo'),fill = 'tonexty',fillcolor=ci[q],stackgroup='one'),row=2,col=1)
-        q+=1
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = np.abs(di['ihcn1'][indx]),name=li[q],mode='lines',line=dict(width=1,color='indigo'),fill = 'tonexty',fillcolor=ci[q],stackgroup='one'),row=2,col=1)
-        q+=1
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = np.abs(di['ihcn2'][indx]),name=li[q],mode='lines',line=dict(width=1,color='indigo'),fill = 'tonexty',fillcolor=ci[q],stackgroup='one'),row=2,col=1)
-        q+=1
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = np.abs(di['ihcn3'][indx]),name=li[q],mode='lines',line=dict(width=1,color='indigo'),fill = 'tonexty',fillcolor=ci[q],stackgroup='one'),row=2,col=1)
-        q+=1
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = np.abs(di['ihcn4'][indx]),name=li[q],mode='lines',line=dict(width=1,color='indigo'),fill = 'tonexty',fillcolor=ci[q],stackgroup='one'),row=2,col=1)
-        q = 0
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = do['ikcna'][indx],name=lo[q],mode='lines',line=dict(width=1,color='black'),fill = 'tonexty',fillcolor=co[q],stackgroup='one'),row=3,col=1)
-        q+=1
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = do['ikcnc'][indx],name=lo[q],mode='lines',line=dict(width=1,color='black'),fill = 'tonexty',fillcolor=co[q],stackgroup='one'),row=3,col=1)
-        q+=1
-        fr.add_trace(go.Scatter(x = dm['t'][indx], y = do['ikcnj'][indx],name=lo[q],mode='lines',line=dict(width=1,color='black'),fill = 'tonexty',fillcolor=co[q],stackgroup='one'),row=3,col=1)
-        fr.update_xaxes(title_text="Time (ms)", row=3, col=1)
-        fr.update_yaxes(title_text='Membrane Potential <br> (V<sub>m</sub>) (mV)', row=1, col=1)
-        fr.update_yaxes(title_text='Inward Currents <br> (mA/cm<sup>2</sup>)', type = 'log',row=2, col=1)
-        fr.update_yaxes(title_text='Outward Currents <br> (mA/cm<sup>2</sup>)', type = 'log',row=3, col=1)
-        fr.update_layout(width=1100,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font),legend_traceorder='normal',title = f"Neuronal-Type ID: T{dm['cellnum'][indx]+1}",template = 'simple_white')
-        fr.update_annotations(font_size=font) # for sublot titles
-        pio.write_image(fr,f"{batchLabel}/currentScapes/{dm['simLabel'][indx]}.png",format='png',scale=10,width=1100,height=800, validate=True)
-    return
-
-# @author: sgupta
-# Plotting Current-Voltage curves
-def IV(df):
-    div=df[['cellnum','vc']].copy() #,'ina','ik','ica','ih','ipas'
-    # div.replace({},)
-    div['ina'] = df.ina.apply(lambda x: x['cell_0'] if x!={} else 0)
-    div['ik'] = df.ik.apply(lambda x: x['cell_0'] if x!={} else 0)
-    div['ica'] = df.ica.apply(lambda x: x['cell_0'] if x!={} else 0)
-    div['ih'] = df.ih.apply(lambda x: x['cell_0'] if x!={} else 0)
-    div['ipas'] = df.ipas.apply(lambda x: x['cell_0'] if x!={} else 0)
-    div = div.assign(imem=[np.array(n) + np.array(k)+np.array(c) + np.array(h)+np.array(p) for n,k,c,h,p in zip(div['ina'], div['ik'],div['ica'], div['ih'],div['ipas'])])
-    div['im']=div.imem.apply(lambda x: max(x) if abs(max(x))>=abs(min(x)) else min(x))
-
-    font=17
-    f = px.line(div,x = 'vc',y='im',color=div['cellnum'].astype(str), color_discrete_sequence = px.colors.qualitative.Set3, line_dash = div['cellnum'], markers=True, symbol = div['cellnum'].astype(str), labels={'vc': 'Voltage Clamp Levels (mV)','im':'Membrane Current (mA/cm<sup>2</sup>)','color':''},template="simple_white")
-    f.update_traces(line = dict(width=2), marker=dict(line = dict(width=1,color='indigo')))
-    f.update_layout(width=640,height=460,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font))
-    f.update(layout_showlegend=False)
-    pio.write_image(f,"iv.png",format='png',scale=5,width=640,height=460, validate=True)
-    # f.show()
-    return
-
 # @author: sgupta
 # Plotting firing frequency-current curves
 def fI(df):
@@ -439,25 +291,4 @@ def classification(df):
     dc.to_json('classification_test.json') 
 
     return
-
-# Plotting Figure 5A and B (currentscapes)
-# Currentscapes in the manuscript are plotted for 0.2 nA current clamp
-# Change indices in lines 217 and 248 to switch which cell/current clamp amperage is plotted. Current indices are for those in the manuscript
-
-#filename = '22aug25b_allData.json' #classification, Fig 5
-#readAllData(filename,dfonly = True)
-
-#batchLabel = 'currentscapes'
-#currentScapes(df,batchLabel)
-# outputs: {batchLabel}/currentScapes/{dm['simLabel'][indx]}.png
-
-# Plotting Figure 5D (firing frequency-current curve)
-#fI(df)
-# outputs R_fi.png
-
-# Plotting Figure 5C (current-voltage curve)
-#filename = '22aug25d_allData.json' #classification, Fig 5
-#readAllData(filename,dfonly = True)
-#IV(df)
-# outputs: iv.png
 
