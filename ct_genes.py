@@ -30,8 +30,12 @@ color =mcp.gen_color(cmap="viridis_r",n=uni)
 thr = dfth['Expression Threshold'].tolist()
 norm = [(float(t)-float(thr[0])) / (float(thr[-1])-float(thr[0])) for t in thr]
 cols = plt.cm.jet(norm)
+
+# legend label
+a = 'C\u209c \u2264 '
 for i,j in enumerate(thr):
-	thr[i]=f'$C_t \leq {j}$'
+	b = f'{j}'
+	thr[i]=f"{a}{b}"
 
 d = dfth.drop('Expression Threshold',axis=1)
 
