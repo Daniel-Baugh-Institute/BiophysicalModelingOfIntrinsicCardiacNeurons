@@ -177,10 +177,10 @@ def classify_sequence(dc):
             elif rseq.size == 3:
                 if rseq[0][1] == 1:
                     if rseq[0][2] == 0: # pbp
-                        seq_cat[index] = 2
+                        seq_cat[index] = 0 # combined phasic and burst into phasic
                         pbp_idx.append(index*5)
                     elif rseq[0][2] == 2: # pbt
-                        seq_cat[index] = 7
+                        seq_cat[index] = 6 # combined phasic and burst into phasic
                     else:
                         print('No category at')
                         print(index)
@@ -189,7 +189,8 @@ def classify_sequence(dc):
                         seq_cat[index] = 8
                     elif rseq[0][2] == 1: # ptb
                         seq_cat[index] = 7
-                        #ptb_idx.append(index*5)
+                        print('PTB')
+                        print(index*5)
                     else:
                         print('No category at')
                         print(index)
@@ -240,8 +241,6 @@ def classify_sequence(dc):
 
 # load data
 dc = pd.read_json("C:\\Users\\mmgee\\Downloads\\RAGP SODA upload\\Primary\\classification.json")
-#dc_filtered = dc[dc['amp']>= 0.1]
-print(dc.head(10))
 
 # Run sequence classification
 classify_sequence(dc)
