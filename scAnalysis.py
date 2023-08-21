@@ -268,27 +268,27 @@ def classification(df):
 
     #Classification
 
-    dc['Subthreshold'] = dc.scnt.apply(lambda x: 2**q if x<1 else np.nan)
-    dc['Phasic'] = dc.scnt.apply(lambda x: 2**q if 0<x<=1 else np.nan)
-    dc['Burst'] = dc[['spkend','scnt','subthrCross']].apply(lambda x: 2**q if ((x.spkend<=(stim['delay']+((stimend+5)/4))) and (1<x.scnt<=4) and (x.scnt == x.subthrCross/2)) else np.nan, axis=1)
-    dc['Tonic'] = dc.spkt.apply(lambda x: 2**q if len(x)>4 and stim['delay']<=x[-1]<=stimend+5 else np.nan)
-    dc['Post-stimulus Firing'] = dc.spkend.apply(lambda x: 2**q if stimend+5<=x<=data[list(data)[0]]['simConfig']['duration'] else np.nan)
-    dc['Block'] = dc[['Vlist','scnt','rmpCross','mxisi','subthrCross']].apply(lambda x: 2**q if (((-40<= max(x.Vlist[df['t'][0].index(init):df['t'][0].index(end)])<-10) and (x.scnt>=1) and (x.rmpCross>=2)) or ((x.scnt>=1) and ((2*x.scnt)/x.subthrCross < 1)) or (x.mxisi>=120)) else np.nan, axis =1)
-    dc['Incomplete Repolarisation'] = dc[['scnt','rmpCross']].apply(lambda x: 2**q if ((x.rmpCross==1) and (x.scnt==1)) else np.nan, axis =1)
-    dc['na'] = df['na'] 
+    dc['Subthreshold'] = dc.scnt.apply(lambda x: 1 if x<1 else np.nan)
+    dc['Phasic'] = dc.scnt.apply(lambda x: 1 if 0<x<=1 else np.nan)
+    dc['Burst'] = dc[['spkend','scnt','subthrCross']].apply(lambda x: 1 if ((x.spkend<=(stim['delay']+((stimend+5)/4))) and (1<x.scnt<=4) and (x.scnt == x.subthrCross/2)) else np.nan, axis=1)
+    dc['Tonic'] = dc.spkt.apply(lambda x: 1 if len(x)>4 and stim['delay']<=x[-1]<=stimend+5 else np.nan) 
+    dc['na'] = df['ina'] 
+    dc['t'] = df['t']
 
-    # dclass = dc[['amp','cellnum','Subthreshold','Phasic','Burst','Tonic','Post-stimulus Firing','Block','Incomplete Repolarisation']].copy()
-    
-    #sanity check: any unclassified entries?
-    d = dclass[subtypes]
-    d['sum'] = d.sum(axis = 1,numeric_only=True)
-    d.loc[d['sum']==0]
 
     # Added by mmgee
-    dc = dc.sort_values(['cellnum', 'na', 'phi', 'amp'], ascending=[True, True, True, True])
-    print(dc.columns)
-    dc.drop(['spkt','phi','Vrmp','spkend','rmpCross'],axis=1)
-    dc.to_json('classification_test.json') 
+    dc = dc.sort_values(['cellnum', 'amp'], ascending=[True, True])
+    dc = dc[dc['amp']>= 0.1]
+    dc.to_json('classification.json') 
 
     return
+
+
+# Figure 4 classification analysis
+filename = '//lustre//ogunnaike//users//2420//matlab_example//ragp//classification//22aug25b_allData.json'
+readAllData(filename,dfonly = True)
+classification(df)
+
+# Figure 5 plotting (firing frequency-current curve)
+fI(df)
 
