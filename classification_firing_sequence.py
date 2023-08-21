@@ -22,12 +22,12 @@ from matplotlib_scalebar.scalebar import ScaleBar
 
 # Function to plot time vs voltage curves
 def plotVm(df,batchLabel,idx):
-    makedirs('vmPlots')
+    #makedirs('vmPlots')
     font = 15
     f, ax = plt.subplots()
     plt.axis("off")
     offset = 0
-    for indx in idx: #df.index:
+    for indx in idx:
         y = df['Vlist'][indx]
         y = np.array(y)
         y = 3*(offset)+y # add offset for ease of viewing
@@ -40,10 +40,11 @@ def plotVm(df,batchLabel,idx):
     plt.vlines(900.0,-20,-10,label="10 mV",colors=['black'])
     plt.text(865,-25,'100 ms',fontsize=font)
     plt.text(725,-18,'10 mV',fontsize=font)
-    plt.title(f"Tonic, Neuronal-Type ID: T{df['cellnum'][indx]+1}", fontsize=font)
+    plt.title(f"Neuronal-Type ID: T{df['cellnum'][indx]+1}", fontsize=font)
     plt.tick_params(axis='both',labelsize=font)
     plt.legend(['0.1','0.3','0.5'])
     plt.savefig(f"vmPlots/{batchLabel}.png",dpi=300,bbox_inches='tight')
+    plt.show()
     plt.close()
     return
 
@@ -169,6 +170,7 @@ def classify_sequence(dc):
                         print('PT')
                         print(index*5)
                         index_pt = index_pt + 1
+                        
                 else:
                     print('No category at')
                     print(index)
@@ -218,9 +220,10 @@ def classify_sequence(dc):
 
     print(count_col)
     df_seq['Count'] = count_col
-    df_seq = df_seq[df_seq['Count'] > 40] # Change this threshold to plot only commonly occuring firing sequences
+    df_seq = df_seq[df_seq['Count'] > 2] # Change this threshold to plot only commonly occuring firing sequences
     df_seq = df_seq.sort_values(by = 'Count',ascending=False)
-    df_seq = df_seq.drop([16]) # drop block firing types (there are 63 of them)
+    print(df_seq.head(5))
+    #df_seq = df_seq.drop([16]) # drop block firing types (there are 63 of them)
     print("Dataframe size:", df_seq.shape)
     df_seq.to_json('df_seq.json')
 
@@ -236,36 +239,40 @@ def classify_sequence(dc):
     return
 
 # load data
-dc = pd.read_json("classification_test.json")
+dc = pd.read_json("C:\\Users\\mmgee\\Downloads\\RAGP SODA upload\\Primary\\classification.json")
+#dc_filtered = dc[dc['amp']>= 0.1]
+print(dc.head(10))
 
 # Run sequence classification
 classify_sequence(dc)
 
-makedirs('vmPlots')
+#makedirs('vmPlots')
 # Phasic only plots
+# 0.062
 # print(dc.head(5)) # Row numbers for example voltage traces are printed out in the script. To determine the indices of those row numbers, uncomment this line to print them out
-idx = [1, 833,1665]
+idx = [936,1144,1352]
 df = dc.loc[idx,['Vlist','t','cellnum']]
 batchLabel = "Phasic" #
 plotVm(df,batchLabel,idx)
 
+
 # Tonic only plots
-#print(dc.iloc[2000:2006])
-idx = [201,1033,1865]
+#print(dc.iloc[250:255])
+idx = [986,1194,1402]
 df = dc.loc[idx,['Vlist','t','cellnum']]
 batchLabel = "Tonic" #
 plotVm(df,batchLabel,idx)
 
 # Phasic-tonic plots
-#print(dc.iloc[145:150])
-idx = [2093,2925,3757]
+#print(dc.iloc[255:260])
+idx = [937,1145,1353] 
 df = dc.loc[idx,['Vlist','t','cellnum']]
 batchLabel = "Phasic-Tonic" #
 plotVm(df,batchLabel,idx)
 
 # Tonic-phasic
-#print(dc.iloc[1990:1996])
-idx = [10597,11429,12261]
+#print(dc.iloc[250:255])
+idx = [987,1195,1403]
 df = dc.loc[idx,['Vlist','t','cellnum']]
 batchLabel = "Tonic-Phasic" #
 plotVm(df,batchLabel,idx)
