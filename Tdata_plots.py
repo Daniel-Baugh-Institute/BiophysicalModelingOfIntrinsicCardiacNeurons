@@ -88,7 +88,7 @@ ty = 14.8
 txt1 = 'Neuronal-Type ID: T1'
 txt2 = 'T104'
 cs = 'binary'
-phys =["HCN3 (h)","HCN1 (h)","Cav 3.1 (T)","Cav 2.1 (P/Q)","Cav 1.3 (L)","HCN4 (h)","Cav 1.2 (L)","Cav 3.3 (T)","Kv 1.1 (Kdr)","Kir 3.1 (Kdr)","Cav 2.2 (N)","HCN2 (h)","Kv 3.1 (Kdr)","Nav 1.1 (Naf)"]
+phys =["HCN3 (h)","HCN1 (h)","Cav 3.1 (T)","Cav 2.1 (P/Q)","Cav 1.3 (L)","HCN4 (h)","Cav 1.2 (L)","Cav 3.3 (T)","Kv 1.1 (Kdr)","Kir 3.1 (Kir)","Cav 2.2 (N)","HCN2 (h)","Kv 3.1 (Kdr)","Nav 1.1 (Naf)"]
 
 plotHeatmap(dfrm2l,gr,phys,'red',wr,tx1, txe, ty,txt1,txt2,cs)
 
