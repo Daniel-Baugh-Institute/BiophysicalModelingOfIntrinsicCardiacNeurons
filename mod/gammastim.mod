@@ -126,7 +126,7 @@ FUNCTION invl(mean (ms)) (ms) {
 }
 
 FUNCTION erand() {
-LOCAL x,v,u,break
+LOCAL x,w,u,break
 VERBATIM
     if (_p_donotuse) {
         /*
@@ -134,22 +134,22 @@ VERBATIM
         : each instance. However, the corresponding hoc Random
         : distribution MUST be set to Random.negexp(1)
         */
-    double x,v,u;
+    double x,w,u;
 #if !NRNBBCORE
         if (_ran_compat == 2) {
             nrnran123_State* state = reinterpret_cast<nrnran123_State*>(_p_donotuse);
             //_lerand = nrnran123_negexp(reinterpret_cast<nrnran123_State*>(_p_donotuse));
             while(true) {
                 x = nrnran123_normal(state);
-                v = (1.0 + gammac*x)*(1.0 + gammac*x)*(1.0 + gammac*x);
-                if(v<0) continue;
+                w = (1.0 + gammac*x)*(1.0 + gammac*x)*(1.0 + gammac*x);
+                if(w<0) continue;
                 u = nrnran123_dblpick(state);
                 if(u < 1.0 - (0.0331*x)*(0.0331*x)*(0.0331*x)*(0.0331*x) ||
-                    log(u) < 0.5*x*x + gammad*(1.0 - v + log(v))) {
+                    log(u) < 0.5*x*x + gammad*(1.0 - w + log(w))) {
                     if(k < 1)
-                        return gammad*v*pow(nrnran123_dblpick(state),1.0/k);
+                        return gammad*w*pow(nrnran123_dblpick(state),1.0/k);
                     else
-                        return gammad*v;
+                        return gammad*w;
                 }
             }
 
@@ -161,15 +161,15 @@ VERBATIM
         nrnran123_State* state = reinterpret_cast<nrnran123_State*>(_p_donotuse);
         while(true) {
             x = nrnran123_normal(state);
-            v = (1.0 + gammac*x)*(1.0 + gammac*x)*(1.0 + gammac*x);
-            if(v<0) continue;
+            w = (1.0 + gammac*x)*(1.0 + gammac*x)*(1.0 + gammac*x);
+            if(w<0) continue;
             u = nrnran123_dblpick(state);
             if( (u < 1.0 - (0.0331*x)*(0.0331*x)*(0.0331*x)*(0.0331*x)) ||
-                (log(u) < 0.5*x*x + gammad*(1.0 - v + log(v)))) {
+                (log(u) < 0.5*x*x + gammad*(1.0 - w + log(w)))) {
                 if(k < 1.0)
-                    return gammad*v*pow(nrnran123_dblpick(state),1.0/k);
+                    return gammad*w*pow(nrnran123_dblpick(state),1.0/k);
                 else
-                    return gammad*v;
+                    return gammad*w;
             }
         }
 #endif
@@ -190,15 +190,15 @@ ENDVERBATIM
     break = true 
     while(break) {
         x = normrand(0,1) 
-        v = (1.0 + gammac*x)*(1.0 + gammac*x)*(1.0 + gammac*x)
-        if(v>0) {
+        w = (1.0 + gammac*x)*(1.0 + gammac*x)*(1.0 + gammac*x)
+        if(w>0) {
             u = scop_random()
             if((u < 1.0 - (0.0331*x)*(0.0331*x)*(0.0331*x)*(0.0331*x)) ||
-               (log(u) < 0.5*x*x + gammad*(1.0 - v + log(v)))) {
+               (log(u) < 0.5*x*x + gammad*(1.0 - w + log(w)))) {
                 if(k < 1) {
-                    erand = gammad*v*pow(scop_random(), 1.0/k)
+                    erand = gammad*w*pow(scop_random(), 1.0/k)
                 } else {
-                    erand = gammad*v
+                    erand = gammad*w
                 }
                 break = false
             }
