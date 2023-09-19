@@ -288,6 +288,28 @@ elif cfg.stim == "network" and cfg.phasic_split == 0:
                 ),
             }
 
+        elif hasattr(cfg, 'NADurations'):
+            netParams.popParams[f"NA{idx}"] = {
+                "cellModel": "InhomStim",
+                "type": "NetStim",
+                "noise": cfg.NANoise,
+                "number": max(10_000, 5 * cfg.duration),
+                "numCells": int(
+                    np.ceil(
+                        cfg.NAConvergence
+                        * netParams.popParams[f"cluster{idx}_M"]["numCells"]
+                        / cfg.NADivergence
+                    )
+                ),
+            }
+            period = 0
+            for i,(dur,rate) in enumerate(zip(cfg.NADurations, cfg.NARates)):
+                netParams.popParams[f"NA{idx}"][f"t{i}"] = dur
+                netParams.popParams[f"NA{idx}"][f"r{i}"] = rate
+                period += dur
+            netParams.popParams[f"NA{idx}"]['period'] = period
+
+
         else:
             netParams.popParams[f"NA{idx}"] = {
                 "cellModel": "NetStim",

@@ -5,10 +5,10 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 5_000
+cfg.duration = 30_000
 cfg.dt = 0.01
 cfg.recordStep = 0.1
-cfg.simLabel = "10jul23test"
+cfg.simLabel = "14aug23test"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
@@ -18,11 +18,11 @@ cfg.matched_feedback = True
 cfg.feedback_scale = 1.0
 cfg.nTEBins = {
     "DMV0": {
-        "cluster0_P": int(cfg.duration / 42.6),
-        "cluster0_M": int(cfg.duration / 27.4),
+        "cluster0_P": 9.25,
+        "cluster0_M": 32.12,
     },
-    "NA0": {"cluster0_M": int(cfg.duration / 27.4)},
-    "cluster0_P": {"cluster0_M": int(cfg.duration / 7.6)},
+    "NA0": {"cluster0_M": 8.62},
+    "cluster0_P": {"cluster0_M": 23.56},
 }
 
 cfg.stim = "network"
@@ -124,7 +124,7 @@ cfg.phasic_cells = [
     92,
     102,
 ]
-cfg.seed = 1
+cfg.seed = 3
 
 # cell size
 cfg.sze = 21
@@ -169,6 +169,9 @@ if cfg.drive == "phys":
     interval = scale + loc
     cfg.NARate = 1000 / interval
     cfg.NANoise = 1.0 - loc / interval
+    cfg.NADurations =  [1.6e3, 1.0e3, 0.25e3, 1.15e3, 0]
+    cfg.NARates = [1.1063846622294002, 1.8796522412694383, 4.772142618640775, 1.5187011273138138, 0]
+    cfg.NARates = [1,0,0,0]
 
 elif cfg.drive == "chemoreflex":
     # NA Chemoreflex drive -- gamma distributed ISIs
@@ -226,31 +229,31 @@ if cfg.phasic_split > 0:
 
 else:
     # phasic connections
-    cfg.DMV_P_weight = 0.006262447766727022
+    cfg.DMV_P_weight = 0.00175083198746365 
     cfg.DMV_P_weight_scale = 1.0
-    cfg.DMV_P_weight_var = 9.106163425174792
+    cfg.DMV_P_weight_var = 1.0 
     cfg.DMV_P_delay = 5
-    cfg.P_P_prob = 0.09636272716083877
-    cfg.P_P_weight = 0.0036849217793258485
+    cfg.P_P_prob = 0.3
+    cfg.P_P_weight = 0.00029474078465396673
     cfg.P_P_weight_scale = 1.0 
-    cfg.P_P_weight_var = 5.10194566836602
+    cfg.P_P_weight_var = 1.0
     cfg.P_P_delay = 5
 
     cfg.P_M_prob = 0.3
-    cfg.P_M_weight = 0.9139191207900156
+    cfg.P_M_weight =  0.000237462599185915
     cfg.P_M_weight_scale = 1.0
-    cfg.P_M_weight_var = 0.05682089969970895
+    cfg.P_M_weight_var = 1.0
     cfg.P_M_delay = 5
 
     # mixed connections
-    cfg.NA_M_weight = 0.00477066435901985 
-    cfg.NA_M_weight_var = 0.001
+    cfg.NA_M_weight = 0.009348577762565058 
+    cfg.NA_M_weight_var = 1.0 
     cfg.NA_M_weight_scale = 1.0
     cfg.NA_M_delay = 5
     cfg.M_M_prob = [0.3, 0.3]
-    cfg.M_M_weight = 0.14770056359818068
+    cfg.M_M_weight = 5.222894963372222e-06 
     cfg.M_M_weight_scale = 1.0
-    cfg.M_M_weight_var = 0.019784040899752355
+    cfg.M_M_weight_var = 1.0
 
     cfg.M_M_delay = [5, 5]
 
