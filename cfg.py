@@ -5,17 +5,15 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 30_000
+cfg.duration = 10_000
 cfg.dt = 0.01
 cfg.recordStep = 0.1
-cfg.simLabel = "14aug23test"
+cfg.simLabel = "18sep23test"
 cfg.saveFolder = cfg.simLabel
 cfg.verbose = False
 cfg.saveJson = True
 cfg.recordStim = True
 cfg.log_weights = False  # all weights are log scaled -- to improve search
-cfg.matched_feedback = True
-cfg.feedback_scale = 1.0
 cfg.nTEBins = {
     "DMV0": {
         "cluster0_P": 9.25,
@@ -219,7 +217,7 @@ if cfg.phasic_split > 0:
     cfg.PSAN_M_delay = [5, 5]
 
     # mixed connections
-    cfg.NA_M_weight = 0.00027972942965111996
+    cfg.NA_M_weight = 0 #0.00027972942965111996
     # cfg.NA_M_weight_var = 1e-3  # 1.0
     cfg.NA_M_delay = 5
     cfg.M_M_prob = [0.3, 0.3]
@@ -229,24 +227,25 @@ if cfg.phasic_split > 0:
 
 else:
     # phasic connections
-    cfg.DMV_P_weight = 0.00175083198746365 
+    # min value that produced firing in disconnected network
+    cfg.DMV_P_weight = 4.19e-5 #4.1970446534750974e-05
     cfg.DMV_P_weight_scale = 1.0
     cfg.DMV_P_weight_var = 1.0 
     cfg.DMV_P_delay = 5
     cfg.P_P_prob = 0.3
-    cfg.P_P_weight = 0.00029474078465396673
+    cfg.P_P_weight = 0 #0.00029474078465396673
     cfg.P_P_weight_scale = 1.0 
     cfg.P_P_weight_var = 1.0
     cfg.P_P_delay = 5
 
     cfg.P_M_prob = 0.3
-    cfg.P_M_weight =  0.000237462599185915
+    cfg.P_M_weight = 0 #0.000237462599185915
     cfg.P_M_weight_scale = 1.0
     cfg.P_M_weight_var = 1.0
     cfg.P_M_delay = 5
 
     # mixed connections
-    cfg.NA_M_weight = 0.009348577762565058 
+    cfg.NA_M_weight = 0.003159 #0.0031593261150747 
     cfg.NA_M_weight_var = 1.0 
     cfg.NA_M_weight_scale = 1.0
     cfg.NA_M_delay = 5
