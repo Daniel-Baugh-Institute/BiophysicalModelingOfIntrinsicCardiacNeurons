@@ -42,9 +42,7 @@ PARAMETER {
     r1          = 8 (Hz)   <1e-9, 1e9> 
     t2          = 600 (ms) <0, 1e9> 
     r2          = 4 (Hz)   <1e-9, 1e9> 
-    t3          = 800 (ms) <0, 1e9> 
     r3          = 6 (Hz)   <1e-0, 1e9>      
-    r4          = 10 (Hz)  <1e-9, 1e9>    
 }
 
 ASSIGNED {
@@ -125,10 +123,8 @@ FUNCTION rate(t) {
         rate = r1
     } else if (ptime < t2) {
         rate = r2
-    }  else if (ptime < t3) {
+    }  else {
         rate = r3
-    } else {
-        rate = r4
     }
 }
 
