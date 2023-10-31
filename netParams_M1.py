@@ -288,7 +288,7 @@ elif cfg.stim == "network" and cfg.phasic_split == 0:
                 ),
             }
 
-        elif hasattr(cfg, 'NADurations'):
+        elif hasattr(cfg, "NADurations"):
             netParams.popParams[f"NA{idx}"] = {
                 "cellModel": "InhomStim",
                 "type": "NetStim",
@@ -303,12 +303,11 @@ elif cfg.stim == "network" and cfg.phasic_split == 0:
                 ),
             }
             period = 0
-            for i,(dur,rate) in enumerate(zip(cfg.NADurations, cfg.NARates)):
+            for i, (dur, rate) in enumerate(zip(cfg.NADurations, cfg.NARates)):
                 netParams.popParams[f"NA{idx}"][f"t{i}"] = dur
                 netParams.popParams[f"NA{idx}"][f"r{i}"] = rate
                 period += dur
-            netParams.popParams[f"NA{idx}"]['period'] = period
-
+            netParams.popParams[f"NA{idx}"]["period"] = period
 
         else:
             netParams.popParams[f"NA{idx}"] = {

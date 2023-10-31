@@ -149,7 +149,7 @@ def batch():
         fitnessR += abs(rateM - target["mean"]) / target["var"]
         print(f"fitness, {fitnessN}, {fitnessR}, {1000*Pks}, {1000*Mks}")
         return min(
-            fitnessN + 1000*fitnessR + 1000 * (Pks + Mks), kwargs["maxFitness"]
+            fitnessN + 1000 * fitnessR + 1000 * (Pks + Mks), kwargs["maxFitness"]
         )
 
     # create Batch object with paramaters to modify, and specifying files to use

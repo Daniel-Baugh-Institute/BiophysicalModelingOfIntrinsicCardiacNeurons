@@ -11,7 +11,7 @@ def batch():
     params = specs.ODict()
     params["DMV_P_weight"] = [1e-6, 0.01]
     params["NA_M_weight"] = [1e-6, 0.01]
-    params["seed"] = list(range(5,15))  # indexed
+    params["seed"] = list(range(5, 15))  # indexed
     b = Batch(params=params, cfgFile="cfg.py", netParamsFile="netParams_M1.py")
     # Set output folder, grid method (all param combinations), and run configuration
     b.batchLabel = "03oct23disconnect"

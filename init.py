@@ -107,7 +107,6 @@ def getTimes(nTE=None, tau=None):
 def fi(cells):
     """set steady state RMP for 1 cell"""
     for c in cells:
-
         # skip artificial cells
         if not hasattr(c.secs, "soma"):
             continue
@@ -133,7 +132,6 @@ def fi(cells):
 
 
 def simSim(np0, sc0):
-
     sim.create(netParams=np0, simConfig=sc0)
     fih = [h.FInitializeHandler(2, lambda: fi(sim.net.cells))]
     print("BEFORE simulate")

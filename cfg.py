@@ -23,8 +23,8 @@ cfg.nTEBins = {
     "cluster0_P": {"cluster0_M": 7.48},
 }
 
-cfg.nTERange = [5,100,95*4+1]
-cfg.tauRange = [5,250,245*2+1]
+cfg.nTERange = [5, 100, 95 * 4 + 1]
+cfg.tauRange = [5, 250, 245 * 2 + 1]
 
 cfg.stim = "network"
 cfg.phasic_ratio = 19 / 32  # from McAllen et al 2011
@@ -170,8 +170,13 @@ if cfg.drive == "phys":
     interval = scale + loc
     cfg.NARate = 1000 / interval
     cfg.NANoise = 1.0 - loc / interval
-    cfg.NADurations =  [1.6e3, 1.0e3, 0.25e3, 1.15e3]
-    cfg.NARates = [1.1063846622294002, 1.8796522412694383, 4.772142618640775, 1.5187011273138138]
+    cfg.NADurations = [1.6e3, 1.0e3, 0.25e3, 1.15e3]
+    cfg.NARates = [
+        1.1063846622294002,
+        1.8796522412694383,
+        4.772142618640775,
+        1.5187011273138138,
+    ]
 
 elif cfg.drive == "chemoreflex":
     # NA Chemoreflex drive -- gamma distributed ISIs
@@ -219,7 +224,7 @@ if cfg.phasic_split > 0:
     cfg.PSAN_M_delay = [5, 5]
 
     # mixed connections
-    cfg.NA_M_weight = 0 #0.00027972942965111996
+    cfg.NA_M_weight = 0  # 0.00027972942965111996
     # cfg.NA_M_weight_var = 1e-3  # 1.0
     cfg.NA_M_delay = 5
     cfg.M_M_prob = [0.3, 0.3]
@@ -230,29 +235,29 @@ if cfg.phasic_split > 0:
 else:
     # phasic connections
     # min value that produced firing in disconnected network
-    cfg.DMV_P_weight = 6e-5 #4.75e-5 #4.19e-5 #4.1970446534750974e-05
+    cfg.DMV_P_weight = 6e-5  # 4.75e-5 #4.19e-5 #4.1970446534750974e-05
     cfg.DMV_P_weight_scale = 1.0
-    cfg.DMV_P_weight_var = 1.0 
+    cfg.DMV_P_weight_var = 1.0
     cfg.DMV_P_delay = 5
     cfg.P_P_prob = 0.3
     cfg.P_P_weight = 0.001
-    cfg.P_P_weight_scale = 1.0 
+    cfg.P_P_weight_scale = 1.0
     cfg.P_P_weight_var = 1.0
     cfg.P_P_delay = 5
 
     cfg.P_M_prob = 0.3
-    cfg.P_M_weight = 0 #0.001 #0.0025
+    cfg.P_M_weight = 0  # 0.001 #0.0025
     cfg.P_M_weight_scale = 1.0
     cfg.P_M_weight_var = 1.0
     cfg.P_M_delay = 5
 
     # mixed connections
-    cfg.NA_M_weight = 0.004 #0.00315 #0.0031593261150747 
-    cfg.NA_M_weight_var = 1.0 
+    cfg.NA_M_weight = 0.004  # 0.00315 #0.0031593261150747
+    cfg.NA_M_weight_var = 1.0
     cfg.NA_M_weight_scale = 1.0
     cfg.NA_M_delay = 5
     cfg.M_M_prob = [0.3, 0.3]
-    cfg.M_M_weight = 0.0001 
+    cfg.M_M_weight = 0.0001
     cfg.M_M_weight_scale = 1.0
     cfg.M_M_weight_var = 1.0
 
