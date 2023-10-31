@@ -65,6 +65,19 @@ def readRates(dataFolder, batchLabel, paramFile="params.csv"):
             data[indexComb][k] = v
         for lab, val in zip(labelList, paralist):
             data[indexComb][lab] = val
+
+        # find bin size for max nTE
+        ts = pd.read_csv(f"{dataFolder}/{f[:-8]}_nTE_timescales.csv")
+        bins = [float(i) for i in ts.columns[2:]]
+        nTE_timescales = {}
+        for _, r in ts.iterrows():
+            idx = np.argmax(r[2:])
+            if r['source'] in nTE_timescales:
+                nTE_timescales[r['source']][r[' target']] = (bins[idx],r[idx+2])
+            else:
+                nTE_timescales[r['source']] = {r[' target']: (bins[idx],r[idx+2])}
+        data[indexComb]['nTE_timescale'] = nTE_timescales
+
     df = pd.DataFrame(data).T
     return df
 

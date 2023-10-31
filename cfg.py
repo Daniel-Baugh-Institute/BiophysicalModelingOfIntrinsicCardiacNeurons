@@ -5,7 +5,7 @@ from netpyne.specs import simConfig
 cfg = specs.SimConfig()
 
 # simulation configuration
-cfg.duration = 60_000
+cfg.duration = 28_000
 cfg.dt = 0.01
 cfg.recordStep = 0.1
 cfg.simLabel = "22sep23long"
@@ -235,13 +235,13 @@ else:
     cfg.DMV_P_weight_var = 1.0 
     cfg.DMV_P_delay = 5
     cfg.P_P_prob = 0.3
-    cfg.P_P_weight = 0.005
+    cfg.P_P_weight = 0.001
     cfg.P_P_weight_scale = 1.0 
     cfg.P_P_weight_var = 1.0
     cfg.P_P_delay = 5
 
     cfg.P_M_prob = 0.3
-    cfg.P_M_weight = 0.005
+    cfg.P_M_weight = 0 #0.001 #0.0025
     cfg.P_M_weight_scale = 1.0
     cfg.P_M_weight_var = 1.0
     cfg.P_M_delay = 5
@@ -252,7 +252,7 @@ else:
     cfg.NA_M_weight_scale = 1.0
     cfg.NA_M_delay = 5
     cfg.M_M_prob = [0.3, 0.3]
-    cfg.M_M_weight = 0.005 
+    cfg.M_M_weight = 0.0001 
     cfg.M_M_weight_scale = 1.0
     cfg.M_M_weight_var = 1.0
 

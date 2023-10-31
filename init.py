@@ -170,14 +170,15 @@ def simSim(np0, sc0):
         with open(f"{sim.cfg.filename}_nTE_timescales.csv", "w") as f:
             sizes = np.linspace(*cfg.nTERange)
             _, nTE = getTimes(nTE=sizes)
-            f.write("source, target, ")
+            f.write("source, target")
             for sz in sizes:
-                f.write(f"{sz}, ")
+                f.write(f", {sz}")
+            f.write("\n")
             for src, dat in nTE.items():
                 for tar, val in dat.items():
-                    f.write(f"{src}, {tar}, ")
+                    f.write(f"{src}, {tar}")
                     for v in val:
-                        f.write(f"{v}, ")
+                        f.write(f", {v}")
                     f.write("\n")
     if hasattr(cfg, "tauRange"):
         with open(f"{sim.cfg.filename}_tau_timescales.csv", "w") as f:
