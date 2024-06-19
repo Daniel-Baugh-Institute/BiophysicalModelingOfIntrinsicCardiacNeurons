@@ -8,13 +8,18 @@ Created in April 2021
 from netpyne import specs, sim
 import numpy as np
 import csv
+
+#Things to change
+cellfile = 'red_tdata_all_15.csv'
+
+
 netParams = specs.NetParams()
 try:
     from __main__ import cfg  # import SimConfig object with params from parent module
 except:
     from cfg import cfg  # if no simConfig in parent module, import directly from cfg.py:cfg
 
-netParams.defaultThreshold = -10 #defining threshold for spike detection
+netParams.defaultThreshold = -10 # defining threshold for spike detection
 
 # order in genemod MUST be preserved to match cell_identities channel order
 genemod = {'ch_Hcn3_cp11':{'gHCN3bar': cfg.h3},  'ch_Hcn1_cp9':{'gHCN1bar': cfg.h1},
@@ -25,20 +30,20 @@ genemod = {'ch_Hcn3_cp11':{'gHCN3bar': cfg.h3},  'ch_Hcn1_cp9':{'gHCN1bar': cfg.
             'ch_Cacna1b_cp6':{'gCav2_2bar': cfg.c1b},  'ch_Hcn2_cp10':{'gHCN2bar': cfg.h2},            
             'ch_Kcnc1_rothman':{'gbar': cfg.kc, 'phi':cfg.phi}, 'ch_Scn1a_cp35':{'gNabar': cfg.na}  }     
 
-cell_identities = np.bool_(np.transpose(np.genfromtxt('red_tdata_all_15_m2l.csv', delimiter=',')))
+cell_identities = np.bool_(np.transpose(np.genfromtxt(cellfile, delimiter=','))) # was 15_m2l.csv before
 cell = cell_identities[cfg.cellnum]
 
 ## Cell parameters/rules
 CEL = {'secs': {}}
 
-CEL['secs']['soma'] = {'geom': {'diam': cfg.sze, 'L': cfg.sze, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 0.00078, 'e': -65} }}
+CEL['secs']['soma'] = {'geom': {'diam': cfg.sze, 'L': cfg.sze, 'Ra': 35.4, 'cm':1}, 'mechs':  {'pas' : {'g': 0.00078, 'e': -65} }} # Ra: 35.4, 'e': -65
                                                                             
 
 for mod,onoff in zip(genemod,cell):
     if onoff:
         CEL['secs']['soma']['mechs'][mod]=genemod[mod]
 netParams.cellParams['CEL'] = CEL
-netParams.popParams['U'] = {'cellType': 'CEL', 'numCells': 1}
+netParams.popParams['U'] = {'cellType': 'CEL', 'numCells': 1} # leave this as 1
 
 if cfg.stim == 'IClamp':
     netParams.stimSourceParams['iclamp'] = {'type': 'IClamp', 'amp': cfg.amp, 'dur': 400, 'delay': 100} 
