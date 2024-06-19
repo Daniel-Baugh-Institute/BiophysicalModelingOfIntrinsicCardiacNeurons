@@ -4,7 +4,8 @@ Created in April 2021
 
 @author: sgupta
 """
-
+import os
+os.system('nrnivmodl mod')
 from netpyne import sim
 from neuron import h
 
