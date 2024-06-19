@@ -8,6 +8,13 @@ Created in April 2021
 import sys, os
 from netpyne import specs
 from netpyne.specs import simConfig
+
+# Things to change
+savefoldername = '12jun24'
+num_cells = 104
+
+
+
 cfg = specs.SimConfig() 
 
 cfg.hParams = {'celsius':35, 'v_init':-61}
@@ -21,6 +28,7 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
                     'ica': {'sec': 'soma', 'loc': 0.5,'var': 'ica'},
                     'ik': {'sec': 'soma', 'loc': 0.5,'var': 'ik'},
                     'ipas':{'sec': 'soma', 'loc': 0.5,'var': 'i_pas'},
+                     'epas':{'sec': 'soma', 'loc': 0.5,'var': 'e_pas'},
                     'ica1a':{'sec': 'soma', 'loc': 0.5,'var': 'ica1a_ch_Cacna1a_cp5'},
                     'ica1b':{'sec': 'soma', 'loc': 0.5,'var': 'ica1b_ch_Cacna1b_cp6'},
                     'ica1c':{'sec': 'soma', 'loc': 0.5,'var': 'ica1c_ch_Cacna1c_cp3'},
@@ -38,7 +46,7 @@ cfg.recordTraces = {'V_soma':{'sec': 'soma','loc': 0.5,'var': 'v'},
 cfg.stim = 'IClamp' #'IClamp' 'VClamp' 
 cfg.cellnum = 52
 cfg.sze = 21
-cfg.amp = 0.1 
+cfg.amp = 0.5
 cfg.vc = 0 
 
 cfg.na = 0.075 
@@ -62,9 +70,10 @@ cfg.c1a = 0.00005
 
 cfg.recordStep = 0.1       
 cfg.simLabel = '0'
-cfg.saveFolder = '22aug23'
+cfg.saveFolder = savefoldername
 cfg.saveJson = True
-cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': False}
+include_cells = list(range(num_cells))
+cfg.analysis['plotTraces'] = {'include': include_cells, 'saveFig': True}
 cfg.analysis['plotRaster'] = {'saveFig': False}         
 
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
