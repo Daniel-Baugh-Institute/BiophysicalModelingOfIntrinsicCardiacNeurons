@@ -1,0 +1,10 @@
+Warning: no DISPLAY environment variable.
+--No graphics will be displayed.
+NEURON -- VERSION 8.2.2 HEAD (93d41fafd) 2022-12-15
+Duke, Yale, and the BlueBrain Project -- Copyright 1984-2022
+See http://neuron.yale.edu/neuron/credits
+
+Additional mechanisms from files
+ "mod/ch_Cacna1a_cp5.mod" "mod/ch_Cacna1b_cp6.mod" "mod/ch_Cacna1c_cp3.mod" "mod/ch_Cacna1d_md150284.mod" "mod/ch_Cacna1g_cp41.mod" "mod/ch_Cacna1i_md279.mod" "mod/ch_Hcn1_cp9.mod" "mod/ch_Hcn2_cp10.mod" "mod/ch_Hcn3_cp11.mod" "mod/ch_Hcn4_cp12.mod" "mod/ch_Kcna1ab1_md80769.mod" "mod/ch_Kcnc1_rothman.mod" "mod/ch_Kcnj3_md2488.mod" "mod/ch_Scn1a_cp35.mod" "mod/dexp2syn.mod" "mod/fdsexp2s.mod"
+0 /home/2420/.conda/neuron/20230515/bin/nrniv: can't open simConfig=24jan24_14/24jan24_14_2_44_cfg.json
+Could not open netParams=24jan24_14/24jan24_14_netParams.py

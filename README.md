@@ -9,13 +9,15 @@ A.	Figure 2 and 3
   1.	Clone GitHub repository and checkout to tag-v2.0.2
 git clone https://github.com/suny-downstate-medical-center/ragp.git
   2.   Figure 2: Execute ct_genes.py, which reads data from threshold.py
-  3.   Figure 3: Run Tdata_plots.py, which reads the data from tdata_all_15.csv
+  3.   Figure 3: Run Tdata_plots.py, which reads the data from tdata_all_15.csv. Also run Tdata_plots_thresholds.py for plots showing the alternative Ct thresholds tested.
 
 B.	Figure 4
   1.   Read data file 22aug25b_allData.json
   2.   Execute the 'classification' function in scAnalysis.py
   3.   Download classification.json and classification_firing_sequence.py
   4.   Run classification_firing_sequence.py
+  5.  To produce the distribution of firing types at different thresholds, use analysis_ct.py. The dataFolder, batchLabel, paramFile, and filename must be updated. For example for a Ct threshold of 13, use dataFolder = "24jan24_13", batchLabel = '24jan24_13', paramFile = 'params_13.csv', filename = 'your_working_directory_path//24jan24_13_allData.json'
+
  Note that a large amount of RAM is required to run this file 
  
 C.	Figure 5
@@ -72,6 +74,13 @@ https://github.com/suny-downstate-medical-center/ragp.git
   
     c.	pip install --quiet netpyne
 7.	Resume the steps from I.5. 
+
+
+Additional analysis:
+
+Effect of varying sodium channel inactivation parameter (h_inf) on electrophysiological behaviour
+  1. Use analysis_ct.py
+  2. Change the following variables dataFolder = "25jan24_scn1a_-20", batchLabel = '25jan24_scn1a_-20', paramFile = 'params.csv', filename = '//lustre//ogunnaike//users//2420//matlab_example//ragp//batch//25jan24_scn1a_-20_allData.json' for simulating a -20% change in h_inf. There are also data available for a +20% change in h_inf
 
 
 

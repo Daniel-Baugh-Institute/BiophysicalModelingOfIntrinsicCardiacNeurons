@@ -1,0 +1,55 @@
+/lustre/ogunnaike/users/2420/matlab_example/ragp/batch
+Mod files: "mod/mod/ch_Cacna1a_cp5.mod" "mod/mod/ch_Cacna1b_cp6.mod" "mod/mod/ch_Cacna1c_cp3.mod" "mod/mod/ch_Cacna1d_md150284.mod" "mod/mod/ch_Cacna1g_cp41.mod" "mod/mod/ch_Cacna1i_md279.mod" "mod/mod/ch_Hcn1_cp9.mod" "mod/mod/ch_Hcn2_cp10.mod" "mod/mod/ch_Hcn3_cp11.mod" "mod/mod/ch_Hcn4_cp12.mod" "mod/mod/ch_Kcna1ab1_md80769.mod" "mod/mod/ch_Kcnc1_rothman.mod" "mod/mod/ch_Kcnj3_md2488.mod" "mod/mod/ch_Scn1a_cp35.mod" "mod/mod/dexp2syn.mod" "mod/mod/fdsexp2s.mod"
+
+ -> [32mCompiling[0m mod_func.cpp
+ => [32mLINKING[0m shared library ./libnrnmech.so
+Successfully created x86_64/special
+
+Reading command line arguments using syntax: python file.py [simConfig=filepath] [netParams=filepath]
+Importing simConfig from 24jan24_14/24jan24_14_0_44_cfg.json
+Loading file 24jan24_14/24jan24_14_0_44_cfg.json ... 
+Loading simConfig...
+Importing netParams from 24jan24_14/24jan24_14_netParams.py
+
+Start time:  2024-01-24 22:32:07.972878
+
+Creating network of 1 cell populations on 1 hosts...
+  Number of cells on node 0: 1 
+  Done; cell creation time = 0.00 s.
+Making connections...
+  Number of connections on node 0: 0 
+  Done; cell connection time = 0.00 s.
+Adding stims...
+  Number of stims on node 0: 1 
+  Done; cell stims creation time = 0.00 s.
+Recording 1 traces of 1 types on node 0
+BEFORE simulate
+44 -63.46176769707394
+
+Running simulation using NEURON for 1000.0 ms...
+  Done; run time = 0.21 s; real-time ratio: 4.66.
+
+Gathering data...
+  Done; gather time = 0.00 s.
+
+Analyzing...
+  Cells: 1
+  Connections: 0 (0.00 per cell)
+  Spikes: 11 (11.00 Hz)
+  Simulated time: 1.0 s; 1 workers
+  Run time: 0.21 s
+Saving output as 24jan24_14/24jan24_14_0_44_data.json ... 
+Finished saving!
+  Done; saving time = 0.03 s.
+Saving output as 24jan24_14/24jan24_14_0_44_data.json ... 
+Finished saving!
+  Done; saving time = 0.03 s.
+Preparing spike data...
+Plotting raster...
+Plotting recorded cell traces ... cell
+  Done; plotting time = 0.13 s
+
+Total time = 0.40 s
+AFTER save
+first instance of v_init
+first instance of tstop
