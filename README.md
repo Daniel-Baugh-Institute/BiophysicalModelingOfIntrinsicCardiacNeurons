@@ -25,6 +25,9 @@ C.	Figure 5
   2.	Execute the 'IV' function in scAnalysis.py  
   Note that a large amount of RAM is required to run this file 
 
+D.	Figure 6
+  1. Raw transcriptomic data and calculations for fold change difference in expression between ion channel genes can be found in RAGP_4subs_raw_Ct_analyzed_Differential_expression.xlsx. The figure is also provided in the spreadsheet.
+
 Instructions for running the models: 
 Detailed instructions for running the model in NetPyNE and on the O2S2PARC platform are as follows:
 
