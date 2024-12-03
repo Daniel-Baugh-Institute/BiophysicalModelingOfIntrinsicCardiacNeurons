@@ -82,6 +82,8 @@ Effect of varying sodium channel inactivation parameter (h_inf) on electrophysio
   1. Use analysis_ct.py
   2. Change the following variables dataFolder = "25jan24_scn1a_-20", batchLabel = '25jan24_scn1a_-20', paramFile = 'params.csv', filename = '//lustre//ogunnaike//users//2420//matlab_example//ragp//batch//25jan24_scn1a_-20_allData.json' for simulating a -20% change in h_inf. There are also data available for a +20% change in h_inf
 
+Note: These json files are not available on Github due to their large size, but are available on the SPARC portal (10.26275/cy9w-ttjn)
+
 
 
 
