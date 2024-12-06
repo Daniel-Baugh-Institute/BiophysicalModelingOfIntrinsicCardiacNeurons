@@ -14,10 +14,12 @@ import plotly.graph_objects as go
 import math as m
 import plotly.io as pio
 import seaborn as sns
+import os
 
 font = 16
 plt.rcParams.update({'font.size': font})
 
+os.chdir('./../primary')
 name = 'tdata_all_15'
 wr = 20 # width of reduced heatmap
 wf = 20 # width of full heatmap
@@ -134,12 +136,12 @@ del dfrm2l['bitsum']
 tx1 = -12# -15
 txe = 103
 ty = 14.8
-txt1 = 'Neuronal Phenotype ID: T1'
+txt1 = 'Neuronal Genotype ID: T1'
 txt2 = 'T104'
 cs = 'binary'
 phys =["HCN3 (h)","HCN1 (h)","Cav 3.1 (T)","Cav 2.1 (P/Q)","Cav 1.3 (L)","HCN4 (h)","Cav 1.2 (L)","Cav 3.3 (T)","Kv 1.1 (Kdr)","Kir 3.1 (Kir)","Cav 2.2 (N)","HCN2 (h)","Kv 3.1 (Kdr)","Nav 1.1 (Naf)"]
 
-plotHeatmap(dfrm2l,gr,phys,'red',wr,tx1, txe, ty,txt1,txt2,cs,title='')
+plotHeatmap(dfrm2l,gr,phys,'mediumvioletred',wr,tx1, txe, ty,txt1,txt2,cs,title='')
 
 
 z = dfrm2l.transpose()
@@ -335,7 +337,7 @@ def barplot(dovr_13, plot_name, title, new_nt_idx):
     sns.barplot(x=dovr_13.index + 1, y=dovr_13['Overall'], palette=cols, ax=axs)
     axs.set_xticks([])  # Disable x-axis ticks
     axs.set_ylabel('Number of Occurrences', fontsize=fnt)
-    axs.set_xlabel('Neuronal Phenotype ID', fontsize=fnt)
+    axs.set_xlabel('Neuronal Genotype ID', fontsize=fnt)
     axs.set_title(title, fontsize=fnt)
     axs.set(ylim=(0, 50))  # Set y-axis limits for better visualization
     plt.tight_layout()
@@ -417,11 +419,11 @@ def plotHeatmap_compare(dfr, gene, phy, l, w, x1, xe, y, t1, t2, cs, title,thres
 
     font = 18
     f = plt.figure(figsize=(w, 7))
-    ax = sns.heatmap(dfr, linewidth=0.4, xticklabels=False, yticklabels=gene, cmap="RdGy", cbar=False)
+    ax = sns.heatmap(dfr, linewidth=0.4, xticklabels=False, yticklabels=gene, cmap="PuOr", cbar=False)
     ax.set_ylabel('Genomic Identity', fontsize=font)
     ax2 = ax.twinx()
     ax2.yaxis.set_ticks_position('right')
-    ax2 = sns.heatmap(dfr, linewidth=0.5, xticklabels=False, yticklabels=phy, cmap="RdGy", cbar=False)
+    ax2 = sns.heatmap(dfr, linewidth=0.5, xticklabels=False, yticklabels=phy, cmap="PuOr", cbar=False)
     ax2.set_ylabel('Physiological Identity', fontsize=font)
     ax2.set_yticklabels(ax2.get_ymajorticklabels(), fontsize=font)
     plt.text(x1, y, t1, fontdict={'size': font})
@@ -454,7 +456,7 @@ dovr_13 = pd.DataFrame({'Overall': dovr_13['Overall']})  # Convert the Series to
 
 # plot frequency
 plot_name = "tdata_red_freq_13.png"
-title13 = r'$C_t \leq 13$'
+title13 = ''#r'$C_t \leq 13$'
 barplot(dovr_13['Overall'], plot_name,title13,new_nt_idx_13)
 
 
@@ -522,7 +524,7 @@ dovr_17['Overall'] = dovr_17['Overall'].astype(int)  # Optional: Ensure values a
 dovr_17 = pd.DataFrame({'Overall': dovr_17['Overall']})  # Convert the Series to a DataFrame with a specified column name
 
 # plot frequency
-title17 = r'$C_t \leq 17$'
+title17 = ''#r'$C_t \leq 17$'
 plot_name = "tdata_red_freq_17.png"
 barplot(dovr_17['Overall'], plot_name, title17,new_nt_idx_17)
 
@@ -557,7 +559,7 @@ def actual_orgHeatmap(df):
 tx1 = -12# -15
 txe = 77
 ty = 14.8
-txt1 = 'Neuronal Phenotype ID: T1'
+txt1 = 'Neuronal Genotype ID: T1'
 txt2 = 'T78'
 cs = "binary"#"PiYG"
 l = 7

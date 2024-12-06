@@ -14,9 +14,11 @@ import plotly.graph_objects as go
 import math as m
 import plotly.io as pio
 import seaborn as sns
+import os
 
 font = 16
 plt.rcParams.update({'font.size': font})
+os.chdir('./../primary')
 name = 'tdata_all_15'
 wr = 20 # width of reduced heatmap
 wf = 20 # width of full heatmap
@@ -85,7 +87,7 @@ del dfrm2l['bitsum']
 tx1 = -12# -15
 txe = 103
 ty = 14.8
-txt1 = 'Neuronal-Type ID: T1'
+txt1 = 'Neuronal Genotype ID: T1'
 txt2 = 'T104'
 cs = 'binary'
 phys =["HCN3 (h)","HCN1 (h)","Cav 3.1 (T)","Cav 2.1 (P/Q)","Cav 1.3 (L)","HCN4 (h)","Cav 1.2 (L)","Cav 3.3 (T)","Kv 1.1 (Kdr)","Kir 3.1 (Kir)","Cav 2.2 (N)","HCN2 (h)","Kv 3.1 (Kdr)","Nav 1.1 (Naf)"]
@@ -167,7 +169,7 @@ plt.text(txe,ty,txt2, fontdict={'size':fnt})
 cols = ['mediumvioletred' if z > 10 else 'green' for z in dovr['Overall']]
 sns.barplot(x = dovr.index+1, y = dovr['Overall'],palette=cols, ax=axs[1])
 axs[1].set_xticks(np.arange(1, 104, step=5))
-axs[1].set_xlabel('Neuronal-Type ID (T#)',fontsize=fnt)
+axs[1].set_xlabel('Neuronal Genotype ID (T#)',fontsize=fnt)
 axs[1].set_ylabel('Number of Occurences',fontsize=fnt)
 plt.tight_layout()
 plt.savefig("tdata_red_freq.png",dpi=300,bbox_inches='tight')
