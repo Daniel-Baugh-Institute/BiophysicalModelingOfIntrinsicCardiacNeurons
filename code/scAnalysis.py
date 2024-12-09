@@ -21,6 +21,7 @@ import plotly.graph_objects as go
 import plotly_express as px
 import plotly.io as pio
 import matplotlib.pyplot as plt
+import scipy
 import scipy.optimize as opt
 from plotly.subplots import make_subplots
 
@@ -164,21 +165,91 @@ def toPandas(params, data):
 # @author: sgupta
 # Plotting firing frequency-current curves
 def fI(df):
-    dur = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']['dur']
+    stim = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']
+    stimend = stim['dur'] + stim['delay']
+    dur = stim['dur']
+    dc=df[['amp','cellnum','spkt']].copy()
+    dc['Vlist'] = df.V_soma.apply(lambda x: x['cell_0'])
+    dc['Vrmp'] = dc.Vlist.apply(lambda x: x[0])
+    dc['spkend'] = df.spkt.apply(lambda x: x[len(x)-1] if len(x)>0 else -1)
+    dc['scnt'] = df.spkt.apply(len)
 
-    dfss=df[['amp', 'cellnum', 'avgRate']].copy()  # note double brackets
-    dfss.scnt    = df.spkt.apply(len) # number of spikes (spikecount) * IGNORE WARNING, creates dfss.scnt anyway
-    dfss['scnt'] = df.spkt.apply(len)
-    dfss['spk1'] = df.spkt.apply(lambda x: x[0] if len(x)>0 else -1) # spk1; time of first spike
-    dfss['f1']   = df.spkt.apply(lambda x: 1e3/(x[1] - x[0]) if len(x)>1 else 0) # f1: freq for 1st ISI
-    dfss['f2']   = df.spkt.apply(lambda x: 1e3/(x[2] - x[1]) if len(x)>2 else 0) # f2: freq for 2nd ISI
-    dfss['sdur'] = df.spkt.apply(lambda x: x[-1] - x[0] if len(x)>1 else 0) # sdur: duration of spiking
+    #computing no. of times Vm crosses resting membrane potential
+    cnt = []
+    for indx in dc.index:
+        y = dc['Vlist'][indx]
+        c = 0
+        for i in range(0,len(y)-1):
+            if (y[i] >= dc['Vrmp'][indx] and y[i + 1] < dc['Vrmp'][indx]) or (y[i] <= dc['Vrmp'][indx] and y[i + 1] > dc['Vrmp'][indx]):
+                c = c+1
+        cnt.append(c)
+        del y
+
+    dc['rmpCross'] = cnt
+    del c,cnt
+
+    #computing no. of times Vm crosses a set subthreshold value
+    ct = []
+    for indx in dc.index:
+        y = dc['Vlist'][indx]
+        z = 0
+        for i in range(0,len(y)-1):
+            if ((y[i] >= -40 and y[i + 1] < -40) or (y[i] <= -40 and y[i + 1] > -40)):
+                z = z+1
+        ct.append(z)
+        del y
+
+    dc['subthrCross'] = ct
+    del ct,z
+
+    temp = dc
+    isi = []
+
+    # computing inter-spike interval
+    for ind in dc.index:
+        e = dc.iloc[ind]['spkt']
+        intval = [0]
+        if len(e)>1:
+            intval = [e[j+1]-e[j] for j in range(0,len(e)-1)]
+        else:
+            None
+        isi.append(intval)
+
+    dc['isi'] = isi
+    dc['mxisi'] = dc.isi.apply(lambda x: max(x))
+    del isi,intval,e, ind
+
+    col_names = dc.columns.values.tolist()
+    print(col_names)
+    df_shape = dc.shape
+    print("Number of rows: ", df_shape[0])
+    print("Number of columns: ", df_shape[1])
+
+    init = max([x if x<=2*stimend/3 else 0 for x in df['t'][0]])
+    end = max([x if x<=stimend else 0 for x in df['t'][0]])
+
+
+    dc['Block'] = dc[['Vlist','scnt','rmpCross','mxisi','subthrCross']].apply(lambda x: np.nan if (((-40<= max(x.Vlist[df['t'][0].index(init):df['t'][0].index(end)])<-10) and (x.scnt>=1) and (x.rmpCross>=2)) or ((x.scnt>=1) and ((2*x.scnt)/x.subthrCross < 1)) or (x.mxisi>=120)) else 1, axis =1)
+    dc['Phasic'] = dc.scnt.apply(lambda x: np.nan if 0<x<=1 else 1)
+    dc['Burst'] = dc[['spkend','scnt','subthrCross']].apply(lambda x: np.nan if ((x.spkend<=(stim['delay']+((stimend+5)/4))) and (1<x.scnt<=4) and (x.scnt == x.subthrCross/2)) else 1, axis=1)
+    dc['Post-stimulus Firing'] = dc.spkend.apply(lambda x: np.nan if stimend+5<=x<=data[list(data)[0]]['simConfig']['duration'] else 1)
+    dc['Tonic'] = dc.spkt.apply(lambda x: 1 if len(x)>4 and stim['delay']<=x[-1]<=stimend+5 else np.nan)
+
+    dfss = dc.dropna() #Plot only for tonically firing cells
+
+
+    dfss.scnt    = dc.spkt.apply(len) # number of spikes (spikecount) * IGNORE WARNING, creates dfss.scnt anyway
+    dfss['scnt'] = dc.spkt.apply(len)
+    dfss['spk1'] = dc.spkt.apply(lambda x: x[0] if len(x)>0 else -1) # spk1; time of first spike
+    dfss['f1']   = dc.spkt.apply(lambda x: 1e3/(x[1] - x[0]) if len(x)>1 else 0) # f1: freq for 1st ISI
+    dfss['f2']   = dc.spkt.apply(lambda x: 1e3/(x[2] - x[1]) if len(x)>2 else 0) # f2: freq for 2nd ISI
+    dfss['sdur'] = dc.spkt.apply(lambda x: x[-1] - x[0] if len(x)>1 else 0) # sdur: duration of spiking
     dfss['ffdur'] = dfss.sdur.apply(lambda x: dur if x<=dur else x)
     dfss['hzz']   = dfss.scnt.div(dfss.ffdur).mul(1e3).fillna(0).replace(np.inf,0) # >>> NaN
     dfss.drop(dfss.index[dfss['hzz'] == 0], inplace = True)
     dfss.drop(dfss.index[dfss['sdur'] == 0], inplace = True)
 
-# least-error fit
+    # least-error fit
     def func(x, m, c):
         return (m*x) + c
     xdata = np.array(dfss['amp'])
@@ -188,17 +259,26 @@ def fI(df):
     print(optimizedParameters)
 
     font = 17
-    b = px.line(x=xdata, y=func(xdata, *optimizedParameters))
-    b.update_traces(line=dict(color="Black", width=2.5))
-    # fr = px.strip(dfss, x='amp', y='hzz', color = dfss['cellnum'].astype(str), color_discrete_sequence = px.colors.qualitative.Set3,template="simple_white")
-    # fr.update_traces(marker=dict(size=font/1.5,line = dict(color='black',width=0.5)),jitter = 0)
+    fr = px.strip(dfss, x='amp', y='hzz', color = dfss['cellnum'].astype(str), color_discrete_sequence = px.colors.qualitative.Set3,template="simple_white")
+    fr.update_traces(marker=dict(size=font/1.5,line = dict(color='black',width=0.5)),jitter = 0)
     fr = px.line(dfss, x='amp', y='hzz',color=dfss['cellnum'].astype(str), color_discrete_sequence= px.colors.qualitative.Set3, line_dash = dfss['cellnum'], symbol = dfss['cellnum'],markers=True,template="simple_white")
     fr.update_traces(line = dict(width=2), marker=dict(size=font/1.8,line = dict(width=1,color='indigo')))
-    fr.add_trace(b.data[0])
     fr.update_layout(width=1000,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font),coloraxis_showscale=False) 
     fr.update_layout(xaxis_title='Current Clamp (nA)', yaxis_title='Firing Frequency (Hz)',showlegend=False)
-    pio.write_image(fr,"R_fi.png",format='png',scale=10,width=640,height=460, validate=True)
-    fr.show()
+    pio.write_image(fr,"fi.png",format='png',scale=10,width=640,height=460, validate=True)
+    # fr.show()
+
+    # inset
+    dfsub = dfss[['amp', 'cellnum', 'Vrmp', 'scnt', 'hzz']].copy()
+    dfins = dfsub.loc[dfsub['amp']<=0.1]
+
+    font = 17
+    f = px.line(dfins, x='amp', y='hzz',color=dfins['cellnum'].astype(str), color_discrete_sequence= px.colors.qualitative.Set3, line_dash = dfins['cellnum'], symbol = dfins['cellnum'],markers=True,template="simple_white")
+    f.update_traces(line = dict(width=2), marker=dict(size=font/1.8,line = dict(width=1,color='indigo')))
+    f.update_layout(width=1000,height=800,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font),coloraxis_showscale=False) 
+    f.update_layout(xaxis_title='Current Clamp (nA)', yaxis_title='Firing Frequency (Hz)',showlegend=False)
+    pio.write_image(f,"fi_inset.png",format='png',scale=10,width=640,height=460, validate=True)
+    # f.show()
     return
 
 #Classification of responses
@@ -291,4 +371,6 @@ classification(df)
 
 # Figure 5 plotting (firing frequency-current curve)
 fI(df)
+
+
 
