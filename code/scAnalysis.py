@@ -363,6 +363,48 @@ def classification(df):
 
     return
 
+def fphi(df):
+    dur = data[list(data)[0]]['net']['params']['stimSourceParams']['iclamp']['dur']
+
+    dfss=df[['amp','phi', 'cellnum', 'avgRate']].copy()  # note double brackets
+    dfss.scnt    = df.spkt.apply(len) # number of spikes (spikecount) * IGNORE WARNING, creates dfss.scnt anyway
+    dfss['scnt'] = df.spkt.apply(len)
+    dfss['spk1'] = df.spkt.apply(lambda x: x[0] if len(x)>0 else -1) # spk1; time of first spike
+    dfss['f1']   = df.spkt.apply(lambda x: 1e3/(x[1] - x[0]) if len(x)>1 else 0) # f1: freq for 1st ISI
+    dfss['f2']   = df.spkt.apply(lambda x: 1e3/(x[2] - x[1]) if len(x)>2 else 0) # f2: freq for 2nd ISI
+    dfss['sdur'] = df.spkt.apply(lambda x: x[-1] - x[0] if len(x)>1 else 0) # sdur: duration of spiking
+    dfss['ffdur'] = dfss.sdur.apply(lambda x: dur if x<=dur else x)
+    dfss['hzz']   = dfss.scnt.div(dfss.ffdur).mul(1e3).fillna(0).replace(np.inf,0) # >>> NaN
+    dfss.drop(dfss.index[dfss['hzz'] == 0], inplace = True)
+    dfss.drop(dfss.index[dfss['sdur'] == 0], inplace = True)
+
+    def func(x, m, c):
+        return (m*x) + c
+    xdata = np.array(dfss['phi'])
+    ydata = np.array(dfss['hzz']) 
+    optimizedParameters, pcov = opt.curve_fit(func, xdata, ydata)
+
+    print(optimizedParameters)
+
+    font = 18
+    b = px.line(x=xdata, y=func(xdata, *optimizedParameters))
+    b.update_traces(line=dict(color="Black", width=2.5))
+    fr = px.strip(dfss, x='phi', y='hzz', color = dfss['amp'].astype(str),color_discrete_sequence= px.colors.qualitative.Pastel1,labels={'phi':'Fractional Amplitude of <i>Kcnc1</i> currents','hzz':'Firing Frequency (Hz)','color':'Current Amplitude (nA)'},template="simple_white")
+    fr.update_traces(marker=dict(size=font/1.4,line = dict(color='black',width=1)),jitter = 0)
+    fr.add_trace(b.data[0])
+    fr.update_layout(legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.01),width=1300,height=700,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font))
+    # pio.write_image(fr,"phi_f.png",format='png',scale=3,width=1300,height=700, validate=True)
+    fr.show()
+
+    #3D plot
+    # font = 16
+    # f = px.scatter_3d(dfss, x='phi', y='amp', z='hzz',color='hzz',color_continuous_scale='plasma', labels={'phi':'Fractional Amplitude of I<sub>Kcnc1</sub>','hzz':'Firing Frequency (Hz)', 'amp':'Current Clamp (nA)'},template="simple_white")
+    # f.update_traces(marker=dict(size=font/1.5,line = dict(color='black',width=2)))
+    # f.update_layout(width=1200,height=1000,uniformtext_minsize=font,uniformtext_mode='show',font=dict(size=font))
+    # pio.write_image(f,"3Dffphii.png",format='png',scale=3,width=1300,height=700, validate=True)
+    # f.show()
+    return
+
 
 # Figure 4 classification analysis
 filename = '//lustre//ogunnaike//users//2420//matlab_example//ragp//classification//22aug25b_allData.json'
@@ -371,6 +413,10 @@ classification(df)
 
 # Figure 5 plotting (firing frequency-current curve)
 fI(df)
+
+# Supplementary figure in Github
+# readAllData('22aug25c_allData.json')
+fphi(df)
 
 
 
