@@ -3,6 +3,9 @@ from neuron import h
 import numpy as np
 import matplotlib.pyplot as plt
 
+import os
+os.system('nrnivmodl CaTmod')
+
 sec = h.Section(name = 'sec')
 mc = []	#CP
 tmc = []
