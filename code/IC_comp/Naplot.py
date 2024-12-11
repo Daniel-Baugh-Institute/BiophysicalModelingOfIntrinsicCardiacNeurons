@@ -1,10 +1,10 @@
+import os
+os.system('nrnivmodl Namod')
+
 from neuron import h
 import numpy as np
 import math
 import matplotlib.pyplot as plt
-
-import os
-os.system('nrnivmodl Namod')
 
 volt = [v for v in np.arange(-100,100,1)]
 
