@@ -36,10 +36,11 @@ except IOError:
     print("Error opening the file 'params.csv'.")
 
 
+# NOTE: if this script is throwing an error, comment out anything that's not a function (the stuff at the bottom) in scAnalysis.py and classification_firing_sequence.py
 # read batch data to generate _allData.json file
 dataFolder = "25jan24_scn1a_-20"
 batchLabel = '25jan24_scn1a_-20'
-readBatchData(dataFolder, batchLabel, paramFile = 'params_15.csv', target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None)
+readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None)
 
 # load json file and convert to pandas dataframe
 filename = '//lustre//ogunnaike//users//2420//matlab_example//ragp//batch//25jan24_scn1a_-20_allData.json'
@@ -54,10 +55,11 @@ dc = pd.read_json('//lustre//ogunnaike//users//2420//matlab_example//ragp//batch
 # Run sequence classification
 classify_sequence(dc)
 
-# Tonic only plots
-#print(dc.iloc[4:6])
+# Voltage vs time plots
+print(dc.iloc[4:6])
 
-idx = [0, 104, 208]#[0+59,78+59,156+59]
+idx = [0, 104, 208]# indices for -20
+# indices for +20 [0+59,78+59,156+59]
 df = dc.loc[idx,['Vlist','t','cellnum']]
 batchLabel = "T1_scn1a-20" #
 plotVm(df,batchLabel,idx)
