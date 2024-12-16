@@ -22,7 +22,7 @@ C.	Figures 5 and 6
     iii. Download classification.json and classification_firing_sequence.py
     iv.  Run classification_firing_sequence.py
   2.  Figure 5B and 5C: To produce the distribution of firing types at different thresholds, use analysis_ct.py. The dataFolder, batchLabel, paramFile, and filename must be updated. For example for a Ct threshold of 13, use dataFolder = "24jan24_13", batchLabel = '24jan24_13', paramFile = 'params_13.csv', filename = 'your_working_directory_path//24jan24_13_allData.json'
-  3.  Figure 6: Use analysis_ct.py but switch out the file paths to be filename = '25jan24_scn1a_-20_allData.json' and filename = '25jan24_scn1a_allData+20.json' for a negative 20% change and positive 20% change in h_inf. Note that these files are available on the SPARC portal (https://doi.org/10.26275/cy9w-ttjn). Use paramFile = 'params.csv', dataFolder = '25jan24_scn1a_-20' and batchLabel='25jan24_scn1a_-20'.
+  3.  Figure 6: Use analysis_ct.py but switch out the file paths to be filename = '25jan24_scn1a_-20_allData.json' and filename = '25jan24_scn1a_allData+20.json' for a negative 20% change and positive 20% change in h_inf. Note that these files are available on the SPARC portal (https://doi.org/10.26275/cy9w-ttjn). Use paramFile = 'params.csv', dataFolder = '25jan24_scn1a_-20' and batchLabel='25jan24_scn1a_-20'. You will need to comment out any part of scAnalysis.py that is not a function (at the end of the script).
 
  Note that a large amount of RAM is required to run this file 
  
