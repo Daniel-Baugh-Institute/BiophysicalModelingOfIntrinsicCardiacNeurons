@@ -352,7 +352,11 @@ def classification(df):
     dc['Phasic'] = dc.scnt.apply(lambda x: 1 if 0<x<=1 else np.nan)
     dc['Burst'] = dc[['spkend','scnt','subthrCross']].apply(lambda x: 1 if ((x.spkend<=(stim['delay']+((stimend+5)/4))) and (1<x.scnt<=4) and (x.scnt == x.subthrCross/2)) else np.nan, axis=1)
     dc['Tonic'] = dc.spkt.apply(lambda x: 1 if len(x)>4 and stim['delay']<=x[-1]<=stimend+5 else np.nan) 
-    dc['na'] = df['ina'] 
+    try:
+      dc['na'] = df['ina'] 
+    except Exception as e:
+      print('Skipped adding ina to this dataframe since it was unnecessary')
+      pass
     dc['t'] = df['t']
 
 
