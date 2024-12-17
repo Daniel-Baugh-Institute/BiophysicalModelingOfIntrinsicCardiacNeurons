@@ -240,7 +240,7 @@ def classify_sequence(dc):
     return
 
 # load data
-dc = pd.read_json("C:\\Users\\mmgee\\Downloads\\RAGP SODA upload\\Primary\\classification.json")
+dc = pd.read_json("C:\\Users\\mmgee\\Downloads\\RAGP SODA upload\\Primary\\classification_15.json")
 
 # Run sequence classification
 classify_sequence(dc)
