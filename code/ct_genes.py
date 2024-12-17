@@ -18,6 +18,8 @@ import plotly_express as px
 import math as m
 import plotly.io as pio
 import seaborn as sns
+import os
+os.chdir(r'..\primary')
 
 font = 19 
 
@@ -46,5 +48,5 @@ f.update_layout(width=1100,height=550,font=dict(size=font),bargap = 0.4, yaxis =
 f.update_layout(legend = dict(font = dict(size = font), orientation = 'v',x=1.0,y=0.99,tracegroupgap=10), legend_title = dict(font = dict(size = font),text=''))
 
 pio.write_image(f,"threshold.png",format='png',scale=10,width=1100, height=550, validate=True)
-# f.show()
+f.show()
 
