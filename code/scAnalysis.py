@@ -409,9 +409,23 @@ def fphi(df):
     # f.show()
     return
 
+# @author: sgupta
+# plotting membrane potential vs time
+def plotVm(df, batchLabel):
+    makedirs(f"{batchLabel}/vmPlots")
+    for indx in df.index:
+        f = plt.figure()
+        plt.plot(df["t"][indx], df["V_soma"][indx]["cell_0"], c="C0")
+        plt.xlabel("Time (ms)")
+        plt.ylabel("Membrane Voltage (mV)")
+        plt.title(f"Cell Number: {df['cellnum'][indx]}")
+        plt.savefig(f"{batchLabel}/vmPlots/{df['simLabel'][indx]}.png")
+        plt.close()
+    return
+
 
 # Figure 4 classification analysis
-filename = '//lustre//ogunnaike//users//2420//matlab_example//ragp//classification//22aug25b_allData.json'
+filename = './../primary/22aug25b_allData.json'
 readAllData(filename,dfonly = True)
 classification(df)
 
@@ -420,6 +434,7 @@ fI(df)
 
 # Supplementary figure in Github
 # readAllData('22aug25c_allData.json')
+# filename = './../primary/22aug25c_allData.json'
 fphi(df)
 
 
