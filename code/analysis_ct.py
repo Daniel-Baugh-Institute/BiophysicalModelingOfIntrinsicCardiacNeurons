@@ -43,14 +43,14 @@ batchLabel = '25jan24_scn1a_-20'
 readBatchData(dataFolder, batchLabel, paramFile = 'params.csv', target=None, saveAll=True, vars=None, maxCombs=None, listCombs=None)
 
 # load json file and convert to pandas dataframe
-filename = '//lustre//ogunnaike//users//2420//matlab_example//ragp//batch//25jan24_scn1a_-20_allData.json'
+filename = './../primary/25jan24_scn1a_-20_allData.json'
 params, data, df_20jan24 = readAllData(filename,dfonly = False)
 
 # classify behavior and generate classification.json file that will be analyzed to determine the classification sequence 
 classification(df_20jan24)
 
 # determine classification sequence using classification_firing_sequence.py
-dc = pd.read_json('//lustre//ogunnaike//users//2420//matlab_example//ragp//batch//classification.json')
+dc = pd.read_json('./../primary/classification.json')
 #dc = dc.iloc[0:3]
 # Run sequence classification
 classify_sequence(dc)
